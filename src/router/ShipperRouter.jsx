@@ -9,9 +9,11 @@ function ShipperRouter(props)
 {
     return(
         <Switch>
+            <Route path='/shipper'>
             <SideNavBar>
-                <Route exact to="/shipper/dashboard" component={ShipperDashboard} />
+                <Route exact path="/shipper/dashboard" component={ShipperDashboard} />
             </SideNavBar>
+            </Route>
         </Switch>
     );
 }
