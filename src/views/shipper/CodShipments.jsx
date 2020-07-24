@@ -31,7 +31,10 @@ export default function CodShipment(props)
     const columns = [
         {
             Header: 'Info',
-            accessor: ''
+            accessor: '',
+            Cell:(row)=>{
+                return(<i className='fa fa-info-circle' ></i>)
+            }
         },
         {
             Header: 'tracking No',
