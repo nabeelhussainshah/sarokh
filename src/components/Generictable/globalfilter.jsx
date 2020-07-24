@@ -24,7 +24,7 @@ function GlobalFilter({
                         onChange={e => {
                             setGlobalFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
                         }}
-                        placeholder={`  Total ${count} Students..`}
+                        placeholder={`  Total ${count} Records..`}
                         style={{
                             fontSize: "1.1rem",
                             border: "1",

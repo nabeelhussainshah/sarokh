@@ -84,6 +84,7 @@ export default function AllShipments(props) {
                     columns={columns}
                     tableclass={"table-responsive custom-table"}
                     pagination={true}
+                    filter={true}
                 />
             </div>
         </ListingContainer>

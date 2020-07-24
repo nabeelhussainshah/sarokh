@@ -8,6 +8,7 @@ import CodShipments from "../views/shipper/CodShipments";
 import PendingShipments from "../views/shipper/PendingShipments";
 import ShippmentIssues from "../views/shipper/ShipmentIssues";
 import AllShipments from "../views/shipper/AllShipments";
+import ShipmentDetails from "../views/shipper/ShipmentDetails";
 import { toast } from "react-toastify";
 
 function ShipperRouter(props) {
@@ -42,6 +43,11 @@ function ShipperRouter(props) {
         exact
         path="/shipper/allshipments"
         component={AllShipments}
+      />
+        <ProtectedRoute
+        exact
+        path="/shipper/shipments/vieworder"
+        component={ShipmentDetails}
       />
     </Switch>
   );

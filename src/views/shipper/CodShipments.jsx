@@ -3,8 +3,10 @@ import ListingContainer from '../../components/Containers/ListingContainer';
 import Table from '../../components/Generictable/generatictable';
 import axios from 'axios';
 import { useTransition, animated } from "react-spring";
+import {useHistory} from 'react-router-dom';
 
 export default function CodShipment(props) {
+    const hist = useHistory();
     const [loading, setloading] = useState(true);
     const [response, setresponse] = useState();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -26,13 +28,27 @@ export default function CodShipment(props) {
         fetchData();
     }, []);
 
+    const handleClick = (row) => {
+        console.log(row.row.original.id);
+        hist.push({
+            pathname: '/shipper/shipments/vieworder',
+            state:{
+                id: row.row.original.id
+            }
+        });
+    };
+
     const columns = [
         {
             Header: 'Action',
             accessor: '',
             Cell: (row) => {
-                return (<i className='fa fa-info-circle' ></i>)
+                return (<i className='fa fa-info-circle' onClick={()=>handleClick(row)} ></i>)
             }
+        },
+        {
+            Header: 'id',
+            accessor: 'id'
         },
         {
             Header: 'tracking No',
@@ -80,6 +96,7 @@ export default function CodShipment(props) {
                     columns={columns}
                     tableclass={"table-responsive custom-table"}
                     pagination={true}
+                    hiddenColumns={['id']}
                 />
             </div>
         </ListingContainer>
