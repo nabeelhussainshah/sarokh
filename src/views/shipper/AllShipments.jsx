@@ -4,7 +4,7 @@ import Table from '../../components/Generictable/generatictable';
 import axios from 'axios';
 import { useTransition, animated } from "react-spring";
 
-export default function CodShipment(props) {
+export default function AllShipments(props) {
     const [loading, setloading] = useState(true);
     const [response, setresponse] = useState();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -12,7 +12,7 @@ export default function CodShipment(props) {
     useEffect(() => {
 
         async function fetchData() {
-            await axios.get(`${process.env.REACT_APP_API}/order/get-COD-shipments/${user.id}`)
+            await axios.get(`${process.env.REACT_APP_API}/order/get-all-shipments/${user.id}`)
                 .then((response) => {
                     if (response.data.status === 200) {
                         setresponse(response.data.data);
@@ -39,19 +39,23 @@ export default function CodShipment(props) {
             accessor: 'orderId'
         },
         {
-            Header: 'Date/Time',
+            Header: 'Location',
+            accessor: 'pickType'
+        },
+        {
+            Header: 'Delievery',
+            accessor: 'deliveryType'
+        },
+        {
+            Header: 'Date And Time',
             accessor: 'dateTime'
         },
         {
-            Header: 'Reciever Name',
+            Header: 'Reciever',
             accessor: 'receiverName'
         },
         {
-            Header: 'COD Amount',
-            accessor: 'codAmount'
-        },
-        {
-            Header: 'status',
+            Header: 'Status',
             accessor: 'status'
         }
     ];
@@ -72,7 +76,7 @@ export default function CodShipment(props) {
                 <animated.div key={key} style={props}>
         <ListingContainer>
             <div className="card-header">
-                <h2>COD Shipments</h2>
+                <h2>All Shipments</h2>
             </div>
             <div className="card-body">
                 <Table

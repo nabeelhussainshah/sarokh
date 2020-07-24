@@ -1,41 +1,53 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import SideNavBar from "../components/SideNavbar/SideNavbar";
 import { Switch, Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import ShipperDashboard from "../views/shipper/ShipperDashboard";
 import OurLocation from "../views/shipper/OurLocation";
-import CodShipments from '../views/shipper/CodShipments';
-import PendingShipments from '../views/shipper/PendingShipments';
-import {toast} from 'react-toastify';
+import CodShipments from "../views/shipper/CodShipments";
+import PendingShipments from "../views/shipper/PendingShipments";
+import ShippmentIssues from "../views/shipper/ShipmentIssues";
+import AllShipments from "../views/shipper/AllShipments";
+import { toast } from "react-toastify";
 
 function ShipperRouter(props) {
   return (
     <Switch>
-      <ProtectedRoutes
+      <ProtectedRoute
         exact
         path="/shipper/dashboard"
         component={ShipperDashboard}
       />
-      <ProtectedRoutes
+      <ProtectedRoute
         exact
         path="/shipper/ourlocation"
         component={OurLocation}
       />
-            <ProtectedRoutes
+      <ProtectedRoute
         exact
         path="/shipper/codshipments"
         component={CodShipments}
       />
-                  <ProtectedRoutes
+      <ProtectedRoute
         exact
         path="/shipper/pendingshipments"
         component={PendingShipments}
+      />
+      <ProtectedRoute
+        exact
+        path="/shipper/shipmentissues"
+        component={ShippmentIssues}
+      />
+      <ProtectedRoute
+        exact
+        path="/shipper/allshipments"
+        component={AllShipments}
       />
     </Switch>
   );
 }
 
-const ProtectedRoutes = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({ component: Component, ...rest }) => {
   if (JSON.parse(localStorage.getItem("user"))) {
     return (
       <SideNavBar>
@@ -48,7 +60,7 @@ const ProtectedRoutes = ({ component: Component, ...rest }) => {
       </SideNavBar>
     );
   } else {
-    toast.error('PLEASE LOGIN');
+    toast.error("PLEASE LOGIN");
     return <Redirect to="/login" />;
   }
 };

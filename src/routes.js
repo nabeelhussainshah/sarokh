@@ -25,8 +25,8 @@ export const NaqilRoutes = [
       iconClass: "nav-icon fa fa-map",
     },
     {
-      to: "/shipmentissue",
-      name: "Shipment issue",
+      to: "/shipper/shipmentissues",
+      name: "Shipment issues",
       iconClass: "nav-icon fa fa-map",
     },
     {

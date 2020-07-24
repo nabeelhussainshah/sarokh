@@ -83,11 +83,21 @@ function GenericTable({
                   >
                     {column.render("Header")}
                     <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? <>&nbsp;<i className="fa fa-arrow-down" /></>
-                          : <>&nbsp;<i className="fa fa-arrow-up" /></>
-                        : ""}
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <>
+                            &nbsp;
+                            <i className="fa fa-arrow-down" />
+                          </>
+                        ) : (
+                          <>
+                            &nbsp;
+                            <i className="fa fa-arrow-up" />
+                          </>
+                        )
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </th>
                 ))}

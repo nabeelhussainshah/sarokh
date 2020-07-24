@@ -21,7 +21,7 @@ function Pagination(
             <span>
                 Page{' '}
                 <strong>
-                    {pageIndex + 1} of {pageOptions.length}
+                    {pageOptions.length === 0 ? "1 of 1" : (<>{pageIndex + 1} of {pageOptions.length}</>)}
                 </strong>{' '}
             </span>
             <button className="btn btn-info" onClick={() => previousPage()} disabled={!canPreviousPage}>
@@ -36,7 +36,7 @@ function Pagination(
                     setPageSize(Number(e.target.value));
                 }}
             >
-                {[5, 10, 20, 30].map(pageSize => (
+                {[5, 10, 15, 20].map(pageSize => (
                     <option key={pageSize} value={pageSize}>
                         Show {pageSize}
                     </option>
