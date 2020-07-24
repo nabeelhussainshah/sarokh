@@ -1,194 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { StatsCard } from "./components/StatsCard";
+import { UserBio } from "./components/UserBio";
+import MainContainer from "../../components/Containers/MainContainer";
+import axios from "axios";
+import { useTransition, animated } from "react-spring";
 
+function ShipperDashboard(props) {
+  const [loading, setloading] = useState(true);
+  const [data, setData] = useState(JSON.parse(localStorage.getItem("user")));
+  const [response, setresponse] = useState();
 
-function ShipperDashboard(props)
-{
-    return(
-<div className="card card-accent-primary borderradius40 margintop30 container-fluid custom-margin">
-  <div className="panel-body">
-    <div className="row">
-      <div className="col-sm-12">
-        <div className="profile__header">
-          <h4 className=" float-left">SADsdsadsad</h4>
-          <div className="clearfix" />
-        </div>
-        <div>
-          <div className="float-left mt-2">
-            <div>
-              <div className="float-left mt-2">
-                <div className="icon color-default fs-20 mr-10 float-left">
-                  <i className="fa fa-user" />
-                </div>
-                <div style={{display: 'inline-block', marginRight: 30}}>
-                  <p>top heading</p>
-                </div>
-              </div>
-              <div className="float-left mt-2">
-                <div className="icon color-default fs-20 mr-10 float-left">
-                  <i className="fa fa-envelope" />
-                </div>
-                <div style={{display: 'inline-block', marginRight: 30}}>
-                  <p>SADsdsadsad</p>
-                </div>
-              </div>
-              <div className="float-left mt-2">
-                <div className="icon color-default fs-20 mr-10 float-left">
-                  <i className="fa fa-mobile" />
-                </div>
-                <div style={{display: 'inline-block', marginRight: 30}}>
-                  <p>SADsdsadsad</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 ">
-          <div className="row mt-2">
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fa fa-usd font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SAR SADsdsadsad</span>
-                    <br />Total Earning</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fas fa-dolly-flatbed font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SADsdsadsad</span>
-                    <br />Completed Orders</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fa fa-money font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SAR SADsdsadsad</span>
-                    <br />Pending Delivery Charges</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fa fa-money font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SAR SADsdsadsad</span>
-                    <br />Pending COD</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fas fa-dolly-flatbed font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SADsdsadsad</span>
-                    <br />Total Orders</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fas fa-dolly-flatbed font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SADsdsadsad</span>
-                    <br />Pending Order (pickups)</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fas fa-dolly-flatbed font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SADsdsadsad</span>
-                    <br />Return Orders</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fas fa-dolly-flatbed font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SADsdsadsad</span>
-                    <br />Order Pending Deliveries</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-            <div className="flex-row col-md-6">
-              <div className="thumnail-box">
-                <div className="icon color-default fs-26 mr-10 float-left">
-                  <i className="fa fa-exclamation-circle font40" />
-                </div>
-                <div className="float-left">
-                  <p>
-                    <span className="font20">SADsdsadsad</span>
-                    <br />Active Shipment Issues</p>
-                </div>
-                <div className="clearfix" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <h4>Account Users</h4>
-          <div className="profile__avatar-small">
-            <img src="../../../../../assets/img/avatar-png-icon-6.png" alt title />
-          </div>
-          <div className="profile__avatar_small_addnew">
-            <a>
-              <i className="fa fa-user-plus" aria-hidden="true" />
-            </a>
-          </div>
-          <div className="profile__avatar_small_addnew marginleft10">
-            <a>
-              <i className="fa fa-group" aria-hidden="true" />
-            </a>
-          </div>
-          <div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  useEffect(() => {
+    async function fetchAPI() {
+      await axios
+        .get(`${process.env.REACT_APP_API}/web-dashboard/shipper/${data.id}`)
+        .then((response) => {
+          if (response.data.status === 200) {
+            setresponse(response.data.data);
+            setloading(false);
+          }
+        })
+        .catch((err) => {
+          window.alert(err.message);
+        });
+    }
+    fetchAPI();
+  }, []);
 
-    );
+  const transitions = useTransition(!loading, null, {
+    from: { opacity: 0, transform: "translate3d(-270px,0,0)" },
+    enter: {
+      opacity: 1,
+      transform: "translate3d(0,0px,0)",
+      transition: "ease-out 0.3s",
+    },
+  });
+
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    transitions.map(({ item, props, key }) => {
+      return (
+        <animated.div key={key} style={props}>
+          <MainContainer>
+            <UserBio data={data} />
+            <StatsCard response={response} />
+          </MainContainer>
+        </animated.div>
+      );
+    })
+  );
 }
 
 export default ShipperDashboard;

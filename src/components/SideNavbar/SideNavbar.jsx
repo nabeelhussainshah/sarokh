@@ -69,7 +69,7 @@ const NavigationLinks = ({ routes }) => {
           );
         } else {
           return (
-            <li className="nav-item has-treeview">
+            <li key={j} className="nav-item has-treeview">
               <NavLink
                 to={doc.to}
                 className="nav-link"
