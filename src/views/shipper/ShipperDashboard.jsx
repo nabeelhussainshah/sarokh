@@ -34,20 +34,23 @@ function ShipperDashboard(props) {
       opacity: 1,
       transform: "translate3d(0,0px,0)",
       transition: "ease-out 0.3s",
-    }
+    },
   });
 
   return loading ? (
     <div>Loading...</div>
   ) : (
-    transitions.map(({ item, props, key }) => (
-        <animated.div key={key} style={props}>
-          <MainContainer>
-            <UserBio data={data} />
-            <StatsCard response={response} />
-          </MainContainer>
-        </animated.div>
-    ))
+    transitions.map(
+      ({ item, props, key }) =>
+        item && (
+          <animated.div key={key} style={props}>
+            <MainContainer>
+              <UserBio data={data} />
+              <StatsCard response={response} />
+            </MainContainer>
+          </animated.div>
+        )
+    )
   );
 }
 
