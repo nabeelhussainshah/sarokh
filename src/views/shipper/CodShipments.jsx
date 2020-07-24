@@ -30,7 +30,7 @@ export default function CodShipment(props)
 
     const columns = [
         {
-            Header: 'Info',
+            Header: 'Action',
             accessor: '',
             Cell:(row)=>{
                 return(<i className='fa fa-info-circle' ></i>)
