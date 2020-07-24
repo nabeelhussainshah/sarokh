@@ -1,8 +1,26 @@
 /* login page css  */
 body{
     background-color: #e4e5e6;
+}
 
-
+.app-body .main {
+    flex: 1;
+    min-width: 0;
+}
+.custom-table table td,th{padding: 15px 10px;border-right: #fcdcb6 dotted 1px;border-top: #f6921d solid 1px; text-align: center; font-weight: normal; color: #595d6e; font-size: 15px;}
+.custom-table table thead{background: #dbc09e;}
+.custom-table table i {font-size: 20px;color: #337ab7;}
+.custom-table table{display: table;width: 100%;}
+.card-header{padding: 15px 0 0 20px;border-bottom: #f6921d solid 2px;}
+.card-accent-primary {
+    border-top: #ec1c24 solid 4px;
+}
+.card-header h2{font-size: 16px; font-weight: bold; margin: 0 0 15px 0;}
+.content-wrapper{background: none;}
+.app-body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 .custom-margin{
     margin-left: 15px;

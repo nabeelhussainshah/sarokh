@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import MainContainer from '../../components/Containers/MainContainer';
+import ListingContainer from '../../components/Containers/ListingContainer';
 import Table from '../../components/Generictable/generatictable';
 import axios from 'axios';
 
-export default function CodShipment(props) {
+export default function PendingShipment(props) {
     const [loading, setloading] = useState(true);
     const [response, setresponse] = useState();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -11,7 +11,7 @@ export default function CodShipment(props) {
     useEffect(() => {
 
         async function fetchData() {
-            await axios.get(`${process.env.REACT_APP_API}/order/get-COD-shipments/${user.id}`)
+            await axios.get(`${process.env.REACT_APP_API}/order/get-pending-orders/${user.id}`)
                 .then((response) => {
                     if (response.data.status === 200) {
                         setresponse(response.data.data);
@@ -27,7 +27,7 @@ export default function CodShipment(props) {
 
     const columns = [
         {
-            Header: 'Action',
+            Header: 'Info',
             accessor: '',
             Cell: (row) => {
                 return (<i className='fa fa-info-circle' ></i>)
@@ -46,6 +46,10 @@ export default function CodShipment(props) {
             accessor: 'receiverName'
         },
         {
+            Header: 'Payment Type',
+            accessor: 'paymentType'
+        },
+        {
             Header: 'COD Amount',
             accessor: 'codAmount'
         },
@@ -57,7 +61,7 @@ export default function CodShipment(props) {
 
     const data = [];
     return loading ? <div>loading...</div> : (
-        <MainContainer>
+        <ListingContainer>
             <div className="card-header">
                 <h2>COD Shipments</h2>
             </div>
@@ -69,6 +73,6 @@ export default function CodShipment(props) {
                     pagination={true}
                 />
             </div>
-        </MainContainer>
+        </ListingContainer>
     );
 }

@@ -5,6 +5,7 @@ import { Switch, Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import ShipperDashboard from "../views/shipper/ShipperDashboard";
 import OurLocation from "../views/shipper/OurLocation";
 import CodShipments from '../views/shipper/CodShipments';
+import PendingShipments from '../views/shipper/PendingShipments';
 import {toast} from 'react-toastify';
 
 function ShipperRouter(props) {
@@ -24,6 +25,11 @@ function ShipperRouter(props) {
         exact
         path="/shipper/codshipments"
         component={CodShipments}
+      />
+                  <ProtectedRoutes
+        exact
+        path="/shipper/pendingshipments"
+        component={PendingShipments}
       />
     </Switch>
   );

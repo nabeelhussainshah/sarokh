@@ -17,7 +17,7 @@ function Pagination(
 ) {
     return (
 
-        <div className="row pagination">
+        <div className="pagination">
             <span>
                 Page{' '}
                 <strong>
