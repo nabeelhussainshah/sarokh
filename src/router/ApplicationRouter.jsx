@@ -15,6 +15,7 @@ function ApplicationRouter(porps)
             </Route>
         </Switch>
         <ShipperRouter />
+        <Route render={props => {return <div>ROUTE NOT FOUND</div>}} />
         </BrowserRouter>
     );
 }

@@ -1,26 +1,26 @@
 export const NaqilRoutes = [
     {
-      to: "/dashboard",
+      to: "/shipper/dashboard",
       name: "Dashboard",
       iconClass: "nav-icon fas fa-rocket",
     },
     {
-      to: "/ourlocation",
+      to: "/shipper/ourlocation",
       name: "Our Location",
       iconClass: "nav-icon fa fa-warehouse",
     },
     {
-      to: "/allshipments",
+      to: "/shipper/allshipments",
       name: "All Shipments",
       iconClass: "nav-icon fa fa-map",
     },
     {
-      to: "/codshipments",
+      to: "/shipper/codshipments",
       name: "COD Shipments",
       iconClass: "nav-icon fa fa-map",
     },
     {
-      to: "/pendingshipments",
+      to: "/shipper/pendingshipments",
       name: "Pending Shipments",
       iconClass: "nav-icon fa fa-map",
     },
