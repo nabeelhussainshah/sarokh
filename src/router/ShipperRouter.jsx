@@ -9,6 +9,7 @@ import PendingShipments from "../views/shipper/PendingShipments";
 import ShippmentIssues from "../views/shipper/ShipmentIssues";
 import AllShipments from "../views/shipper/AllShipments";
 import ShipmentDetails from "../views/shipper/ShipmentDetails";
+import AddUserForm from "../views/shipper/AddUserForm";
 import { toast } from "react-toastify";
 
 function ShipperRouter(props) {
@@ -44,10 +45,15 @@ function ShipperRouter(props) {
         path="/shipper/allshipments"
         component={AllShipments}
       />
-        <ProtectedRoute
+      <ProtectedRoute
         exact
         path="/shipper/shipments/vieworder"
         component={ShipmentDetails}
+      />
+      <ProtectedRoute
+        exact
+        path="/shipper/users/adduser"
+        component={AddUserForm}
       />
     </Switch>
   );

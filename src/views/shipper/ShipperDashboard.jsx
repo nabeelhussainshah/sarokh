@@ -6,19 +6,18 @@ import axios from "axios";
 import { useTransition, animated } from "react-spring";
 
 function ShipperDashboard(props) {
-  const [loading, setloading] = useState(true);
-  const [data, setData] = useState(JSON.parse(localStorage.getItem("user")));
-  const [response, setresponse] = useState();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [response, setresponse] = useState({loading: true});
   console.log(response);
 
   useEffect(() => {
     async function fetchAPI() {
-      await axios
-        .get(`${process.env.REACT_APP_API}/web-dashboard/shipper/${data.id}`)
+      return await axios
+        .get(`${process.env.REACT_APP_API}/web-dashboard/shipper/${user.id}`)
         .then((response) => {
           if (response.data.status === 200) {
-            setresponse(response.data.data);
-            setloading(false);
+            setresponse({loading: false, data: response.data.data});
           }
         })
         .catch((err) => {
@@ -26,10 +25,11 @@ function ShipperDashboard(props) {
         });
     }
     fetchAPI();
+
   }, []);
 
-  const transitions = useTransition(!loading, null, {
-    from: { opacity: 0, transform: "translate3d(-270px,0,0)" },
+  const transitions = useTransition(!response.loading, null, {
+    from: { opacity: 0, transform: "translate3d(-290px,0,0)" },
     enter: {
       opacity: 1,
       transform: "translate3d(0,0px,0)",
@@ -37,7 +37,7 @@ function ShipperDashboard(props) {
     },
   });
 
-  return loading ? (
+  return response.loading ? (
     <div>Loading...</div>
   ) : (
     transitions.map(
@@ -45,8 +45,8 @@ function ShipperDashboard(props) {
         item && (
           <animated.div key={key} style={props}>
             <MainContainer>
-              <UserBio data={data} />
-              <StatsCard response={response} />
+              <UserBio data={user} />
+              <StatsCard response={response.data} />
             </MainContainer>
           </animated.div>
         )

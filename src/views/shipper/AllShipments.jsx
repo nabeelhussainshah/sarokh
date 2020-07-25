@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import ListingContainer from '../../components/Containers/ListingContainer';
 import Table from '../../components/Generictable/generatictable';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import { useTransition, animated } from "react-spring";
 
 export default function AllShipments(props) {
-    const [loading, setloading] = useState(true);
-    const [response, setresponse] = useState();
-    const user = JSON.parse(localStorage.getItem('user'));
+    const hist = useHistory();
+    const [response, setresponse] = useState({loading: true});
+    const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
 
         async function fetchData() {
-            await axios.get(`${process.env.REACT_APP_API}/order/get-all-shipments/${user.id}`)
+           return await axios.get(`${process.env.REACT_APP_API}/order/get-all-shipments/${user.id}`)
                 .then((response) => {
                     if (response.data.status === 200) {
-                        setresponse(response.data.data);
-                        setloading(false);
+                        setresponse({loading: false,data: response.data.data});
                     }
                 })
                 .catch((err) => {
@@ -26,13 +26,27 @@ export default function AllShipments(props) {
         fetchData();
     }, []);
 
+    const handleClick = (row) => {
+        console.log(row.row.original.id);
+        hist.push({
+            pathname: '/shipper/shipments/vieworder',
+            state:{
+                id: row.row.original.id
+            }
+        });
+    };
+
     const columns = [
         {
             Header: 'Action',
             accessor: '',
             Cell: (row) => {
-                return (<i className='fa fa-info-circle' ></i>)
+                return (<i className='fa fa-info-circle' onClick={()=>handleClick(row)} ></i>)
             }
+        },
+        {
+            Header: 'id',
+            accessor: 'id'
         },
         {
             Header: 'tracking No',
@@ -60,7 +74,7 @@ export default function AllShipments(props) {
         }
     ];
 
-    const transitions = useTransition(!loading, null, {
+    const transitions = useTransition(!response.loading, null, {
         from: { opacity: 0, transform: "translate3d(-270px,0,0)" },
         enter: {
           opacity: 1,
@@ -69,7 +83,7 @@ export default function AllShipments(props) {
         },
       });
 
-    return loading ? <div>loading...</div> : (
+    return response.loading ? <div>loading...</div> : (
         transitions.map(
             ({ item, props, key }) =>
               item && (
@@ -80,11 +94,12 @@ export default function AllShipments(props) {
             </div>
             <div className="card-body">
                 <Table
-                    data={response}
+                    data={response.data}
                     columns={columns}
                     tableclass={"table-responsive custom-table"}
                     pagination={true}
                     filter={true}
+                    hiddenColumns={['id']}
                 />
             </div>
         </ListingContainer>

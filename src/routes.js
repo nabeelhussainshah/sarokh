@@ -30,12 +30,12 @@ export const NaqilRoutes = [
       iconClass: "nav-icon fa fa-map",
     },
     {
-      to: "/users",
+      to: "/shipper/users",
       name: "Users",
       iconClass: "nav-icon fas fa-copy",
       subRoutes: [
         {
-          to: "/users/adduser",
+          to: "/shipper/users/adduser",
           name: "Add User",
           iconClass: "fas fa-user-plus nav-icon",
         },

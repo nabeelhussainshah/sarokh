@@ -5,20 +5,18 @@ import axios from "axios";
 import { useTransition, animated } from "react-spring";
 
 export default function ShipmentIssues(props) {
-  const [loading, setloading] = useState(true);
-  const [response, setresponse] = useState();
+  const [response, setresponse] = useState({loading: true});
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     async function fetchData() {
-      await axios
+      return await axios
         .get(
           `${process.env.REACT_APP_API}/order/get-issue-shipments/${user.id}`
         )
         .then((response) => {
           if (response.data.status === 200) {
-            setresponse(response.data.data);
-            setloading(false);
+            setresponse({loading: false,data: response.data.data});
           }
         })
         .catch((err) => {
@@ -58,7 +56,7 @@ export default function ShipmentIssues(props) {
     },
   ];
 
-  const transitions = useTransition(!loading, null, {
+  const transitions = useTransition(!response.loading, null, {
     from: { opacity: 0, transform: "translate3d(-270px,0,0)" },
     enter: {
       opacity: 1,
@@ -67,8 +65,8 @@ export default function ShipmentIssues(props) {
     },
   });
 
-  const data = [];
-  return loading ? (
+
+  return response.loading ? (
     <div>loading...</div>
   ) : (
     transitions.map(
@@ -81,7 +79,7 @@ export default function ShipmentIssues(props) {
               </div>
               <div className="card-body">
                 <Table
-                  data={response}
+                  data={response.data}
                   columns={columns}
                   tableclass={"table-responsive custom-table"}
                   pagination={true}

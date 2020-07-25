@@ -12,17 +12,17 @@ import axios from 'axios';
 export default function ShipmentDetails(props)
 {
     const loc = useLocation();
-    const [loading, setloading] = useState(true);
-    const [response, setresponse] = useState();
-    const user = localStorage.getItem('user');
+    const [response, setresponse] = useState({loading: true});
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(loc.state);
 
     useEffect(()=>{
         async function fetchData()
         {
-            await axios.get(`${process.env.REACT_APP_API}/order/get-details/${loc.state.id}`)
+            return await axios.get(`${process.env.REACT_APP_API}/order/get-details/${loc.state.id}`)
             .then((response)=>{
-                setresponse(response.data.data);
-                setloading(false)
+                setresponse({loading: false,data: response.data.data});
+
             })
             .catch((err)=>{
                 window.alert(err.message);
@@ -31,12 +31,12 @@ export default function ShipmentDetails(props)
         fetchData();
     },[]);
 
-    return loading ? <div>Loading...</div> :(
+    return response.loading ? <div>Loading...</div> :(
         <Container>
-            <OrderDetails response={response}/>
-            <RecieverDetails response = {response.shipmentOrderItems[0]}/>
-            <ShipmentDetail response={response.shipmentOrderItems[0]}/>
-            <PaymentDetails response={response.shipmentOrderItems[0]} />
+            <OrderDetails response={response.data}/>
+            <RecieverDetails response = {response.data.shipmentOrderItems[0]}/>
+            <ShipmentDetail response={response.data.shipmentOrderItems[0]}/>
+            <PaymentDetails response={response.data.shipmentOrderItems[0]} />
             <ShipmentDelieveryStatus />
         </Container>
         );

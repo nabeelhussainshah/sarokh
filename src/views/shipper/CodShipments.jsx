@@ -7,18 +7,16 @@ import {useHistory} from 'react-router-dom';
 
 export default function CodShipment(props) {
     const hist = useHistory();
-    const [loading, setloading] = useState(true);
-    const [response, setresponse] = useState();
-    const user = JSON.parse(localStorage.getItem('user'));
+    const [response, setresponse] = useState({loading: true});
+    const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
 
         async function fetchData() {
-            await axios.get(`${process.env.REACT_APP_API}/order/get-COD-shipments/${user.id}`)
+           return await axios.get(`${process.env.REACT_APP_API}/order/get-COD-shipments/${user.id}`)
                 .then((response) => {
                     if (response.data.status === 200) {
-                        setresponse(response.data.data);
-                        setloading(false);
+                        setresponse({loading: false,data: response.data.data});
                     }
                 })
                 .catch((err) => {
@@ -72,7 +70,7 @@ export default function CodShipment(props) {
         }
     ];
 
-    const transitions = useTransition(!loading, null, {
+    const transitions = useTransition(!response.loading, null, {
         from: { opacity: 0, transform: "translate3d(-270px,0,0)" },
         enter: {
           opacity: 1,
@@ -81,7 +79,7 @@ export default function CodShipment(props) {
         },
       });
 
-    return loading ? <div>loading...</div> : (
+    return response.loading ? <div>loading...</div> : (
         transitions.map(
             ({ item, props, key }) =>
               item && (
@@ -92,7 +90,7 @@ export default function CodShipment(props) {
             </div>
             <div className="card-body">
                 <Table
-                    data={response}
+                    data={response.data}
                     columns={columns}
                     tableclass={"table-responsive custom-table"}
                     pagination={true}
