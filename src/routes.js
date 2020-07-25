@@ -40,7 +40,7 @@ export const NaqilRoutes = [
           iconClass: "fas fa-user-plus nav-icon",
         },
         {
-          to: "/user/allusers",
+          to: "/shipper/users/allusers",
           name: "All Users",
           iconClass: "fas fa-users nav-icon",
         },
