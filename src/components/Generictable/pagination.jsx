@@ -18,7 +18,7 @@ function Pagination(
     return (
 
         <div className="pagination">
-            <span>
+            <span className="page-num">
                 Page{' '}
                 <strong>
                     {pageOptions.length === 0 ? "1 of 1" : (<>{pageIndex + 1} of {pageOptions.length}</>)}
@@ -30,7 +30,7 @@ function Pagination(
             <button className="btn btn-info" onClick={() => nextPage()} disabled={!canNextPage}>
                 {'>'}
             </button>{" "}
-            <select className="btn btn-info"
+            <select className="btn btn-info page-item"
                 value={pageSize}
                 onChange={e => {
                     setPageSize(Number(e.target.value));
@@ -43,7 +43,7 @@ function Pagination(
                 ))}
             </select>
         </div>
-        );
+    );
 
 }
 

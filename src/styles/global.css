@@ -7,15 +7,27 @@ body{
     flex: 1;
     min-width: 0;
 }
+.nav-sidebar>.nav-item .nav-icon{margin-right: 10px;}
 .custom-table table td,th{padding: 15px 10px;border-right: #fcdcb6 dotted 1px;border-top: #f6921d solid 1px; text-align: center; font-weight: normal; color: #595d6e; font-size: 15px;}
 .custom-table table thead{background: #dbc09e;}
 .custom-table table i {font-size: 20px;color: #337ab7;}
 .custom-table table{display: table;width: 100%;}
-.card-header{padding: 15px 0 0 20px;border-bottom: #f6921d solid 2px;}
+.card-header{padding: 0 0 0 20px;border-bottom: #f6921d solid 2px;}
 .card-accent-primary {
     border-top: #ec1c24 solid 4px;
 }
-.card-header h2{font-size: 16px; font-weight: bold; margin: 0 0 15px 0;}
+.custom-search h4{float: left;font-size: 18px;margin-top: 8px;}
+.custom-search .search-field{float: left;
+    width: 210px;
+    margin-left: 10px;
+    margin-bottom: 16px;}
+/* .main-sidebar{background: #FFF;} */
+.btn-success{margin-right: 5px;}
+.page-num{margin-right: 15px; line-height: 36px;}
+.page-item{margin-left: 25px;}
+.pagination{margin-top:25px;}
+.card-header button{margin: 10px 14px 10px 0;}
+.card-header h2{font-size: 16px; font-weight: bold; margin: 19px 0 15px 0;}
 .content-wrapper{background: none;}
 .app-body{
     display: flex;

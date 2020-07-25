@@ -5,7 +5,7 @@ import axios from "axios";
 import { useTransition, animated } from "react-spring";
 
 export default function ShipmentIssues(props) {
-  const [response, setresponse] = useState({loading: true});
+  const [response, setresponse] = useState({ loading: true });
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function ShipmentIssues(props) {
         )
         .then((response) => {
           if (response.data.status === 200) {
-            setresponse({loading: false,data: response.data.data});
+            setresponse({ loading: false, data: response.data.data });
           }
         })
         .catch((err) => {
@@ -69,25 +69,25 @@ export default function ShipmentIssues(props) {
   return response.loading ? (
     <div>loading...</div>
   ) : (
-    transitions.map(
-      ({ item, props, key }) =>
-        item && (
-          <animated.div key={key} style={props}>
-            <ListingContainer>
-              <div className="card-header">
-                <h2>COD Shipments</h2>
-              </div>
-              <div className="card-body">
-                <Table
-                  data={response.data}
-                  columns={columns}
-                  tableclass={"table-responsive custom-table"}
-                  pagination={true}
-                />
-              </div>
-            </ListingContainer>
-          </animated.div>
-        )
-    )
-  );
+      transitions.map(
+        ({ item, props, key }) =>
+          item && (
+            <animated.div key={key} style={props}>
+              <ListingContainer>
+                <div className="card-header">
+                  <h2>Shipment Issues</h2>
+                </div>
+                <div className="card-body">
+                  <Table
+                    data={response.data}
+                    columns={columns}
+                    tableclass={"table-responsive custom-table"}
+                    pagination={true}
+                  />
+                </div>
+              </ListingContainer>
+            </animated.div>
+          )
+      )
+    );
 }

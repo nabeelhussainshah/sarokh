@@ -16,9 +16,10 @@ function GlobalFilter({
 
     return (
         <div className="row" style={{ 'zoom': '94%' }}>
-            <div className="col">
-                <div className="student-search-field">
-                    <h4>Search: &nbsp;<input
+            <div className="col custom-search">
+                <div className="Search-field">
+                    <h4>Search</h4>
+                    <input className="form-control search-field"
                         // ref={textInput}
                         value={state.globalFilter || ""}
                         onChange={e => {
@@ -30,7 +31,7 @@ function GlobalFilter({
                             border: "1",
 
                         }}
-                    /></h4>
+                    />
 
                 </div>
 

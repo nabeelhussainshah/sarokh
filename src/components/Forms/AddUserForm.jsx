@@ -25,7 +25,7 @@ export default function AddUserForm(props) {
 
   return (
     <>
-      <div className="card-header">Add User</div>
+      <div className="card-header"><h2>Add User</h2></div>
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row mb-3">
@@ -94,7 +94,7 @@ export default function AddUserForm(props) {
                 {" "}
                 {errors.designation && errors.designation.message}
               </span> */}
-               <select
+              <select
                 className="form-control"
                 id="designation"
                 name="designation"
@@ -104,9 +104,9 @@ export default function AddUserForm(props) {
                 })}
               >
                 <option value="true">--- Select Designation ---</option>
-                {props.designation.map((doc)=>{
-                  return(
-                  <option value={doc}>{doc}</option>
+                {props.designation.map((doc) => {
+                  return (
+                    <option value={doc}>{doc}</option>
                   );
                 })}
               </select>
@@ -178,7 +178,7 @@ export default function AddUserForm(props) {
                 className="form-control"
                 placeholder="User Password"
                 ref={register({
-                  minLength: 5,
+                  // minLength: 5,
                   required: "password is required",
                 })}
               />
