@@ -7,21 +7,6 @@ export default function AddUserForm(props) {
     defaultValues: props.formData,
   });
   const onSubmit = (data) => props.form(data);
-  const hist = useHistory();
-
-  useEffect(() => {
-    if (props.formToggle !== undefined) {
-      hist.listen((newLocation, action) => {
-        if (action === "POP") {
-          hist.push("/shipper/users/allusers");
-          hist.go();
-        }
-      });
-    }
-    return () => {
-      window.onpopstate = null;
-    };
-  }, []);
 
   return (
     <>
@@ -79,21 +64,6 @@ export default function AddUserForm(props) {
               </span>
             </div>
             <div className="col">
-              {/* <input
-                type="text"
-                name="designation"
-                className="form-control"
-                placeholder="Designation"
-                defaultValue={""}
-                ref={register({
-                  minLength: 5,
-                  required: "Designation is required",
-                })}
-              />
-              <span style={{ color: "red" }}>
-                {" "}
-                {errors.designation && errors.designation.message}
-              </span> */}
               <select
                 className="form-control"
                 id="designation"
@@ -104,7 +74,7 @@ export default function AddUserForm(props) {
                 })}
               >
                 <option value="true">--- Select Designation ---</option>
-                {props.designation.map((doc) => {
+                {props.designation.map((doc) => { //this will add designations that select field which will be passed from the parent component
                   return (
                     <option value={doc}>{doc}</option>
                   );
@@ -112,7 +82,7 @@ export default function AddUserForm(props) {
               </select>
               <span style={{ color: "red" }}>
                 {" "}
-                {errors.gender && errors.gender.message}
+                {errors.designation && errors.designation.message}
               </span>
             </div>
           </div>
@@ -188,7 +158,7 @@ export default function AddUserForm(props) {
               </span>
             </div>
           </div>
-          {props.userType === "Admin" ? (
+          {props.userType === "Admin" ? ( //this will be only displayed for admin
             <div className="form-row mb-3">
               <div className="col-6 pl-1 pr-2">
                 <select
@@ -223,7 +193,7 @@ export default function AddUserForm(props) {
             type="button"
             className="btn btn-danger"
             onClick={() => {
-              props.formToggle({ form: false });
+              props.formToggle({ form: false }); //this will hide the form
             }}
           >
             Cancel
