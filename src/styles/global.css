@@ -112,3 +112,102 @@ profile__header p {
 .font20{font-size: 20px; font-weight: bold;}
 .borderradius40{border-radius: 20px;}
 .thumnail-box{margin-bottom: 15px;background-color: #f0f3f5;border: 1px solid #e4e7ea;color: #73818f;padding: 18px 15px 9px 15px;border-radius: 8px;font-size: 12px;}
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator {
+    padding: 24px 0 10px 0;
+}
+
+aw-wizard-navigation-bar.horizontal ul.steps-indicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    list-style: none;
+}
+
+aw-wizard-navigation-bar.horizontal ul.steps-indicator.steps-3 li {
+    width: 33.33333%;
+}
+
+aw-wizard-navigation-bar.horizontal ul.steps-indicator li {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+aw-wizard-navigation-bar ul.steps-indicator li {
+    position: relative;
+    pointer-events: none;
+}
+
+aw-wizard-navigation-bar ul.steps-indicator * {
+    box-sizing: border-box;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li:not(:last-child):before {
+    background-color: #e4e7ea !important;
+    height: 4px;
+    top: -9px;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li:not(:last-child):before {
+    background-color: #E6E6E6;
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: calc(100% - 14px);
+    top: -7px;
+    left: calc(50% + 7px);
+}
+
+aw-wizard-navigation-bar a:not([href]):not([tabindex]) {
+    margin-left: 17px;
+    margin-top: 10px;
+    display: block;
+}
+
+a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+}
+
+aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
+    display: inline-block;
+    padding-top: 10px;
+    text-align: center;
+}
+
+aw-wizard-navigation-bar ul.steps-indicator li a .label {
+    color: #808080;
+    line-height: 14px;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.25s;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li.current .step-indicator {
+    background-color: #1D81F6;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li .step-indicator {
+    width: 25px;
+    height: 25px;
+    top: -20px;
+    background: e2e5ec;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li .step-indicator {
+    top: -14px;
+    left: calc(50% - 7px);
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 14px;
+    transition: 0.25s;
+    border-radius: 100%;
+    background-color: #E6E6E6;
+}

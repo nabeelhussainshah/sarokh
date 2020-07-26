@@ -11,6 +11,7 @@ import AllShipments from "../views/shipper/AllShipments";
 import ShipmentDetails from "../views/shipper/ShipmentDetails";
 import AddUser from "../views/shipper/AddUser";
 import AllUsers from "../views/shipper/AllUsers";
+import NewShipment from "../views/shipper/NewShipment";
 import { toast } from "react-toastify";
 
 function ShipperRouter(props) {
@@ -61,6 +62,8 @@ function ShipperRouter(props) {
         path="/shipper/users/allusers"
         component={AllUsers}
       />
+      <ProtectedRoute
+      component={NewShipment} />
     </Switch>
   );
 }
