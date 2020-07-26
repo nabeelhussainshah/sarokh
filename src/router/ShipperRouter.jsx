@@ -82,7 +82,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     );
   } else {
     toast.error("PLEASE LOGIN");
-    return <Redirect to="/login" />;
+    return <Redirect to="/" />;
   }
 };
 export default ShipperRouter;

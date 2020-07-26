@@ -1,7 +1,10 @@
 import React from "react";
 import StepIndicator from "./StepIndicator";
+import {useHistory} from "react-router-dom";
 
 export default function Step3(props) {
+  const hist = useHistory();
+  console.log(hist.location.state);
   return (
     <>
      <StepIndicator />

@@ -11,6 +11,7 @@ function ShipperDashboard(props) {
   const [response, setresponse] = useState({loading: true});
   console.log(response);
 
+
   useEffect(() => {
     async function fetchAPI() {
       return await axios
@@ -25,6 +26,8 @@ function ShipperDashboard(props) {
         });
     }
     fetchAPI();
+
+    return ()=> window.location.reload();
 
   }, []);
 

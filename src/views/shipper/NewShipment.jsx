@@ -4,18 +4,13 @@ import Step1 from "../../components/ShipperComponents/NewShipmentSteps/Step1";
 import Step2 from "../../components/ShipperComponents/NewShipmentSteps/Step2";
 import Step3 from "../../components/ShipperComponents/NewShipmentSteps/Step3";
 import Container from "../../components/Containers/ListingContainer";
-import { StateMachineProvider,createStore } from "little-state-machine";
-import { DevTool } from 'little-state-machine-devtools';
+
 
 export default function NewShipment(props) {
 
-    createStore({
 
-    });
   return (
-    <Switch>
-      <StateMachineProvider>
-      {process.env.NODE_ENV !== 'production' && <DevTool />}
+    <Switch location={useHistory()}>
         <Container>
           <div className="card-header">
             <h2>NEW Shipment</h2>
@@ -32,7 +27,6 @@ export default function NewShipment(props) {
             </Route>
           </div>
         </Container>
-      </StateMachineProvider>
     </Switch>
   );
 }

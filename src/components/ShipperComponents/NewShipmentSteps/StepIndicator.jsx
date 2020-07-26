@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function StepIndicator({ step1="ng-star-inserted", step2="ng-star-inserted", step3="ng-star-inserted" }) {
+export default function StepIndicator({ step1="", step2="", step3="" }) {
   return (
-    <aw-wizard-navigation-bar className="horizontal small">
+    <div className="horizontal small">
       <ul className="steps-indicator steps-3">
         <li className={step1}>
           <a href="#">
@@ -23,6 +23,6 @@ export default function StepIndicator({ step1="ng-star-inserted", step2="ng-star
           </a>
         </li>
       </ul>
-    </aw-wizard-navigation-bar>
+    </div>
   );
 }

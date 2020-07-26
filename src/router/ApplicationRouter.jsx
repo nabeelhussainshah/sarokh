@@ -22,10 +22,9 @@ function ApplicationRouter(porps) {
     <RecoilRoot>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/login">
+          <Route exact path="/">
             <Login />
           </Route>
-
           <ShipperRouter />
           <Route
             path="/*"
