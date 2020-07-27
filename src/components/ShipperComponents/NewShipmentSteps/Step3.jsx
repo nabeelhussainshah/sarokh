@@ -1,29 +1,20 @@
 import React from "react";
 import StepIndicator from "./StepIndicator";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function Step3(props) {
   const hist = useHistory();
   console.log(hist.location.state);
   return (
     <>
-     <StepIndicator />
-      <div>
+      <StepIndicator />
+      <div className="order-step-detail">
         <div className="form-row">
-          <div className="form-group col-md-6">
-            <div>
-              Latitude:
-              <input className="form-control" type="text" />
-            </div>
-          </div>
-          <div className="form-group col-md-6">
-            <div>
-              Longitude:
-              <input className="form-control" type="text" />
-            </div>
+          <div className="col-sm-12">
+            <h2>Receiver Information</h2>
           </div>
         </div>
-        <form className="margintop30">
+        <form>
           <div className="form-row">
             <div className="form-group col-md-6">
               <label htmlFor="receiverName">Receiver Name</label>
@@ -45,35 +36,20 @@ export default function Step3(props) {
             </div>
           </div>
           <div className="form-row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-12">
               <label htmlFor="receiverAddress">Receiver Address</label>
-              <input
-                type="text"
-                className="form-control"
-                id="receiverAddress"
-                placeholder="Receiver Address"
-              />
+              <div className="input-group">
+                <input type="text" class="form-control" placeholder="Your Email" />
+                <div className="input-group-append">
+                  <span className="input-group-text">map</span>
+                </div>
+              </div>
+
             </div>
           </div>
           <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputEmail4">Shipment Type</label>
-              <select className="form-control" id="sel1">
-                <option value>Shipment Type</option>
-                <option value="Electronics">Electronics</option>
-                <option value="General Goods">General Goods</option>
-                <option value="Apparel">Apparel</option>
-                <option value="Others">Others</option>
-              </select>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="weight">Shipment Weight</label>
-              <select className="form-control" id="sel1">
-                <option value>Shipment Weight</option>
-                <option value="Upto 5 kg">Upto 5 kg</option>
-                <option value="5 kg to 10 kg"> 5 kg to 10 kg</option>
-                <option value="Above 15 kg">Above 15 kg</option>
-              </select>
+            <div className="col-sm-12">
+              <h2>Shipment Information</h2>
             </div>
           </div>
           <div className="form-row">
@@ -87,6 +63,38 @@ export default function Step3(props) {
               />
             </div>
             <div className="form-group col-md-6">
+              <label htmlFor="inputEmail4">Shipment Type</label>
+              <select className="form-control" id="sel1">
+                <option value>Shipment Type</option>
+                <option value="Electronics">Electronics</option>
+                <option value="General Goods">General Goods</option>
+                <option value="Apparel">Apparel</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="weight">Shipment Weight</label>
+              <select className="form-control" id="sel1">
+                <option value>Shipment Weight</option>
+                <option value="Upto 5 kg">Upto 5 kg</option>
+                <option value="5 kg to 10 kg"> 5 kg to 10 kg</option>
+                <option value="Above 15 kg">Above 15 kg</option>
+              </select>
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="shipmentName">Shipment Value</label>
+              <input
+                type="text"
+                className="form-control"
+                id="shipmentName"
+                placeholder="Shipment Title"
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-sm-12">
               <label htmlFor="shipmentcontent">Shipment Content</label>
               <textarea
                 style={{ resize: "none" }}
@@ -98,82 +106,110 @@ export default function Step3(props) {
             </div>
           </div>
           <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="shipmentValue">Shipment Value (SAR)</label>
-              <input
-                type="text"
-                className="form-control"
-                id="value"
-                placeholder="Shipment Value"
-              />
-              <p
-                style={{
-                  fontSize: 11,
-                  fontStyle: "italic",
-                  marginTop: 5,
-                  marginLeft: 5,
-                  color: "#666666",
-                }}
-              >
-                Exclusive of VAT
-              </p>
+            <div className="col-md-6">
+              <h2>Shipper Bill</h2>
+              <h3>Additional Services</h3>
+              <table className="table">
+                <tr>
+                  <td className="bordertop font14" align="left">
+                    <input type="checkbox" />Normal Packaging
+                </td>
+                  <td className="bordertop font14" align="right">SAR 0/-</td>
+                </tr>
+                <tr>
+                  <td className="font14" align="left">
+                    <input type="checkbox" />Gift Packaging
+                </td>
+                  <td className="font14" align="right">SAR 5/-</td>
+                </tr>
+                <tr>
+                  <td className="font14" align="left">
+                    <input type="checkbox" />Insurance (2% of Shipment Value)
+                </td>
+                  <td className="font14" align="right">SAR 15/-</td>
+                </tr>
+              </table>
+              <table className="table">
+                <tr>
+                  <td className="bordertop" align="left">
+                    Additional Services Total:
+                </td>
+                  <td className="bordertop" align="right">SAR 20/-</td>
+                </tr>
+                <tr>
+                  <td>
+                    Services Charges:
+                </td>
+                  <td align="right">SAR 35/-</td>
+                </tr>
+                <tr>
+                  <td>
+                    Receiver Address Surcharge:
+                  </td>
+                  <td align="right">SAR 10/-</td>
+                </tr>
+              </table>
+              <table className="table">
+                <tr>
+                  <td className="bordertop" align="left">
+                    Sub Total:
+                </td>
+                  <td className="bordertop" align="right">SAR 65/-</td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    VAT: (15%)
+                </td>
+                  <td align="right">SAR 20/-</td>
+                </tr>
+              </table>
+              <table className="table">
+                <tr>
+                  <td className="font18" align="left">
+                    Total: (VAT Incusive)
+                </td>
+                  <td className="font18" align="right">SAR 85/-</td>
+                </tr>
+              </table>
             </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="deliveryCharges">Delivery Charges (SAR)</label>
-              <input
-                type="text"
-                className="form-control"
-                disabled
-                id="deliveryCharges"
-                placeholder="Delivery Charges"
-              />
-              <p
-                style={{
-                  fontSize: 11,
-                  fontStyle: "italic",
-                  marginTop: 5,
-                  marginLeft: 5,
-                  color: "#666666",
-                }}
-              >
-                Exclusive of VAT
-              </p>
+            <div className="col-md-6">
+              <h2>Receiver Bill</h2>
+              <div className="form-row">
+                <div className="form-group col-md-12">
+                  <label htmlFor="weight">Shipment Bill</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="shipmentName"
+                    placeholder="Shipment Title"
+                  />
+                </div>
+                <div className="form-group col-md-12">
+                  <label htmlFor="shipmentName">Cash On Delivery (COD)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="shipmentName"
+                    placeholder="Shipment Title"
+                  />
+                </div>
+              </div>
+              <table className="table bordernone mb-3">
+                <tr>
+                  <td className="font18 bordernone redcolor" align="left">
+                    Cash to be collected by Receiver
+                </td>
+                  <td className="font18 bordernone redcolor" align="right">SAR 200/-</td>
+                </tr>
+              </table>
+              <div class="form-row">
+                <div className="col-sm-12">
+                  <p>Note: COD does not include delivery charges and shipper is liable to pay all delivery and additional service changes</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputEmail4">Payment Type</label>
-              <select
-                className="form-control"
-                id="paymentType"
-                formcontrolname="paymentType"
-              >
-                <option value>Payment Type</option>
-                <option value="COD">Cash On Delivery(COD)</option>
-                <option value="Prepaid">Prepaid</option>
-              </select>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="codAmount">COD Amount (SAR)</label>
-              <input
-                type="text"
-                className="form-control"
-                id="codAmount"
-                placeholder="COD Amount"
-              />
-              <p
-                style={{
-                  fontSize: 11,
-                  fontStyle: "italic",
-                  marginTop: 5,
-                  marginLeft: 5,
-                  color: "#666666",
-                }}
-              >
-                Exclusive of VAT
-              </p>
-            </div>
-          </div>
+
           <div className="form-row">
             <div className="form-group col-sm-6">
               <div className="form-row mb-4 mt-4">
@@ -196,41 +232,29 @@ export default function Step3(props) {
           <div className="form-row">
             <div className="col-sm-12">
               <div className="btn-container float-left">
-                <button type="button" className="btn btn-danger">
+                <button type="button" className="btn btn-danger canclebtn">
                   Cancel
                 </button>
               </div>
               <div className="btn-container float-right">
                 <button className="btn btn-success" type="button">
-                  Add to Way Bill
-                </button>
-                <button className="btn btn-success" type="button">
                   Clone
                 </button>
                 <button className="btn btn-success" type="button">
-                  Update
+                  Add to Way Bill
+                </button>
+                <div className="clearfix"></div>
+                <button className="btn btn-success mt-3 width206 finishbtn" type="button">
+                  Finish
                 </button>
               </div>
-              <div className="btn-container float-right mr-2 mb-4"></div>
               <div className="clearfix" />
-              <small style={{ color: "#ec1c24 !important" }}>
-                Prepaid means that you will be obliged to pay the shipping
-                charges mentioned below Cash on Delivery (COD) are the total
-                charges that will be collected from the receiver upon delivery.
-                This includes the Shipping charges that are to be paid to
-                Sarokh.
-              </small>
             </div>
           </div>
         </form>
-        <button className="btn btn-primary mt-3" type="button">
-          Complete Way Bill List
-        </button>
-        <div className="col-sm-12" style={{ margin: "25px 0 00 0" }}>
-          <table
-            style={{ width: "100%" }}
-            className="dataTable table-responsive pb-3"
-          >
+        <div className="clearfix"></div>
+        <div class="col-sm-12 margintop30">
+          <table>
             <thead>
               <tr>
                 <th scope="col">Actions</th>
@@ -248,25 +272,22 @@ export default function Step3(props) {
             <tbody>
               <tr>
                 <td>
-                  <i
-                    style={{ fontSize: 20, color: "#d9534f" }}
-                    className="fa fa-trash-o"
-                  />
+                  <i class="fa fa-trash-o"></i>
                 </td>
-                <td>shipment.receiverName</td>
-                <td>shipment.receiverMobileNumber</td>
-                <td>shipment.receiverAddress</td>
-                <td>shipment.shipmentType</td>
-                <td>shipment.weight</td>
-                <td>shipment.additionalServices</td>
-                <td>shipment.paymentType</td>
-                <td>shipment.codAmount</td>
-                <td>shipment.billedAmount</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </tbody>
-          </table>
-        </div>
-      </div>
+          </table >
+        </div >
+      </div >
     </>
   );
 }
