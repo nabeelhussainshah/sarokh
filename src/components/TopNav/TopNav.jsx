@@ -18,9 +18,9 @@ function TopNav(props)
             </a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" className="nav-link">
+            <Link to="/shipper/printwaybill" className="nav-link">
               Print Way Bill
-            </a>
+            </Link>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
             <Link to="/shipper/newshipment/step1" className="nav-link">
@@ -33,9 +33,9 @@ function TopNav(props)
             </a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <a href="#" className="nav-link">
+            <Link to="/shipper/printbulkshipment" className="nav-link">
               Print Bulk Shipment
-            </a>
+            </Link>
           </li>
         </ul>
 
