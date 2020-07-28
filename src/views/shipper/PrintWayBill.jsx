@@ -43,7 +43,7 @@ export default function PrintWayBill(props) {
   return response.loading ? <div>Loading...</div> : (
     <ListingContainer>
       <div>
-        <div className="card-header"><h2>Print Order</h2></div>
+        <div className="card-header"><h2>Print Way Bill</h2></div>
         <div className="card-body">
           <label>Select Tracking Numbers</label>
           <select className="form-control mb-5" id="status" onChange={(e)=>{handleChange(e.target.value)}}>
