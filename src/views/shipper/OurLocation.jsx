@@ -46,7 +46,11 @@ const MyMapComponent = withScriptjs(
 export default function Maps(porps) {
   const [state, setstate] = useState([{ lat: -34.397, lng: 150.644 }]);
   return (
-
+    <MainContainer>
+      <div className='card-header'>
+        <h2>Our Location</h2>
+      </div>
+      <div className="card-body">
       <MyMapComponent
         isMarkerShown={true}
         position={state}
@@ -58,6 +62,7 @@ export default function Maps(porps) {
         }
         mapElement={<div style={{ height: `100%` }} />}
       />
-
+      </div>
+</MainContainer>
   );
 }

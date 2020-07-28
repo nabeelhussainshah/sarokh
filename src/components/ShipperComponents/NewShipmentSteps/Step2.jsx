@@ -22,6 +22,8 @@ export default function Step2(props) {
 
   const { register, errors, handleSubmit } = useForm({
     defaultValues: hist.location.state === undefined ? {} : hist.location.state.step2,
+    shouldFocusError: true
+
   });
 
   const onsubmit = (data1) => {
