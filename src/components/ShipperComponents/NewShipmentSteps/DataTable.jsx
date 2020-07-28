@@ -1,15 +1,18 @@
 import React from "react";
 import Table from "../../Generictable/generatictable";
+import {useHistory} from "react-router-dom";
 
 export default function DataTable(props)
 {
+    const hist = useHistory();
     const columns = [
         {
             Header: 'Action',
             Cell: (row)=>{
                 return(
                 <> <i className="fa fa-trash"></i>
-                <i className="fa fa-edit"></i>
+                &nbsp;&nbsp;
+                <i className="fa fa-edit" ></i>
                 </>
                 );
             }
@@ -52,6 +55,6 @@ export default function DataTable(props)
         }
     ];
 
-    return <Table data={props.data} columns={columns} />
+    return <Table data={props.data} columns={columns} tableclass={"table-responsive custom-table"} />
 
 }

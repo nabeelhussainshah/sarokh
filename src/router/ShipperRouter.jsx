@@ -12,6 +12,8 @@ import ShipmentDetails from "../views/shipper/ShipmentDetails";
 import AddUser from "../views/shipper/AddUser";
 import AllUsers from "../views/shipper/AllUsers";
 import NewShipment from "../views/shipper/NewShipment";
+import PrintWayBill from "../views/shipper/PrintWayBill";
+import PrintBulkShipment from "../views/shipper/PrintBulkShipment";
 import { toast } from "react-toastify";
 
 function ShipperRouter(props) {
@@ -52,18 +54,23 @@ function ShipperRouter(props) {
         path="/shipper/shipments/vieworder"
         component={ShipmentDetails}
       />
-      <ProtectedRoute
-        exact
-        path="/shipper/users/adduser"
-        component={AddUser}
-      />
+      <ProtectedRoute exact path="/shipper/users/adduser" component={AddUser} />
       <ProtectedRoute
         exact
         path="/shipper/users/allusers"
         component={AllUsers}
       />
       <ProtectedRoute
-      component={NewShipment} />
+        exact
+        path="/shipper/printwaybill"
+        component={PrintWayBill}
+      />
+      <ProtectedRoute
+        exact
+        path="/shipper/printbulkshipment"
+        component={PrintBulkShipment}
+      />
+      <ProtectedRoute component={NewShipment} />
     </Switch>
   );
 }
