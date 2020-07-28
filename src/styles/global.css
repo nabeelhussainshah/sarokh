@@ -1,7 +1,8 @@
 /* login page css  */
 body{
-    background-color: #e4e5e6;
+    background-color: #e4e5e6;font-family: 'Changa', sans-serif !important;
 }
+h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
 
 .app-body .main {
     flex: 1;
@@ -51,11 +52,11 @@ body{
     border-radius: 10%;
     margin-right: 20px;
     overflow: hidden;
-    font-family: 'Poppins', sans-serif;
+     
 }
 .profile__header {
 
-    font-family: 'Poppins', sans-serif;
+     
     border-bottom: #f6921d solid 1px;padding-bottom: 8px;
 }
 .panel-body :first-child {
@@ -63,44 +64,44 @@ body{
 }
 .profile__header p {
     margin: 10px 0;
-    font-family: 'Poppins', sans-serif;
+     
 }
 .text-muted {
     color:
     #777;
-    font-family: 'Poppins', sans-serif;
+     
 }
 profile__header p {
     margin: 20px 0;
-    font-family: 'Poppins', sans-serif;
+     
 }
 .panel-body{padding: 25px;}
 .profile__avatar > img {
     width: 100%;
     height: auto;
-    font-family: 'Poppins', sans-serif;
+     
 }
 .fs-26 {
-    font-size: 26px !important;font-family: 'Poppins', sans-serif;
+    font-size: 26px !important; 
 }
 .fs-20 {
-    font-size: 20px !important;font-family: 'Poppins', sans-serif;
+    font-size: 20px !important; 
 }
 .mr-10{
-    margin-right: 10px !important;font-family: 'Poppins', sans-serif;
+    margin-right: 10px !important; 
 }
 .profile__avatar-small{width: 50px;
     height: 50px;
     float: left;
     border-radius: 50%;
     margin-right: -6px;
-    overflow: hidden;font-family: 'Poppins', sans-serif;}
+    overflow: hidden; }
 .profile__avatar-small > img {
         width: 100%;
-        height: auto;font-family: 'Poppins', sans-serif;
+        height: auto; 
     }
-.margintop30{margin-top: 30px !important;font-family: 'Poppins', sans-serif;}
-.marginbottom10{margin-bottom: 10px;font-family: 'Poppins', sans-serif;}
+.margintop30{margin-top: 30px !important; }
+.marginbottom10{margin-bottom: 10px; }
 .profile__header h4{font-size: 45px;}
 .profile__header p{font-size: 19px;}
 .profile__header i{font-size: 25px;}
@@ -218,7 +219,7 @@ ul.steps-indicator li a .label {
 .order-step-detail input[type=checkbox], input[type=radio]{margin-right: 5px;}
 .form-row>.col, .form-row>[class*=col-]{padding-left:15px; padding-right: 15px; }
 .width206{width: 206px;}
-label:not(.form-check-label):not(.custom-file-label){font-weight: normal;}
+label:not(.form-check-label):not(.custom-file-label){font-weight: normal;color: #545454;}
 .font14{font-size: 14px;}
 .font18{font-size: 18px;}
 .bordernone{border: none !important;}
@@ -229,3 +230,25 @@ label:not(.form-check-label):not(.custom-file-label){font-weight: normal;}
 .redcolor{color:#fa1c25; }
 /* pac-container class for google places list drop down */
 .pac-container{top: 500px !important; left: 480px !important;}
+.thumnail-box .float-left p{font-size: 15px;}
+.btn-success {
+    color: #fff;
+    background-color: #f7931e;
+    border-color: #f7931e;}
+.btn-danger{background-color:#fa1c25;border: #fa1c25 solid 1px; }
+.form-control:focus{border-color: #03a9f4 !important;}
+[class*=sidebar-dark-] .sidebar a {
+    color: #ec1c24 !important;
+}
+[class*=sidebar-dark-]{background: #FFF;}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{background: #f6921d !important; color: #FFF !important;}
+[class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-treeview{background: #fcdcb6 !important;}
+li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
+.navbar-light .navbar-nav .nav-link{color: #ec1c24;padding-top: 10px;padding-bottom: 10px;}
+.main-header .navbar-nav .nav-item{border-right: #fcdcb6 dotted 1px;}
+.main-header .nav-link{height: auto;}
+.navbar{padding: 0 .5rem;}
+.navbar-light .navbar-nav .nav-link:focus{color: #ec1c24;}
+.brand-link{padding: 2px 0 5px 0;}
+[class*=sidebar-dark] .brand-link{border-bottom: #f6921d solid 2px;}
+.navbar-white{border-bottom: #f6921d solid 2px;}
