@@ -7,7 +7,6 @@ import logo from "../../assets/images/sarokh-logo.png";
 export default function PrintWayBill(props) {
 
   const [response, setresponse] = useState({ loading: true });
-  const componentRef = useRef();
 
   const printBill = () => {
     var content = document.getElementById("print-section");
@@ -72,12 +71,8 @@ export default function PrintWayBill(props) {
               );
             })}
           </select>
-          <ComponentToPrint ref={el => (this.componentRef = el)} response={response} />
+          <ComponentToPrint response={response} />
           {response.content === undefined ? null :
-            // <ReactToPrint
-            //   trigger={() => }
-            //   content={() => componentRef.current}
-            // />
             <>
               <button onClick={() => printBill()} className="btn btn-primary mt-4 float-right">print</button>
               {setTimeout(() => showBill(), 500)}
