@@ -50,11 +50,11 @@ function TopNav(props) {
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <div className="dropdown-divider" />
             <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2" /> Edit Profile
+              <i className="far fa-user mr-2" /> Profile
             </a>
             <div className="dropdown-divider" />
             <a href="#" className="dropdown-item">
-              <i className="fas fa-users mr-2" /> Logout
+              <i className="fas fa-lock mr-2" /> Logout
             </a>
           </div>
         </li>
