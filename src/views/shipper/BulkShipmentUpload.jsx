@@ -407,7 +407,7 @@ export default function BulkShipmentUpload(props) {
 					<div className="form-row">
 						<div className="col-sm-12">
 							<div className="btn-container float-left">
-								<button type="submit" className="btn btn-danger">
+								<button type="submit" className="btn btn-danger" disabled={!data.fileUploaded}>
 									Upload
 								</button>
 							</div>
