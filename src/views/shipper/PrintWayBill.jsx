@@ -75,7 +75,7 @@ export default function PrintWayBill(props) {
           {response.content === undefined ? null :
             <>
               <button onClick={() => printBill()} className="btn btn-primary mt-4 float-right">print</button>
-              {setTimeout(() => showBill(), 500)}
+              {setTimeout(() => showBill(), 100)}
             </>
           }
 

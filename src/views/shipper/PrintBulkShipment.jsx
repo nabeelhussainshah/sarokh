@@ -22,9 +22,9 @@ export default function PrintBulkShipment(props) {
     }
     fetchData();
   }, []);
-
+  console.log(response)
   const onSubmit = async (data)=>{
-      console.log(data);
+      setresponse({...response,link: undefined});
       await axios.post(`${process.env.REACT_APP_API}/order/print-bulk-shipments/`,
       {
           ...data
@@ -113,7 +113,7 @@ export default function PrintBulkShipment(props) {
           {response.link === undefined ? null :
           <div style={{textAlign: 'center'}}>
               <a style={{fontWeight: 'bold', fontSize:'18px'}} href={response.link} download={true}>Download File</a>
-              </div>}
+          </div>}
         </form>
       </div>
     </Container>

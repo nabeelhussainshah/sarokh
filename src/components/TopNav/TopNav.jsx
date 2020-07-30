@@ -27,9 +27,9 @@ function TopNav(props) {
             </Link>
         </li>
         <li className="nav-item d-none d-sm-inline-block">
-          <a href="#" className="nav-link">
+          <Link to="/shipper/bulkshipmentupload" className="nav-link">
             Bulk Shipment Upload
-            </a>
+            </Link>
         </li>
         <li className="nav-item d-none d-sm-inline-block">
           <Link to="/shipper/printbulkshipment" className="nav-link">
