@@ -22,7 +22,8 @@
     "react-table": "^7.3.2",
     "react-to-print": "^2.9.0",
     "react-toastify": "^6.0.8",
-    "recoil": "0.0.10"
+    "recoil": "0.0.10",
+    "yup": "^0.29.2"
   },
   "scripts": {
     "start": "react-scripts start",
