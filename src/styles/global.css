@@ -229,7 +229,7 @@ label:not(.form-check-label):not(.custom-file-label){font-weight: normal;color: 
 .input-group span{cursor: pointer;padding: 0 30px;background:#fa1c25;color: #FFF; }
 .redcolor{color:#fa1c25; }
 /* pac-container class for google places list drop down */
-/* .pac-container{top: 500px !important; left: 480px !important;} */
+/* .pac-container{position: absolute; top: 500px !important; left: 480px !important;} */
 .thumnail-box .float-left p{font-size: 15px;}
 .btn-success {
     color: #fff;

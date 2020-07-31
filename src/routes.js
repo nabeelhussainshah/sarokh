@@ -5,7 +5,7 @@ export const NaqilRoutes = [
       iconClass: "nav-icon fas fa-rocket",
     },
     {
-      to: "/shipper/ourlocation",
+      to: "/shipper/addshipperwarehouse/ourlocation",
       name: "Our Location",
       iconClass: "nav-icon fa fa-warehouse",
     },

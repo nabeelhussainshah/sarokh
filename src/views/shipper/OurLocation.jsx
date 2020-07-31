@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import moment from 'moment';
+import {useHistory} from 'react-router-dom';
+import {useRecoilState} from 'recoil';
 import Container from '../../components/Containers/ListingContainer';
 import { GoogleMapComponent } from "../../components/GoogleMap/GoogleMapComponent";
 import Table from "../../components/Generictable/generatictable";
+import {warehouseData} from "../../components/ShipperComponents/AddShipperWarehouse/state";
 
 export default function Maps(porps) {
+	const hist = useHistory();
+	const [data,setdata] = useRecoilState(warehouseData);
 	const [response, setresponse] = useState({loading: true});
 	const user = JSON.parse(localStorage.getItem('user'));
 
@@ -27,18 +33,50 @@ export default function Maps(porps) {
 				toast.error(err.message);
 			});
 		}
+		if(response.loading)
+		{
 		fetchData();
-	}, []);
+		}
+	}, [response.loading]);
 
-	const data = [];
+	const editData = dataToEdit => {
+		setdata({
+			...dataToEdit,
+			update : true,
+			location : [{latitude: dataToEdit.locationLatitude, longitude: dataToEdit.locationLongitude}],
+			operationalTimefrom: moment(data.operationalTimefrom).format('hh:mm'),
+			operationalTimeto: moment(data.operationalTimeto).format('hh:mm')
+		});
+
+		hist.push('/shipper/addshipperwarehouse/step1');
+	};
+
+	const deleteData = async dataToDelete => {
+		await axios.delete(`${process.env.REACT_APP_API}/shipper-warehouse/delete/${dataToDelete.id}`)
+		.then((res)=>{
+			if(res.data.status === 200)
+			{
+				toast.success(res.data.data);
+				setresponse({...response,loading : true});
+			}
+			else{
+				toast.error("something went wrong");
+			}
+
+		})
+		.catch((err)=>{
+			toast.error(err.message);
+		});
+	};
+
 	const columns = [
 		{
 			Header :'Actions',
 			Cell: (row)=>{
 				return (
 					<>
-					<i className="fa fa-edit" />&nbsp;&nbsp;
-					<i className="fa fa-trash" />
+					<i className="fa fa-edit" onClick={()=>editData(row.row.original)} />&nbsp;&nbsp;
+					<i className="fa fa-trash" onClick={()=>deleteData(row.row.original)}/>
 					</>
 				);
 			}
@@ -72,7 +110,8 @@ export default function Maps(porps) {
 	return response.loading ? <div>loading...</div> : (
 		<Container>
 			<div className="card-header">
-				<h2>Our Location</h2>
+				<h2 className="float-left">Our Location</h2>
+				<button className="btn btn-info float-right" onClick={()=>hist.push('/shipper/addshipperwarehouse/step1')}>New New</button>
 			</div>
 			<div className="card-body">
 				<GoogleMapComponent

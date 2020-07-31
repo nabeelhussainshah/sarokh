@@ -9,32 +9,36 @@ import Autocomplete from 'react-google-autocomplete';
 
 export const GoogleMapComponent = withScriptjs(
 	withGoogleMap((props) => {
+
 		return (
 			<GoogleMap defaultZoom={6} defaultCenter={{ lat: 23.8859, lng: 39.1925 }}>
 				{props.isMarkerShown &&
 					props.position.map((doc) => {
-						console.log(doc);
 						return (
 							<Marker
 								position={{lat: parseFloat(doc.latitude), lng : parseFloat(doc.longitude)}}
 								draggable={props.draggable}
 								onDragEnd={(e) => {
-									console.log(e.latLng.lat());
+									props.changeFunction({...props.globalState,location:[
+										{
+											latitude: e.latLng.lat(),
+											longitude: e.latLng.lng(),
+										}
+									]});
 								}}
 							/>
 						);
 					})}
-				{props.autocomplete ?
+				{props.autocompleted ?
 				<Autocomplete
-					style={{ width: '100%' }}
+					style={{ width: '100%'}}
 					onPlaceSelected={(place) => {
-						props.changefunction([
-							...props.position,
+						props.changeFunction({...props.globalState,location:[
 							{
-								lat: place.geometry.location.lat(),
-								lng: place.geometry.location.lng(),
-							},
-						]);
+								latitude: place.geometry.location.lat(),
+								longitude: place.geometry.location.lng(),
+							}
+						]});
 					}}
 					types={['(regions)']}
 					componentRestrictions={{ country: 'SA' }}

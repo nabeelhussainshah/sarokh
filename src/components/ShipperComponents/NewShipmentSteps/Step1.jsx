@@ -59,9 +59,10 @@ export default function Step1(props) {
               className="form-control"
               id="shipFromCity"
               name="shipFromCity"
+              placeholder="--- Ship From City ---"
               ref={register({required : true, validate: value => value !== "true"})}
             >
-              <option value="true">--- Ship From City ---</option>
+              {/* <option value="true">--- Ship From City ---</option> */}
               {response.data.map((doc)=>{
                 return(
                 <option value={doc}>{doc}</option>
@@ -81,7 +82,7 @@ export default function Step1(props) {
               name="shipToCity"
               ref={register({required : true, validate: value => value !== "true"})}
             >
-              <option value="true">--- Ship To City ---</option>
+              {/* <option value="true">--- Ship To City ---</option> */}
               {response.data.map((doc)=>{
                 return(
                 <option value={doc}>{doc}</option>
