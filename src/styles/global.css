@@ -252,3 +252,6 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
 .brand-link{padding: 2px 0 5px 0;}
 [class*=sidebar-dark] .brand-link{border-bottom: #f6921d solid 2px;}
 .navbar-white{border-bottom: #f6921d solid 2px;}
+.horizontal.small ul.steps-indicator li.done .step-indicator {
+    background-color: #f6921d;
+}

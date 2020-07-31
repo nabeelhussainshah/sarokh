@@ -22,6 +22,7 @@ export default function Maps(porps) {
 					mapElement={<div style={{ height: `100%` }} />}
 				/>
 			</div>
+
 		</Container>
 	);
 }

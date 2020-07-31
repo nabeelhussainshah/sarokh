@@ -53,9 +53,9 @@ function TopNav(props) {
               <i className="fas fa-envelope mr-2" /> Edit Profile
             </a>
             <div className="dropdown-divider" />
-            <a href="#" className="dropdown-item">
+            <Link to="/logout" className="dropdown-item">
               <i className="fas fa-users mr-2" /> Logout
-            </a>
+            </Link>
           </div>
         </li>
       </ul>
