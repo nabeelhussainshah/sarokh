@@ -7,14 +7,14 @@ function TopNav(props) {
       {/* Left navbar links */}
       <ul className="navbar-nav">
         <li className="nav-item">
-          <a
+          <Link
             className="nav-link"
             data-widget="pushmenu"
             href="#"
             role="button"
           >
             <i className="fas fa-bars" />
-          </a>
+          </Link>
         </li>
         <li className="nav-item d-none d-sm-inline-block">
           <Link to="/shipper/printwaybill" className="nav-link">
@@ -43,10 +43,9 @@ function TopNav(props) {
 
         {/* Notifications Dropdown Menu */}
         <li className="nav-item dropdown">
-          <a className="nav-link" data-toggle="dropdown" href="#">
+          <Link className="nav-link" data-toggle="dropdown" href="#">
             <i className="far fa-user" />
-
-          </a>
+          </Link>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <div className="dropdown-divider" />
             <a href="#" className="dropdown-item">
