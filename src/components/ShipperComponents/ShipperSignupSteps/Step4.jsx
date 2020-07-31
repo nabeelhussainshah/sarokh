@@ -10,14 +10,14 @@ import StepIndicator from './StepIndicator';
 
 export default function Step4(props) {
 	const hist = useHistory();
-    const [data, setdata] = useRecoilState(state);
+	const [data, setdata] = useRecoilState(state);
 	const { register, handleSubmit, errors } = useForm({
 		shouldFocusError: true,
 		defaultValues: data,
 		mode: 'onChange',
 		criteriaMode: 'all',
 	});
-    console.log(data);
+	console.log(data);
 	if (Object.keys(data).length === 0 && data.constructor === Object) {
 		return <Redirect to="/shipper/signup/step1" />;
 	}
@@ -25,66 +25,65 @@ export default function Step4(props) {
 	const OnSubmit = async (formdata) => {
 		console.log(formdata);
 		setdata({ ...data, ...formdata, postReady: true });
-    };
+	};
 
-    if(data.postReady)
-    {
-        axios
-        .post(`${process.env.REACT_APP_API}/shipper/add`, {
-            billingAddress: {
-                address: data.address,
-                city: data.city,
-                concernedPerson: data.concernedPerson,
-                concernedPersonDesignation: data.concernedPersonDesignation,
-                country: data.country,
-                locationLatitude: '',
-                locationLongitude: '',
-                postCode: data.postCode,
-            },
-            security: {
-                username: data.username,
-                password: data.password,
-                confirmPassword: data.confirmPassword,
-            },
-            shipperBasicInfo: {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                dateOfBirth: new Date(data.dateOfBirth).toISOString(),
-                contact: data.contact,
-                profilePicture: '',
-            },
-            shipperBusinessDetail: {
-                bankName: data.bankName,
-                businessLogo: '',
-                businessName: data.businessName,
-                iban: data.iban,
-                iqamaNumber: data.iqamaNumber,
-                iqamaFile: data.iqamaFile,
-                vatFile: '',
-                vatNumber: '',
-            },
-            shipperWarehouse: {},
-            verification: {
-                emailOTP: '',
-                mobileOTP: '',
-            },
-        })
-        .then((res) => {
-            console.log(res)
-            if (res.data.status === 200) {
-                toast.success(res.data.message);
-                setdata({});
-                hist.push('/');
-            } else {
-                toast.error('something went wrong');
-            }
-        })
-        .catch((err) => {
-            toast.error(err.message);
-        });
+	if (data.postReady) {
+		axios
+			.post(`${process.env.REACT_APP_API}/shipper/add`, {
+				billingAddress: {
+					address: data.address,
+					city: data.city,
+					concernedPerson: data.concernedPerson,
+					concernedPersonDesignation: data.concernedPersonDesignation,
+					country: data.country,
+					locationLatitude: '',
+					locationLongitude: '',
+					postCode: data.postCode,
+				},
+				security: {
+					username: data.username,
+					password: data.password,
+					confirmPassword: data.confirmPassword,
+				},
+				shipperBasicInfo: {
+					firstName: data.firstName,
+					lastName: data.lastName,
+					email: data.email,
+					dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+					contact: data.contact,
+					profilePicture: '',
+				},
+				shipperBusinessDetail: {
+					bankName: data.bankName,
+					businessLogo: '',
+					businessName: data.businessName,
+					iban: data.iban,
+					iqamaNumber: data.iqamaNumber,
+					iqamaFile: data.iqamaFile,
+					vatFile: '',
+					vatNumber: '',
+				},
+				shipperWarehouse: {},
+				verification: {
+					emailOTP: '',
+					mobileOTP: '',
+				},
+			})
+			.then((res) => {
+				console.log(res)
+				if (res.data.status === 200) {
+					toast.success(res.data.message);
+					setdata({});
+					hist.push('/');
+				} else {
+					toast.error('something went wrong');
+				}
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 
-    }
+	}
 	return (
 		<Container>
 			<div className="card-header">
@@ -103,7 +102,7 @@ export default function Step4(props) {
 								placeholder="User Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.username?.types?.required && (
+							{errors ?.username ?.types ?.required && (
 								<p style={{ color: 'red' }}>firstName is required</p>
 							)}
 						</div>
@@ -118,7 +117,7 @@ export default function Step4(props) {
 								placeholder="Passsword"
 								ref={register({ required: true })}
 							/>
-							{errors?.password?.types?.required && (
+							{errors ?.password ?.types ?.required && (
 								<p style={{ color: 'red' }}>password is required</p>
 							)}
 						</div>
@@ -131,18 +130,20 @@ export default function Step4(props) {
 								placeholder="Confirm Passsword"
 								ref={register({ required: true })}
 							/>
-							{errors?.confirmPassword?.types?.required && (
+							{errors ?.confirmPassword ?.types ?.required && (
 								<p style={{ color: 'red' }}>confirm password is required</p>
 							)}
 						</div>
 					</div>
-					<div className="btn-container float-right">
-						<button className="btn btn-secondary dark-grey" type="button">
-							Go to previous step
+					<div className="btn-container float-right form-row">
+						<div className="col-sm-12">
+							<button className="btn btn-primary dark-grey mr-1" type="button">
+								Back
 						</button>
-						<button className="btn btn-success" type="submit">
-							Finish
+							<button className="btn btn-success mr-0" type="submit">
+								Finish
 						</button>
+						</div>
 					</div>
 				</form>
 			</div>

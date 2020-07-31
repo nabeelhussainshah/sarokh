@@ -12,9 +12,9 @@ export default function Step2(props) {
 	const [data, setdata] = useRecoilState(state);
 	const { register, handleSubmit, errors } = useForm({
 		shouldFocusError: true,
-        defaultValues: data,
-        mode: "onChange",
-        criteriaMode: "all"
+		defaultValues: data,
+		mode: "onChange",
+		criteriaMode: "all"
 	});
 	console.log(data);
 
@@ -67,7 +67,7 @@ export default function Step2(props) {
 								placeholder="Business Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.businessName?.types?.required && (
+							{errors ?.businessName ?.types ?.required && (
 								<p style={{ color: 'red' }}>first Name is required</p>
 							)}
 						</div>
@@ -80,7 +80,7 @@ export default function Step2(props) {
 								placeholder="Iqama No"
 								ref={register({ required: true })}
 							/>
-							{errors?.iqamaNumber?.types?.required && (
+							{errors ?.iqamaNumber ?.types ?.required && (
 								<p style={{ color: 'red' }}>Business Name is required</p>
 							)}
 						</div>
@@ -123,7 +123,7 @@ export default function Step2(props) {
 									Gulf International Bank Saudi Aribia (GIB-SA){' '}
 								</option>
 							</select>
-							{errors?.bankName?.types?.required && (
+							{errors ?.bankName ?.types ?.required && (
 								<p style={{ color: 'red' }}>Bank Name is required</p>
 							)}
 						</div>
@@ -157,18 +157,20 @@ export default function Step2(props) {
 								placeholder="IBAN"
 								ref={register({ required: true })}
 							/>
-							{errors?.iban?.types?.required && (
+							{errors ?.iban ?.types ?.required && (
 								<p style={{ color: 'red' }}>IBAN is required</p>
 							)}
 						</div>
 					</div>
-					<div className="btn-container float-right margintop30">
-						<button className="btn btn-secondary dark-grey" type="button">
-							Go to previous step
+					<div className="btn-container float-right margintop30 form-row">
+						<div className="col-sm-12">
+							<button className="btn btn-primary dark-grey mr-1" type="button">
+								Back
 						</button>
-						<button className="btn btn-success" type="submit" disabled={data.iqamaFile === undefined ? true : false}>
-							Go to next step
+							<button className="btn btn-success mr-0" type="submit" disabled={data.iqamaFile === undefined ? true : false}>
+								Next
 						</button>
+						</div>
 					</div>
 				</form>
 			</div>

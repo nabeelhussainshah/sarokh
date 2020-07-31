@@ -9,11 +9,11 @@ import StepIndicator from "./StepIndicator";
 export default function Step1(props) {
 	const [data, setdata] = useRecoilState(state);
 	const hist = useHistory();
-	const { register, errors , handleSubmit} = useForm({
+	const { register, errors, handleSubmit } = useForm({
 		defaultValues: data,
-        shouldFocusError: true,
-        mode: "onChange",
-        criteriaMode: "all"
+		shouldFocusError: true,
+		mode: "onChange",
+		criteriaMode: "all"
 	});
 
 	const onSubmit = (formdata) => {
@@ -27,7 +27,7 @@ export default function Step1(props) {
 				<h2>Shipper Signup</h2>
 			</div>
 			<div className="card-body">
-            <StepIndicator step1="current"/>
+				<StepIndicator step1="current" />
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
@@ -39,7 +39,7 @@ export default function Step1(props) {
 								placeholder="First Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.firstName?.types?.required && (
+							{errors ?.firstName ?.types ?.required && (
 								<p style={{ color: 'red' }}>first Name is required</p>
 							)}
 						</div>
@@ -53,7 +53,7 @@ export default function Step1(props) {
 								placeholder="Last Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.lastName?.types?.required && (
+							{errors ?.lastName ?.types ?.required && (
 								<p style={{ color: 'red' }}>last Name is required</p>
 							)}
 						</div>
@@ -69,7 +69,7 @@ export default function Step1(props) {
 								placeholder="Contact No"
 								ref={register({ required: true })}
 							/>
-							{errors?.contact?.types?.required && (
+							{errors ?.contact ?.types ?.required && (
 								<p style={{ color: 'red' }}>contact is required</p>
 							)}
 						</div>
@@ -83,7 +83,7 @@ export default function Step1(props) {
 								placeholder="Email"
 								ref={register({ required: true })}
 							/>
-							{errors?.email?.types?.required && (
+							{errors ?.email ?.types ?.required && (
 								<p style={{ color: 'red' }}>email is required</p>
 							)}
 						</div>
@@ -98,15 +98,17 @@ export default function Step1(props) {
 								placeholder="Date Of Birth"
 								ref={register({ required: true })}
 							/>
-							{errors?.dateOfBirth?.types?.required && (
+							{errors ?.dateOfBirth ?.types ?.required && (
 								<p style={{ color: 'red' }}>date of birth is required</p>
 							)}
 						</div>
 					</div>
-					<div className="btn-container float-right">
-						<button className="btn btn-success" type="submit">
-							Next Step
+					<div className="btn-container float-right form-row">
+						<div className="col-sm-12">
+							<button className="btn btn-success mr-0" type="submit">
+								Next
 						</button>
+						</div>
 					</div>
 				</form>
 			</div>
