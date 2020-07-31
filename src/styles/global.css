@@ -253,3 +253,6 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
 [class*=sidebar-dark] .brand-link{border-bottom: #f6921d solid 2px;}
 .navbar-white{border-bottom: #f6921d solid 2px;}
 .dropdown-menu-lg{min-width: 130px;}
+.horizontal.small ul.steps-indicator li.done .step-indicator {
+    background-color: #f6921d;
+}

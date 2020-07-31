@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import {toast} from 'react-toastify';
-import {useHistory} from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 import Container from '../../components/Containers/ListingContainer';
 
 export default function BulkShipmentUpload(props) {
-    const hist = useHistory();
+	const hist = useHistory();
 	const { register, errors, handleSubmit } = useForm();
 	const [response, setresponse] = useState({ loading: true });
 	const user = JSON.parse(localStorage.getItem('user'));
@@ -59,28 +59,23 @@ export default function BulkShipmentUpload(props) {
 	}, [response.city]);
 
 	const onsubmit = async (formdata) => {
-        await axios.post(`${process.env.REACT_APP_API}/order/create-bulk-order`,
-        {
-            ...formdata,
-            orderFile: data.fileURL,
-            shipperId: user.id
-        })
-        .then((res)=>{
-            console.log(res);
-            if(res.data.status === 200)
-            {
-                toast.success(res.data.message);
-
-            }
-            else{
-                toast.error("Internal server error");
-
-            }
-        })
-        .catch((err)=>{
-            toast.error(err.message);
-
-        });
+		await axios
+			.post(`${process.env.REACT_APP_API}/order/create-bulk-order`, {
+				...formdata,
+				orderFile: data.fileURL,
+				shipperId: user.id,
+			})
+			.then((res) => {
+				console.log(res);
+				if (res.data.status === 200) {
+					toast.success(res.data.message);
+				} else {
+					toast.error('Internal server error');
+				}
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	const uploadFile = async (file) => {
@@ -307,17 +302,15 @@ export default function BulkShipmentUpload(props) {
 											type="radio"
 											name="sarokhPoint"
 											value="indeliverycase"
-											defaultChecked={
-												data.customerAddress === 'indeliverycase'
-											}
+											defaultChecked={data.customerAddress === 'indeliverycase'}
 											onClick={(e) => {
 												setdata({
 													...data,
 													customerAddress: 'indeliverycase',
 													sarokhPoint: '',
 												});
-                                            }}
-                                            ref={register()}
+											}}
+											ref={register()}
 										/>
 										<span style={{ color: 'red' }}>
 											{' '}
@@ -399,15 +392,31 @@ export default function BulkShipmentUpload(props) {
 								type="file"
 								name="fileUpload"
 								className="form-control"
-                                onChange={(e) => uploadFile(e.target.files[0])}
-                                required={true}
+								onChange={(e) => uploadFile(e.target.files[0])}
+								required={true}
 							/>
+						</div>
+						<div className="form-group col-md-6">
+						<p style={{paddingTop: 38, float: 'left'}}>
+								Download bulk shipment sample file
+								<a
+									href="http://app.sarokh.net/web/order_file/order.xlsx"
+									download={true}
+								>
+									{' '}
+									Click here{' '}
+								</a>
+							</p>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="col-sm-12">
 							<div className="btn-container float-left">
-								<button type="submit" className="btn btn-danger" disabled={!data.fileUploaded}>
+								<button
+									type="submit"
+									className="btn btn-danger"
+									disabled={!data.fileUploaded}
+								>
 									Upload
 								</button>
 							</div>

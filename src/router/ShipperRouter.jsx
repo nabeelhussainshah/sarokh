@@ -15,6 +15,7 @@ import NewShipment from "../views/shipper/NewShipment";
 import PrintWayBill from "../views/shipper/PrintWayBill";
 import PrintBulkShipment from "../views/shipper/PrintBulkShipment";
 import BulkShipmentUpload from "../views/shipper/BulkShipmentUpload";
+import ShipperSignup from "../views/shipper/ShipperSignup";
 import { toast } from "react-toastify";
 
 function ShipperRouter(props) {
@@ -76,7 +77,10 @@ function ShipperRouter(props) {
         path="/shipper/bulkshipmentupload"
         component={BulkShipmentUpload}
       />
-      <ProtectedRoute component={NewShipment} />
+      <ProtectedRoute path="/shipper/newshipment" component={NewShipment} />
+      <Route path="/shipper/signup" component={ShipperSignup} />
+      <Route path='/logout' component={Logout} />
+
     </Switch>
   );
 }
@@ -98,4 +102,12 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     return <Redirect to="/" />;
   }
 };
+
+const Logout = () => {
+  localStorage.clear();
+  toast.success('LOGOUT SUCCESSFUL');
+  return <Redirect to="/" />;
+
+}
+
 export default ShipperRouter;
