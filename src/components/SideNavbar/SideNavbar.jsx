@@ -17,11 +17,11 @@ function NavBar(props) {
               src="http://app.sarokh.net/web/assets/img/brand/sarokh-logo.png"
               alt="AdminLTE Logo"
               style={{ opacity: ".8",
-              'line-height': '.8',
-              'margin-left': '4.8rem',
-              'margin-right': '.5rem',
-              'margin-top': '7px',
-              'max-height': '44px' }}
+              lineHeight: '.8',
+              marginLeft: '4.8rem',
+              marginRight: '.5rem',
+              marginTop: '7px',
+              maxHeight: '44px' }}
             />
           </a>
 

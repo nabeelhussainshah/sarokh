@@ -2,6 +2,7 @@ import React,{useEffect} from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import $ from 'jquery';
 
 function Login(props) {
   const hist = useHistory();
@@ -41,8 +42,12 @@ function Login(props) {
   };
 
   useEffect(() => {
+    // const trees = $('[data-widget="treeview"]');
+    // trees.init();
     return () => {
       hist.go(); //reloading the application makes the dropdown in the nav working
+
+
     };
   }, []);
 

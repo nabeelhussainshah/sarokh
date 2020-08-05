@@ -27,6 +27,9 @@ function ShipperRouter(props) {
 				path="/shipper/dashboard"
 				component={ShipperDashboard}
 			/>
+			<Route exact path="/shipper/users">
+				<Redirect to="/shipper/users/adduser" />
+			</Route>
 			<ProtectedRoute
 				exact
 				path="/shipper/codshipments"

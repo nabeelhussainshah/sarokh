@@ -74,9 +74,9 @@ export default function AddUserForm(props) {
                 })}
               >
                 <option value="true">--- Select Designation ---</option>
-                {props.designation.map((doc) => { //this will add designations that select field which will be passed from the parent component
+                {props.designation.map((doc,i) => { //this will add designations that select field which will be passed from the parent component
                   return (
-                    <option value={doc}>{doc}</option>
+                    <option key={i} value={doc}>{doc}</option>
                   );
                 })}
               </select>
@@ -171,8 +171,8 @@ export default function AddUserForm(props) {
                   })}
                 >
                   <option value="true">--- Select Role ---</option>
-                  {props.data.map((doc) => {
-                    return <option value={doc.name}>{doc.name}</option>;
+                  {props.data.map((doc,i) => {
+                    return <option key={i} value={doc.name}>{doc.name}</option>;
                   })}
                 </select>
                 <span style={{ color: "red" }}>

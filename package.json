@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "jquery": "^3.5.1",
     "little-state-machine": "^3.0.3",
     "little-state-machine-devtools": "^1.0.0",
     "moment": "^2.27.0",

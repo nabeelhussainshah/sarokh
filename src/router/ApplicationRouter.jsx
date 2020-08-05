@@ -26,7 +26,7 @@ function ApplicationRouter(porps) {
           </Route>
           <ShipperRouter />
           <Route
-            path="/*"
+            path="*"
             render={(props) => {
               return <div>ROUTE NOT FOUND</div>;
             }}
