@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Link } from 'react-router-dom';
+
 
 function TopNav(props) {
   return (
@@ -16,6 +17,8 @@ function TopNav(props) {
             <i className="fas fa-bars" />
           </a>
         </li>
+        {props.links === 'shipper' ?
+        <Fragment>
         <li className="nav-item d-none d-sm-inline-block">
           <Link to="/shipper/printwaybill" className="nav-link">
             Print Way Bill
@@ -36,6 +39,8 @@ function TopNav(props) {
             Print Bulk Shipment
             </Link>
         </li>
+        </Fragment>
+        : null }
       </ul>
 
       {/* Right navbar links */}

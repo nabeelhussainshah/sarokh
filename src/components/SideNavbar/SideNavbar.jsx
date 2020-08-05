@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import TopNav from "../TopNav/TopNav";
 import Footer from "../Footer/Footer";
 import { NavLink } from "react-router-dom";
-import {NaqilRoutes as routes} from '../../routes';
 
 function NavBar(props) {
 
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
       <div className="wrapper">
-        <TopNav />
+        <TopNav links={props.links}/>
 
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           <a href="index3.html" className="brand-link">
@@ -33,7 +32,7 @@ function NavBar(props) {
                 role="menu"
                 data-accordion="false"
               >
-                <NavigationLinks routes={routes} />
+                <NavigationLinks routes={props.routes} />
               </ul>
             </nav>
           </div>

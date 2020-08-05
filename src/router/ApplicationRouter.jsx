@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter, Route, Switch ,HashRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch ,HashRouter, Redirect } from "react-router-dom";
 import Login from "../views/login";
 import ShipperRouter from "./ShipperRouter";
+import AdminRouter from "./AdminRouter";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/global.css";
@@ -21,19 +22,21 @@ function ApplicationRouter(porps) {
   return (
       <HashRouter>
         <Switch>
-          <Route exact path="/">
+          <Route exact={true} path="/">
             <Login />
           </Route>
-          <ShipperRouter />
-          <Route
-            path="*"
-            render={(props) => {
-              return <div>ROUTE NOT FOUND</div>;
-            }}
-          />
+          <Route exact={true} path="/logout"  component={Logout} />
         </Switch>
+        <AdminRouter />
+        <ShipperRouter />
       </HashRouter>
   );
 }
+
+const Logout = () => {
+	localStorage.clear();
+	toast.success('LOGOUT SUCCESSFUL');
+	return <Redirect to="/" />;
+};
 
 export default React.memo(ApplicationRouter);

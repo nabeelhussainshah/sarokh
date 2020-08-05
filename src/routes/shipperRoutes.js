@@ -1,4 +1,4 @@
-export const NaqilRoutes = [
+export const shipperRoutes = [
     {
       to: "/shipper/dashboard",
       name: "Dashboard",
@@ -30,7 +30,7 @@ export const NaqilRoutes = [
       iconClass: "nav-icon fa fa-map",
     },
     {
-      to: "/shipper/users",
+      to: "/shipper/users/adduser",
       name: "Users",
       iconClass: "nav-icon fas fa-copy",
       subRoutes: [

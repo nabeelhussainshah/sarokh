@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import SideNavBar from '../components/SideNavbar/SideNavbar';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import ShipperDashboard from '../views/shipper/ShipperDashboard';
@@ -16,88 +16,57 @@ import PrintBulkShipment from '../views/shipper/PrintBulkShipment';
 import BulkShipmentUpload from '../views/shipper/BulkShipmentUpload';
 import ShipperSignup from '../views/shipper/ShipperSignup';
 import AddShipperWarehouseFormRoutes from '../views/shipper/AddShipperWarehouseFormRoutes';
+import { shipperRoutes } from '../routes/shipperRoutes';
 import { toast } from 'react-toastify';
 
 function ShipperRouter(props) {
-
 	return (
 		<Switch>
+			<ProtectedRoute path="/shipper/dashboard" component={ShipperDashboard} />
+			<ProtectedRoute path="/shipper/codshipments" component={CodShipments} />
 			<ProtectedRoute
-				exact
-				path="/shipper/dashboard"
-				component={ShipperDashboard}
-			/>
-			<Route exact path="/shipper/users">
-				<Redirect to="/shipper/users/adduser" />
-			</Route>
-			<ProtectedRoute
-				exact
-				path="/shipper/codshipments"
-				component={CodShipments}
-			/>
-			<ProtectedRoute
-				exact
 				path="/shipper/pendingshipments"
 				component={PendingShipments}
 			/>
 			<ProtectedRoute
-				exact
 				path="/shipper/shipmentissues"
 				component={ShippmentIssues}
 			/>
+			<ProtectedRoute path="/shipper/allshipments" component={AllShipments} />
 			<ProtectedRoute
-				exact
-				path="/shipper/allshipments"
-				component={AllShipments}
-			/>
-			<ProtectedRoute
-				exact
 				path="/shipper/shipments/vieworder"
 				component={ShipmentDetails}
 			/>
 			<ProtectedRoute exact path="/shipper/users/adduser" component={AddUser} />
+			<ProtectedRoute path="/shipper/users/allusers" component={AllUsers} />
+			<ProtectedRoute path="/shipper/printwaybill" component={PrintWayBill} />
 			<ProtectedRoute
-				exact
-				path="/shipper/users/allusers"
-				component={AllUsers}
-			/>
-			<ProtectedRoute
-				exact
-				path="/shipper/printwaybill"
-				component={PrintWayBill}
-			/>
-			<ProtectedRoute
-				exact
 				path="/shipper/printbulkshipment"
 				component={PrintBulkShipment}
 			/>
 			<ProtectedRoute
-				exact
 				path="/shipper/bulkshipmentupload"
 				component={BulkShipmentUpload}
 			/>
-			<ProtectedRoute path="/shipper/newshipment" component={NewShipment} />
+			<ProtectedRoute
+				exact
+				path="/shipper/newshipment"
+				component={NewShipment}
+			/>
 			<ProtectedRoute
 				path="/shipper/addshipperwarehouse"
 				component={AddShipperWarehouseFormRoutes}
 			/>
 			<Route path="/shipper/signup" component={ShipperSignup} />
-			<Route path="/logout" component={Logout} />
 		</Switch>
 	);
 }
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-
 	if (JSON.parse(localStorage.getItem('user'))) {
 		return (
-			<SideNavBar>
-				<Route
-					{...rest}
-					render={(props) => {
-						return <Component {...props} />;
-					}}
-				/>
+			<SideNavBar routes={shipperRoutes} links={'shipper'}>
+				<Component />
 			</SideNavBar>
 		);
 	} else {
@@ -106,10 +75,11 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 	}
 };
 
-const Logout = () => {
-	localStorage.clear();
-	toast.success('LOGOUT SUCCESSFUL');
-	return <Redirect to="/" />;
-};
-
 export default ShipperRouter;
+
+{/* <Route
+	{...rest}
+	render={(props) => {
+		return <Component {...props} />;
+	}}
+/> */}
