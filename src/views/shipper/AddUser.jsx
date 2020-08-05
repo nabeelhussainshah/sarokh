@@ -34,7 +34,7 @@ export default function AddUser(props) {
           toast.success("user created");
           setTimeout(()=>{
             hist.go();
-          },3000);
+          },1000);
         }
         else{
           toast.error('username already taken');

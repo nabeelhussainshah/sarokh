@@ -1,10 +1,20 @@
-import React from "react";
+import React,{useEffect} from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Login(props) {
   const hist = useHistory();
+  toast.configure({
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -25,10 +35,16 @@ function Login(props) {
           console.log(response);
           localStorage.setItem("user", JSON.stringify(response.data.data));
           toast.success("LOGIN SUCCESS");
-          hist.push("/shipper/dashboard");
+          setTimeout(()=>{hist.push("/shipper/dashboard")},2000);
         }
       });
   };
+
+  useEffect(() => {
+    return () => {
+      hist.go(); //reloading the application makes the dropdown in the nav working
+    };
+  }, []);
 
   return (
     <div className="app-body login-testimonial-container">

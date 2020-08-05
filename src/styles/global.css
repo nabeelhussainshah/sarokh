@@ -101,6 +101,7 @@ profile__header p {
         height: auto;
     }
 .margintop30{margin-top: 30px !important; }
+.margintop40{margin-top: 40px !important; }
 .marginbottom10{margin-bottom: 10px; }
 .profile__header h4{font-size: 45px;}
 .profile__header p{font-size: 19px;}

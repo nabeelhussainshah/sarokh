@@ -186,7 +186,7 @@ export default function Step3(props) {
 						</div>
 						<div className="btn-container float-right form-row">
 							<div className="col-sm-12">
-								<button className="btn btn-primary dark-grey mr-1" type="button">
+								<button className="btn btn-primary dark-grey mr-1" type="button" onClick={()=>hist.goBack()}>
 									Back
 						</button>
 								<button className="btn btn-success mr-0" type="submit">

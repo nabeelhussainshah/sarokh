@@ -35,6 +35,7 @@ export const GoogleMapComponent = withScriptjs(
 					onPlaceSelected={(place) => {
 						props.changeFunction({...props.globalState,location:[
 							{
+								label: place.formatted_address,
 								latitude: place.geometry.location.lat(),
 								longitude: place.geometry.location.lng(),
 							}

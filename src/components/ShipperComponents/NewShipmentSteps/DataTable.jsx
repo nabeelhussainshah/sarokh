@@ -1,60 +1,84 @@
-import React from "react";
-import Table from "../../Generictable/generatictable";
-import {useHistory} from "react-router-dom";
+import React from 'react';
+import Table from '../../Generictable/generatictable';
+import { useHistory } from 'react-router-dom';
+import { newShipment, newShipmentList } from './state';
+import { useRecoilState } from 'recoil';
 
-export default function DataTable(props)
-{
-    const hist = useHistory();
-    const columns = [
-        {
-            Header: 'Action',
-            Cell: (row)=>{
-                return(
-                <> <i className="fa fa-trash"></i>
-                &nbsp;&nbsp;
-                <i className="fa fa-edit" ></i>
-                </>
-                );
-            }
-        },
-        {
-            Header: 'Reciever Name',
-            accessor: 'receiverName'
-        },
-        {
-            Header: 'Reciever Contact',
-            accessor: 'receiverContact'
-        },
-        {
-            Header: 'Reciever Address',
-            accessor: ''
-        },
-        {
-            Header: 'Shipment Type',
-            accessor: 'shipmentType'
-        },
-        {
-            Header: 'Shipment Weight',
-            accessor: 'shipmentWeight'
-        },
-        {
-            Header: 'Additional Services',
-            accessor: 'additionalCharges'
-        },
-        {
-            Header: 'Payment Type',
-            accessor: 'billingType'
-        },
-        {
-            Header: 'COD Amount',
-            accessor: 'CodValue'
-        },
-        {
-            Header: 'Shipment Cost',
-            accessor: 'shipmentCost'
-        }
-    ];
+export default function DataTable(props) {
+	const hist = useHistory();
+	const [data, setdata] = useRecoilState(newShipment);
+	const [list, setlist] = useRecoilState(newShipmentList);
 
-    return <Table data={props.data} columns={columns} tableclass={"table-responsive custom-table"} />
+	const deleteData = (rowData) => {
+		let tempData = [...list];
+		tempData.splice(rowData.row.index, 1);
+		setlist([...tempData]);
+	};
 
+	const editData = (rowData) => {
+		setdata({ ...rowData.data[rowData.row.index], editing: true });
+		let tempData = [...list];
+		console.log('this is the data', tempData.splice(rowData.row.index, 1));
+		setlist([...tempData]);
+		hist.push('/shipper/newshipment/step1');
+	};
+
+	const columns = [
+		{
+			Header: 'Action',
+			Cell: (row) => {
+				return (
+					<>
+						<i className="fa fa-trash" onClick={() => deleteData(row)}></i>
+						&nbsp;&nbsp;
+						<i className="fa fa-edit" onClick={() => editData(row)}></i>
+					</>
+				);
+			},
+		},
+		{
+			Header: 'Reciever Name',
+			accessor: 'receiverName',
+		},
+		{
+			Header: 'Reciever Contact',
+			accessor: 'receiverContact',
+		},
+		{
+			Header: 'Reciever Address',
+			accessor: 'location[0].label',
+		},
+		{
+			Header: 'Shipment Type',
+			accessor: 'shipmentType',
+		},
+		{
+			Header: 'Shipment Weight',
+			accessor: 'shipmentWeight',
+		},
+		{
+			Header: 'Additional Services',
+			accessor: 'additionalCharges',
+		},
+		{
+			Header: 'Payment Type',
+			accessor: 'billingType',
+		},
+		{
+			Header: 'COD Amount',
+			accessor: 'codValue',
+		},
+		{
+			Header: 'Shipment Cost',
+			accessor: 'shipmentCost',
+		},
+	];
+
+	return (
+		<Table
+			data={props.data}
+			columns={columns}
+			tableclass={'table-responsive custom-table'}
+		/>
+	);
 }

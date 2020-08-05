@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
 import SideNavBar from '../components/SideNavbar/SideNavbar';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import ShipperDashboard from '../views/shipper/ShipperDashboard';
-import OurLocation from '../views/shipper/OurLocation';
 import CodShipments from '../views/shipper/CodShipments';
 import PendingShipments from '../views/shipper/PendingShipments';
 import ShippmentIssues from '../views/shipper/ShipmentIssues';
@@ -20,17 +19,13 @@ import AddShipperWarehouseFormRoutes from '../views/shipper/AddShipperWarehouseF
 import { toast } from 'react-toastify';
 
 function ShipperRouter(props) {
+
 	return (
 		<Switch>
 			<ProtectedRoute
 				exact
 				path="/shipper/dashboard"
 				component={ShipperDashboard}
-			/>
-			<ProtectedRoute
-				exact
-				path="/shipper/ourlocation"
-				component={OurLocation}
 			/>
 			<ProtectedRoute
 				exact
@@ -90,6 +85,7 @@ function ShipperRouter(props) {
 }
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
+
 	if (JSON.parse(localStorage.getItem('user'))) {
 		return (
 			<SideNavBar>

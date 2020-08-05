@@ -61,6 +61,15 @@ export default function CodShipment(props) {
             accessor: 'receiverName'
         },
         {
+          Header: "From",
+          accessor: "shipFromCity",
+        },
+        {
+          Header: "To",
+          accessor: "shipToCity",
+        },
+
+        {
             Header: 'COD Amount',
             accessor: 'codAmount'
         },

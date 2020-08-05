@@ -23,27 +23,6 @@ export default function Step2(props) {
 		hist.push('/shipper/signup/step3');
 	};
 
-	const uploadFile = async (file) => {
-		const formdata = new FormData();
-		formdata.append('file', file);
-		formdata.append('filename', file.name);
-
-		await axios
-			.post(`${process.env.REACT_APP_API}/upload-file`, formdata, {
-				headers: {
-					'Content-Type': 'multipart/form-data;',
-				},
-			})
-			.then((res) => {
-				if (res.data.status === 200) {
-					console.log(res.data.data);
-					setdata({ ...data, iqamaFile: res.data.data });
-				}
-			})
-			.catch((err) => {
-				window.alert(err.message);
-			});
-	};
 
 	if (Object.keys(data).length === 0 && data.constructor === Object) {
 		return <Redirect to="/shipper/signup/step1" />;
@@ -72,6 +51,47 @@ export default function Step2(props) {
 							)}
 						</div>
 						<div className="form-group col-md-6">
+							<label htmlFor="bankName">Bank Name</label>
+							<select
+								className="form-control"
+								name="bankName"
+								ref={register({ required: true, validate: value => value !== "" })}
+							>
+								<option value="">Select Bank Name</option>
+								<option value="The National Commercial Bank">
+									The National Commercial Bank{' '}
+								</option>
+								<option value="The Saudi British Bank">
+									The Saudi British Bank{' '}
+								</option>
+								<option value="Saudi Investment Bank">
+									Saudi Investment Bank{' '}
+								</option>
+								<option value="Alinma Bank">Alinma Bank </option>
+								<option value="Banque Saudi Fransi">
+									{' '}
+									Banque Saudi Fransi{' '}
+								</option>
+								<option value="Riyad Bank"> Riyad Bank </option>
+								<option value="Samba Financial Group (Samba)">
+									{' '}
+									Samba Financial Group (Samba){' '}
+								</option>
+								<option value="Alawwal Bank"> Alawwal Bank </option>
+								<option value="Al Rajhi Bank"> Al Rajhi Bank </option>
+								<option value="Arab National Bank"> Arab National Bank </option>
+								<option value="Bank AlBilad"> Bank AlBilad </option>
+								<option value="Bank AlJazira"> Bank AlJazira </option>
+								<option value="Gulf International Bank Saudi Aribia (GIB-SA)">
+									{' '}
+									Gulf International Bank Saudi Aribia (GIB-SA){' '}
+								</option>
+							</select>
+							{errors ?.bankName ?.types ?.required && (
+								<p style={{ color: 'red' }}>Bank Name is required</p>
+							)}
+						</div>
+						{/* <div className="form-group col-md-6">
 							<label htmlFor="iqamaNumber">ID license</label>
 							<input
 								name="iqamaNumber"
@@ -83,9 +103,9 @@ export default function Step2(props) {
 							{errors ?.iqamaNumber ?.types ?.required && (
 								<p style={{ color: 'red' }}>Business Name is required</p>
 							)}
-						</div>
+						</div> */}
 					</div>
-					<div className="form-row">
+					{/* <div className="form-row">
 						<div className="form-group col-md-6">
 							<label htmlFor="bankName">Bank Name</label>
 							<select
@@ -146,7 +166,7 @@ export default function Step2(props) {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div className="form-row">
 						<div className="form-group col-md-6">
 							<label htmlFor="iban">IBAN</label>
@@ -164,10 +184,10 @@ export default function Step2(props) {
 					</div>
 					<div className="btn-container float-right margintop30 form-row">
 						<div className="col-sm-12">
-							<button className="btn btn-primary dark-grey mr-1" type="button">
+							<button className="btn btn-primary dark-grey mr-1" type="button" onClick={()=>hist.goBack()}>
 								Back
 						</button>
-							<button className="btn btn-success mr-0" type="submit" disabled={data.iqamaFile === undefined ? true : false}>
+							<button className="btn btn-success mr-0" type="submit" >
 								Next
 						</button>
 						</div>

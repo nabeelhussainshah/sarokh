@@ -35,25 +35,34 @@ export default function ShipmentIssues(props) {
       },
     },
     {
-      Header: "tracking No",
-      accessor: "orderId",
+      Header: "ID",
+      accessor: "",
     },
     {
-      Header: "Shipment ID",
-      accessor: "shipmentId",
+      Header: "Tracking No",
+      accessor: "",
     },
     {
-      Header: "Reported By",
+      Header: "Creation Date",
       accessor: "reportedBy",
     },
     {
-      Header: "Issue Type",
-      accessor: "issueType",
+      Header: "Only Date",
+      accessor: "",
     },
     {
-      Header: "Note",
-      accessor: "note",
+      Header: "Description",
+      accessor: "",
     },
+    {
+      Header: 'Resolution',
+      accessor: ''
+    }
+    ,
+    {
+      Header: 'Status',
+      accessor: ''
+    }
   ];
 
   const transitions = useTransition(!response.loading, null, {

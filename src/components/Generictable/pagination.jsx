@@ -36,7 +36,7 @@ function Pagination(
                     setPageSize(Number(e.target.value));
                 }}
             >
-                {[5, 10, 15, 20].map(pageSize => (
+                {[6, 10, 15, 20].map(pageSize => (
                     <option key={pageSize} value={pageSize}>
                         Show {pageSize}
                     </option>

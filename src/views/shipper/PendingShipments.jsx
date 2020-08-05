@@ -4,6 +4,7 @@ import Table from "../../components/Generictable/generatictable";
 import axios from "axios";
 import { useTransition, animated } from "react-spring";
 import { useHistory } from "react-router-dom";
+import moment from 'moment';
 
 export default function PendingShipment(props) {
   const hist = useHistory();
@@ -67,18 +68,25 @@ export default function PendingShipment(props) {
     {
       Header: "Date/Time",
       accessor: "dateTime",
+      Cell: (row)=>{
+      return <>{moment(row.row.original.dateTime).format('YYYY-MM-DD')}</>
+      }
+    },
+    {
+      Header: "Shipment Title",
+      accessor: "shipmentTitle",
     },
     {
       Header: "Reciever Name",
       accessor: "receiverName",
     },
     {
-      Header: "Payment Type",
-      accessor: "paymentType",
+      Header: "From",
+      accessor: "shipFromCity",
     },
     {
-      Header: "COD Amount",
-      accessor: "codAmount",
+      Header: "To",
+      accessor: "shipToCity",
     },
     {
       Header: "status",

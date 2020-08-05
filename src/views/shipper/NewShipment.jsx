@@ -4,13 +4,15 @@ import Step1 from "../../components/ShipperComponents/NewShipmentSteps/Step1";
 import Step2 from "../../components/ShipperComponents/NewShipmentSteps/Step2";
 import Step3 from "../../components/ShipperComponents/NewShipmentSteps/Step3";
 import Container from "../../components/Containers/ListingContainer";
+import { RecoilRoot } from 'recoil';
 
 
 export default function NewShipment(props) {
 
 
   return (
-    <Switch location={useHistory()}>
+    <RecoilRoot>
+    <Switch>
         <Container>
           <div className="card-header">
             <h2>NEW Shipment</h2>
@@ -28,5 +30,6 @@ export default function NewShipment(props) {
           </div>
         </Container>
     </Switch>
+    </RecoilRoot>
   );
 }

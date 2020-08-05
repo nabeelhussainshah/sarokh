@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch ,HashRouter } from "react-router-dom";
 import Login from "../views/login";
 import ShipperRouter from "./ShipperRouter";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/global.css";
-import { RecoilRoot } from "recoil";
+
 
 function ApplicationRouter(porps) {
   toast.configure({
@@ -19,8 +19,7 @@ function ApplicationRouter(porps) {
   });
 
   return (
-    <RecoilRoot>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route exact path="/">
             <Login />
@@ -33,8 +32,7 @@ function ApplicationRouter(porps) {
             }}
           />
         </Switch>
-      </BrowserRouter>
-    </RecoilRoot>
+      </HashRouter>
   );
 }
 

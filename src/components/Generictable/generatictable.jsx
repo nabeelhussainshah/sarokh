@@ -22,7 +22,7 @@ function GenericTable({
   skipPageReset,
   submission,
   editablecolumn,
-  pagesize = 5,
+  pagesize = 6,
   tableclass = "",
 }) {
   const {

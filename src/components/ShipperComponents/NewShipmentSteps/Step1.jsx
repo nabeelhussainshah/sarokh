@@ -1,13 +1,18 @@
 import React,{useState,useEffect} from "react";
 import StepIndicator from "./StepIndicator";
 import {useForm} from 'react-hook-form';
-import {useHistory} from 'react-router-dom';
+import {useHistory,Redirect} from 'react-router-dom';
 import axios from "axios";
-
+import { newShipment, newShipmentList } from "./state";
+import {useRecoilState, useSetRecoilState} from 'recoil';
 
 export default function Step1(props) {
 
+  const hist = useHistory();
+  const [data,setdata] = useRecoilState(newShipment);
   const [response, setresponse] = useState({loading: true});
+  const setState = useSetRecoilState(newShipmentList);
+
   useEffect(()=>{
     async function fetchData()
     {
@@ -21,27 +26,34 @@ export default function Step1(props) {
       })
       .catch((err)=>{
         window.alert(err.message);
-      })
+      });
     }
     fetchData();
   },[]);
 
-  const hist = useHistory();
-  console.log(hist.location)
   const {register,errors,handleSubmit} = useForm(
     {
-      defaultValues: hist.location.state === undefined ? {} : hist.location.state.step1
+      defaultValues: data,
+      shouldFocusError : true,
+      mode: "onChange",
+      criteriaMode: "all"
+
     }
   );
-  const onSubmit = data =>{
-    hist.replace({pathname:hist.location.pathname,state:{step1:{...data}}});
-    hist.push({pathname:`/shipper/newshipment/step2`,state:{step1:{...data}}});
+  const onSubmit = formData =>{
+    setdata({...data, ...formData});
+    hist.push('/shipper/newshipment/step2');
+    console.log(data);
 
   };
-  const deleteDate = ()=>{
-    window.STATE_MACHINE_RESET();
 
+  const cancel = () => {
+    setdata({});
+    setState([]);
+    hist.push('/shipper/allshipments');
   };
+
+
   return response.loading ? <div>Loading...</div> : (
     <>
       <StepIndicator step1={"current"} />
@@ -62,10 +74,9 @@ export default function Step1(props) {
               placeholder="--- Ship From City ---"
               ref={register({required : true, validate: value => value !== "true"})}
             >
-              {/* <option value="true">--- Ship From City ---</option> */}
-              {response.data.map((doc)=>{
+              {response.data.map((doc,i)=>{
                 return(
-                <option value={doc}>{doc}</option>
+                <option key={i} value={doc}>{doc}</option>
                 );
               })}
             </select>
@@ -82,10 +93,10 @@ export default function Step1(props) {
               name="shipToCity"
               ref={register({required : true, validate: value => value !== "true"})}
             >
-              {/* <option value="true">--- Ship To City ---</option> */}
-              {response.data.map((doc)=>{
+
+              {response.data.map((doc,i)=>{
                 return(
-                <option value={doc}>{doc}</option>
+                <option key={i} value={doc}>{doc}</option>
                 );
               })}
             </select>
@@ -98,7 +109,7 @@ export default function Step1(props) {
         <div className="form-row">
           <div className="col-md-12">
             <div className="btn-container float-left">
-              <button type="button" className="btn btn-danger" onClick={()=>deleteDate()}>
+              <button type="button" className="btn btn-danger" onClick={()=>{cancel()}}>
                 Cancel
               </button>
             </div>
