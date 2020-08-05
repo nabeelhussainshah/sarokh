@@ -17,6 +17,7 @@ h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
 .card-accent-primary {
     border-top: #ec1c24 solid 4px;
 }
+.card{border-radius: 20px;}
 .custom-search h4{float: left;font-size: 18px;margin-top: 8px;}
 .custom-search .search-field{float: left;
     width: 210px;
@@ -227,7 +228,7 @@ label:not(.form-check-label):not(.custom-file-label){font-weight: normal;color: 
 .form-control{border:#fa1c25 solid 1px !important;}
 .finishbtn{background: #f7931e; border: #f7931e solid 1px;}
 .canclebtn{background: #fa1c25;}
-.input-group span{cursor: pointer;padding: 0 30px;background:#fa1c25;color: #FFF; }
+.input-group span{cursor: pointer;padding: 0 14px;background:#fa1c25;color: #FFF; border: #fa1c25 solid 1px;}
 .redcolor{color:#fa1c25; }
 /* pac-container class for google places list drop down */
 /* .pac-container{position: absolute; top: 500px !important; left: 480px !important;} */
@@ -257,3 +258,6 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
 .horizontal.small ul.steps-indicator li.done .step-indicator {
     background-color: #f6921d;
 }
+.custom-border{border-radius: 20px !important;}
+.padding15{padding: 15px;}
+.font20{font-size: 20px;}
