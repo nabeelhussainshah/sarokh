@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -35,7 +35,7 @@ function Login(props) {
           console.log(response);
           localStorage.setItem("user", JSON.stringify(response.data.data));
           toast.success("LOGIN SUCCESS");
-          setTimeout(()=>{hist.push("/shipper/dashboard")},2000);
+          setTimeout(() => { hist.push("/shipper/dashboard") }, 2000);
         }
       });
   };
@@ -53,7 +53,7 @@ function Login(props) {
           <div className="row justify-content-center">
             <div className="col-sm-6 mx-auto">
               <div className="card-group">
-                <div className="card p-5">
+                <div className="card p-5 custom-border">
                   <div className="card-body">
                     <form onSubmit={onSubmit}>
                       <fieldset>
