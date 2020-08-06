@@ -41,7 +41,7 @@ export const GoogleMapComponent = withScriptjs(
 							}
 						]});
 					}}
-					types={['(regions)']}
+					types={[]}
 					componentRestrictions={{ country: 'SA' }}
 				/> : null }
 			</GoogleMap>

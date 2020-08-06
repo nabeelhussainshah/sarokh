@@ -67,7 +67,7 @@ export default function Step1(props) {
 	return response.loading ? <div>Loading...</div> : (
 		<Container>
 			<div className="card-header">
-				<h2>Add Shipper Warehouse</h2>
+				<h2>Add New Location</h2>
 			</div>
 			<div className="card-body">
                 <StepIndicator step1="current" />
