@@ -30,13 +30,13 @@ export default function Step2(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Shipper Warehouse</h2>
+			<h2>Add New Location</h2>
 			</div>
 			<div className="card-body">
                 <StepIndicator step1="done" step2="current"/>
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
-						<div className="form-group col-md-6">
+						{/* <div className="form-group col-md-6">
 							<label htmlFor="managerName">Concern Person Name</label>
 							<input
 								type="text"
@@ -49,7 +49,7 @@ export default function Step2(props) {
 							{errors?.managerName?.types?.required && (
 								<p style={{ color: 'red' }}>Name is required</p>
 							)}
-						</div>
+						</div> */}
 						<div className="form-group col-md-6">
 							<label htmlFor="mangerContact">Contact No</label>
 							<input
@@ -57,13 +57,13 @@ export default function Step2(props) {
 								className="form-control"
 								name="mangerContact"
 								placeholder="Contact No"
-								ref={register({ required: true })}
+								ref={register({})}
 							/>
-							{errors?.mangerContact?.types?.required && (
+							{/* {errors?.mangerContact?.types?.required && (
 								<p style={{ color: 'red' }}>Name is required</p>
-							)}
+							)} */}
 						</div>
-						<div className="form-group col-md-6">
+						{/* <div className="form-group col-md-6">
 							<label htmlFor="mangerEmail">Email</label>
 							<input
 								type="email"
@@ -75,7 +75,7 @@ export default function Step2(props) {
 							{errors?.mangerEmail?.types?.required && (
 								<p style={{ color: 'red' }}>Name is required</p>
 							)}
-						</div>
+						</div> */}
 						<div className="form-group col-sm-6" />
 						<div className="form-group col-md-6">
 							<label htmlFor="operationalTimeto">Operationl Time From</label>

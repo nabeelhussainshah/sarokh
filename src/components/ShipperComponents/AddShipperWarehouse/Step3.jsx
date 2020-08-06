@@ -114,7 +114,7 @@ export default function Step3(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Shipper Warehouse</h2>
+			<h2>Add New Location</h2>
 			</div>
 			<div className="card-body">
 				<StepIndicator step1="done" step2="done" step3="current" />
