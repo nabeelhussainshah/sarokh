@@ -2,6 +2,10 @@
 body{
     background-color: #e4e5e6;font-family: 'Changa', sans-serif !important;
 }
+body, html {
+	height: 100%;
+	font-family: Poppins-Regular, sans-serif;
+}
 h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
 
 .app-body .main {
@@ -214,6 +218,7 @@ ul.steps-indicator li a .label {
     border-radius: 100%;
     background-color: #E6E6E6;
 }
+.wrap-login100{text-align: center; padding-top: 180px; }
 .order-step-detail h2{font-size: 20px; color: #fa1c25; margin: 15px 0;}
 .order-step-detail h3{font-size: 16px;}
 .order-step-detail .table{border-bottom: #f6921d solid 4px; margin-bottom: 0;}
@@ -261,3 +266,68 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
 .custom-border{border-radius: 20px !important;}
 .padding15{padding: 15px;}
 .font20{font-size: 20px;}
+
+
+
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .container-login100 {
+    width: 100%;  
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  
+  
+  .wrap-login100 {
+    width: 1000px;
+    min-height: 100vh;
+    background: #fff;
+    border-radius: 2px;
+    position: relative;
+  }
+  
+  /*------------------------------------------------------------------
+  [ Login100 more ]*/
+  .login100-more {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: calc(100% - 1000px);
+    position: relative;
+    z-index: 1;
+    padding: 170px 20px 20px 20px;
+  }
+  .login100-more h1{font-size: 22px; color: #FFF; margin-bottom: 25px;}
+  .login100-more label{color: #FFF !important;}
+  .login100-more .input-group{width: 84%;}
+  .login100-more .btn-link {color: #FFF !important;}
+  .login100-more::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #f7931e;
+    opacity: 0.8;
+  }
+  
+  
+  
+  @media (max-width: 576px) {
+    .wrap-login100 {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
