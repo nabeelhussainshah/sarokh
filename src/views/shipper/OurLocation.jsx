@@ -148,7 +148,7 @@ export default function Maps(porps) {
 									className="btn btn-info float-right"
 									onClick={() => addNewWarehouse()}
 								>
-									New New
+									Add New
 								</button>
 							</div>
 							<div className="card-body">

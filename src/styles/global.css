@@ -273,9 +273,9 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     width: 100%;
     margin: 0 auto;
   }
-  
+
   .container-login100 {
-    width: 100%;  
+    width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -285,8 +285,8 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     align-items: stretch;
     flex-wrap: wrap;
   }
-  
-  
+
+
   .wrap-login100 {
     width: 1000px;
     min-height: 100vh;
@@ -294,7 +294,7 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     border-radius: 2px;
     position: relative;
   }
-  
+
   /*------------------------------------------------------------------
   [ Login100 more ]*/
   .login100-more {
@@ -322,9 +322,9 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     background: #f7931e;
     opacity: 0.8;
   }
-  
-  
-  
+
+
+
   @media (max-width: 576px) {
     .wrap-login100 {
       padding-left: 15px;

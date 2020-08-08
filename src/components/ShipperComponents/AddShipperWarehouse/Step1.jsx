@@ -51,6 +51,8 @@ export default function Step1(props) {
 				console.log(res);
 				if (res.data.status === 200) {
 					setresponse({ ...response, loading: false, cities: res.data.data });
+					setdata({...data, city: undefined}); /* this is to remove the entry of city that was populated when editing warehouse so populated new cities in the dropdown
+					because even when the new country is selected the default value still remains the city list even if it does not belong to that country */
 				}
 			})
 			.catch((err) => {
@@ -138,7 +140,7 @@ export default function Step1(props) {
 									validate: (value) => value !== '',
 								})}
 							>
-								<option key={12345} value="">
+								<option key={123456} value="">
 									---Select City---
 								</option>
 								{data.city === undefined ? null : (
@@ -150,7 +152,7 @@ export default function Step1(props) {
 									? null
 									: response.cities.map((doc, i) => {
 											return (
-												<option key={i} value={doc}>
+												<option key={doc} value={doc}>
 													{doc}
 												</option>
 											);

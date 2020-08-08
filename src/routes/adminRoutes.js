@@ -5,7 +5,7 @@ export const adminRoutes = [
       iconClass: "nav-icon fas fa-rocket",
     },
     {
-        to: "/admin/tracking/driverlocations",
+        to: "/admin/tracking/",
         name: "Tracking",
         iconClass: "nav-icon fas fa-map-marker-alt",
         subRoutes: [
@@ -22,22 +22,22 @@ export const adminRoutes = [
         ],
       },
     {
-      to: "/shipper/allshipments",
+      to: "/admin/shipments/",
       name: "Shipments",
       iconClass: "nav-icon fas fa-box",
       subRoutes: [
         {
-          to: "/admin/tracking/driverlocations",
+          to: "/admin/shipments/allshipments",
           name: "All Shipments",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
-          name: "Delievered Shipments",
+          to: "/admin/shipments/deliveredshipments",
+          name: "Delivered Shipments",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/pendingshipments",
           name: "Pending Shipments",
           iconClass: "nav-icon fas fa-box",
         },
@@ -47,32 +47,32 @@ export const adminRoutes = [
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/CODshipments",
           name: "COD Shipments",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/prepaidshipments",
           name: "Prepaid Shipments",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/returnshipments",
           name: "Return Shipments",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/shipmentissues",
           name: "Shipment issues",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/pickupshipments",
           name: "Pickup Shipments",
           iconClass: "nav-icon fas fa-box",
         },
         {
-          to: "/admin/tracking/orderlocations",
+          to: "/admin/shipments/deliveryshipments",
           name: "Delievery Shipments",
           iconClass: "nav-icon fas fa-box",
         }
