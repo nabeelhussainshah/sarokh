@@ -4,7 +4,7 @@ export default function ShipmentDetails({ response }) {
   return (
     <div>
 
-      <h2 className="mt-3 mb-1 font20">Shipment Detail</h2>
+      <h2 className="mt-3 mb-1 font20 redcolor">Shipment Detail</h2>
       <table className="table table-resposive">
         <tbody>
           <tr>

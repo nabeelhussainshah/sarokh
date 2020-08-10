@@ -3,7 +3,7 @@ import React from "react";
 export default function ShipmentDelieveryStatus(props) {
   return (
     <div className="shipper-detail-container mt-3">
-      <h2 className="font20">Shipment Delivery Status</h2>
+      <h2 className="font20 redcolor">Shipment Delivery Status</h2>
       <label className="customise-radio-btn">
         Shipper Warehouse
     <input type="radio" defaultChecked={false} name="radio" />
