@@ -7,7 +7,7 @@ import { deliveredShipmentsApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
-export default function AllShipments(props) {
+export default function DeliveredShipments(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 

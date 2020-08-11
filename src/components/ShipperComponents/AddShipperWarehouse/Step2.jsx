@@ -1,39 +1,39 @@
 import React from 'react';
 import { warehouseData } from './state';
 import { useForm } from 'react-hook-form';
-import {useHistory,Redirect} from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
 
 export default function Step2(props) {
-    const hist = useHistory();
+	const hist = useHistory();
 	const [data, setdata] = useRecoilState(warehouseData);
 	const { register, errors, handleSubmit } = useForm({
 		defaultValues: data,
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
-    });
+	});
 
-    if (Object.keys(data).length === 1 && data.constructor === Object) {
-		return <Redirect to="/shipper/addshipperwarehouse/step1" />;
+	if (Object.keys(data).length === 1 && data.constructor === Object) {
+		return <Redirect to={props.defaultPath} />;
 	}
-    console.log(data);
+	console.log(data);
 
 	const onSubmit = (formdata) => {
 		setdata({ ...data, ...formdata });
-        console.log(formdata);
-        hist.push('/shipper/addshipperwarehouse/step3');
+		console.log(formdata);
+		hist.push(props.path);
 	};
 
 	return (
 		<Container>
 			<div className="card-header">
-			<h2>Add New Location</h2>
+				<h2>Add New Location</h2>
 			</div>
 			<div className="card-body">
-                <StepIndicator step1="done" step2="current"/>
+				<StepIndicator step1="done" step2="current" type={props.type} />
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						{/* <div className="form-group col-md-6">
@@ -105,7 +105,11 @@ export default function Step2(props) {
 						</div>
 					</div>
 					<div className="btn-container float-right">
-						<button className="btn btn-secondary dark-grey" type="button" onClick={()=>hist.goBack()}>
+						<button
+							className="btn btn-secondary dark-grey"
+							type="button"
+							onClick={() => hist.goBack()}
+						>
 							Go to previous step
 						</button>
 						<button className="btn btn-success" type="submit">

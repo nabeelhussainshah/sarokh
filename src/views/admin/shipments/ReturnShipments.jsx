@@ -7,7 +7,7 @@ import { returnShipmentsApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
-export default function PrepaidShipments(props) {
+export default function ReturnShipments(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 

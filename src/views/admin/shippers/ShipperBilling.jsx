@@ -3,17 +3,17 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { pickupShipmentsApi } from '../../../Api/adminApi';
+import { shipperBillingApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
-export default function PickupShipments(props) {
+export default function ShipperBilling(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			pickupShipmentsApi()
+			shipperBillingApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -35,45 +35,33 @@ export default function PickupShipments(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
-			accessor: '',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
-					</Fragment>
-				);
-			},
-		},
-		{
-			Header: 'id',
+			Header: 'ID',
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
-			accessor: 'shipmentId',
+			Header: 'Shipper Name',
+			accessor: 'user.fullName',
+        },
+        {
+			Header: 'Shipper Type',
+			accessor: 'shipperType',
+        },
+		{
+			Header: 'Transaction Type',
+			accessor: 'transactionType',
 		},
 		{
 			Header: 'Date',
-			accessor: 'dateTime',
-		},
-		{
-			Header: 'Pick up Location',
 			accessor: '',
 		},
 		{
-			Header: 'Assign To Driver',
-			accessor: '',
+			Header: 'Amount',
+			accessor: 'totalAmount',
 		},
-
-		{
-			Header: 'Status',
-			accessor: 'status',
-		},
-
+        {
+            Header: 'No Of Shipments',
+            accessor: ''
+        }
 	];
 
 	const transitions = useTransition(!response.loading, null, {
@@ -100,7 +88,7 @@ export default function PickupShipments(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">Pickup Shipments</h2>
+								<h2 className="float-left">Shipper Billing</h2>
 							</div>
 							<div className="card-body">
 								<Table
@@ -109,7 +97,6 @@ export default function PickupShipments(props) {
 									tableclass={'table-responsive custom-table'}
 									pagination={true}
 									filter={true}
-									hiddenColumns={['id']}
 								/>
 							</div>
 						</ListingContainer>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Container from '../../components/Containers/ListingContainer';
-import Table from '../../components/Generictable/generatictable';
-import AddUserForm from '../../components/Forms/AddUserForm';
+import Container from '../../../components/Containers/ListingContainer';
+import Table from '../../../components/Generictable/generatictable';
+import AddUserForm from '../../../components/Forms/AddUserForm';
+import Loading from "../../../components/Loading/Loading";
+import {allUsersApi, deleteUserApi, updateUserApi} from "../../../Api/adminApi";
 import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -12,8 +14,15 @@ export default function AllUsers(props) {
 	const [response, setresponse] = useState({ loading: true }); //contains the response and loading state
 	const [formToggle, setformToggle] = useState({ form: false }); //decides when we display the form
 	const [data, setdata] = useState(); // the data from the api is stored here which is then passed to the form to get populated
-	const user = JSON.parse(localStorage.getItem('user'));
-	console.log(data);
+
+    const Roles = [
+		{ id: 2, name: 'Shipper', parentRole: 'Admin' },
+		{ id: 3, name: 'Dealer', parentRole: 'Admin' },
+		{ id: 4, name: 'Driver', parentRole: 'Admin' },
+		{ id: 8, name: 'WarehouseUser', parentRole: 'Admin' },
+		{ id: 9, name: 'WarehouseManager', parentRole: 'Admin' },
+		{ id: 10, name: 'FinanceManager', parentRole: 'Admin' },
+	];
 
 	useEffect(() => {
 		/* this side effect is used to redirect the user to the all users page, since the userform and user details
@@ -21,7 +30,7 @@ export default function AllUsers(props) {
      in history in stead of going to the all users page */
 		hist.listen((newLocation, action) => {
 			if (action === 'POP') {
-				hist.replace('/shipper/users/allusers');
+				hist.replace('/admin/users/allusers');
 			}
 		});
 		return () => (window.onpopstate = null);
@@ -29,22 +38,13 @@ export default function AllUsers(props) {
 
 	useEffect(() => {
 		// in here api is called and value is stored in the response object
-		async function fetchData() {
-			return await axios
-				.get(
-					`${process.env.REACT_APP_API}/user/get-shipper-users-list/${user.id}`
-				)
-				.then((response) => {
-					console.log(response);
-					if (response.status === 200) {
-						setresponse({ loading: false, data: response.data });
-					}
-				})
-				.catch((err) => {
-					window.alert(err.message);
-				});
-		}
-		fetchData();
+        allUsersApi()
+        .then((res)=>{
+            setresponse({loading: false, data: res});
+        })
+        .catch((err)=>{
+            toast.error(err.message);
+        });
 	}, [formToggle]);
 
 	/*when ever the formtoggle state is changed this will be called, this is done in order
@@ -59,32 +59,14 @@ export default function AllUsers(props) {
 
 				/* the data set in the handleclick function changes the data but we donot require that data to be posted, since the response from api
         does not send userpassword we can use that as a check, when ever the data is submitted from the userform that will have a password init along with the completed data we will then send the patch request to the api */
-
-				axios
-					.patch(`${process.env.REACT_APP_API}/user/update`, {
-						fullName: data.fullName,
-						designation: data.designation,
-						userName: data.userName,
-						userPassword: data.userPassword,
-						email: data.email,
-						contact: data.contact,
-						gender: data.gender,
-						dob: new Date(data.dob).toISOString(),
-						userType: 'shipper',
-						profilePicture: 'string',
-						userId: formToggle.userId,
-						roleId: 2,
-						parentTypeId: user.id,
-					})
-					.then((response) => {
-						if (response.status === 200) {
-							toast.success('User updated successfully');
-							setformToggle({ form: false });
-						}
-					})
-					.catch((err) => {
-						window.alert(err.message);
-					});
+				updateUserApi(data,formToggle.userId)
+				.then((res)=>{
+					toast.success("User Data Updated!!");
+					setformToggle({form: false});
+				})
+				.catch((err)=>{
+					toast.error(err.message);
+				});
 			}
 		}
   }, [data]);
@@ -94,36 +76,25 @@ export default function AllUsers(props) {
 
 	const handleClick = (row) => {
 		let data = row.row.original; //data from the row clicked is being stored in this
-
+		console.log("this is the date",moment(data.dob).format(moment.HTML5_FMT.DATE));
 		setformToggle({ form: true, userId: data.userId }); //userId is the id that will be send along with the updated user data to update the user information
 		setdata({
 			//this function sets the state of the form which will be passed to the userForm component to get populated there
-			fullName: data.fullName,
-			designation: data.designation,
-			userName: data.userName,
+			...data,
 			userPassword: '',
-			email: data.email,
-			contact: data.contact,
-			gender: data.gender,
-			dob: moment(data.dob).format(moment.HTML5_FMT.DATE),
+            dob: moment(data.dob).format(moment.HTML5_FMT.DATE),
 		});
 	};
 
 	const handleDelete = async (id) => {
-		await axios
-			.delete(`${process.env.REACT_APP_API}/user/delete/${id}`)
-			.then((response) => {
-				console.log(response);
-				if (response.data.status === 200) {
-					toast.success(response.data.data);
-					setformToggle({ form: false });
-				} else {
-					toast.error('something went wrong');
-				}
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+		deleteUserApi(id)
+		.then((res)=>{
+			toast.success("User Deleted!");
+			setformToggle({ form: false });
+		})
+		.catch((err)=>{
+			toast.error(err.message);
+		});
 	};
 
 	const columns = [
@@ -179,12 +150,12 @@ export default function AllUsers(props) {
 
 	if (formToggle.form === false) {
 		return response.loading ? (
-			<div>Loading ...</div>
+			<Loading />
 		) : (
 			<Container>
 				<div className="card-header">
 					<h2 className="float-left">All Users</h2>
-					<Link to="/shipper/users/adduser">
+					<Link to="/admin/users/adduser">
 						<button className="btn btn-primary float-right">Add Users</button>
 					</Link>
 				</div>
@@ -206,7 +177,9 @@ export default function AllUsers(props) {
 					formData={data}
 					formToggle={setformToggle}
 					operation={'update'}
-					designation={['Manager', 'Supervisor']}
+                    designation={['Manager', 'Supervisor']}
+                    data={Roles}
+                    userType={"Admin"}
 				/>
 			</Container>
 		);

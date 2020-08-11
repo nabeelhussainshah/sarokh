@@ -171,3 +171,173 @@ export async function shipmentIssuesApi() {
 			throw err;
 		});
 }
+
+export async function allShippersApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/shipper/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function shipperBillingApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/admin/get-shipper-billing`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function addUserApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/user/add`, {
+			...data,
+			dob: new Date(data.dob).toISOString(),
+		})
+		.then((response) => {
+			if (response.data.status === 200) {
+				return true;
+			} else {
+				throw new Error('username already taken');
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function allUsersApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/user/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function deleteUserApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/user/delete/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateUserApi(data, id) {
+	return await axios
+		.patch(`${process.env.REACT_APP_API}/user/update`, {
+			...data,
+			roleId: parseInt(data.roleId),
+			dob: new Date(data.dob).toISOString(),
+			userId: id,
+		})
+		.then((res) => {
+			if (res.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function addShipperWarehouseApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/sarokh-warehouse/add`, {
+			...data,
+			locationLatitude: data.location[0].latitude,
+			locationLongitude: data.location[0].longitude,
+		})
+		.then((res) => {
+			if (res.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateShipperWarehouseApi(data) {
+	return await axios
+		.put(`${process.env.REACT_APP_API}/sarokh-warehouse/update`, {
+			...data,
+			locationLatitude: data.location[0].latitude,
+			locationLongitude: data.location[0].longitude,
+		})
+		.then((res) => {
+			if (res.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function warehouseListApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/sarokh-warehouse/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

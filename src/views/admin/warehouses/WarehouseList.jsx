@@ -1,41 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import Container from '../../components/Containers/ListingContainer';
-import { GoogleMapComponent } from '../../components/GoogleMap/GoogleMapComponent';
-import Table from '../../components/Generictable/generatictable';
-import { warehouseData } from '../../components/ShipperComponents/AddShipperWarehouse/state';
+import { warehouseListApi } from '../../../Api/adminApi';
+import Container from '../../../components/Containers/ListingContainer';
+import { GoogleMapComponent } from '../../../components/GoogleMap/GoogleMapComponent';
+import Table from '../../../components/Generictable/generatictable';
+import { warehouseData } from '../../../components/ShipperComponents/AddShipperWarehouse/state';
 import { useTransition, animated } from 'react-spring';
 
-export default function Maps(porps) {
+export default function WarehouseList(porps) {
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(warehouseData);
 	const [response, setresponse] = useState({ loading: true });
 	const user = JSON.parse(localStorage.getItem('user'));
 
 	useEffect(() => {
-		async function fetchData() {
-			await axios
-				.get(
-					`${process.env.REACT_APP_API}/shipper-warehouse/get-list-by-shipperId/${user.id}`
-				)
+		if (response.loading) {
+			warehouseListApi()
 				.then((res) => {
-					console.log(res);
-					if (res.data.status === 200) {
-						setresponse({ loading: false, data: res.data.data });
-					} else {
-						toast.error('something went wrong');
-					}
+					setresponse({ loading: false, data: res });
 				})
 				.catch((err) => {
 					toast.error(err.message);
 				});
-		}
-		if (response.loading) {
-			fetchData();
 		}
 	}, [response.loading]);
 
@@ -49,13 +38,9 @@ export default function Maps(porps) {
 					longitude: dataToEdit.locationLongitude,
 				},
 			],
-			operationalTimefrom: moment(dataToEdit.operationalTimefrom).format(
-				'hh:mm'
-			), //gives time for html input type='time' e.g "08:15"
-			operationalTimeto: moment(dataToEdit.operationalTimeto).format('hh:mm'),
 		});
 
-		hist.push('/shipper/addshipperwarehouse/step1');
+		hist.push('/admin/warehouses/addshipperwarehouse/step1');
 	};
 
 	const deleteData = async (dataToDelete) => {
@@ -78,7 +63,7 @@ export default function Maps(porps) {
 
 	const addNewWarehouse = () => {
 		setdata({ location: [{ latitude: '23.8859', longitude: '39.1925' }] }); //resets the global state incase any previous data was present
-		hist.push('/shipper/addshipperwarehouse/step1');
+		hist.push('/admin/warehouses/addshipperwarehouse/step1');
 	};
 
 	const columns = [
@@ -101,7 +86,7 @@ export default function Maps(porps) {
 			},
 		},
 		{
-			Header: 'Location Id',
+			Header: 'Warehouse Id',
 			accessor: 'id',
 		},
 		{
@@ -145,7 +130,7 @@ export default function Maps(porps) {
 					<animated.div key={key} style={props}>
 						<Container>
 							<div className="card-header">
-								<h2 className="float-left">Our Location</h2>
+								<h2 className="float-left">Warehouse List</h2>
 								<button
 									className="btn btn-info float-right"
 									onClick={() => addNewWarehouse()}

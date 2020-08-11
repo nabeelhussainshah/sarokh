@@ -2,16 +2,21 @@ import React from 'react';
 import SideNavBar from '../components/SideNavbar/SideNavbar';
 import AdminDashboard from '../views/admin/dashboard/AdminDashboard';
 import DriverLocation from '../views/admin/tracking/DriverLocation';
-import OrderLocation from "../views/admin/tracking/OrderLocation";
-import AllShipments from "../views/admin/shipments/AllShipments";
-import PendingShipments from "../views/admin/shipments/PendingShipments";
-import DeliveredShipments from "../views/admin/shipments/DeliveredShipments";
-import CodShipments from "../views/admin/shipments/CodShipments";
-import PrepaidShipments from "../views/admin/shipments/PrepaidShipments";
-import ReturnShipments from "../views/admin/shipments/ReturnShipments";
-import PickupShipments from "../views/admin/shipments/PickupShipments";
-import DeliveryShipments from "../views/admin/shipments/DeliveryShipments";
-import ShipmentIssues from "../views/admin/shipments/ShipmentIssues";
+import OrderLocation from '../views/admin/tracking/OrderLocation';
+import AllShipments from '../views/admin/shipments/AllShipments';
+import PendingShipments from '../views/admin/shipments/PendingShipments';
+import DeliveredShipments from '../views/admin/shipments/DeliveredShipments';
+import CodShipments from '../views/admin/shipments/CodShipments';
+import PrepaidShipments from '../views/admin/shipments/PrepaidShipments';
+import ReturnShipments from '../views/admin/shipments/ReturnShipments';
+import PickupShipments from '../views/admin/shipments/PickupShipments';
+import DeliveryShipments from '../views/admin/shipments/DeliveryShipments';
+import ShipmentIssues from '../views/admin/shipments/ShipmentIssues';
+import AllShippers from '../views/admin/shippers/AllShippers';
+import ShipperBilling from '../views/admin/shippers/ShipperBilling';
+import AddUser from '../views/admin/users/AddUser';
+import AllUsers from '../views/admin/users/AllUsers';
+import AddShipperWarehouse from '../views/admin/warehouses/AddShipperWarehouse';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import { adminRoutes } from '../routes/adminRoutes';
 import { toast } from 'react-toastify';
@@ -63,6 +68,20 @@ export default function AdminRouter(props) {
 			<ProtectedRoute
 				path="/admin/shipments/shipmentissues"
 				component={ShipmentIssues}
+			/>
+			<ProtectedRoute
+				path="/admin/shippers/allshippers"
+				component={AllShippers}
+			/>
+			<ProtectedRoute
+				path="/admin/shippers/shipperbilling"
+				component={ShipperBilling}
+			/>
+			<ProtectedRoute path="/admin/users/adduser" component={AddUser} />
+			<ProtectedRoute path="/admin/users/allusers" component={AllUsers} />
+			<ProtectedRoute
+				path="/admin/warehouses/"
+				component={AddShipperWarehouse}
 			/>
 		</Switch>
 	);

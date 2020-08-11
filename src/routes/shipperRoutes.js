@@ -30,7 +30,7 @@ export const shipperRoutes = [
       iconClass: "nav-icon fa fa-map",
     },
     {
-      to: "/shipper/users/adduser",
+      to: "/shipper/users",
       name: "Users",
       iconClass: "nav-icon fas fa-copy",
       subRoutes: [

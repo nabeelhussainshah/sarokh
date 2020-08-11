@@ -160,9 +160,9 @@ export default function AddUserForm(props) {
           </div>
           {props.userType === "Admin" ? ( //this will be only displayed for admin
             <div className="form-row mb-3">
-              <div className="col-6 pl-1 pr-2">
+              <div className="col-6">
                 <select
-                  name="role"
+                  name="roleId"
                   className="form-control"
                   id="roleId"
                   ref={register({
@@ -171,8 +171,8 @@ export default function AddUserForm(props) {
                   })}
                 >
                   <option value="true">--- Select Role ---</option>
-                  {props.data.map((doc,i) => {
-                    return <option key={i} value={doc.name}>{doc.name}</option>;
+                  {props.data.map((doc) => {
+                    return <option key={doc.name} value={doc.id}>{doc.name}</option>;
                   })}
                 </select>
                 <span style={{ color: "red" }}>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { warehouseData } from './state';
 import { useForm } from 'react-hook-form';
-import { useHistory,Redirect } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
@@ -18,15 +18,14 @@ export default function Step3(props) {
 		mode: 'onChange',
 		criteriaMode: 'all',
 	});
-    console.log(data);
+	console.log(data);
 
-    if (Object.keys(data).length === 1 && data.constructor === Object) {
-		return <Redirect to="/shipper/addshipperwarehouse/step1" />;
+	if (Object.keys(data).length === 1 && data.constructor === Object) {
+		return <Redirect to={props.defaultPath} />;
 	}
 
-
-    if(data.ready && data.update === undefined)
-    {		axios
+	if (data.ready && data.update === undefined) {
+		axios
 			.post(`${process.env.REACT_APP_API}/shipper-warehouse/add`, {
 				address: data.address,
 				city: data.city,
@@ -50,23 +49,20 @@ export default function Step3(props) {
 				shipperId: user.id,
 			})
 			.then((res) => {
-                console.log(res);
-                if(res.status === 200)
-                {
-                  toast.success("warehouse has been added");
-                  hist.push('/shipper/addshipperwarehouse/ourlocation');
-                }
-                else{
-                    toast.error("something went wrong");
-                }
+				console.log(res);
+				if (res.status === 200) {
+					toast.success('warehouse has been added');
+					hist.push('/shipper/addshipperwarehouse/ourlocation');
+				} else {
+					toast.error('something went wrong');
+				}
 			})
 			.catch((err) => {
-                toast.error(err.message);
+				toast.error(err.message);
 			});
 	}
 
-    if(data.ready && data.update)
-    {
+	if (data.ready && data.update) {
 		axios
 			.put(`${process.env.REACT_APP_API}/shipper-warehouse/update`, {
 				address: data.address,
@@ -92,32 +88,43 @@ export default function Step3(props) {
 				id: data.id,
 			})
 			.then((res) => {
-                console.log(res);
-                if(res.status === 200)
-                {
-                  toast.success("warehouse data has been updated");
-                  hist.push('/shipper/addshipperwarehouse/ourlocation');
-                }
-                else{
-                    toast.error("something went wrong");
-                }
+				console.log(res);
+				if (res.status === 200) {
+					toast.success('warehouse data has been updated');
+					hist.push(props.redirect);
+				} else {
+					toast.error('something went wrong');
+				}
 			})
 			.catch((err) => {
-                toast.error(err.message);
+				toast.error(err.message);
 			});
 	}
 
 	const onSubmit = (formdata) => {
-		setdata({ ...data, ...formdata, ready: true });
+		if (props.path) {
+			/* this if condition is for admin adding warehouses since this is the second step in the admin warehouse
+			so this check if put in place to redirect to the final step */
+
+			setdata({ ...data, ...formdata });
+			hist.push(props.path);
+		} else {
+			setdata({ ...data, ...formdata, ready: true });
+		}
 	};
 
 	return (
 		<Container>
 			<div className="card-header">
-			<h2>Add New Location</h2>
+				<h2>Add New Location</h2>
 			</div>
 			<div className="card-body">
-				<StepIndicator step1="done" step2="done" step3="current" />
+				<StepIndicator
+					step1="done"
+					step2="done"
+					step3="current"
+					type={props.type}
+				/>
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className="margintop30">
@@ -144,7 +151,7 @@ export default function Step3(props) {
 										name="qrscanner"
 										ref={register({ required: true })}
 									>
-											<option value={true}>Yes</option>
+										<option value={true}>Yes</option>
 										<option value={false}>No</option>
 									</select>
 								</div>
@@ -159,28 +166,48 @@ export default function Step3(props) {
 										name="thermalPrinter"
 										ref={register({ required: true })}
 									>
-											<option value={true}>Yes</option>
+										<option value={true}>Yes</option>
 										<option value={false}>No</option>
 									</select>
 								</div>
 							</div>
 						</div>
 
-						<div className="btn-container float-right">
-							<button className="btn btn-secondary dark-grey" type="button" onClick={()=>hist.goBack()}>
-								Go to previous step
-							</button>
-							&nbsp;
-							{data.update === undefined ? (
-								<button className="btn btn-success" type="submit" >
-									Finish
+						{props.type === 'Admin' ? (
+							<div className="btn-container float-right">
+								<button
+									className="btn btn-secondary dark-grey"
+									type="button"
+									onClick={() => hist.goBack()}
+								>
+									Go to previous step
 								</button>
-							) : (
+								&nbsp;
 								<button className="btn btn-secondary dark-grey" type="submit">
-									Update
+									Next
 								</button>
-							)}
-						</div>
+							</div>
+						) : (
+							<div className="btn-container float-right">
+								<button
+									className="btn btn-secondary dark-grey"
+									type="button"
+									onClick={() => hist.goBack()}
+								>
+									Go to previous step
+								</button>
+								&nbsp;
+								{data.update === undefined ? (
+									<button className="btn btn-success" type="submit">
+										Finish
+									</button>
+								) : (
+									<button className="btn btn-secondary dark-grey" type="submit">
+										Update
+									</button>
+								)}
+							</div>
+						)}
 					</form>
 				</div>
 			</div>

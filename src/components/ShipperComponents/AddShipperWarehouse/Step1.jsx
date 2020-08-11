@@ -1,33 +1,28 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {useRecoilState} from 'recoil';
+import { useRecoilState } from 'recoil';
 import Container from '../../Containers/ListingContainer';
-import StepIndicator from "./StepIndicator";
+import StepIndicator from './StepIndicator';
 import { GoogleMapComponent } from '../../GoogleMap/GoogleMapComponent';
-import {warehouseData} from './state';
-import {useForm} from 'react-hook-form';
-import {toast} from 'react-toastify';
-import {useHistory} from 'react-router-dom';
-
+import { warehouseData } from './state';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 export default function Step1(props) {
+	const hist = useHistory();
+	const [response, setresponse] = useState({ loading: true });
+	const [data, setdata] = useRecoilState(warehouseData);
+	const { register, errors, handleSubmit } = useForm({
+		defaultValues: data,
+		shouldFocusError: true,
+		mode: 'onChange',
+		criteriaMode: 'all',
+	});
 
-    const hist = useHistory();
-    const [response, setresponse] = useState({loading : true});
-    const [data,setdata] = useRecoilState(warehouseData);
-    const {register,errors,handleSubmit} = useForm(
-        {
-            defaultValues: data,
-            shouldFocusError : true,
-            mode: "onChange",
-            criteriaMode: "all"
-        }
-    );
+	console.log(data);
 
-    console.log(data);
-
-
-    useEffect(() => {
+	useEffect(() => {
 		async function fetchData() {
 			await axios
 				.get(`${process.env.REACT_APP_API}/country/get-countries-list`)
@@ -42,37 +37,41 @@ export default function Step1(props) {
 				});
 		}
 		fetchData();
-    }, []);
+	}, []);
 
-    const getCities = async (countryCode) => {
+	const getCities = async (countryCode) => {
 		await axios
 			.get(`${process.env.REACT_APP_API}/city/get-country-city/${countryCode}`)
 			.then((res) => {
 				console.log(res);
 				if (res.data.status === 200) {
 					setresponse({ ...response, loading: false, cities: res.data.data });
-					setdata({...data, city: undefined}); /* this is to remove the entry of city that was populated when editing warehouse so populated new cities in the dropdown
+					setdata({
+						...data,
+						city: undefined,
+					}); /* this is to remove the entry of city that was populated when editing warehouse so populated new cities in the dropdown
 					because even when the new country is selected the default value still remains the city list even if it does not belong to that country */
 				}
 			})
 			.catch((err) => {
 				toast.error(err.message);
 			});
-    };
-
-    const onSubmit = (formdata) => {
-        setdata({ ...data, ...formdata });
-        hist.push('/shipper/addshipperwarehouse/step2');
-
 	};
 
-	return response.loading ? <div>Loading...</div> : (
+	const onSubmit = (formdata) => {
+		setdata({ ...data, ...formdata });
+		hist.push(props.path);
+	};
+
+	return response.loading ? (
+		<div>Loading...</div>
+	) : (
 		<Container>
 			<div className="card-header">
 				<h2>Add New Location</h2>
 			</div>
 			<div className="card-body">
-                <StepIndicator step1="current" />
+				<StepIndicator step1="current" type={props.type} />
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
@@ -81,10 +80,10 @@ export default function Step1(props) {
 								type="text"
 								className="form-control"
 								name="name"
-                                placeholder="Name"
-                                ref={register({required: true})}
+								placeholder="Name"
+								ref={register({ required: true })}
 							/>
-                            	{errors?.name?.types?.required && (
+							{errors?.name?.types?.required && (
 								<p style={{ color: 'red' }}>Name is required</p>
 							)}
 						</div>
@@ -94,10 +93,10 @@ export default function Step1(props) {
 								type="text"
 								className="form-control"
 								name="address"
-                                placeholder="Address"
-                                ref={register({required: true})}
+								placeholder="Address"
+								ref={register({ required: true })}
 							/>
-                            	{errors?.address?.types?.required && (
+							{errors?.address?.types?.required && (
 								<p style={{ color: 'red' }}>address is required</p>
 							)}
 						</div>
@@ -170,10 +169,10 @@ export default function Step1(props) {
 								type="text"
 								className="form-control"
 								name="postalCode"
-                                placeholder="postalCode"
-                                ref={register({required: true})}
+								placeholder="postalCode"
+								ref={register({ required: true })}
 							/>
-                            	{errors?.postalCode?.types?.required && (
+							{errors?.postalCode?.types?.required && (
 								<p style={{ color: 'red' }}>postal code is required</p>
 							)}
 						</div>
@@ -183,11 +182,11 @@ export default function Step1(props) {
 							<label htmlFor="latitude">Select Location</label>
 							<GoogleMapComponent
 								isMarkerShown={true}
-                                position={data.location}
-                                changeFunction={setdata}
-                                draggable={true}
-                                globalState={data}
-                                autocompleted={true}
+								position={data.location}
+								changeFunction={setdata}
+								draggable={true}
+								globalState={data}
+								autocompleted={true}
 								googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
 								loadingElement={<div style={{ height: `100%` }} />}
 								containerElement={
@@ -202,13 +201,21 @@ export default function Step1(props) {
 								<div className="form-group col-md-6">
 									<div>
 										Latitude:
-										<input className="form-control" type="text" value={data.location[0].latitude} />
+										<input
+											className="form-control"
+											type="text"
+											value={data.location[0].latitude}
+										/>
 									</div>
 								</div>
 								<div className="form-group col-md-6">
 									<div>
-                                        longitude:
-										<input className="form-control" type="text" value={data.location[0].longitude}/>
+										longitude:
+										<input
+											className="form-control"
+											type="text"
+											value={data.location[0].longitude}
+										/>
 									</div>
 								</div>
 							</div>
