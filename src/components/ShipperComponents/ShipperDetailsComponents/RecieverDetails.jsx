@@ -3,7 +3,7 @@ import React from 'react';
 export default function RecieverDetails({ response }) {
   return (
     <div>
-      <h2 className="mt-3 mb-1 font20">Receiver Detail</h2>
+      <h2 className="mt-3 mb-1 font20 redcolor">Receiver Detail</h2>
       <table className="table table-resposive">
         <tbody>
           <tr>

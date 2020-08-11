@@ -4,7 +4,7 @@ export default function OrderDetails({ response }) {
   return (
     <div>
 
-      <h2 className="font20">Order Details</h2>
+      <h2 className="font20 redcolor">Order Details</h2>
       <table className="table table-resposive">
         <tbody>
           <tr>
