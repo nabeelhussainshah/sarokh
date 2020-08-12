@@ -12,6 +12,8 @@ h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
     flex: 1;
     min-width: 0;
 }
+.finance-detail h3{font-size: 20px;color: #ec1c24;}
+.finance-detail h4{font-size: 17px;color: #ec1c24;}
 .redcolor{color: #ec1c24;}
 .nav-sidebar>.nav-item .nav-icon{margin-right: 10px;}
 .custom-table table td,th{padding: 15px 10px;border-right: #fcdcb6 dotted 1px;border-top: #f6921d solid 1px; text-align: center; font-weight: normal; color: #595d6e; font-size: 15px;}
