@@ -3,13 +3,21 @@ import ListingContainer from '../../components/Containers/ListingContainer';
 import Table from '../../components/Generictable/generatictable';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
-import { allShipmentsApi, deleteShipmentApi } from '../../Api/shipperApi';
+import {
+	allShipmentsApi,
+	deleteShipmentApi,
+	editShipmentApi,
+} from '../../Api/shipperApi';
+import { shipmentEditHelper } from '../../Utils/shipmentEditHelper';
 import { useTransition, animated } from 'react-spring';
+import { useRecoilState } from 'recoil';
+import { newShipment } from '../../components/ShipperComponents/NewShipmentSteps/state';
 import { toast } from 'react-toastify';
 
 export default function AllShipments(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
+	const [data, setdata] = useRecoilState(newShipment);
 
 	useEffect(() => {
 		if (response.loading) {
@@ -44,6 +52,18 @@ export default function AllShipments(props) {
 			});
 	};
 
+	const editData = (id) => {
+		editShipmentApi(id)
+			.then((res) => {
+				const dataToSet = shipmentEditHelper(res, id);
+				setdata(dataToSet);
+				hist.push('/shipper/newshipment/step1');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
@@ -59,6 +79,13 @@ export default function AllShipments(props) {
 						<i
 							className="fa fa-trash"
 							onClick={() => deleteData(row.row.original.id)}
+						></i>
+						&nbsp;&nbsp;
+						<i
+							className="fa fa-edit"
+							onClick={() => {
+								editData(row.row.original.id);
+							}}
 						></i>
 					</Fragment>
 				);

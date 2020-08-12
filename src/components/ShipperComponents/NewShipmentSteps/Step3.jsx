@@ -68,15 +68,35 @@ export default function Step3(props) {
 		if (list.length === 0) {
 			toast.warning('Please add data first by using add way bill or clone');
 		} else {
-      postData(list)
-      .then((res)=>{
-        toast.success("order was created successfully");
-        cancel();
-      })
-      .catch((err)=>{
-        toast.error(err.message);
-      });
+			postData(list)
+				.then((res) => {
+					toast.success('order was created successfully');
+					cancel();
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
 		}
+	};
+
+	const updateData = (value) => {
+		setlist([
+			...list,
+			{
+				...data,
+				...value,
+				additionalCharges: data.additionalCharges,
+				shipmentCost: data.total + Math.round((data.total / 100) * 15),
+			},
+		]);
+		postData(list, 'update')
+			.then((res) => {
+				toast.success('order was successfully updated!');
+				cancel();
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	/* this function is executed when the checkboxes are checked and when the shipment value field is changed when the option is normalPackaging and the check is true
@@ -146,7 +166,16 @@ value is deducted from these fields this does not include the gift packaging val
 	};
 
 	const cancel = () => {
-		setdata({});
+		setdata({
+			shipmentValue: 10,
+			normalPackaging: true,
+			giftPackaging: false,
+			insurance: false,
+			additionalCharges: 0,
+			total: 45,
+			billingType: 'true',
+			location: [{ latitude: '23.8859', longitude: '39.1925' }],
+		});
 		setlist([]);
 		hist.push('/shipper/allshipments');
 	};
@@ -457,8 +486,10 @@ value is deducted from these fields this does not include the gift packaging val
 											className="form-control"
 											name="codValue"
 											min="1"
-                      placeholder="Shipment Title"
-                      onChange={(e)=>setdata({...data, codValue: e.target.value})}
+											placeholder="Shipment Title"
+											onChange={(e) =>
+												setdata({ ...data, codValue: e.target.value })
+											}
 											ref={register({ min: 1, required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -534,27 +565,39 @@ value is deducted from these fields this does not include the gift packaging val
 								</button>
 							</div>
 							<div className="btn-container float-right">
-								<input
-									className="btn btn-success"
-									value="Clone"
-									type="button"
-									onClick={() => handleSubmit(clone)()}
-								/>
-								<input
-									className="btn btn-success"
-									value="Add to way bill"
-									type="button"
-									onClick={() => handleSubmit(onSubmit)()}
-								/>
+								{data.update ? (
+									<button
+										className="btn btn-success mt-3 width206 finishbtn"
+										type="button"
+										onClick={() => updateData()}
+									>
+										Update
+									</button>
+								) : (
+									<>
+										<input
+											className="btn btn-success"
+											value="Clone"
+											type="button"
+											onClick={() => handleSubmit(clone)()}
+										/>
+										<input
+											className="btn btn-success"
+											value="Add to way bill"
+											type="button"
+											onClick={() => handleSubmit(onSubmit)()}
+										/>
 
-								<div className="clearfix"></div>
-								<button
-									className="btn btn-success mt-3 width206 finishbtn"
-									type="button"
-									onClick={() => submitData()}
-								>
-									Finish
-								</button>
+										<div className="clearfix"></div>
+										<button
+											className="btn btn-success mt-3 width206 finishbtn"
+											type="button"
+											onClick={() => submitData()}
+										>
+											Finish
+										</button>
+									</>
+								)}
 							</div>
 							<div className="clearfix" />
 						</div>

@@ -52,3 +52,21 @@ export async function deleteShipmentApi(id) {
 			throw err;
 		});
 }
+
+export async function editShipmentApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/order/edit-order/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

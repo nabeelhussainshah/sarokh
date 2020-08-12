@@ -10,9 +10,8 @@ export default function Step2(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const user = JSON.parse(localStorage.getItem('user'));
-  const [data, setdata] = useRecoilState(newShipment);
-  const setState = useSetRecoilState(newShipmentList);
-
+	const [data, setdata] = useRecoilState(newShipment);
+	const setState = useSetRecoilState(newShipmentList);
 
 	console.log(data);
 
@@ -47,35 +46,45 @@ export default function Step2(props) {
 		fetchData();
 	}, []);
 
-	if (Object.keys(data).length <= 8 && data.constructor === Object) { // this is to check if the values exist from step1 if they dont page will be redirected to step 1 the default values have the length of 8
+	if (Object.keys(data).length <= 8 && data.constructor === Object) {
+		// this is to check if the values exist from step1 if they dont page will be redirected to step 1 the default values have the length of 8
 		return <Redirect to="/shipper/newshipment/step1" />;
 	}
 
-	if (data.deliveryLocationRadio && data.deliveryLocation) { // this first check is to check if the values exist becasue these values wont exist when user comes from step1 to step2 in newly created form but will exist in editing existing record
+	if (data.deliveryLocationRadio && data.deliveryLocation) {
+		// this first check is to check if the values exist becasue these values wont exist when user comes from step1 to step2 in newly created form but will exist in editing existing record
 		if (
 			data.deliveryLocationRadio === 'sarokhPoint' &&
-      data.location[0].latitude !== '23.8859' && // co-ordinates are checked if the co-oridinates are not as in this condition this means they are not default and need to be changed
-      data.location[0].longitude !== '39.1925'
+			data.location[0].latitude !== '23.8859' && // co-ordinates are checked if the co-oridinates are not as in this condition this means they are not default and need to be changed
+			data.location[0].longitude !== '39.1925'
 		) {
 			setdata({
 				...data,
 				location: [{ latitude: '23.8859', longitude: '39.1925' }],
 			}); //this check is in case the user edits the data from the table in step3 and chooses to select a sarokh point instead of customer address then we need to set the location to default instead of previous value inserted because map is only showen when the customeraddress is selected
 		}
-  }
-
+	}
 
 	const goback = () => {
 		hist.push({
 			pathname: '/shipper/newshipment/step1',
 		});
-  };
+	};
 
-  const cancel = () => {
-    setdata({});
-    setState([]);
-    hist.push('/shipper/allshipments');
-  };
+	const cancel = () => {
+		setdata({
+			shipmentValue: 10,
+			normalPackaging: true,
+			giftPackaging: false,
+			insurance: false,
+			additionalCharges: 0,
+			total: 45,
+			billingType: 'true',
+			location: [{ latitude: '23.8859', longitude: '39.1925' }],
+		});
+		setState([]);
+		hist.push('/shipper/allshipments');
+	};
 
 	return response.loading ? (
 		<div>Loading...</div>
@@ -297,7 +306,13 @@ export default function Step2(props) {
 				<div className="form-row">
 					<div className="col-sm-12">
 						<div className="btn-container float-left">
-							<button type="button" className="btn btn-danger" onClick={()=>{cancel()}}>
+							<button
+								type="button"
+								className="btn btn-danger"
+								onClick={() => {
+									cancel();
+								}}
+							>
 								Cancel
 							</button>
 						</div>
@@ -310,7 +325,7 @@ export default function Step2(props) {
 							>
 								Go to previous step
 							</button>
-              &nbsp;&nbsp;
+							&nbsp;&nbsp;
 							<button className="btn btn-success" type="submit">
 								Next step
 							</button>
