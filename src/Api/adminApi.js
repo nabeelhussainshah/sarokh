@@ -341,3 +341,20 @@ export async function warehouseListApi() {
 			throw err;
 		});
 }
+
+export async function deleteWarehouseApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/sarokh-warehouse/delete/${id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

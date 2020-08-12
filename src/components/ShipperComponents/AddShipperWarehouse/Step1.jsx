@@ -49,7 +49,8 @@ export default function Step1(props) {
 					setdata({
 						...data,
 						city: undefined,
-					}); /* this is to remove the entry of city that was populated when editing warehouse so populated new cities in the dropdown
+					});
+					/* this is to remove the entry of city that was populated when editing warehouse so populated new cities in the dropdown
 					because even when the new country is selected the default value still remains the city list even if it does not belong to that country */
 				}
 			})

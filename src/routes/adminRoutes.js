@@ -145,24 +145,24 @@ export const adminRoutes = [
 		],
 	},
 	{
-		to: '/shipper/users/adduser',
+		to: '/admin/finance/',
 		name: 'Finance',
 		iconClass: 'nav-icon fas fa-money-bill-wave',
 		subRoutes: [
 			{
-				to: '/shipper/users/adduser',
-				name: 'Add Driver',
+				to: '/admin/finance/dasboard',
+				name: 'Finance Dashboard',
 				iconClass: 'nav-icon fas fa-map',
 			},
 		],
 	},
 	{
-		to: '/shipper/users/adduser',
+		to: '/admin/drivers/',
 		name: 'Drivers',
 		iconClass: 'nav-icon fas fa-map',
 		subRoutes: [
 			{
-				to: '/shipper/users/adduser',
+				to: '/admin/drivers/adddriver/step1',
 				name: 'Add Driver',
 				iconClass: 'nav-icon fas fa-map',
 			},

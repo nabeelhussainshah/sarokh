@@ -17,6 +17,8 @@ import ShipperBilling from '../views/admin/shippers/ShipperBilling';
 import AddUser from '../views/admin/users/AddUser';
 import AllUsers from '../views/admin/users/AllUsers';
 import AddShipperWarehouse from '../views/admin/warehouses/AddShipperWarehouse';
+import AddDriver from '../views/admin/drivers/AddDriver';
+import FinanceDashboard from '../views/admin/finance/FinanceDashboard';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import { adminRoutes } from '../routes/adminRoutes';
 import { toast } from 'react-toastify';
@@ -82,6 +84,11 @@ export default function AdminRouter(props) {
 			<ProtectedRoute
 				path="/admin/warehouses/"
 				component={AddShipperWarehouse}
+			/>
+			<ProtectedRoute path="/admin/drivers/" component={AddDriver} />
+			<ProtectedRoute
+				path="/admin/finance/dasboard"
+				component={FinanceDashboard}
 			/>
 		</Switch>
 	);

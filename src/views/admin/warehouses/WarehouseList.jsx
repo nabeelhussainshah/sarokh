@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { warehouseListApi } from '../../../Api/adminApi';
+import { warehouseListApi, deleteWarehouseApi } from '../../../Api/adminApi';
 import Container from '../../../components/Containers/ListingContainer';
 import { GoogleMapComponent } from '../../../components/GoogleMap/GoogleMapComponent';
 import Table from '../../../components/Generictable/generatictable';
@@ -44,17 +44,10 @@ export default function WarehouseList(porps) {
 	};
 
 	const deleteData = async (dataToDelete) => {
-		await axios
-			.delete(
-				`${process.env.REACT_APP_API}/shipper-warehouse/delete/${dataToDelete.id}`
-			)
+		deleteWarehouseApi(dataToDelete.id)
 			.then((res) => {
-				if (res.data.status === 200) {
-					toast.success(res.data.data);
-					setresponse({ ...response, loading: true });
-				} else {
-					toast.error('something went wrong');
-				}
+				toast.success('warehouse deleted!');
+				setresponse({ loading: true });
 			})
 			.catch((err) => {
 				toast.error(err.message);
