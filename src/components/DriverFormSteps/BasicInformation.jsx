@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { driverData } from './state';
+import { uploadFile } from '../../Api/generalApi';
 import StepIndicator from './StepIndicator';
+import { toast } from 'react-toastify';
 
 export default function BasicInformation(props) {
 	const hist = useHistory();
@@ -16,11 +18,21 @@ export default function BasicInformation(props) {
 		criteriaMode: 'all',
 	});
 
+	console.log(data);
+
 	const onSubmit = (formData) => {
-		console.log(formData);
-		window.alert(JSON.stringify(data));
-		setdata({ ...data, formData });
+		setdata({ ...data, ...formData });
 		hist.push(props.next);
+	};
+
+	const uploadPicture = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, profilePicture: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	return (
@@ -104,6 +116,7 @@ export default function BasicInformation(props) {
 										className="form-control"
 										placeholder="RegistrationFile"
 										name="profilePicture"
+										onChange={(e) => uploadPicture(e.target.files[0])}
 									/>
 								</div>
 							</div>
@@ -123,8 +136,12 @@ export default function BasicInformation(props) {
 							</span>
 						</div>
 					</div>
-					<div className="btn-container float-right">
-						<button className="btn btn-success" type="submit">
+					<div className="btn-container float-right" style={{ margin: '10px' }}>
+						<button
+							className="btn btn-success"
+							type="submit"
+							disabled={data.profilePicture ? false : true}
+						>
 							Next Step
 						</button>
 					</div>

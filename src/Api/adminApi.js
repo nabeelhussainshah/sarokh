@@ -358,3 +358,27 @@ export async function deleteWarehouseApi(id) {
 			throw err;
 		});
 }
+
+export async function addDriver(data) {
+	const payload = {
+		...data,
+		contactValidTill: new Date(data.contactValidTill).toISOString(),
+		contractStartDate: new Date(data.contractStartDate).toISOString(),
+		dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+	};
+
+	return await axios
+		.post(`${process.env.REACT_APP_API}/driver/add`, payload)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

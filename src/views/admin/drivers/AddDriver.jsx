@@ -31,16 +31,16 @@ export default function AddDriver(props) {
 					<Step1 next={routes.step2} />
 				</Route>
 				<Route exact path={routes.step2}>
-					<Step2 next={routes} />
+					<Step2 next={routes} defaultPath={routes.step1} />
 				</Route>
 				<Route exact path={routes.step3}>
-					<Step3 next={routes.step2} />
+					<Step3 next={routes.step4} defaultPath={routes.step1} />
 				</Route>
 				<Route exact path={routes.step4}>
-					<Step4 next={routes.step2} />
+					<Step4 next={routes.step5} defaultPath={routes.step1} />
 				</Route>
 				<Route exact path={routes.step5}>
-					<Step5 next={routes.step2} />
+					<Step5 next={routes.step2} defaultPath={routes.step1} />
 				</Route>
 			</Switch>
 		</RecoilRoot>

@@ -5,6 +5,9 @@ import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { driverData } from './state';
 import StepIndicator from './StepIndicator';
+import { toast } from 'react-toastify';
+import { uploadFile } from '../../Api/generalApi';
+import { Redirect } from 'react-router-dom';
 
 export default function VehicleDetail(props) {
 	const hist = useHistory();
@@ -16,6 +19,26 @@ export default function VehicleDetail(props) {
 		criteriaMode: 'all',
 	});
 
+	if (Object.keys(data).length === 1 && data.constructor === Object) {
+		return <Redirect to={props.defaultPath} />;
+	}
+
+	const onSubmit = (formData) => {
+		console.log(formData);
+		setdata({ ...data, ...formData });
+		hist.push(props.next);
+	};
+
+	const uploadRegistrationFile = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, registrationFile: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	return (
 		<Container>
 			<div className="card-header">
@@ -25,7 +48,7 @@ export default function VehicleDetail(props) {
 				<div className="margintop30">
 					<StepIndicator step1="done" step2="done" step3="current" />
 				</div>
-				<form className="margintop30">
+				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
 							<label htmlFor="name">Vehicle Name</label>
@@ -34,18 +57,26 @@ export default function VehicleDetail(props) {
 								className="form-control"
 								name="vehicleName"
 								placeholder="Vehicle Name"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.vehicleName && 'Vehicle Name is required'}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="model">Vehicle Model</label>
 							<input
 								type="text"
 								className="form-control"
-								id="vehicleModel"
+								name="vehicleModel"
 								placeholder="Vehicle Model"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.vehicleModel && 'Vehicle Model is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -56,8 +87,12 @@ export default function VehicleDetail(props) {
 								className="form-control"
 								placeholder="Vehicle Maker"
 								name="make"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.make && 'Vehicle Maker is required'}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="type">Vehicle Type</label>
@@ -66,20 +101,28 @@ export default function VehicleDetail(props) {
 								className="form-control"
 								name="type"
 								placeholder="Vehicle Type"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.type && 'Vehicle Type is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
 							<label htmlFor="cargoCapacity">Vehicle Cargo Capicity</label>
 							<input
-								type="text"
+								type="number"
 								className="form-control"
 								name="cargoCapacity"
 								placeholder="Vehicle Cargo Capicity"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.cargoCapacity && 'Vehicle Cargo Capicity is required'}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="registrationNumber">Vehicle Reg No</label>
@@ -88,8 +131,12 @@ export default function VehicleDetail(props) {
 								className="form-control"
 								name="registrationNumber"
 								placeholder="Vehicle Reg No"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.registrationNumber && 'Vehicle Reg No is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -104,6 +151,7 @@ export default function VehicleDetail(props) {
 									className="form-control"
 									placeholder="RegistrationFile"
 									name="registrationFile"
+									onChange={(e) => uploadRegistrationFile(e.target.files[0])}
 								/>
 							</div>
 						</div>
@@ -114,8 +162,12 @@ export default function VehicleDetail(props) {
 								className="form-control"
 								name="productionYear"
 								placeholder="Production Year"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.productionYear && 'Production Year is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -126,15 +178,27 @@ export default function VehicleDetail(props) {
 								className="form-control"
 								name="registrationYear"
 								placeholder="Registration Year"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.registrationYear && 'Registration Year is required'}
+							</span>
 						</div>
 					</div>
-					<div className="btn-container float-right">
-						<button className="btn btn-secondary dark-grey" type="button">
+					<div className="btn-container float-right" style={{ margin: '10px' }}>
+						<button
+							className="btn btn-secondary dark-grey"
+							type="button"
+							onClick={() => hist.goBack()}
+						>
 							Go to previous step
 						</button>
-						<button className="btn btn-success" type="button">
+						<button
+							className="btn btn-success"
+							type="submit"
+							disabled={data.registrationFile ? false : true}
+						>
 							Next step
 						</button>
 					</div>

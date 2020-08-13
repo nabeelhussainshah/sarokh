@@ -5,6 +5,9 @@ import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { driverData } from './state';
 import StepIndicator from './StepIndicator';
+import { toast } from 'react-toastify';
+import { uploadFile } from '../../Api/generalApi';
+import { Redirect } from 'react-router-dom';
 
 export default function BasicInformation(props) {
 	const hist = useHistory();
@@ -15,6 +18,26 @@ export default function BasicInformation(props) {
 		mode: 'onChange',
 		criteriaMode: 'all',
 	});
+
+	if (Object.keys(data).length === 1 && data.constructor === Object) {
+		return <Redirect to={props.defaultPath} />;
+	}
+
+	const onSubmit = (formData) => {
+		console.log(formData);
+		setdata({ ...data, ...formData });
+		hist.push(props.next);
+	};
+
+	const uploadContract = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, contactFile: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
 
 	return (
 		<Container>
@@ -30,7 +53,7 @@ export default function BasicInformation(props) {
 						step4="current"
 					/>
 				</div>
-				<form className="margintop30">
+				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
 							<label htmlFor="compensationCycle">Compensation Cycle</label>
@@ -39,8 +62,12 @@ export default function BasicInformation(props) {
 								className="form-control"
 								name="compensationCycle"
 								placeholder="Compensation Cycle"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.compensationCycle && 'Compensation Cycle is required'}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="compensation">Compensation</label>
@@ -49,8 +76,12 @@ export default function BasicInformation(props) {
 								className="form-control"
 								name="compensation"
 								placeholder="Compensation"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.compensation && 'Compensation is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -61,8 +92,12 @@ export default function BasicInformation(props) {
 								className="form-control"
 								name="contractStartDate"
 								placeholder="Contract Starting"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contractStartDate && 'Contract date is required'}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="contactValidTill">Contract Valid Till</label>
@@ -71,8 +106,12 @@ export default function BasicInformation(props) {
 								className="form-control"
 								name="contactValidTill"
 								placeholder="Contract Valid Till"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contactValidTill && 'Contract Valid date is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -86,14 +125,22 @@ export default function BasicInformation(props) {
 										className="form-control"
 										placeholder="RegistrationFile"
 										name="contactFile"
+										onChange={(e) => uploadContract(e.target.files[0])}
 									/>
 								</div>
 							</div>
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="bank">Bank Name</label>
-							<select className="form-control" id="bank" formcontrolname="bank">
-								<option value>Select Bank Name</option>
+							<select
+								className="form-control"
+								name="bank"
+								ref={register({
+									required: true,
+									validate: (value) => value !== 'true',
+								})}
+							>
+								<option value="true">Select Bank Name</option>
 								<option value="The National Commercial Bank">
 									The National Commercial Bank{' '}
 								</option>
@@ -123,6 +170,10 @@ export default function BasicInformation(props) {
 									Gulf International Bank Saudi Aribia (GIB-SA){' '}
 								</option>
 							</select>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.bank && 'Bank is required'}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -133,15 +184,27 @@ export default function BasicInformation(props) {
 								className="form-control"
 								name="iban"
 								placeholder="IBAN"
-								required
+								ref={register({ required: true })}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.iban && 'IBAN is required'}
+							</span>
 						</div>
 					</div>
-					<div className="btn-container float-right">
-						<button className="btn btn-secondary dark-grey" type="button">
+					<div className="btn-container float-right" style={{ margin: '10px' }}>
+						<button
+							className="btn btn-secondary dark-grey"
+							type="button"
+							onClick={() => hist.goBack()}
+						>
 							Go to previous step
 						</button>
-						<button className="btn btn-success" type="button">
+						<button
+							className="btn btn-success"
+							type="submit"
+							disabled={data.contactFile ? false : true}
+						>
 							Next step
 						</button>
 					</div>

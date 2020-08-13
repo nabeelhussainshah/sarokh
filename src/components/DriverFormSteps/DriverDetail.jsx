@@ -6,6 +6,9 @@ import { useRecoilState } from 'recoil';
 import { driverData } from './state';
 import StepIndicator from './StepIndicator';
 import { cities } from '../../Utils/cities';
+import { toast } from 'react-toastify';
+import { uploadFile } from '../../Api/generalApi';
+import { Redirect } from 'react-router-dom';
 
 export default function DriverDetails(props) {
 	const hist = useHistory();
@@ -17,9 +20,12 @@ export default function DriverDetails(props) {
 		criteriaMode: 'all',
 	});
 
+	if (Object.keys(data).length === 1 && data.constructor === Object) {
+		return <Redirect to={props.defaultPath} />;
+	}
+
 	const onSubmit = (formData) => {
 		console.log(formData);
-		window.alert(JSON.stringify(formData));
 		setdata({ ...data, ...formData });
 
 		if (data.driverType === 'employee') {
@@ -27,6 +33,26 @@ export default function DriverDetails(props) {
 		} else {
 			hist.push(props.next.step3);
 		}
+	};
+
+	const uploadNic = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, nicFile: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
+	const uploadLicence = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, licenceFile: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	return (
@@ -98,7 +124,11 @@ export default function DriverDetails(props) {
 						</div>
 						<div className="form-group col-md-6">
 							<label>Select Country</label>
-							<select className="form-control" name="country">
+							<select
+								className="form-control"
+								name="country"
+								ref={register({ required: true })}
+							>
 								<option value="SAU">Saudi Arabia</option>
 							</select>
 						</div>
@@ -166,6 +196,7 @@ export default function DriverDetails(props) {
 										className="form-control"
 										placeholder="RegistrationFile"
 										name="nicFile"
+										onChange={(e) => uploadNic(e.target.files[0])}
 									/>
 								</div>
 							</div>
@@ -196,16 +227,28 @@ export default function DriverDetails(props) {
 										className="form-control"
 										placeholder="RegistrationFile"
 										name="licenceFile"
+										onChange={(e) => uploadLicence(e.target.files[0])}
 									/>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="btn-container float-right margintop30">
-						<button class="btn btn-secondary dark-grey" type="button">
+					<div
+						class="btn-container float-right margintop30"
+						style={{ margin: '10px' }}
+					>
+						<button
+							class="btn btn-secondary dark-grey"
+							type="button"
+							onClick={() => hist.goBack()}
+						>
 							Go to previous step
 						</button>
-						<button class="btn btn-success" type="submit">
+						<button
+							class="btn btn-success"
+							type="submit"
+							disabled={data.nicFile && data.licenceFile ? false : true}
+						>
 							Next step
 						</button>
 					</div>
