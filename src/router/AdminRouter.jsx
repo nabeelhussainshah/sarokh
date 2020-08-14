@@ -24,10 +24,10 @@ import AddVehicle from '../views/admin/Vehicle/AddVehicle';
 import AllVehicles from '../views/admin/Vehicle/AllVehicle';
 import MaintenanceRecords from '../views/admin/Vehicle/MaintenanceRecords';
 import AddDealer from '../views/admin/dealer/AddDealer';
-import CreateBill from '../views/admin/finance/BillDetail';
+import CreateBill from '../views/admin/finance/CreateBill';
 import PaymentRecord from '../views/admin/finance/RecordPayment';
 import BillDetail from '../views/admin/finance/BillDetail';
-import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { Switch, Redirect } from 'react-router-dom';
 import { adminRoutes } from '../routes/adminRoutes';
 import { toast } from 'react-toastify';
 
