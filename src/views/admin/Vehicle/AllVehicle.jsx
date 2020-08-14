@@ -3,9 +3,10 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allShipmentsApi } from '../../../Api/adminApi';
+import { allVehiclesApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 export default function AllShipments(props) {
 	const hist = useHistory();
@@ -13,7 +14,7 @@ export default function AllShipments(props) {
 
 	useEffect(() => {
 		if (response.loading) {
-			allShipmentsApi()
+			allVehiclesApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -23,12 +24,15 @@ export default function AllShipments(props) {
 		}
 	}, [response.loading]);
 
-	const handleClick = (row) => {
+	const Edit = (row) => {
 		console.log(row.row.original.id);
 		hist.push({
-			pathname: '/shipper/shipments/vieworder',
+			pathname: '/admin/vehicles/addvehicle',
 			state: {
-				id: row.row.original.id,
+				...row.row.original,
+				createdDate: moment(row.row.original.createdDate).format(
+					moment.HTML5_FMT.DATE
+				),
 			},
 		});
 	};
@@ -40,42 +44,26 @@ export default function AllShipments(props) {
 			Cell: (row) => {
 				return (
 					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
+						<i className="fa fa-edit" onClick={() => Edit(row)}></i>
 					</Fragment>
 				);
 			},
 		},
 		{
-			Header: 'id',
-			accessor: 'id',
+			Header: 'Car Name',
+			accessor: 'name',
 		},
 		{
-			Header: 'tracking No',
-			accessor: 'shipmentId',
+			Header: 'Owner',
+			accessor: 'owner',
 		},
 		{
-			Header: 'Date And Time',
-			accessor: 'dateTime',
+			Header: 'Type',
+			accessor: 'type',
 		},
 		{
-			Header: 'Shipper',
-			accessor: 'shipper',
-		},
-		{
-			Header: 'Current Location',
-			accessor: 'currentLocation',
-		},
-
-		{
-			Header: 'Destination City',
-			accessor: 'destinationCity',
-		},
-		{
-			Header: 'Status',
-			accessor: 'status',
+			Header: 'Warehouse',
+			accessor: '',
 		},
 	];
 

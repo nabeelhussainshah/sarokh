@@ -23,3 +23,21 @@ export async function uploadFile(file) {
 			throw err;
 		});
 }
+
+export async function sarokhWarehouseList() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/sarokh-warehouse/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data.warehouseList;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

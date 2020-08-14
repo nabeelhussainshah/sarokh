@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { driverData } from './state';
 import StepIndicator from './StepIndicator';
 import { Redirect } from 'react-router-dom';
-import { addDriver } from '../../Api/adminApi';
+import { addDriverApi } from '../../Api/adminApi';
 import { toast } from 'react-toastify';
 
 export default function BasicInformation(props) {
@@ -26,7 +26,7 @@ export default function BasicInformation(props) {
 	console.log(data);
 
 	if (data.ready && data.update === undefined) {
-		addDriver(data)
+		addDriverApi(data)
 			.then((res) => {
 				toast.success('driver successfully added');
 			})

@@ -3,34 +3,16 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allShipmentsApi } from '../../../Api/adminApi';
+import { allDriversApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
-export default function AllShipments(props) {
+export default function MaintenanceRecords(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: true });
-
-	useEffect(() => {
-		if (response.loading) {
-			allShipmentsApi()
-				.then((res) => {
-					setresponse({ loading: false, data: res });
-				})
-				.catch((err) => {
-					toast.error(err.message);
-				});
-		}
-	}, [response.loading]);
+	const [response, setresponse] = useState({ loading: false, data: [] });
 
 	const handleClick = (row) => {
 		console.log(row.row.original.id);
-		hist.push({
-			pathname: '/shipper/shipments/vieworder',
-			state: {
-				id: row.row.original.id,
-			},
-		});
 	};
 
 	const columns = [
@@ -49,33 +31,32 @@ export default function AllShipments(props) {
 			},
 		},
 		{
-			Header: 'id',
-			accessor: 'id',
+			Header: 'ID',
+			accessor: '',
 		},
 		{
-			Header: 'tracking No',
-			accessor: 'shipmentId',
+			Header: 'Description',
+			accessor: '',
 		},
 		{
-			Header: 'Date And Time',
-			accessor: 'dateTime',
+			Header: 'Maintenance Type',
+			accessor: '',
 		},
 		{
-			Header: 'Shipper',
-			accessor: 'shipper',
+			Header: 'Repair Faculty',
+			accessor: '',
 		},
 		{
-			Header: 'Current Location',
-			accessor: 'currentLocation',
-		},
-
-		{
-			Header: 'Destination City',
-			accessor: 'destinationCity',
+			Header: 'Autorized By',
+			accessor: '',
 		},
 		{
-			Header: 'Status',
-			accessor: 'status',
+			Header: 'Repair start Date',
+			accessor: '',
+		},
+		{
+			Header: 'Repair End Date',
+			accessor: '',
 		},
 	];
 
@@ -103,7 +84,7 @@ export default function AllShipments(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Shipments</h2>
+								<h2 className="float-left">Maintenance Records</h2>
 							</div>
 							<div className="card-body">
 								<Table
@@ -112,7 +93,6 @@ export default function AllShipments(props) {
 									tableclass={'table-responsive custom-table'}
 									pagination={true}
 									filter={true}
-									hiddenColumns={['id']}
 								/>
 							</div>
 						</ListingContainer>

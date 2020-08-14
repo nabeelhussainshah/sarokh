@@ -25,6 +25,7 @@
     "react-to-print": "^2.9.0",
     "react-toastify": "^6.0.8",
     "recoil": "0.0.10",
+    "underscore": "^1.10.2",
     "yup": "^0.29.2"
   },
   "scripts": {

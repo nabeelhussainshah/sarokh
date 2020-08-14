@@ -80,23 +80,27 @@ export default function Step3(props) {
 	};
 
 	const updateData = (value) => {
-		setlist([
-			...list,
-			{
-				...data,
-				...value,
-				additionalCharges: data.additionalCharges,
-				shipmentCost: data.total + Math.round((data.total / 100) * 15),
-			},
-		]);
-		postData(list, 'update')
-			.then((res) => {
-				toast.success('order was successfully updated!');
-				cancel();
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+		if (list.length === 0) {
+			setlist([
+				...list,
+				{
+					...data,
+					...value,
+					additionalCharges: data.additionalCharges,
+					shipmentCost: data.total + Math.round((data.total / 100) * 15),
+				},
+			]);
+			postData(list, 'update')
+				.then((res) => {
+					toast.success('order was successfully updated!');
+					cancel();
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		} else {
+			toast.warning('only one order can be updated at a time');
+		}
 	};
 
 	/* this function is executed when the checkboxes are checked and when the shipment value field is changed when the option is normalPackaging and the check is true

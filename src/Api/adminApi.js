@@ -359,7 +359,7 @@ export async function deleteWarehouseApi(id) {
 		});
 }
 
-export async function addDriver(data) {
+export async function addDriverApi(data) {
 	const payload = {
 		...data,
 		contactValidTill: new Date(data.contactValidTill).toISOString(),
@@ -376,6 +376,88 @@ export async function addDriver(data) {
 				throw new Error(
 					`something went wrong with status code: ${res.data.status}`
 				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function allDriversApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/driver/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function addVehicleApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/vehicle/add`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function allVehiclesApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/vehicle/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateVehicleApi(data) {
+	return await axios
+		.put(`${process.env.REACT_APP_API}/vehicle/update`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function maintenanceRecordsApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/vehicle/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
 			}
 		})
 		.catch((err) => {

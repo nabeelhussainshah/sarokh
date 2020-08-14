@@ -152,7 +152,22 @@ export const adminRoutes = [
 			{
 				to: '/admin/finance/dasboard',
 				name: 'Finance Dashboard',
-				iconClass: 'nav-icon fas fa-map',
+				iconClass: 'nav-icon fas fa-money-bill-wave',
+			},
+			{
+				to: '/admin/finance/createbill',
+				name: 'Create Bill',
+				iconClass: 'nav-icon fas fa-money-bill-wave',
+			},
+			{
+				to: '/admin/finance/paymentrecord',
+				name: 'Payment Record',
+				iconClass: 'nav-icon fas fa-money-bill-wave',
+			},
+			{
+				to: '/admin/finance/billdetail',
+				name: 'Bill Details',
+				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
 		],
 	},
@@ -167,19 +182,19 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-map',
 			},
 			{
-				to: '/shipper/users/allusers',
+				to: '/admin/drivers/alldrivers',
 				name: 'All Drivers',
 				iconClass: 'nav-icon fas fa-map',
 			},
 		],
 	},
 	{
-		to: '/shipper/ledger',
+		to: '/admin/dealer',
 		name: 'Dealer',
 		iconClass: 'nav-icon fas fa-store',
 		subRoutes: [
 			{
-				to: '/ledger/addledger',
+				to: '/admin/dealer/adddealer/step1',
 				name: 'Add Dealer',
 				iconClass: 'nav-icon fas fa-store',
 			},
@@ -206,22 +221,22 @@ export const adminRoutes = [
 		],
 	},
 	{
-		to: '/reports',
+		to: '/admin/vehicles/',
 		name: 'Vechicles',
 		iconClass: 'nav-icon fas fa-truck',
 		subRoutes: [
 			{
-				to: '/admin/tracking/driverlocations',
+				to: '/admin/vehicles/addvehicle',
 				name: 'Add Vechicles',
 				iconClass: 'nav-icon fas fa-truck',
 			},
 			{
-				to: '/admin/tracking/orderlocations',
+				to: '/admin/vehicles/allvehicles',
 				name: 'All Vechicles',
 				iconClass: 'nav-icon fas fa-truck',
 			},
 			{
-				to: '/admin/tracking/orderlocations',
+				to: '/admin/vehicles/maintenancerecords',
 				name: 'Maintenance Records',
 				iconClass: 'nav-icon fas fa-truck',
 			},
