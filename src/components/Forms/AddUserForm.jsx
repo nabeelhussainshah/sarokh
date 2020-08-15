@@ -74,7 +74,7 @@ export default function AddUserForm(props) {
                 })}
               >
                 <option value="true">--- Select Designation ---</option>
-                {props.designation.map((doc,i) => { //this will add designations that select field which will be passed from the parent component
+                {props.designation.map((doc, i) => { //this will add designations that select field which will be passed from the parent component
                   return (
                     <option key={i} value={doc}>{doc}</option>
                   );
@@ -182,27 +182,30 @@ export default function AddUserForm(props) {
               </div>
             </div>
           ) : null}
-
-          {props.operation === "new" ? (
-            <button type="submit" className="btn btn-success">
-              Submit
+          <div className="form-row mb-3">
+            <div className="col-sm-12">
+              {props.operation === "new" ? (
+                <button type="submit" className="btn btn-success">
+                  Submit
             </button>
-          ) : null}
+              ) : null}
 
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => {
-              props.formToggle({ form: false }); //this will hide the form
-            }}
-          >
-            Cancel
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  props.formToggle({ form: false }); //this will hide the form
+                }}
+              >
+                Cancel
           </button>
-          {props.operation === "update" ? (
-            <button type="submit" className="btn btn-warning">
-              Update
+              {props.operation === "update" ? (
+                <button type="submit" className="btn btn-warning">
+                  Update
             </button>
-          ) : null}
+              ) : null}
+            </div>
+          </div>
         </form>
       </div>
     </>

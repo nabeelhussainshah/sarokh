@@ -12,6 +12,11 @@ h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
     flex: 1;
     min-width: 0;
 }
+.font12{font-size: 12px; margin-bottom: 0;}
+.btnbrown{background: #f6921d !important;border: #f6921d solid 1px !important;}
+.btngreen{background: #28a745 !important;border: #28a745 solid 1px !important;}
+.billdetail p{margin-bottom: 0 !important;}
+.creatbill h2{font-size: 17px;color: #ec1c24;}
 .finance-detail h3{font-size: 20px;color: #ec1c24;}
 .finance-detail h4{font-size: 17px;color: #ec1c24;}
 .redcolor{color: #ec1c24;}
