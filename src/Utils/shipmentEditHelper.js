@@ -1,9 +1,10 @@
 /* this method transforms the data which is then send to shipment form for edit */
 
 export const shipmentEditHelper = (data, id) => {
+	console.log('this is the data and id', data, id);
 	return {
-		id: id,
 		...data,
+		id: id,
 		deliveryLocation:
 			data.deliveryLocation === 'Last Mile'
 				? 'To Sarokh Point'

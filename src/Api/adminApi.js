@@ -464,3 +464,67 @@ export async function maintenanceRecordsApi() {
 			throw err;
 		});
 }
+
+export async function addDealerApi(data) {
+	const payload = {
+		...data,
+		contractStartDate: new Date(data.contractStartDate).toISOString(),
+		contractEndDate: new Date(data.contractEndDate).toISOString(),
+		dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+	};
+
+	return await axios
+		.post(`${process.env.REACT_APP_API}/dealer/add`, payload)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function allDealersApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/dealer/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateDealerApi(data) {
+	const payload = {
+		...data,
+		contractStartDate: new Date(data.contractStartDate).toISOString(),
+		contractEndDate: new Date(data.contractEndDate).toISOString(),
+		dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+	};
+
+	return await axios
+		.put(`${process.env.REACT_APP_API}/dealer/update`, payload)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

@@ -55,6 +55,7 @@ export default function AllShipments(props) {
 	const editData = (id) => {
 		editShipmentApi(id)
 			.then((res) => {
+				console.log('this is the id', id);
 				const dataToSet = shipmentEditHelper(res, id);
 				setdata(dataToSet);
 				hist.push('/shipper/newshipment/step1');

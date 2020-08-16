@@ -123,12 +123,12 @@ export const adminRoutes = [
 		],
 	},
 	{
-		to: '/shipper/shipmentissues',
+		to: '/admin/scheduling/',
 		name: 'Scheduling',
 		iconClass: 'nav-icon fas fa-money-bill-wave',
 		subRoutes: [
 			{
-				to: '/admin/tracking/driverlocations',
+				to: '/admin/scheduling/createtrip',
 				name: 'Create Trip',
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
@@ -199,7 +199,7 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-store',
 			},
 			{
-				to: '/ledger/allledger',
+				to: '/admin/dealer/alldealers',
 				name: 'All Dealers',
 				iconClass: 'nav-icon fas fa-store',
 			},

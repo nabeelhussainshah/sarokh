@@ -3,21 +3,22 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allDriversApi } from '../../../Api/adminApi';
+import { allDealersApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import { driverEditHelper } from '../../../Utils/driverHelper';
+import moment from 'moment';
+import { dealerEditHelper } from '../../../Utils/dealerHelper';
 import { useRecoilState } from 'recoil';
-import { driverData } from '../../../components/DriverFormSteps/state';
+import { dealerData } from '../../../components/DealerFormSteps/state';
 
-export default function AllDrivers(props) {
-	const [data, setdata] = useRecoilState(driverData);
+export default function AllDealers(props) {
+	const [data, setdata] = useRecoilState(dealerData);
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			allDriversApi()
+			allDealersApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -28,11 +29,10 @@ export default function AllDrivers(props) {
 	}, [response.loading]);
 
 	const handleClick = (row) => {
-		console.log(row.row.original);
-		const result = driverEditHelper(row.row.original);
-		console.log(result);
+		const result = dealerEditHelper(row.row.original);
 		setdata(result);
-		hist.push('/admin/drivers/adddriver/step1');
+		hist.push('/admin/dealer/adddealer/step1');
+		console.log(result);
 	};
 
 	const columns = [
@@ -51,24 +51,29 @@ export default function AllDrivers(props) {
 			},
 		},
 		{
-			Header: 'First Name',
-			accessor: 'firstName',
-		},
-		{
-			Header: 'Last Name',
-			accessor: 'lastName',
+			Header: 'Owner Name',
+			accessor: 'ownerName',
 		},
 		{
 			Header: 'Contact No',
-			accessor: 'user.contact',
+			accessor: 'contact',
 		},
 		{
-			Header: 'Driver Type',
-			accessor: 'driverType',
+			Header: 'Contract Ending',
+			accessor: 'contractEndDate',
+			Cell: (row) => {
+				return (
+					<>{moment(row.row.original.contractEndDate).format('YYYY-MM-DD')}</>
+				);
+			},
 		},
 		{
-			Header: 'Warehouse',
-			accessor: 'warehouse',
+			Header: 'Compensation Rate',
+			accessor: 'perShipmentsCompensation',
+		},
+		{
+			Header: 'Current Points (No of Points Owned)',
+			accessor: '',
 		},
 	];
 
@@ -96,7 +101,7 @@ export default function AllDrivers(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Drivers</h2>
+								<h2 className="float-left">Dealer Owners</h2>
 							</div>
 							<div className="card-body">
 								<Table
@@ -105,6 +110,7 @@ export default function AllDrivers(props) {
 									tableclass={'table-responsive custom-table'}
 									pagination={true}
 									filter={true}
+									hiddenColumns={['id']}
 								/>
 							</div>
 						</ListingContainer>

@@ -1,13 +1,14 @@
 import React from 'react';
 import Container from '../Containers/ListingContainer';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { dealerData } from './state';
 import { uploadFile } from '../../Api/generalApi';
-import { cities } from '../../Utils/cities';
+import { addDealerApi, updateDealerApi } from '../../Api/adminApi';
 import StepIndicator from './StepIndicator';
 import { toast } from 'react-toastify';
+import { isEmpty } from 'underscore';
 
 export default function BusinessInformation(props) {
 	const hist = useHistory();
@@ -19,21 +20,50 @@ export default function BusinessInformation(props) {
 		criteriaMode: 'all',
 	});
 
+	if (isEmpty(data)) {
+		return <Redirect to={props.defaultPath} />;
+	}
+
 	console.log(data);
 
-	const onSubmit = (formData) => {
-		setdata({ ...data, ...formData });
-		hist.push(props.next);
-	};
-
-	const uploadPicture = async (file) => {
-		await uploadFile(file)
+	if (data.ready && data.update === undefined) {
+		addDealerApi(data)
 			.then((res) => {
-				setdata({ ...data, profilePicture: res });
+				toast.success('Dealer has been added');
+				hist.push(props.next);
 			})
 			.catch((err) => {
 				toast.error(err.message);
 			});
+	} else if (data.ready && data.update) {
+		updateDealerApi(data)
+			.then((res) => {
+				toast.success('Dealer has been updated!');
+				hist.push(props.next);
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	}
+
+	const onSubmit = (formData) => {
+		setdata({ ...data, ...formData, ready: true });
+		// hist.push(props.next);
+	};
+
+	const uploadContract = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, contractFile: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
+	const cancel = () => {
+		setdata({});
+		hist.push(props.next);
 	};
 
 	return (
@@ -54,8 +84,11 @@ export default function BusinessInformation(props) {
 								class="form-control"
 								name="contractId"
 								placeholder="Enter Contract ID"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.contractId?.types?.required && (
+								<p style={{ color: 'red' }}>Contract ID is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">Contract Upload</label>
@@ -65,7 +98,7 @@ export default function BusinessInformation(props) {
 								className="form-control"
 								placeholder="RegistrationFile"
 								name="contactFile"
-								// onChange={(e) => uploadContract(e.target.files[0])}
+								onChange={(e) => uploadContract(e.target.files[0])}
 							/>
 						</div>
 					</div>
@@ -75,9 +108,14 @@ export default function BusinessInformation(props) {
 							<input
 								type="date"
 								class="form-control"
-								name="contactStartDate"
-								required
+								name="contractStartDate"
+								ref={register({ required: true })}
 							/>
+							{errors?.contactStartDate?.types?.required && (
+								<p style={{ color: 'red' }}>
+									Contract Starting Date is required
+								</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lastName">Contract Ending Date</label>
@@ -85,8 +123,11 @@ export default function BusinessInformation(props) {
 								type="date"
 								class="form-control"
 								name="contractEndDate"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.contractEndDate?.types?.required && (
+								<p style={{ color: 'red' }}>Contract Ending Date is required</p>
+							)}
 						</div>
 					</div>
 					<div class="form-row">
@@ -97,8 +138,11 @@ export default function BusinessInformation(props) {
 								class="form-control"
 								name="compensationPerShipment"
 								placeholder="Enter Amount in SAR"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.compensationPerShipment?.types?.required && (
+								<p style={{ color: 'red' }}>Amount is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">Compensation Cycle</label>
@@ -106,9 +150,12 @@ export default function BusinessInformation(props) {
 								type="number"
 								class="form-control"
 								name="compensationCycle"
-								placeholder="Enter No Of Days"
-								required
+								placeholder="Compensation Cycle"
+								ref={register({ required: true })}
 							/>
+							{errors?.compensationCycle?.types?.required && (
+								<p style={{ color: 'red' }}>Compensation Cycles are required</p>
+							)}
 						</div>
 					</div>
 					<div class="form-row">
@@ -164,8 +211,11 @@ export default function BusinessInformation(props) {
 								class="form-control"
 								name="iban"
 								placeholder="Enter IBAN"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.iban?.types?.required && (
+								<p style={{ color: 'red' }}>IBAN is required</p>
+							)}
 						</div>
 					</div>
 					<div class="form-row">
@@ -176,8 +226,11 @@ export default function BusinessInformation(props) {
 								class="form-control"
 								name="userName"
 								placeholder="Enter Username"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.userName?.types?.required && (
+								<p style={{ color: 'red' }}>Username is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lastName">Password</label>
@@ -186,21 +239,39 @@ export default function BusinessInformation(props) {
 								class="form-control"
 								name="password"
 								placeholder="Enter Password"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.password?.types?.required && (
+								<p style={{ color: 'red' }}>Password is required</p>
+							)}
 						</div>
 					</div>
-					<div className="btn-container float-right">
+					<div className="btn-container float-right" style={{ margin: '10px' }}>
 						<button
 							className="btn btn-secondary dark-grey"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Cancel
 						</button>
-						<button className="btn btn-success" type="submit">
-							Next step
-						</button>
+						&nbsp;
+						{data.update ? (
+							<button
+								className="btn btn-success"
+								type="button"
+								onClick={() => handleSubmit(onSubmit)()}
+							>
+								Update
+							</button>
+						) : (
+							<button
+								className="btn btn-success"
+								type="button"
+								onClick={() => handleSubmit(onSubmit)()}
+							>
+								Finish
+							</button>
+						)}
 					</div>
 				</form>
 			</div>

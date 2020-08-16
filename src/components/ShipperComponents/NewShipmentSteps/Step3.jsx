@@ -8,6 +8,7 @@ import Table from './DataTable';
 import Map from './Map';
 import { toast } from 'react-toastify';
 import { postData } from './Api';
+import { has } from 'underscore';
 
 export default function Step3(props) {
 	const hist = useHistory();
@@ -79,6 +80,17 @@ export default function Step3(props) {
 		}
 	};
 
+	if (has(list[0], 'updateReady')) {
+		postData(list, 'update')
+			.then((res) => {
+				toast.success('order was successfully updated!');
+				cancel();
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	}
+
 	const updateData = (value) => {
 		if (list.length === 0) {
 			setlist([
@@ -88,16 +100,9 @@ export default function Step3(props) {
 					...value,
 					additionalCharges: data.additionalCharges,
 					shipmentCost: data.total + Math.round((data.total / 100) * 15),
+					updateReady: true,
 				},
 			]);
-			postData(list, 'update')
-				.then((res) => {
-					toast.success('order was successfully updated!');
-					cancel();
-				})
-				.catch((err) => {
-					toast.error(err.message);
-				});
 		} else {
 			toast.warning('only one order can be updated at a time');
 		}
@@ -573,7 +578,7 @@ value is deducted from these fields this does not include the gift packaging val
 									<button
 										className="btn btn-success mt-3 width206 finishbtn"
 										type="button"
-										onClick={() => updateData()}
+										onClick={() => handleSubmit(updateData)()}
 									>
 										Update
 									</button>

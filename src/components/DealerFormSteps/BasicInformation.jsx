@@ -26,10 +26,20 @@ export default function BasicInformation(props) {
 		hist.push(props.next);
 	};
 
-	const uploadPicture = async (file) => {
+	const uploadProfilePicture = async (file) => {
 		await uploadFile(file)
 			.then((res) => {
 				setdata({ ...data, profilePicture: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
+	const uploadIqamaFile = async (file) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, iqamaFile: res });
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -45,7 +55,7 @@ export default function BasicInformation(props) {
 				<div className="margintop30">
 					<StepIndicator step1="current" />
 				</div>
-				<form class="margintop30">
+				<form class="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="firstName">Owner Name</label>
@@ -54,52 +64,68 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="owner"
 								placeholder="Owner Name"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.owner?.types?.required && (
+								<p style={{ color: 'red' }}>owner is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
-							<label for="lastName">Business Group Name: (Optional)</label>
+							<label for="BusinessGroupName">
+								Business Group Name: (Optional)
+							</label>
 							<input
 								type="text"
 								class="form-control"
 								name="businessGroupName"
 								placeholder="Business Group Name"
-								required
+								ref={register({})}
 							/>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="firstName">Contact Number</label>
+							<label for="contactNo">Contact Number</label>
 							<input
 								type="text"
 								class="form-control"
-								name="contact"
-								placeholder="Business Name"
-								required
+								name="contactNo"
+								placeholder="Contact Number"
+								ref={register({ required: true })}
 							/>
+							{errors?.contactNo?.types?.required && (
+								<p style={{ color: 'red' }}>Contact Number is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
-							<label for="lastName">Email</label>
+							<label for="email">Email</label>
 							<input
 								type="email"
 								class="form-control"
 								name="email"
 								placeholder="abc@gmail.com"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.email?.types?.required && (
+								<p style={{ color: 'red' }}>Email is required</p>
+							)}
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="lastName">National ID/iqama Number</label>
+							<label for="nicNumber">National ID/iqama Number</label>
 							<input
 								type="text"
 								class="form-control"
 								name="nicNumber"
 								placeholder="National ID/iqama Number"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.nicNumber?.types?.required && (
+								<p style={{ color: 'red' }}>
+									National ID/iqama Number is required
+								</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">National ID/iqama Copy:</label>
@@ -108,8 +134,8 @@ export default function BasicInformation(props) {
 								accept=".png, .jpg, .jpeg, .pdf"
 								className="form-control"
 								placeholder="RegistrationFile"
-								name="contactFile"
-								// onChange={(e) => uploadContract(e.target.files[0])}
+								name="iqamaFile"
+								onChange={(e) => uploadIqamaFile(e.target.files[0])}
 							/>
 						</div>
 					</div>
@@ -121,8 +147,11 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="dateOfBirth"
 								placeholder="DOB"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.dateOfBirth?.types?.required && (
+								<p style={{ color: 'red' }}>DOB is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">Profile Picture</label>
@@ -130,9 +159,8 @@ export default function BasicInformation(props) {
 								type="file"
 								accept=".png, .jpg, .jpeg, .pdf"
 								className="form-control"
-								placeholder="RegistrationFile"
 								name="profilePicture"
-								// onChange={(e) => uploadContract(e.target.files[0])}
+								onChange={(e) => uploadProfilePicture(e.target.files[0])}
 							/>
 						</div>
 					</div>
@@ -144,10 +172,13 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="country"
 								placeholder="Country"
-								required
+								ref={register({ required: true })}
 							>
 								<option value="SAU">Saudi Arabia</option>
 							</select>
+							{errors?.country?.types?.required && (
+								<p style={{ color: 'red' }}>country is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">City</label>
@@ -156,7 +187,7 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="city"
 								placeholder="City"
-								required
+								ref={register({ required: true })}
 							>
 								{cities.map((doc, i) => {
 									return (
@@ -166,6 +197,9 @@ export default function BasicInformation(props) {
 									);
 								})}
 							</select>
+							{errors?.city?.types?.required && (
+								<p style={{ color: 'red' }}>city is required</p>
+							)}
 						</div>
 					</div>
 					<div class="form-row">
@@ -176,8 +210,11 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="address"
 								placeholder="Address"
-								required
+								ref={register({ required: true })}
 							/>
+							{errors?.address?.types?.required && (
+								<p style={{ color: 'red' }}>Address is required</p>
+							)}
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lastName">Post Code</label>
@@ -185,19 +222,23 @@ export default function BasicInformation(props) {
 								type="text"
 								class="form-control"
 								name="postCode"
-								placeholder="Full Name"
-								required
+								placeholder="Post Code"
+								ref={register({ required: true })}
 							/>
+							{errors?.postCode?.types?.required && (
+								<p style={{ color: 'red' }}>Post Code is required</p>
+							)}
 						</div>
 					</div>
-					<div className="btn-container float-right">
+					<div className="btn-container float-right" style={{ margin: '10px' }}>
 						<button
 							className="btn btn-secondary dark-grey"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Cancel
 						</button>
+						&nbsp;
 						<button className="btn btn-success" type="submit">
 							Next step
 						</button>

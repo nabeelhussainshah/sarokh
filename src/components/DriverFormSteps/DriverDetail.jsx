@@ -28,7 +28,7 @@ export default function DriverDetails(props) {
 		console.log(formData);
 		setdata({ ...data, ...formData });
 
-		if (data.driverType === 'employee') {
+		if (data.driverType === 'Employee') {
 			hist.push(props.next.step4);
 		} else {
 			hist.push(props.next.step3);
@@ -72,9 +72,9 @@ export default function DriverDetails(props) {
 								className="form-check-input"
 								type="radio"
 								name="driverType"
-								value="employee"
+								value="Employee"
 								onChange={() => {
-									setdata({ ...data, driverType: 'employee' });
+									setdata({ ...data, driverType: 'Employee' });
 								}}
 								ref={register()}
 							/>
@@ -91,9 +91,9 @@ export default function DriverDetails(props) {
 								className="form-check-input"
 								type="radio"
 								name="driverType"
-								value="freeLancer"
+								value="FreeLancer"
 								onChange={() => {
-									setdata({ ...data, driverType: 'freeLancer' });
+									setdata({ ...data, driverType: 'FreeLancer' });
 								}}
 								ref={register({ required: true })}
 							/>

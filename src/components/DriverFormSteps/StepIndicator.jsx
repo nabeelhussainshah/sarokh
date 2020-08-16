@@ -25,7 +25,7 @@ export default function StepIndicator({
 						<div className="step-indicator"></div>
 					</a>
 				</li>
-				{driverType === 'freeLancer' && (
+				{driverType === 'FreeLancer' && (
 					<li className={step3}>
 						<a href="#">
 							<div className="label">&nbsp;&nbsp;&nbsp;VEHICLE DETAIL</div>

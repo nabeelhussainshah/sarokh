@@ -19,7 +19,7 @@ import AllUsers from '../views/admin/users/AllUsers';
 import AddShipperWarehouse from '../views/admin/warehouses/AddShipperWarehouse';
 import AddDriver from '../views/admin/drivers/AddDriver';
 import FinanceDashboard from '../views/admin/finance/FinanceDashboard';
-import AllDrivers from '../views/admin/drivers/AllDrivers';
+import CreateTrip from '../views/admin/scheduling/CreateTrip';
 import AddVehicle from '../views/admin/Vehicle/AddVehicle';
 import AllVehicles from '../views/admin/Vehicle/AllVehicle';
 import MaintenanceRecords from '../views/admin/Vehicle/MaintenanceRecords';
@@ -87,7 +87,6 @@ export default function AdminRouter(props) {
 				path="/admin/shippers/shipperbilling"
 				component={ShipperBilling}
 			/>
-			<ProtectedRoute path="/admin/drivers/alldrivers" component={AllDrivers} />
 
 			<ProtectedRoute path="/admin/users/adduser" component={AddUser} />
 			<ProtectedRoute path="/admin/users/allusers" component={AllUsers} />
@@ -121,6 +120,10 @@ export default function AdminRouter(props) {
 				component={PaymentRecord}
 			/>
 			<ProtectedRoute path="/admin/finance/billdetail" component={BillDetail} />
+			<ProtectedRoute
+				path="/admin/scheduling/createtrip"
+				component={CreateTrip}
+			/>
 		</Switch>
 	);
 }

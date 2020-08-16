@@ -29,11 +29,12 @@ export default function BasicInformation(props) {
 		addDriverApi(data)
 			.then((res) => {
 				toast.success('driver successfully added');
+				hist.push(props.next);
 			})
 			.catch((err) => {
 				toast.error(err.message);
 			});
-	} else {
+	} else if (data.ready && data.update) {
 		console.log('update code here');
 	}
 
