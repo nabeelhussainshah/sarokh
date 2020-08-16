@@ -28,19 +28,125 @@ export default function CreateBill(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<Container>
-							<div className="card-header">
-								<h2 className="float-left">Create Trip</h2>
-							</div>
-							<div className="card-body">//your code here</div>
-						</Container>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<Container>
+								<div className="card-header">
+									<h2 className="float-left">Create Trip</h2>
+								</div>
+								<div className="card-body">
+									<div className="form-row mb-3">
+										<div className="col">
+											<select className="form-control" id="status" formControlName="warehouse">
+												<option value="">--- Select Warehouse ---</option>
+											</select>
+										</div>
+										<div className="col">
+											<select className="form-control" id="status" formControlName="vehical">
+												<option value="">--- Select Vehical ---</option>
+											</select>
+										</div>
+									</div>
+									<div className="form-row mb-3">
+										<div className="col">
+											<select className="form-control" id="status" formControlName="driver">
+												<option value="">--- Select Driver ---</option>
+											</select>
+										</div>
+									</div>
+									<div className="form-row mb-3">
+										<div className="col-sm-12">
+											<button type="submit" class="btn btn-success mb-3">Fetch Details</button>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+									<div className="row">
+										<div className="flex-row col-md-2">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />Point Pick up</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-2">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />Shipper Pick up</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-2">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />Deliveries to Point</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-2">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />Deliveries to Lastmile</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-2">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />Lastmile COD</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-2">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />Point Collection</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</Container >
+						</animated.div >
+					)
+			)
+		);
 }
