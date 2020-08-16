@@ -48,7 +48,7 @@ export default function DriverDetails(props) {
 	const uploadLicence = async (file) => {
 		await uploadFile(file)
 			.then((res) => {
-				setdata({ ...data, licenceFile: res });
+				setdata({ ...data, licenseFile: res });
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -204,7 +204,7 @@ export default function DriverDetails(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="licenceNumber">Driver Licence No</label>
+							<label htmlFor="licenceNumber">Driver License No</label>
 							<input
 								type="text"
 								className="form-control"
@@ -218,7 +218,7 @@ export default function DriverDetails(props) {
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="inputEmail4">Licence Copy Upload</label>
+							<label htmlFor="inputEmail4">License Copy Upload</label>
 							<div className="input-group">
 								<div className="col">
 									<input
@@ -226,7 +226,7 @@ export default function DriverDetails(props) {
 										accept=".png, .jpg, .jpeg, .pdf"
 										className="form-control"
 										placeholder="RegistrationFile"
-										name="licenceFile"
+										name="licenseFile"
 										onChange={(e) => uploadLicence(e.target.files[0])}
 									/>
 								</div>
@@ -247,7 +247,7 @@ export default function DriverDetails(props) {
 						<button
 							class="btn btn-success"
 							type="submit"
-							disabled={data.nicFile && data.licenceFile ? false : true}
+							disabled={data.nicFile && data.licenseFile ? false : true}
 						>
 							Next step
 						</button>

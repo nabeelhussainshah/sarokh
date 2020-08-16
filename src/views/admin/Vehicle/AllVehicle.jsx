@@ -3,7 +3,7 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allVehiclesApi } from '../../../Api/adminApi';
+import { allVehiclesApi, deleteVehicleApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -37,6 +37,17 @@ export default function AllShipments(props) {
 		});
 	};
 
+	const Delete = (id) => {
+		deleteVehicleApi(id)
+			.then((res) => {
+				toast.success('vehicle deleted');
+				setresponse({ ...response, loading: true });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
@@ -45,6 +56,11 @@ export default function AllShipments(props) {
 				return (
 					<Fragment>
 						<i className="fa fa-edit" onClick={() => Edit(row)}></i>
+						&nbsp;
+						<i
+							className="fa fa-trash"
+							onClick={() => Delete(row.row.original.id)}
+						></i>
 					</Fragment>
 				);
 			},
@@ -63,7 +79,7 @@ export default function AllShipments(props) {
 		},
 		{
 			Header: 'Warehouse',
-			accessor: '',
+			accessor: 'warehouseName',
 		},
 	];
 

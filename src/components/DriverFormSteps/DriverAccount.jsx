@@ -32,7 +32,7 @@ export default function BasicInformation(props) {
 	const uploadContract = async (file) => {
 		await uploadFile(file)
 			.then((res) => {
-				setdata({ ...data, contactFile: res });
+				setdata({ ...data, contractFile: res });
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -104,7 +104,7 @@ export default function BasicInformation(props) {
 							<input
 								type="date"
 								className="form-control"
-								name="contactValidTill"
+								name="contractValidTill"
 								placeholder="Contract Valid Till"
 								ref={register({ required: true })}
 							/>
@@ -124,7 +124,7 @@ export default function BasicInformation(props) {
 										accept=".png, .jpg, .jpeg, .pdf"
 										className="form-control"
 										placeholder="RegistrationFile"
-										name="contactFile"
+										name="contractFile"
 										onChange={(e) => uploadContract(e.target.files[0])}
 									/>
 								</div>
@@ -203,7 +203,7 @@ export default function BasicInformation(props) {
 						<button
 							className="btn btn-success"
 							type="submit"
-							disabled={data.contactFile ? false : true}
+							disabled={data.contractFile ? false : true}
 						>
 							Next step
 						</button>

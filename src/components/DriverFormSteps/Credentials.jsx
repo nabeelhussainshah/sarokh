@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { driverData } from './state';
 import StepIndicator from './StepIndicator';
 import { Redirect } from 'react-router-dom';
-import { addDriverApi } from '../../Api/adminApi';
+import { addDriverApi, updateDriverApi } from '../../Api/adminApi';
 import { toast } from 'react-toastify';
 
 export default function BasicInformation(props) {
@@ -35,7 +35,15 @@ export default function BasicInformation(props) {
 				toast.error(err.message);
 			});
 	} else if (data.ready && data.update) {
-		console.log('update code here');
+		console.log(data);
+		updateDriverApi(data)
+			.then((res) => {
+				toast.success('driver updated');
+				hist.push(props.next);
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	}
 
 	const onSubmit = (formData) => {
@@ -64,7 +72,7 @@ export default function BasicInformation(props) {
 							<input
 								type="text"
 								className="form-control"
-								name="username"
+								name="userName"
 								placeholder="Username"
 								ref={register({ required: true })}
 							/>
@@ -76,7 +84,7 @@ export default function BasicInformation(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="password">Passsword</label>
+							<label htmlFor="password">Password</label>
 							<input
 								type="password"
 								className="form-control"

@@ -9,5 +9,10 @@ export const driverEditHelper = (data) => {
 		contractStartDate: moment(data.contractStartDate).format('YYYY-MM-DD'),
 		contractValidTill: moment(data.contractValidTill).format('YYYY-MM-DD'),
 		dateOfBirth: moment(data.user.dob).format('YYYY-MM-DD'),
+		postCode: data.postalCode,
+		vehicleName: data.vehicle.name,
+		vehicleModel: data.vehicle.model,
+		userName: data.user.userName,
+		update: true,
 	};
 };

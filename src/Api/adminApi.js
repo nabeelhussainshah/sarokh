@@ -362,13 +362,37 @@ export async function deleteWarehouseApi(id) {
 export async function addDriverApi(data) {
 	const payload = {
 		...data,
-		contactValidTill: new Date(data.contactValidTill).toISOString(),
+		contactValidTill: new Date(data.contractValidTill).toISOString(),
 		contractStartDate: new Date(data.contractStartDate).toISOString(),
 		dateOfBirth: new Date(data.dateOfBirth).toISOString(),
 	};
 
 	return await axios
 		.post(`${process.env.REACT_APP_API}/driver/add`, payload)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateDriverApi(data) {
+	const payload = {
+		...data,
+		contactValidTill: new Date(data.contractValidTill).toISOString(),
+		contractStartDate: new Date(data.contractStartDate).toISOString(),
+		dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+	};
+
+	return await axios
+		.put(`${process.env.REACT_APP_API}/driver/update`, payload)
 		.then((res) => {
 			if (res.data.status === 200) {
 				return true;
@@ -435,6 +459,22 @@ export async function allVehiclesApi() {
 export async function updateVehicleApi(data) {
 	return await axios
 		.put(`${process.env.REACT_APP_API}/vehicle/update`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+export async function deleteVehicleApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/vehicle/delete/${id}`)
 		.then((res) => {
 			if (res.data.status === 200) {
 				return true;

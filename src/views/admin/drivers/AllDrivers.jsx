@@ -29,10 +29,14 @@ export default function AllDrivers(props) {
 
 	const handleClick = (row) => {
 		console.log(row.row.original);
-		const result = driverEditHelper(row.row.original);
-		console.log(result);
-		setdata(result);
-		hist.push('/admin/drivers/adddriver/step1');
+		try {
+			const result = driverEditHelper(row.row.original);
+			console.log(result);
+			setdata(result);
+			hist.push('/admin/drivers/adddriver/step1');
+		} catch (e) {
+			toast.error(e.message);
+		}
 	};
 
 	const columns = [
@@ -42,10 +46,7 @@ export default function AllDrivers(props) {
 			Cell: (row) => {
 				return (
 					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
+						<i className="fa fa-edit" onClick={() => handleClick(row)}></i>
 					</Fragment>
 				);
 			},
