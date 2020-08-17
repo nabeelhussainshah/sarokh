@@ -21,6 +21,7 @@ import AddDriver from '../views/admin/drivers/AddDriver';
 import FinanceDashboard from '../views/admin/finance/FinanceDashboard';
 import CreateTrip from '../views/admin/scheduling/CreateTrip';
 import AllTrips from '../views/admin/scheduling/AllTrips';
+import TripDetail from '../views/admin/scheduling/TripDetail';
 import AddVehicle from '../views/admin/Vehicle/AddVehicle';
 import AllVehicles from '../views/admin/Vehicle/AllVehicle';
 import MaintenanceRecords from '../views/admin/Vehicle/MaintenanceRecords';
@@ -127,6 +128,10 @@ export default function AdminRouter(props) {
 			/>
 
 			<ProtectedRoute path="/admin/scheduling/alltrips" component={AllTrips} />
+			<ProtectedRoute
+				path="/admin/scheduling/tripdetail"
+				component={TripDetail}
+			/>
 		</Switch>
 	);
 }
