@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { sarokhWarehouseList } from './generalApi';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -562,6 +563,69 @@ export async function updateDealerApi(data) {
 				throw new Error(
 					`something went wrong with status code: ${res.data.status}`
 				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getCreateTripDataApi() {
+	try {
+		const warehouses = await sarokhWarehouseList();
+		const vehicles = await allVehiclesApi();
+		const drivers = await allDriversApi();
+
+		return await {
+			warehouses: warehouses,
+			vehicles: vehicles,
+			drivers: drivers,
+		};
+	} catch (e) {
+		throw e.message;
+	}
+}
+
+export async function tripShipmentsApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/trip/get-trips-shipments/${id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function createTrip(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/trip/create-trip`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function allTripsApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/admin/get-all-trips`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
 			}
 		})
 		.catch((err) => {

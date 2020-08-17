@@ -20,6 +20,7 @@ import AddShipperWarehouse from '../views/admin/warehouses/AddShipperWarehouse';
 import AddDriver from '../views/admin/drivers/AddDriver';
 import FinanceDashboard from '../views/admin/finance/FinanceDashboard';
 import CreateTrip from '../views/admin/scheduling/CreateTrip';
+import AllTrips from '../views/admin/scheduling/AllTrips';
 import AddVehicle from '../views/admin/Vehicle/AddVehicle';
 import AllVehicles from '../views/admin/Vehicle/AllVehicle';
 import MaintenanceRecords from '../views/admin/Vehicle/MaintenanceRecords';
@@ -124,6 +125,8 @@ export default function AdminRouter(props) {
 				path="/admin/scheduling/createtrip"
 				component={CreateTrip}
 			/>
+
+			<ProtectedRoute path="/admin/scheduling/alltrips" component={AllTrips} />
 		</Switch>
 	);
 }

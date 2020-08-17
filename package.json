@@ -21,7 +21,7 @@
     "react-scripts": "3.4.1",
     "react-spring": "^8.0.27",
     "react-stepzilla": "^6.0.2",
-    "react-table": "^7.3.2",
+    "react-table": "^7.5.0",
     "react-to-print": "^2.9.0",
     "react-toastify": "^6.0.8",
     "recoil": "0.0.10",

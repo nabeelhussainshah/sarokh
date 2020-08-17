@@ -5,10 +5,28 @@ import {
 	usePagination,
 	useGlobalFilter,
 	useSortBy,
+	useRowSelect,
 } from 'react-table';
 import GlobalFilter from './globalfilter';
 import Pagination from './pagination';
-import { toast } from 'react-toastify';
+import { last } from 'underscore';
+
+const IndeterminateCheckbox = React.forwardRef(
+	({ indeterminate, ...rest }, ref) => {
+		const defaultRef = React.useRef();
+		const resolvedRef = ref || defaultRef;
+
+		React.useEffect(() => {
+			resolvedRef.current.indeterminate = indeterminate;
+		}, [resolvedRef, indeterminate]);
+
+		return (
+			<>
+				<input type="checkbox" ref={resolvedRef} {...rest} />
+			</>
+		);
+	}
+);
 
 function GenericTable({
 	columns,
@@ -23,6 +41,9 @@ function GenericTable({
 	editablecolumn,
 	pagesize = 6,
 	tableclass = '',
+	rowToggle = false,
+	selectedData,
+	dataCheck,
 }) {
 	const {
 		getTableProps,
@@ -40,6 +61,7 @@ function GenericTable({
 		state,
 		preGlobalFilteredRows,
 		setGlobalFilter,
+		selectedFlatRows,
 		state: { pageIndex, pageSize },
 	} = useTable(
 		{
@@ -55,8 +77,54 @@ function GenericTable({
 		},
 		useGlobalFilter,
 		useSortBy,
-		usePagination
+		usePagination,
+		useRowSelect,
+		(hooks) => {
+			if (rowToggle) {
+				hooks.visibleColumns.push((columns) => [
+					// Let's make a column for selection
+					{
+						id: 'selection',
+						// The header can use the table's getToggleAllRowsSelectedProps method
+						// to render a checkbox
+						Header: ({ getToggleAllPageRowsSelectedProps }) => (
+							<div>
+								{/* <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} /> */}
+							</div>
+						),
+						// The cell can use the individual row's getToggleRowSelectedProps method
+						// to the render a checkbox
+						Cell: ({ row }) => (
+							<div>
+								<IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+							</div>
+						),
+					},
+					...columns,
+				]);
+			}
+		}
 	);
+
+	// if (selectedData) {
+	// 	selectedData(selectedFlatRows);
+	// }
+
+	if (rowToggle) {
+		if (
+			(selectedFlatRows.length !== 0 && dataCheck.length === 0) ||
+			(selectedFlatRows.length === 0 && dataCheck.length !== 0)
+		) {
+			selectedData(selectedFlatRows);
+		} else if (dataCheck.length !== 0) {
+			if (
+				dataCheck[dataCheck.length - 1].id !==
+				selectedFlatRows[selectedFlatRows.length - 1].id
+			) {
+				selectedData(selectedFlatRows);
+			}
+		}
+	}
 
 	const count = preGlobalFilteredRows.length;
 	return (
@@ -121,7 +189,6 @@ function GenericTable({
 					</tbody>
 				</table>
 			</div>
-
 
 			{/* //pagination section */}
 

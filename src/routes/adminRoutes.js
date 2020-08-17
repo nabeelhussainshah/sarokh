@@ -133,7 +133,7 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
 			{
-				to: '/admin/tracking/orderlocations',
+				to: '/admin/scheduling/alltrips',
 				name: 'All Trips',
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
@@ -222,17 +222,17 @@ export const adminRoutes = [
 	},
 	{
 		to: '/admin/vehicles/',
-		name: 'Vechicles',
+		name: 'Vehicles',
 		iconClass: 'nav-icon fas fa-truck',
 		subRoutes: [
 			{
 				to: '/admin/vehicles/addvehicle',
-				name: 'Add Vechicles',
+				name: 'Add Vehicles',
 				iconClass: 'nav-icon fas fa-truck',
 			},
 			{
 				to: '/admin/vehicles/allvehicles',
-				name: 'All Vechicles',
+				name: 'All Vehicles',
 				iconClass: 'nav-icon fas fa-truck',
 			},
 			{

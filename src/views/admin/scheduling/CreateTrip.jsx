@@ -2,14 +2,75 @@ import React, { useState, useEffect, Fragment } from 'react';
 import Container from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
+import Form from '../../../components/CreateTripForm/CreateTripForm';
 import { useHistory } from 'react-router-dom';
-import { CODShipmentsApi } from '../../../Api/adminApi';
+import {
+	getCreateTripDataApi,
+	tripShipmentsApi,
+	createTrip,
+} from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
 export default function CreateBill(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: false });
+	const [response, setresponse] = useState({ loading: true });
+	const [pickData, setpickData] = useState([]);
+	const [deliveryData, setdeliveryData] = useState([]);
+
+	useEffect(() => {
+		if (response.loading && response.id === undefined) {
+			getCreateTripDataApi()
+				.then((res) => {
+					setresponse({ loading: false, data: res });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+		if (response.id && response.loading) {
+			tripShipmentsApi(response.id.warehouse)
+				.then((res) => {
+					setresponse({ ...response, loading: false, tabledata: res });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	}, [response.loading]);
+
+	const submitResponse = () => {
+		if (
+			(pickData.length !== 0 && deliveryData.length === 0) ||
+			(pickData.length === 0 && deliveryData.length !== 0) ||
+			(pickData.length !== 0 && deliveryData.length !== 0)
+		) {
+			let dataset1 = [];
+			pickData.map((doc) => {
+				dataset1.push(doc.original);
+			});
+			deliveryData.map((doc) => {
+				dataset1.push(doc.original);
+			});
+			const finalresult = {
+				shipmentsList: dataset1,
+				warehouseId: response.id.warehouse,
+				driverId: response.id.driver,
+				vehicleId: response.id.vehicle,
+			};
+			console.log(finalresult);
+			createTrip(finalresult)
+				.then((res) => {
+					toast.success('Trip Created');
+					hist.push('/admin/scheduling/alltrips');
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		} else {
+			toast.error('please select from the tables to create trip');
+		}
+	};
 
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
@@ -27,28 +88,24 @@ export default function CreateBill(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
-			accessor: '',
-		},
-		{
 			Header: 'Tracking Number',
-			accessor: '',
+			accessor: 'shipmentId',
 		},
 		{
 			Header: 'Shipper',
 			accessor: '',
 		},
 		{
-			Header: 'Location No',
-			accessor: '',
+			Header: 'Location Name',
+			accessor: 'toLocation',
 		},
 		{
 			Header: 'Destination Address',
-			accessor: '',
+			accessor: 'address',
 		},
 		{
 			Header: 'COD',
-			accessor: '',
+			accessor: 'cod',
 		},
 	];
 
@@ -78,159 +135,49 @@ export default function CreateBill(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<Container>
 							<div className="card-header">
 								<h2 className="float-left">Create Trip</h2>
 							</div>
 							<div className="card-body">
-								<div className="form-row mb-3">
-									<div className="col">
-										<select
-											className="form-control"
-											id="status"
-											formControlName="warehouse"
-										>
-											<option value="">--- Select Warehouse ---</option>
-										</select>
-									</div>
-									<div className="col">
-										<select
-											className="form-control"
-											id="status"
-											formControlName="vehical"
-										>
-											<option value="">--- Select Vehical ---</option>
-										</select>
-									</div>
-								</div>
-								<div className="form-row mb-3">
-									<div className="col">
-										<select
-											className="form-control"
-											id="status"
-											formControlName="driver"
-										>
-											<option value="">--- Select Driver ---</option>
-										</select>
-									</div>
-								</div>
-								<div className="form-row mb-3">
-									<div className="col-sm-12">
-										<button type="submit" class="btn btn-success mb-3">
-											Fetch Details
-										</button>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div className="row">
-									<div className="flex-row col-md-2">
-										<div className="thumnail-box custom-dashboard-box">
-											<div className="icon color-default fs-26 mr-10 float-left">
-												<i className="fa fa-usd font40"></i>
-											</div>
-											<div className="float-left">
-												<p>
-													<span className="font20">45</span>
-													<br />
-													Point Pick up
-												</p>
-											</div>
-											<div className="clearfix"></div>
+								<Form listing={response} setId={setresponse} />
+								{response.tabledata ? (
+									<Fragment>
+										<h2 style={{ margin: '10px' }}> Pickups</h2>
+										<Table
+											data={response.tabledata.pickups}
+											columns={columns}
+											tableclass={'table-responsive custom-table'}
+											pagination={true}
+											filter={true}
+											selectionToggle={true}
+											rowToggle={true}
+											selectedData={setpickData}
+											dataCheck={pickData}
+										/>
+										<div className="margintop30">
+											<h2 style={{ margin: '10px' }}> Deliveries</h2>
+											<Table
+												data={response.tabledata.deliveries}
+												columns={columns}
+												tableclass={'table-responsive custom-table'}
+												pagination={true}
+												filter={true}
+												rowToggle={true}
+												selectedData={setdeliveryData}
+												dataCheck={deliveryData}
+											/>
 										</div>
-									</div>
-									<div className="flex-row col-md-2">
-										<div className="thumnail-box custom-dashboard-box">
-											<div className="icon color-default fs-26 mr-10 float-left">
-												<i className="fa fa-usd font40"></i>
-											</div>
-											<div className="float-left">
-												<p>
-													<span className="font20">45</span>
-													<br />
-													Shipper Pick up
-												</p>
-											</div>
-											<div className="clearfix"></div>
+										<div className="btn-container">
+											<button
+												className="btn btn-success float-right"
+												onClick={() => submitResponse()}
+											>
+												Create Trip
+											</button>
 										</div>
-									</div>
-									<div className="flex-row col-md-2">
-										<div className="thumnail-box custom-dashboard-box">
-											<div className="icon color-default fs-26 mr-10 float-left">
-												<i className="fa fa-usd font40"></i>
-											</div>
-											<div className="float-left">
-												<p>
-													<span className="font20">45</span>
-													<br />
-													Deliveries to Point
-												</p>
-											</div>
-											<div className="clearfix"></div>
-										</div>
-									</div>
-									<div className="flex-row col-md-2">
-										<div className="thumnail-box custom-dashboard-box">
-											<div className="icon color-default fs-26 mr-10 float-left">
-												<i className="fa fa-usd font40"></i>
-											</div>
-											<div className="float-left">
-												<p>
-													<span className="font20">45</span>
-													<br />
-													Deliveries to Lastmile
-												</p>
-											</div>
-											<div className="clearfix"></div>
-										</div>
-									</div>
-									<div className="flex-row col-md-2">
-										<div className="thumnail-box custom-dashboard-box">
-											<div className="icon color-default fs-26 mr-10 float-left">
-												<i className="fa fa-usd font40"></i>
-											</div>
-											<div className="float-left">
-												<p>
-													<span className="font20">45</span>
-													<br />
-													Lastmile COD
-												</p>
-											</div>
-											<div className="clearfix"></div>
-										</div>
-									</div>
-									<div className="flex-row col-md-2">
-										<div className="thumnail-box custom-dashboard-box">
-											<div className="icon color-default fs-26 mr-10 float-left">
-												<i className="fa fa-usd font40"></i>
-											</div>
-											<div className="float-left">
-												<p>
-													<span className="font20">45</span>
-													<br />
-													Point Collection
-												</p>
-											</div>
-											<div className="clearfix"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<Table
-								data={[{}]}
-								columns={columns}
-								tableclass={'table-responsive custom-table'}
-								pagination={true}
-								filter={true}
-							/>
-							<div className="margintop30">
-								<Table
-									data={[{}]}
-									columns={columns}
-									tableclass={'table-responsive custom-table'}
-									pagination={true}
-									filter={true}
-								/>
+									</Fragment>
+								) : null}
 							</div>
 						</Container>
 					</animated.div>
