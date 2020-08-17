@@ -96,18 +96,126 @@ export default function TripDetail(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">Trip Detail</h2>
-							</div>
-							<div className="card-body">//your code here</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">Trip Detail</h2>
+								</div>
+								<div className="card-body">
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6"> Trip ID:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Warehouse:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Driver Name:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">City:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Vehicele:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Date:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="row mt-3">
+										<div className="flex-row col-md-3">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">45</span>
+														<br />
+														Pick ups
+													</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-3">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">35</span>
+														<br />
+														Deliveries
+													</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-3">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">SAR 3500/-</span>
+														<br />
+														Amount Collected
+													</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div className="flex-row col-md-3">
+											<div className="thumnail-box custom-dashboard-box">
+												<div className="icon color-default fs-26 mr-10 float-left">
+													<i className="fa fa-usd font40"></i>
+												</div>
+												<div className="float-left">
+													<p>
+														<span className="font20">7</span>
+														<br />
+														Locations
+													</p>
+												</div>
+												<div className="clearfix"></div>
+											</div>
+										</div>
+										<div class="col-sm-12 creatbill">
+											<h2>Trip Summary</h2>
+										</div>
+									</div>
+								</div>
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }
