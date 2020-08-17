@@ -138,11 +138,6 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
 			{
-				to: '/admin/scheduling/tripdetail',
-				name: 'Trip Detail',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
-			},
-			{
 				to: '/admin/tracking/orderlocations',
 				name: 'Active Trips',
 				iconClass: 'nav-icon fas fa-money-bill-wave',

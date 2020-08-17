@@ -24,11 +24,11 @@ export default function AllTrips(props) {
 	}, [response.loading]);
 
 	const handleClick = (row) => {
-		console.log(row.row.original.id);
+		console.log(row.row.original.tripId);
 		hist.push({
-			pathname: '/shipper/shipments/vieworder',
+			pathname: '/admin/scheduling/tripdetail',
 			state: {
-				id: row.row.original.id,
+				id: row.row.original.tripId,
 			},
 		});
 	};

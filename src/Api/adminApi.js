@@ -632,3 +632,19 @@ export async function allTripsApi() {
 			throw err;
 		});
 }
+
+export async function tripDetailApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/trip/get-details/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
