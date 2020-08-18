@@ -12,6 +12,14 @@ h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
     flex: 1;
     min-width: 0;
 }
+textarea{resize: none;}
+.width125{width:125px;}
+.width138{width:138px;}
+.clear{clear: both;}
+.shippersetting h3{font-size: 20px;color: #ec1c24;}
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle{background:#f6921d; border: #ec1c24 solid 1px;}
+label:not(.form-check-label):not(.custom-file-label){background: #FFF;}
+.btn-secondary{border: #ec1c24 solid 1px;}
 .custom-dashboard-box{padding: 5px 15px 0px 15px !important;}
 .font12{font-size: 12px; margin-bottom: 0;}
 .btnbrown{background: #f6921d !important;border: #f6921d solid 1px !important;}
