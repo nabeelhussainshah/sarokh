@@ -648,3 +648,18 @@ export async function tripDetailApi(id) {
 			throw err;
 		});
 }
+
+export async function financeDashboardApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/wallet/get-list`)
+		.then((res) => {
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
