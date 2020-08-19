@@ -11,7 +11,6 @@ import moment from 'moment';
 export default function AddPoint(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
-	console.log('sup');
 
 	// useEffect(() => {
 	// 	if (response.loading) {
