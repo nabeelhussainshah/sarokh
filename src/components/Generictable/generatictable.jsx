@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	useTable,
 	usePagination,
@@ -9,9 +9,10 @@ import {
 } from 'react-table';
 import GlobalFilter from './globalfilter';
 import Pagination from './pagination';
-import { last } from 'underscore';
 
 const IndeterminateCheckbox = React.forwardRef(
+	/* this is the component for select row functionality */
+
 	({ indeterminate, ...rest }, ref) => {
 		const defaultRef = React.useRef();
 		const resolvedRef = ref || defaultRef;
@@ -41,9 +42,9 @@ function GenericTable({
 	editablecolumn,
 	pagesize = 6,
 	tableclass = '',
-	rowToggle = false,
-	selectedData,
-	dataCheck,
+	rowToggle = false, // incase of select row option
+	selectedData, // setState function from the parent component to set the selected rows from the table in array in parent compoenent state
+	dataCheck, // state from the parent function that provides the existing state of selected values, it is empty array initially because no rows are selected
 }) {
 	const {
 		getTableProps,
@@ -87,9 +88,10 @@ function GenericTable({
 						id: 'selection',
 						// The header can use the table's getToggleAllRowsSelectedProps method
 						// to render a checkbox
-						Header: ({ getToggleAllPageRowsSelectedProps }) => (
+						Header: ({ getToggleAllRowsSelectedProps }) => (
 							<div>
-								{/* <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} /> */}
+								Select All &nbsp;
+								<IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
 							</div>
 						),
 						// The cell can use the individual row's getToggleRowSelectedProps method
@@ -106,25 +108,25 @@ function GenericTable({
 		}
 	);
 
-	// if (selectedData) {
-	// 	selectedData(selectedFlatRows);
-	// }
+	useEffect(() => {
+		/* logic to set the selected rows in the table and setstate in the parent component */
 
-	if (rowToggle) {
-		if (
-			(selectedFlatRows.length !== 0 && dataCheck.length === 0) ||
-			(selectedFlatRows.length === 0 && dataCheck.length !== 0)
-		) {
-			selectedData(selectedFlatRows);
-		} else if (dataCheck.length !== 0) {
+		if (rowToggle) {
 			if (
-				dataCheck[dataCheck.length - 1].id !==
-				selectedFlatRows[selectedFlatRows.length - 1].id
+				(selectedFlatRows.length !== 0 && dataCheck.length === 0) ||
+				(selectedFlatRows.length === 0 && dataCheck.length !== 0)
 			) {
 				selectedData(selectedFlatRows);
+			} else if (dataCheck.length !== 0) {
+				if (
+					dataCheck[dataCheck.length - 1].id !==
+					selectedFlatRows[selectedFlatRows.length - 1].id
+				) {
+					selectedData(selectedFlatRows);
+				}
 			}
 		}
-	}
+	}, [selectedFlatRows]);
 
 	const count = preGlobalFilteredRows.length;
 	return (

@@ -27,9 +27,11 @@ import AddVehicle from '../views/admin/Vehicle/AddVehicle';
 import AllVehicles from '../views/admin/Vehicle/AllVehicle';
 import MaintenanceRecords from '../views/admin/Vehicle/MaintenanceRecords';
 import AddDealer from '../views/admin/dealer/AddDealer';
+import AddPoint from '../views/admin/dealer/AddPoint';
 import CreateBill from '../views/admin/finance/CreateBill';
 import PaymentRecord from '../views/admin/finance/RecordPayment';
 import BillDetail from '../views/admin/finance/BillDetail';
+import BillListing from '../views/admin/finance/BillListing';
 import { Switch, Redirect } from 'react-router-dom';
 import { adminRoutes } from '../routes/adminRoutes';
 import { toast } from 'react-toastify';
@@ -120,14 +122,19 @@ export default function AdminRouter(props) {
 				path="/admin/vehicles/maintenancerecords"
 				component={MaintenanceRecords}
 			/>
-
+			<ProtectedRoute path="/admin/dealer/addpoint" component={AddPoint} />
 			<ProtectedRoute path="/admin/dealer/" component={AddDealer} />
 			<ProtectedRoute path="/admin/finance/createbill" component={CreateBill} />
+
 			<ProtectedRoute
 				path="/admin/finance/paymentrecord"
 				component={PaymentRecord}
 			/>
 			<ProtectedRoute path="/admin/finance/billdetail" component={BillDetail} />
+			<ProtectedRoute
+				path="/admin/finance/billlisting"
+				component={BillListing}
+			/>
 			<ProtectedRoute
 				path="/admin/scheduling/createtrip"
 				component={CreateTrip}

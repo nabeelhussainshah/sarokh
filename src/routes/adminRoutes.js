@@ -165,13 +165,13 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
 			{
-				to: '/admin/finance/paymentrecord',
-				name: 'Payment Record',
+				to: '/admin/finance/billlisting',
+				name: 'All Bills',
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
 			{
-				to: '/admin/finance/billdetail',
-				name: 'Bill Details',
+				to: '/admin/finance/paymentrecord',
+				name: 'Payment Record',
 				iconClass: 'nav-icon fas fa-money-bill-wave',
 			},
 		],
@@ -221,6 +221,11 @@ export const adminRoutes = [
 			{
 				to: '/ledger/allledger',
 				name: 'COD Ledgers',
+				iconClass: 'nav-icon fas fa-store',
+			},
+			{
+				to: '/admin/dealer/addpoint',
+				name: 'Add Point',
 				iconClass: 'nav-icon fas fa-store',
 			},
 		],

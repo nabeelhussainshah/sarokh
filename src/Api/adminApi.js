@@ -663,3 +663,69 @@ export async function financeDashboardApi() {
 			throw err;
 		});
 }
+
+export async function billListApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/bill/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function createBillApi(data) {
+	const payload = {
+		...data,
+		startDate: new Date(data.startDate).toISOString(),
+		endDate: new Date(data.endDate).toISOString(),
+		dueDate: new Date(data.dueDate).toISOString(),
+	};
+
+	return await axios
+		.post(`${process.env.REACT_APP_API}/bill/create-bill`, payload)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function searchShipperShipmentsApi(dates) {
+	const payload = {
+		startDate: new Date(dates.startDate).toISOString(),
+		endDate: new Date(dates.endDate).toISOString(),
+	};
+
+	return await axios
+		.post(
+			`${process.env.REACT_APP_API}/order/search-shipper-shipments/`,
+			payload
+		)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

@@ -25,6 +25,44 @@ export default function BillDetail(props) {
 		},
 	});
 
+	const column1 = [
+		{
+			Header: 'Date',
+			accessor: '',
+		},
+		{
+			Header: 'Amount Paid',
+			accessor: '',
+		},
+		{
+			Header: 'Payment Type',
+			accessor: '',
+		},
+		{
+			Header: 'Pending Amount',
+			accessor: '',
+		},
+	];
+
+	const column2 = [
+		{
+			Header: 'Tracking NO',
+			accessor: '',
+		},
+		{
+			Header: 'Date',
+			accessor: '',
+		},
+		{
+			Header: 'Units',
+			accessor: '',
+		},
+		{
+			Header: 'Amount',
+			accessor: '',
+		},
+	];
+
 	return response.loading ? (
 		<Loading />
 	) : (
@@ -108,6 +146,29 @@ export default function BillDetail(props) {
 										</label>
 									</div>
 								</div>
+								<Table
+									data={[]}
+									columns={column1}
+									tableclass={'table-responsive custom-table margintop10'}
+									hiddenColumns={['id']}
+								/>
+								<h4
+									style={{
+										color: 'red',
+										marginTop: '20px',
+										marginBottom: '20px',
+									}}
+								>
+									Bill Summary
+								</h4>
+								<Table
+									data={[]}
+									columns={column2}
+									tableclass={'table-responsive custom-table'}
+									pagination={true}
+									filter={true}
+									hiddenColumns={['id']}
+								/>
 							</div>
 						</Container>
 					</animated.div>

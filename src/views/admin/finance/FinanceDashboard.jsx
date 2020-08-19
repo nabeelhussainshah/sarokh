@@ -14,7 +14,7 @@ let radioIntialValue = {
 	driverCompensation: false,
 	dealerCompensation: false,
 	shipperCod: false,
-	ShipperDelivery: false,
+	shipperDelivery: false,
 	vendorPay: false,
 };
 
@@ -471,7 +471,7 @@ export default function CodShipments(props) {
 															className="form-check-input"
 															type="radio"
 															value="Shipper Delivery Charges"
-															checked={radio.ShipperDelivery}
+															checked={radio.shipperDelivery}
 															onClick={(e) => {
 																filterResults(
 																	'shipperDelivery',
