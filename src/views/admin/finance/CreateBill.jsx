@@ -4,7 +4,7 @@ import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
 import {
-	billListApi,
+	getBillToDetailApi,
 	searchShipperShipmentsApi,
 	createBillApi,
 } from '../../../Api/adminApi';
@@ -15,7 +15,11 @@ import moment from 'moment';
 
 export default function CreateBill(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: true, tableData: [] });
+	const [response, setresponse] = useState({
+		loading: false,
+		tableData: [],
+		data: [],
+	});
 
 	const [deliveryData, setdeliveryData] = useState([]);
 
@@ -33,14 +37,16 @@ export default function CreateBill(props) {
 	);
 
 	useEffect(() => {
-		billListApi()
-			.then((res) => {
-				setresponse({ loading: false, data: res, tableData: [] });
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
-	}, []);
+		if (response.data.length === 1) {
+			getBillToDetailApi(getValues('userType'))
+				.then((res) => {
+					setresponse({ loading: false, data: res, tableData: [] });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	}, [response.data]);
 
 	const columns = [
 		{
@@ -49,11 +55,11 @@ export default function CreateBill(props) {
 		},
 		{
 			Header: 'Date',
-			accessor: 'startDate',
+			accessor: 'date',
 			Cell: (row) => {
 				return (
 					<Fragment>
-						{moment(row.row.original.startDate).format('YYYY-MM-DD')}
+						{moment(row.row.original.date).format('YYYY-MM-DD')}
 					</Fragment>
 				);
 			},
@@ -61,10 +67,13 @@ export default function CreateBill(props) {
 		{
 			Header: 'Units',
 			accessor: 'units',
+			Cell: (row) => {
+				return <Fragment>1</Fragment>;
+			},
 		},
 		{
 			Header: 'Amount',
-			accessor: 'totalAmount',
+			accessor: 'amount',
 		},
 	];
 
@@ -96,7 +105,8 @@ export default function CreateBill(props) {
 				shipmentsIdList: getTrackingNumber(),
 			})
 				.then((res) => {
-					toast.success(res);
+					toast.success('Bill Has Been Created !');
+					hist.push('/admin/finance/billlisting');
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -110,7 +120,11 @@ export default function CreateBill(props) {
 			console.log(doc.original.trackingNumber);
 			trackingNo = trackingNo.concat(doc.original.trackingNumber, ',');
 		});
-		return trackingNo;
+		if (trackingNo === '') {
+			return null;
+		} else {
+			return trackingNo;
+		}
 	};
 
 	const getDetails = () => {
@@ -202,7 +216,7 @@ export default function CreateBill(props) {
 												name="billType"
 												className="form-check-input"
 												type="radio"
-												value="creditNote"
+												value="CreditNote"
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Credit Note</label>
@@ -219,7 +233,7 @@ export default function CreateBill(props) {
 												name="billCategory"
 												className="form-check-input"
 												type="radio"
-												value="shipmentCharges"
+												value="ShipmentCharges"
 												ref={register()}
 											/>
 											<label className="form-check-label">
@@ -231,7 +245,7 @@ export default function CreateBill(props) {
 												name="billCategory"
 												className="form-check-input"
 												type="radio"
-												value="cod"
+												value="COD"
 												ref={register()}
 											/>
 											<label className="form-check-label">COD</label>
@@ -241,7 +255,7 @@ export default function CreateBill(props) {
 												name="billCategory"
 												className="form-check-input"
 												type="radio"
-												value="compensation"
+												value="Compensation"
 												ref={register()}
 											/>
 											<label className="form-check-label">Compensation</label>
@@ -251,7 +265,7 @@ export default function CreateBill(props) {
 												name="billCategory"
 												className="form-check-input"
 												type="radio"
-												value="others"
+												value="Other"
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Others</label>
@@ -268,15 +282,29 @@ export default function CreateBill(props) {
 												required: true,
 												validate: (value) => value !== 'true',
 											})}
+											onChange={(e) => {
+												setresponse({
+													...response,
+													data: [{ id: 1, name: 'temp' }],
+												});
+											}}
 										>
-											<option value="true" disabled selected>
+											<option key={1} value="true" disabled selected>
 												Select User Type (Shipper, Dealer, Driver, Vendor) (Drop
 												down)
 											</option>
-											<option value="Shipper">Shipper</option>
-											<option value="Dealer">Dealer</option>
-											<option value="Driver">Driver</option>
-											<option value="Vendor">Vendor</option>
+											<option key={2} value="Shipper">
+												Shipper
+											</option>
+											<option key={3} value="Dealer">
+												Dealer
+											</option>
+											<option key={4} value="Driver">
+												Driver
+											</option>
+											<option key={5} value="Vendor">
+												Vendor
+											</option>
 										</select>
 									</div>
 									<div className="col">
@@ -284,19 +312,17 @@ export default function CreateBill(props) {
 										<select
 											name="billTo"
 											className="form-control"
-											ref={register()}
+											ref={register({ required: true })}
 										>
 											<option value="true" disabled selected>
 												Select Bill Receiver
 											</option>
 											{response.data.map((doc, i) => {
-												if (doc.billTo !== null) {
-													return (
-														<option key={i} value={doc.billTo}>
-															{doc.billTo}
-														</option>
-													);
-												}
+												return (
+													<option key={i} value={doc.name}>
+														{doc.name}
+													</option>
+												);
 											})}
 										</select>
 									</div>
@@ -354,7 +380,7 @@ export default function CreateBill(props) {
 										</span>
 									</div>
 								</div>
-								{watch('billCategory') === 'others' ? (
+								{watch('billCategory') === 'Other' ? (
 									<Fragment>
 										<div className="col-sm-12 creatbill">
 											<h2>Others</h2>
@@ -422,7 +448,7 @@ export default function CreateBill(props) {
 									</Fragment>
 								) : null}
 								<div className="form-row mb-3 mt-3">
-									{watch('billCategory') !== 'others' ? (
+									{watch('billCategory') !== 'Other' ? (
 										<div className="col-sm-12 mb-3">
 											<button
 												type="button"
@@ -465,25 +491,23 @@ export default function CreateBill(props) {
 
 								<Table
 									data={
-										watch('billCategory') === 'others'
+										watch('billCategory') === 'Other'
 											? otherData
 											: response.tableData
 									}
 									columns={
-										watch('billCategory') === 'others'
-											? columns_others
-											: columns
+										watch('billCategory') === 'Other' ? columns_others : columns
 									}
 									tableclass={'table-responsive custom-table margintop30'}
 									pagination={true}
 									rowToggle={true}
 									selectedData={
-										watch('billCategory') === 'others'
+										watch('billCategory') === 'Other'
 											? setselectedOtherData
 											: setdeliveryData
 									}
 									dataCheck={
-										watch('billCategory') === 'others'
+										watch('billCategory') === 'Other'
 											? selectedOtherData
 											: deliveryData
 									}

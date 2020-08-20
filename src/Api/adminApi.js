@@ -729,3 +729,19 @@ export async function searchShipperShipmentsApi(dates) {
 			throw err;
 		});
 }
+
+export async function getBillToDetailApi(user) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/bill/get-bill-to-details/${user}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

@@ -83,7 +83,7 @@ export default function BillListing(props) {
 		},
 		{
 			Header: 'status',
-			accessor: 'status',
+			accessor: 'paymentStatus',
 		},
 	];
 
