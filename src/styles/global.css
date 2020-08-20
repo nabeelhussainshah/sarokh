@@ -325,7 +325,7 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     padding: 170px 20px 20px 20px;
   }
   .login100-more h1{font-size: 22px; color: #FFF; margin-bottom: 25px;}
-  .login100-more label{color: #FFF !important;}
+  .login100-more label{color: #FFF !important; background: none !important;}
   .login100-more .input-group{width: 84%;}
   .login100-more .btn-link {color: #FFF !important;}
   .login100-more::before {
