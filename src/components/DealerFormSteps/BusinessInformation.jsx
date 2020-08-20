@@ -75,7 +75,7 @@ export default function BusinessInformation(props) {
 				<div className="margintop30">
 					<StepIndicator step1="done" step2="current" />
 				</div>
-				<form class="margintop30">
+				<form class="margintop30 padding20">
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="firstName">Contract ID</label>
@@ -86,7 +86,7 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Contract ID"
 								ref={register({ required: true })}
 							/>
-							{errors?.contractId?.types?.required && (
+							{errors ?.contractId ?.types ?.required && (
 								<p style={{ color: 'red' }}>Contract ID is required</p>
 							)}
 						</div>
@@ -111,7 +111,7 @@ export default function BusinessInformation(props) {
 								name="contractStartDate"
 								ref={register({ required: true })}
 							/>
-							{errors?.contactStartDate?.types?.required && (
+							{errors ?.contactStartDate ?.types ?.required && (
 								<p style={{ color: 'red' }}>
 									Contract Starting Date is required
 								</p>
@@ -125,7 +125,7 @@ export default function BusinessInformation(props) {
 								name="contractEndDate"
 								ref={register({ required: true })}
 							/>
-							{errors?.contractEndDate?.types?.required && (
+							{errors ?.contractEndDate ?.types ?.required && (
 								<p style={{ color: 'red' }}>Contract Ending Date is required</p>
 							)}
 						</div>
@@ -140,7 +140,7 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Amount in SAR"
 								ref={register({ required: true })}
 							/>
-							{errors?.compensationPerShipment?.types?.required && (
+							{errors ?.compensationPerShipment ?.types ?.required && (
 								<p style={{ color: 'red' }}>Amount is required</p>
 							)}
 						</div>
@@ -153,7 +153,7 @@ export default function BusinessInformation(props) {
 								placeholder="Compensation Cycle"
 								ref={register({ required: true })}
 							/>
-							{errors?.compensationCycle?.types?.required && (
+							{errors ?.compensationCycle ?.types ?.required && (
 								<p style={{ color: 'red' }}>Compensation Cycles are required</p>
 							)}
 						</div>
@@ -213,7 +213,7 @@ export default function BusinessInformation(props) {
 								placeholder="Enter IBAN"
 								ref={register({ required: true })}
 							/>
-							{errors?.iban?.types?.required && (
+							{errors ?.iban ?.types ?.required && (
 								<p style={{ color: 'red' }}>IBAN is required</p>
 							)}
 						</div>
@@ -228,7 +228,7 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Username"
 								ref={register({ required: true })}
 							/>
-							{errors?.userName?.types?.required && (
+							{errors ?.userName ?.types ?.required && (
 								<p style={{ color: 'red' }}>Username is required</p>
 							)}
 						</div>
@@ -241,12 +241,12 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Password"
 								ref={register({ required: true })}
 							/>
-							{errors?.password?.types?.required && (
+							{errors ?.password ?.types ?.required && (
 								<p style={{ color: 'red' }}>Password is required</p>
 							)}
 						</div>
 					</div>
-					<div className="btn-container float-right" style={{ margin: '10px' }}>
+					<div className="btn-container float-right mt-2 mb-2">
 						<button
 							className="btn btn-secondary dark-grey"
 							type="button"
@@ -264,17 +264,17 @@ export default function BusinessInformation(props) {
 								Update
 							</button>
 						) : (
-							<button
-								className="btn btn-success"
-								type="button"
-								onClick={() => handleSubmit(onSubmit)()}
-							>
-								Finish
+								<button
+									className="btn btn-success"
+									type="button"
+									onClick={() => handleSubmit(onSubmit)()}
+								>
+									Finish
 							</button>
-						)}
+							)}
 					</div>
 				</form>
 			</div>
-		</Container>
+		</Container >
 	);
 }

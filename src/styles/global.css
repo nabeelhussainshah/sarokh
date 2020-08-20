@@ -12,6 +12,7 @@ h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
     flex: 1;
     min-width: 0;
 }
+.padding20{padding: 0 20px;}
 textarea{resize: none;}
 .width125{width:125px;}
 .width138{width:138px;}

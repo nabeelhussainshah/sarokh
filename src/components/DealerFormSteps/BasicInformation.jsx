@@ -55,7 +55,7 @@ export default function BasicInformation(props) {
 				<div className="margintop30">
 					<StepIndicator step1="current" />
 				</div>
-				<form class="margintop30" onSubmit={handleSubmit(onSubmit)}>
+				<form class="margintop30 padding20" onSubmit={handleSubmit(onSubmit)}>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="firstName">Owner Name</label>
@@ -66,7 +66,7 @@ export default function BasicInformation(props) {
 								placeholder="Owner Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.owner?.types?.required && (
+							{errors ?.owner ?.types ?.required && (
 								<p style={{ color: 'red' }}>owner is required</p>
 							)}
 						</div>
@@ -93,7 +93,7 @@ export default function BasicInformation(props) {
 								placeholder="Contact Number"
 								ref={register({ required: true })}
 							/>
-							{errors?.contactNo?.types?.required && (
+							{errors ?.contactNo ?.types ?.required && (
 								<p style={{ color: 'red' }}>Contact Number is required</p>
 							)}
 						</div>
@@ -106,7 +106,7 @@ export default function BasicInformation(props) {
 								placeholder="abc@gmail.com"
 								ref={register({ required: true })}
 							/>
-							{errors?.email?.types?.required && (
+							{errors ?.email ?.types ?.required && (
 								<p style={{ color: 'red' }}>Email is required</p>
 							)}
 						</div>
@@ -121,7 +121,7 @@ export default function BasicInformation(props) {
 								placeholder="National ID/iqama Number"
 								ref={register({ required: true })}
 							/>
-							{errors?.nicNumber?.types?.required && (
+							{errors ?.nicNumber ?.types ?.required && (
 								<p style={{ color: 'red' }}>
 									National ID/iqama Number is required
 								</p>
@@ -149,7 +149,7 @@ export default function BasicInformation(props) {
 								placeholder="DOB"
 								ref={register({ required: true })}
 							/>
-							{errors?.dateOfBirth?.types?.required && (
+							{errors ?.dateOfBirth ?.types ?.required && (
 								<p style={{ color: 'red' }}>DOB is required</p>
 							)}
 						</div>
@@ -176,7 +176,7 @@ export default function BasicInformation(props) {
 							>
 								<option value="SAU">Saudi Arabia</option>
 							</select>
-							{errors?.country?.types?.required && (
+							{errors ?.country ?.types ?.required && (
 								<p style={{ color: 'red' }}>country is required</p>
 							)}
 						</div>
@@ -197,7 +197,7 @@ export default function BasicInformation(props) {
 									);
 								})}
 							</select>
-							{errors?.city?.types?.required && (
+							{errors ?.city ?.types ?.required && (
 								<p style={{ color: 'red' }}>city is required</p>
 							)}
 						</div>
@@ -212,7 +212,7 @@ export default function BasicInformation(props) {
 								placeholder="Address"
 								ref={register({ required: true })}
 							/>
-							{errors?.address?.types?.required && (
+							{errors ?.address ?.types ?.required && (
 								<p style={{ color: 'red' }}>Address is required</p>
 							)}
 						</div>
@@ -225,14 +225,14 @@ export default function BasicInformation(props) {
 								placeholder="Post Code"
 								ref={register({ required: true })}
 							/>
-							{errors?.postCode?.types?.required && (
+							{errors ?.postCode ?.types ?.required && (
 								<p style={{ color: 'red' }}>Post Code is required</p>
 							)}
 						</div>
 					</div>
-					<div className="btn-container float-right" style={{ margin: '10px' }}>
+					<div className="btn-container float-right mt-2 mb-2 mr-1">
 						<button
-							className="btn btn-secondary dark-grey"
+							className="btn btn-danger dark-grey"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
