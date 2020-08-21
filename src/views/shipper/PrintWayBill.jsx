@@ -61,45 +61,45 @@ export default function PrintWayBill(props) {
 	return response.loading ? (
 		<div>Loading...</div>
 	) : (
-			<ListingContainer>
-				<div>
-					<div className="card-header">
-						<h2>Print Way Bill</h2>
-					</div>
-					<div className="card-body">
-						<label>Select Tracking Numbers</label>
-						<select
-							className="form-control mb-5"
-							id="status"
-							onChange={(e) => {
-								handleChange(e.target.value);
-							}}
-						>
-							<option value="true">---Select Order id---</option>
-							{response.list.map((doc, i) => {
-								return (
-									<option key={i} value={doc}>
-										{doc}
-									</option>
-								);
-							})}
-						</select>
-						<ComponentToPrint response={response} />
-						{response.content === undefined ? null : (
-							<>
-								<button
-									onClick={() => printBill()}
-									className="btn btn-primary mt-4 float-right"
-								>
-									print
-							</button>
-								{setTimeout(() => showBill(), 100)}
-							</>
-						)}
-					</div>
+		<ListingContainer>
+			<div>
+				<div className="card-header">
+					<h2>Print Way Bill</h2>
 				</div>
-			</ListingContainer>
-		);
+				<div className="card-body">
+					<label>Select Tracking Numbers</label>
+					<select
+						className="form-control mb-5"
+						id="status"
+						onChange={(e) => {
+							handleChange(e.target.value);
+						}}
+					>
+						<option value="true">---Select Order id---</option>
+						{response.list.map((doc, i) => {
+							return (
+								<option key={i} value={doc}>
+									{doc}
+								</option>
+							);
+						})}
+					</select>
+					<ComponentToPrint response={response} />
+					{response.content === undefined ? null : (
+						<>
+							<button
+								onClick={() => printBill()}
+								className="btn btn-primary mt-4 float-right"
+							>
+								print
+							</button>
+							{setTimeout(() => showBill(), 100)}
+						</>
+					)}
+				</div>
+			</div>
+		</ListingContainer>
+	);
 }
 
 const ComponentToPrint = ({ response }) => {
@@ -107,252 +107,124 @@ const ComponentToPrint = ({ response }) => {
 		<>
 			{response.content === undefined ? null : (
 				<>
-
-					<div className="print-order">
-						<div className="print-heading">
-							<div className="form-row">
-								<div className="col-sm-6 mb-2 text-right"><img src={require('../../assets/images/sarokh-logo.png')} /></div>
-								<div className="col-sm-6 text-left"><img src={response.data.shipmentOrderItems[0].qrcode} style={{ width: 80 }} alt="Logo" /></div>
-							</div>
-						</div>
-						<div className="print-body">
-							<div className="form-row">
-								<div className="col-sm-6 mt-2 text-center">Receiver Name</div>
-								<div className="col-sm-6 mt-2 text-center">{response.data.shipmentOrderItems[0].receiverName}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Receiver Contact</div>
-								<div className="col-sm-6 text-center">{response.data.shipmentOrderItems[0].contact}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Receiver Address</div>
-								<div className="col-sm-6 text-center">dfadfdf</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6">&nbsp;</div>
-								<div className="col-sm-6">&nbsp;</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Receiver City</div>
-								<div className="col-sm-6 text-center">dfadfdf</div>
-							</div>
-							<hr />
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Shipper Name</div>
-								<div className="col-sm-6 text-center">dfadfdf</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Phone Number</div>
-								<div className="col-sm-6 text-center">{response.data.shipmentOrderItems[0].contact}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Address</div>
-								<div className="col-sm-6 text-center">{response.data.shipmentOrderItems[0].address}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6">&nbsp;</div>
-								<div className="col-sm-6">&nbsp;</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">City</div>
-								<div className="col-sm-6 text-center">{response.data.shipFromCity}</div>
-							</div>
-							<hr />
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Pick up Date</div>
-								<div className="col-sm-6 text-center">{new Date(response.data.createdDatetime).toDateString()}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Delivery Date</div>
-								<div className="col-sm-6 text-center">dfadfdf</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Piece</div>
-								<div className="col-sm-6 text-center">dfadfdf</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Service</div>
-								<div className="col-sm-6 text-center">{response.data.shipmentOrderItems[0].paymentType}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Weight</div>
-								<div className="col-sm-6 text-center">{response.data.shipmentOrderItems[0].weight}</div>
-							</div>
-							<div className="form-row">
-								<div className="col-sm-6 text-center">Note</div>
-								<div className="col-sm-6 text-center">{response.data.shipmentOrderItems[0].additionalServices}</div>
-							</div>
-							<hr />
-							<div className="print-footer">
-								<div className="form-row">
-									<div className="col-sm-6 text-center">
-										<img src={response.data.shipmentOrderItems[0].barCode} alt="Logo" />
-										<p>{response.data.orderId}</p>
-									</div>
-									<div className="col-sm-6 text-left font40">JED</div>
-								</div>
-							</div>
-						</div>
-					</div>
 					<iframe
 						id="ifmcontentstoprint"
 						style={{ width: '100%', height: '510px' }}
 					>
-						<div id="print-section">
-							<table
-								className="margintop50"
-								style={{ textAlign: 'center', width: '100%' }}
-								border={1}
-							>
-								<tbody>
-									<tr style={{ border: 'none' }}>
-										<td style={{ width: '20%' }} />
-										<td style={{ width: '20%' }} />
-										<td style={{ width: '20%' }} />
-										<td style={{ width: '20%' }} />
-										<td style={{ width: '20%' }} />
-									</tr>
-									<tr>
-										<td style={{ padding: '10px 0' }} colSpan={2}>
-											<img src={logo} alt="Logo" />
-										</td>
-										<td colSpan={3}>
+						<div id="print-section" className="print-order">
+							<div className="print-heading">
+								<div className="form-row">
+									<div className="col-sm-6 mb-2 text-right">
+										<img src={require('../../assets/images/sarokh-logo.png')} />
+									</div>
+									<div className="col-sm-6 text-left">
+										<img
+											src={response.data.shipmentOrderItems[0].qrcode}
+											style={{ width: 80 }}
+											alt="Logo"
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="print-body">
+								<div className="form-row">
+									<div className="col-sm-6 mt-2 text-center">Receiver Name</div>
+									<div className="col-sm-6 mt-2 text-center">
+										{response.data.shipmentOrderItems[0].receiverName}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Receiver Contact</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipmentOrderItems[0].contact}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Receiver Address</div>
+									<div className="col-sm-6 text-center">dfadfdf</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6">&nbsp;</div>
+									<div className="col-sm-6">&nbsp;</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Receiver City</div>
+									<div className="col-sm-6 text-center">dfadfdf</div>
+								</div>
+								<hr />
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Shipper Name</div>
+									<div className="col-sm-6 text-center">dfadfdf</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Phone Number</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipmentOrderItems[0].contact}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Address</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipmentOrderItems[0].address}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6">&nbsp;</div>
+									<div className="col-sm-6">&nbsp;</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">City</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipFromCity}
+									</div>
+								</div>
+								<hr />
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Pick up Date</div>
+									<div className="col-sm-6 text-center">
+										{new Date(response.data.createdDatetime).toDateString()}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Delivery Date</div>
+									<div className="col-sm-6 text-center">dfadfdf</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Piece</div>
+									<div className="col-sm-6 text-center">dfadfdf</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Service</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipmentOrderItems[0].paymentType}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Weight</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipmentOrderItems[0].weight}
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-6 text-center">Note</div>
+									<div className="col-sm-6 text-center">
+										{response.data.shipmentOrderItems[0].additionalServices}
+									</div>
+								</div>
+								<hr />
+								<div className="print-footer">
+									<div className="form-row">
+										<div className="col-sm-6 text-center">
 											<img
 												src={response.data.shipmentOrderItems[0].barCode}
 												alt="Logo"
 											/>
-										</td>
-									</tr>
-									<tr>
-										<td colSpan={3} rowSpan={4}>
-											From
-										</td>
-										<td>
-											<strong>Company Name</strong>
-										</td>
-										<td>ABC</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>Address</strong>
-										</td>
-										<td>Shipper Address</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>City</strong>
-										</td>
-										<td>{response.data.shipFromCity}</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>Phone</strong>
-										</td>
-										<td>{response.data.shipmentOrderItems[0].contact}</td>
-									</tr>
-									<tr>
-										<td colSpan={2}>&nbsp;</td>
-										<td
-											style={{ fontSize: 18, fontWeight: 'bold' }}
-											rowSpan={4}
-										>
-											To
-										</td>
-										<td>
-											<strong>Customer Name</strong>
-										</td>
-										<td>{response.data.shipmentOrderItems[0].receiverName}</td>
-									</tr>
-									<tr>
-										<td
-											style={{ fontSize: 18, fontWeight: 'bold' }}
-											rowSpan={2}
-											colSpan={2}
-										>
-											{response.data.orderId}
-										</td>
-										<td>
-											<strong>Address</strong>
-										</td>
-										<td>{response.data.shipmentOrderItems[0].address}</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>City</strong>
-										</td>
-										<td>{response.data.shipToCity}</td>
-									</tr>
-									<tr>
-										<td colSpan={2}>&nbsp;</td>
-										<td>
-											<strong>Phone</strong>
-										</td>
-										<td>{response.data.shipmentOrderItems[0].contact}</td>
-									</tr>
-									<tr>
-										<td colSpan={2}>&nbsp;</td>
-										<td style={{ fontSize: 15, fontWeight: 'bold' }}>
-											{response.data.shipFromCity}
-										</td>
-										<td colSpan={2}>For Sender Only</td>
-									</tr>
-									<tr>
-										<td colSpan={2}>Clasification</td>
-										<td>To</td>
-										<td colSpan={2} rowSpan={2}>
-											<img
-												src={response.data.shipmentOrderItems[0].qrcode}
-												style={{ width: 80 }}
-												alt="Logo"
-											/>
-										</td>
-									</tr>
-									<tr>
-										<td colSpan={2}>&nbsp;</td>
-										<td style={{ fontSize: 15, fontWeight: 'bold' }}>
-											{response.data.shipToCity}
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>Pickup Date</strong>
-										</td>
-										<td colSpan={2}>
-											{new Date(response.data.createdDatetime).toDateString()}
-										</td>
-										<td>
-											<strong>Service</strong>
-										</td>
-										<td colSpan={2}>
-											{response.data.shipmentOrderItems[0].paymentType}
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>Pices</strong>
-										</td>
-										<td colSpan={2}>1 of 1</td>
-										<td>
-											<strong>Weight</strong>
-										</td>
-										<td colSpan={2}>
-											{response.data.shipmentOrderItems[0].weight}
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>Reference</strong>
-										</td>
-										<td colSpan={2}>xxxxx</td>
-										<td>
-											<strong>Notes</strong>
-										</td>
-										<td colSpan={2}>
-											{response.data.shipmentOrderItems[0].additionalServices}
-										</td>
-									</tr>
-								</tbody>
-							</table>
+											<p>{response.data.orderId}</p>
+										</div>
+										<div className="col-sm-6 text-left font40">JED</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</iframe>
 				</>
