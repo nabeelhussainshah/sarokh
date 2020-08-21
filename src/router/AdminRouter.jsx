@@ -34,6 +34,7 @@ import BillDetail from '../views/admin/finance/BillDetail';
 import BillListing from '../views/admin/finance/BillListing';
 import { Switch, Redirect } from 'react-router-dom';
 import { adminRoutes } from '../routes/adminRoutes';
+import AddVendor from '../views/admin/dealer/AddVendor';
 import { toast } from 'react-toastify';
 
 export default function AdminRouter(props) {
@@ -122,6 +123,7 @@ export default function AdminRouter(props) {
 				path="/admin/vehicles/maintenancerecords"
 				component={MaintenanceRecords}
 			/>
+			<ProtectedRoute path="/admin/dealer/addvendor" component={AddVendor} />
 			<ProtectedRoute path="/admin/dealer/addpoint" component={AddPoint} />
 			<ProtectedRoute path="/admin/dealer/" component={AddDealer} />
 			<ProtectedRoute path="/admin/finance/createbill" component={CreateBill} />

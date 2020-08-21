@@ -1,27 +1,38 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
-import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
 import { allShippersApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 export default function ShipperSetting(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: false });
+	const [response, setresponse] = useState({ loading: true });
+	const { register, errors, watch, handleSubmit, getValues, trigger } = useForm(
+		{
+			shouldFocusError: true,
+			mode: 'onChange',
+			criteriaMode: 'all',
+		}
+	);
 
-	// useEffect(() => {
-	// 	if (response.loading) {
-	// 		allShippersApi()
-	// 			.then((res) => {
-	// 				setresponse({ loading: false, data: res });
-	// 			})
-	// 			.catch((err) => {
-	// 				toast.error(err.message);
-	// 			});
-	// 	}
-	// }, [response.loading]);
+	useEffect(() => {
+		if (response.loading) {
+			allShippersApi()
+				.then((res) => {
+					setresponse({ loading: false, data: res });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	}, [response.loading]);
+
+	const onSubmit = (formData) => {
+		console.log(formData);
+	};
 
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
@@ -44,7 +55,6 @@ export default function ShipperSetting(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
 								<h2 className="float-left">Shipper Setting</h2>
@@ -53,15 +63,17 @@ export default function ShipperSetting(props) {
 								<div className="form-row mb-3 mt-3">
 									<div className="col">
 										<label>Select Shipper</label>
-										<select className="form-control">
+										<select
+											name="shipperId"
+											className="form-control"
+											// ref={register({
+											// 	required: true,
+											// 	validate: (value) => value !== 'true',
+											// })}
+										>
 											<option value="true" disabled selected>
-												Select User Type (Shipper, Dealer, Driver, Vendor) (Drop
-												down)
+												Select Shipper
 											</option>
-											<option value="Shipper">Shipper</option>
-											<option value="Dealer">Dealer</option>
-											<option value="Driver">Driver</option>
-											<option value="Vendor">Vendor</option>
 										</select>
 									</div>
 									<div className="col">
@@ -99,6 +111,7 @@ export default function ShipperSetting(props) {
 												value="true"
 												className="form-check-input"
 												type="radio"
+												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
@@ -108,6 +121,7 @@ export default function ShipperSetting(props) {
 												value="false"
 												className="form-check-input"
 												type="radio"
+												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
 										</div>
@@ -123,6 +137,7 @@ export default function ShipperSetting(props) {
 												value="true"
 												className="form-check-input"
 												type="radio"
+												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
@@ -132,6 +147,7 @@ export default function ShipperSetting(props) {
 												value="false"
 												className="form-check-input"
 												type="radio"
+												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
 										</div>
@@ -147,6 +163,7 @@ export default function ShipperSetting(props) {
 												value="true"
 												className="form-check-input"
 												type="radio"
+												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
@@ -156,6 +173,7 @@ export default function ShipperSetting(props) {
 												className="form-check-input"
 												value="false"
 												type="radio"
+												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
 										</div>
@@ -173,6 +191,7 @@ export default function ShipperSetting(props) {
 												className="form-check-input"
 												value="true"
 												type="radio"
+												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
@@ -182,6 +201,7 @@ export default function ShipperSetting(props) {
 												className="form-check-input"
 												value="false"
 												type="radio"
+												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
 										</div>
@@ -192,11 +212,23 @@ export default function ShipperSetting(props) {
 											</label>
 										</div>
 										<div className="form-check form-check-inline">
-											<input className="form-check-input" type="radio" />
+											<input
+												name="deliveryLastMile"
+												className="form-check-input"
+												value="true"
+												type="radio"
+												ref={register()}
+											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
-											<input className="form-check-input" type="radio" />
+											<input
+												name="deliveryLastMile"
+												className="form-check-input"
+												value="false"
+												type="radio"
+												ref={register({ required: true })}
+											/>
 											<label className="form-check-label">Disable</label>
 										</div>
 										<div className="clearfix"></div>
@@ -206,17 +238,33 @@ export default function ShipperSetting(props) {
 											</label>
 										</div>
 										<div className="form-check form-check-inline">
-											<input className="form-check-input" type="radio" />
+											<input
+												name="deliveryCustomerChoice"
+												className="form-check-input"
+												value="true"
+												type="radio"
+												ref={register()}
+											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
-											<input className="form-check-input" type="radio" />
+											<input
+												name="deliveryCustomerChoice"
+												className="form-check-input"
+												value="false"
+												type="radio"
+												ref={register({ required: true })}
+											/>
 											<label className="form-check-label">Disable</label>
 										</div>
 									</div>
 									<div className="col-sm-4">
 										<h3>Notes:</h3>
-										<textarea className="form-control"></textarea>
+										<textarea
+											name="notes"
+											className="form-control"
+											ref={register({ required: true })}
+										></textarea>
 									</div>
 								</div>
 								<div className="form-row">
@@ -228,19 +276,21 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Up to 5 Kg</label>
 										<input
-											type="text"
-											name=""
+											type="number"
+											name="weightUptoFiveKg"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 									<div className="col">
 										<label>Last Mile</label>
 										<input
-											type="password"
-											name=""
+											type="number"
+											name="lastMile"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 								</div>
@@ -248,19 +298,21 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Up to 10 kg</label>
 										<input
-											type="text"
-											name=""
+											type="number"
+											name="weightFiveToTen"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 									<div className="col">
 										<label>Normal Packaging</label>
 										<input
-											type="password"
-											name=""
+											type="number"
+											name="normalPackaging"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 								</div>
@@ -268,19 +320,21 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Upto 15 kg</label>
 										<input
-											type="text"
-											name=""
+											type="number"
+											name="weightTenToFifteen"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 									<div className="col">
 										<label>Gift Packaging</label>
 										<input
-											type="password"
-											name=""
+											type="number"
+											name="giftPackaging"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 								</div>
@@ -288,19 +342,21 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Return Shipment Charges; (Undelivered)</label>
 										<input
-											type="text"
-											name=""
+											type="number"
+											name="returnCharges"
 											className="form-control"
 											placeholder="Enter Amount"
+											ref={register({ required: true })}
 										/>
 									</div>
 									<div className="col">
 										<label>Insurance Percentage</label>
 										<input
-											type="password"
-											name=""
+											type="number"
+											name="insurance"
 											className="form-control"
 											placeholder="Enter Percentage"
+											ref={register({ required: true })}
 										/>
 									</div>
 								</div>
@@ -312,6 +368,9 @@ export default function ShipperSetting(props) {
 										<button
 											type="button"
 											className="btn btn-danger float-right btnbrown"
+											onClick={() => {
+												handleSubmit(onSubmit)();
+											}}
 										>
 											Save
 										</button>
