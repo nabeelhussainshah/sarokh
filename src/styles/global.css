@@ -340,9 +340,9 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     background: #f7931e;
     opacity: 0.8;
   }
-.print-order{width: 350px; margin: 0 auto;}
+.print-order{width: 900px; margin: 0 auto;}
 .print-heading{border-bottom:1px solid rgba(0,0,0,.1);}
-
+.print-heading img{width: 150px;}
   @media (max-width: 576px) {
     .wrap-login100 {
       padding-left: 15px;
