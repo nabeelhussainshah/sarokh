@@ -40,222 +40,287 @@ export default function ShipperSetting(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			transitions.map(
-				({ item, props, key }) =>
-					item && (
-						<animated.div key={key} style={props}>
-							{console.log(item)}
-							<ListingContainer>
-								<div className="card-header">
-									<h2 className="float-left">Shipper Setting</h2>
-								</div>
-								<div className="card-body shippersetting">
-									<div className="form-row mb-3 mt-3">
-										<div className="col">
-											<label>Select Shipper</label>
-											<input
-												type="text"
-												name=""
-												className="form-control"
-												placeholder="Select Shipper"
-											/>
-										</div>
-										<div className="col">
-											<div className="btn-group btn-group-toggle float-right mt-4" data-toggle="buttons">
-												<label className="btn btn-secondary active">
-													<input type="radio" name="options" id="option1" checked /> Disable
-  												</label>
-												<label className="btn btn-secondary">
-													<input type="radio" name="options" id="option2" /> Enable
-  												</label>
-											</div>
-										</div>
+		transitions.map(
+			({ item, props, key }) =>
+				item && (
+					<animated.div key={key} style={props}>
+						{console.log(item)}
+						<ListingContainer>
+							<div className="card-header">
+								<h2 className="float-left">Shipper Setting</h2>
+							</div>
+							<div className="card-body shippersetting">
+								<div className="form-row mb-3 mt-3">
+									<div className="col">
+										<label>Select Shipper</label>
+										<select className="form-control">
+											<option value="true" disabled selected>
+												Select User Type (Shipper, Dealer, Driver, Vendor) (Drop
+												down)
+											</option>
+											<option value="Shipper">Shipper</option>
+											<option value="Dealer">Dealer</option>
+											<option value="Driver">Driver</option>
+											<option value="Vendor">Vendor</option>
+										</select>
 									</div>
-									<div className="form-row mb-3 mt-3">
-										<div className="col-sm-4">
-											<h3>Pickup Setting</h3>
-											<div className="form-check form-check-inline">
-												<label className="form-check-label width138">Sarokh Point</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Enable</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Disable</label>
-											</div>
-											<div className="clearfix"></div>
-											<div className="form-check form-check-inline">
-												<label className="form-check-label width138">Shipper Warehouse</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Enable</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Disable</label>
-											</div>
-											<div className="clearfix"></div>
-											<div className="form-check form-check-inline">
-												<label className="form-check-label width138">Sarokh Warehouse</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Enable</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Disable</label>
-											</div>
-										</div>
-										<div className="col-sm-4">
-											<h3>Delivery Setting</h3>
-											<div className="form-check form-check-inline">
-												<label className="form-check-label width125">Sarokh Point</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Enable</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Disable</label>
-											</div>
-											<div className="clearfix"></div>
-											<div className="form-check form-check-inline">
-												<label className="form-check-label width125">Last Mile</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Enable</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Disable</label>
-											</div>
-											<div className="clearfix"></div>
-											<div className="form-check form-check-inline">
-												<label className="form-check-label width125">Customer Choice</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Enable</label>
-											</div>
-											<div className="form-check form-check-inline">
-												<input className="form-check-input" type="radio" />
-												<label className="form-check-label">Disable</label>
-											</div>
-										</div>
-										<div className="col-sm-4">
-											<h3>Notes:</h3>
-											<textarea className="form-control"></textarea>
-										</div>
-									</div>
-									<div className="form-row">
-										<div className="col-sm-12">
-											<h3>Billing Setting</h3>
-										</div>
-									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<label>Up to 5 Kg</label>
-											<input
-												type="text"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-										<div className="col">
-											<label>Last Mile</label>
-											<input
-												type="password"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-									</div>
-									<div className="form-row mb-3 mt-3">
-										<div className="col">
-											<label>Up to 10 kg</label>
-											<input
-												type="text"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-										<div className="col">
-											<label>Normal Packaging</label>
-											<input
-												type="password"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-									</div>
-									<div className="form-row mb-3 mt-3">
-										<div className="col">
-											<label>Upto 15 kg</label>
-											<input
-												type="text"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-										<div className="col">
-											<label>Gift Packaging</label>
-											<input
-												type="password"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-									</div>
-									<div className="form-row mb-3 mt-3">
-										<div className="col">
-											<label>Return Shipment Charges; (Undelivered)</label>
-											<input
-												type="text"
-												name=""
-												className="form-control"
-												placeholder="Enter Amount"
-											/>
-										</div>
-										<div className="col">
-											<label>Insurance Percentage</label>
-											<input
-												type="password"
-												name=""
-												className="form-control"
-												placeholder="Enter Percentage"
-											/>
-										</div>
-									</div>
-									<div className="form-row">
-										<div className="col-sm-12">
-											<button
-												type="button"
-												className="btn btn-danger float-left">
-												Discard
-          									</button>
-											<button
-												type="button"
-												className="btn btn-danger float-right btnbrown">
-												Save
-          									</button>
+									<div className="col">
+										<div
+											className="btn-group btn-group-toggle float-right mt-4"
+											data-toggle="buttons"
+										>
+											<label className="btn btn-secondary active">
+												<input
+													type="radio"
+													name="options"
+													id="option1"
+													checked
+												/>{' '}
+												Disable
+											</label>
+											<label className="btn btn-secondary">
+												<input type="radio" name="options" id="option2" />{' '}
+												Enable
+											</label>
 										</div>
 									</div>
 								</div>
-							</ListingContainer>
-						</animated.div>
-					)
-			)
-		);
+								<div className="form-row mb-3 mt-3">
+									<div className="col-sm-4">
+										<h3>Pickup Setting</h3>
+										<div className="form-check form-check-inline">
+											<label className="form-check-label width138">
+												Sarokh Point
+											</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="pickupSarokhPoint"
+												value="true"
+												className="form-check-input"
+												type="radio"
+											/>
+											<label className="form-check-label">Enable</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="pickupSarokhPoint"
+												value="false"
+												className="form-check-input"
+												type="radio"
+											/>
+											<label className="form-check-label">Disable</label>
+										</div>
+										<div className="clearfix"></div>
+										<div className="form-check form-check-inline">
+											<label className="form-check-label width138">
+												Shipper Warehouse
+											</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="pickupSarokhWarehouse"
+												value="true"
+												className="form-check-input"
+												type="radio"
+											/>
+											<label className="form-check-label">Enable</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="pickupSarokhWarehouse"
+												value="false"
+												className="form-check-input"
+												type="radio"
+											/>
+											<label className="form-check-label">Disable</label>
+										</div>
+										<div className="clearfix"></div>
+										<div className="form-check form-check-inline">
+											<label className="form-check-label width138">
+												Sarokh Warehouse
+											</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="pickupShipperWarehouse"
+												value="true"
+												className="form-check-input"
+												type="radio"
+											/>
+											<label className="form-check-label">Enable</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="pickupShipperWarehouse"
+												className="form-check-input"
+												value="false"
+												type="radio"
+											/>
+											<label className="form-check-label">Disable</label>
+										</div>
+									</div>
+									<div className="col-sm-4">
+										<h3>Delivery Setting</h3>
+										<div className="form-check form-check-inline">
+											<label className="form-check-label width125">
+												Sarokh Point
+											</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="deliverySarokhPoint"
+												className="form-check-input"
+												value="true"
+												type="radio"
+											/>
+											<label className="form-check-label">Enable</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input
+												name="deliverySarokhPoint"
+												className="form-check-input"
+												value="false"
+												type="radio"
+											/>
+											<label className="form-check-label">Disable</label>
+										</div>
+										<div className="clearfix"></div>
+										<div className="form-check form-check-inline">
+											<label className="form-check-label width125">
+												Last Mile
+											</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input className="form-check-input" type="radio" />
+											<label className="form-check-label">Enable</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input className="form-check-input" type="radio" />
+											<label className="form-check-label">Disable</label>
+										</div>
+										<div className="clearfix"></div>
+										<div className="form-check form-check-inline">
+											<label className="form-check-label width125">
+												Customer Choice
+											</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input className="form-check-input" type="radio" />
+											<label className="form-check-label">Enable</label>
+										</div>
+										<div className="form-check form-check-inline">
+											<input className="form-check-input" type="radio" />
+											<label className="form-check-label">Disable</label>
+										</div>
+									</div>
+									<div className="col-sm-4">
+										<h3>Notes:</h3>
+										<textarea className="form-control"></textarea>
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-12">
+										<h3>Billing Setting</h3>
+									</div>
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<label>Up to 5 Kg</label>
+										<input
+											type="text"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+									<div className="col">
+										<label>Last Mile</label>
+										<input
+											type="password"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+								</div>
+								<div className="form-row mb-3 mt-3">
+									<div className="col">
+										<label>Up to 10 kg</label>
+										<input
+											type="text"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+									<div className="col">
+										<label>Normal Packaging</label>
+										<input
+											type="password"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+								</div>
+								<div className="form-row mb-3 mt-3">
+									<div className="col">
+										<label>Upto 15 kg</label>
+										<input
+											type="text"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+									<div className="col">
+										<label>Gift Packaging</label>
+										<input
+											type="password"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+								</div>
+								<div className="form-row mb-3 mt-3">
+									<div className="col">
+										<label>Return Shipment Charges; (Undelivered)</label>
+										<input
+											type="text"
+											name=""
+											className="form-control"
+											placeholder="Enter Amount"
+										/>
+									</div>
+									<div className="col">
+										<label>Insurance Percentage</label>
+										<input
+											type="password"
+											name=""
+											className="form-control"
+											placeholder="Enter Percentage"
+										/>
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="col-sm-12">
+										<button type="button" className="btn btn-danger float-left">
+											Discard
+										</button>
+										<button
+											type="button"
+											className="btn btn-danger float-right btnbrown"
+										>
+											Save
+										</button>
+									</div>
+								</div>
+							</div>
+						</ListingContainer>
+					</animated.div>
+				)
+		)
+	);
 }

@@ -212,7 +212,7 @@ const ComponentToPrint = ({ response }) => {
 									{response.data.shipmentOrderItems[0].paymentType}
 								</div>
 							</div>
-							<div className="form-row">
+							<div classname="form-row">
 								<div className="col-sm-6 text-center">Weight</div>
 								<div className="col-sm-6 text-center">
 									{response.data.shipmentOrderItems[0].weight}
