@@ -745,3 +745,21 @@ export async function getBillToDetailApi(user) {
 			throw err;
 		});
 }
+
+export async function shipperSettingApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/shipper/add-delivery-charges`, data)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
