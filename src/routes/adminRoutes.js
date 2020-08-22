@@ -241,13 +241,8 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-store',
 			},
 			{
-				to: '/admin/vendors/vendordetail',
-				name: 'Vendor Detail',
-				iconClass: 'nav-icon fas fa-truck',
-			},
-			{
-				to: '/admin/vehicles/maintenancerecords',
-				name: 'Maintenance Records',
+				to: '/admin/vendors/allvendors',
+				name: 'All Vendors',
 				iconClass: 'nav-icon fas fa-truck',
 			},
 		],

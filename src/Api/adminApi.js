@@ -473,6 +473,7 @@ export async function updateVehicleApi(data) {
 			throw err;
 		});
 }
+
 export async function deleteVehicleApi(id) {
 	return await axios
 		.delete(`${process.env.REACT_APP_API}/vehicle/delete/${id}`)
@@ -751,6 +752,73 @@ export async function shipperSettingApi(data) {
 		.post(`${process.env.REACT_APP_API}/shipper/add-delivery-charges`, data)
 		.then((res) => {
 			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function addVendorApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/vendor/add`, data)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function vendorListingApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/vendor/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function vendorDetailApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/vendor/get-details/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function deleteVendorApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/vendor/delete/${id}`)
+		.then((res) => {
 			if (res.data.status === 200) {
 				return true;
 			} else {

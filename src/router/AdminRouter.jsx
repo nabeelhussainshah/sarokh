@@ -32,10 +32,11 @@ import CreateBill from '../views/admin/finance/CreateBill';
 import PaymentRecord from '../views/admin/finance/RecordPayment';
 import BillDetail from '../views/admin/finance/BillDetail';
 import BillListing from '../views/admin/finance/BillListing';
+import AddVendor from '../views/admin/vendor/AddVendor';
+import AllVendors from '../views/admin/vendor/VendorListing';
+import VendorDetail from '../views/admin/vendor/VendorDetail';
 import { Switch, Redirect } from 'react-router-dom';
 import { adminRoutes } from '../routes/adminRoutes';
-import AddVendor from '../views/admin/vendor/AddVendor';
-import VendorDetail from '../views/admin/vendor/VendorDetail';
 import { toast } from 'react-toastify';
 
 export default function AdminRouter(props) {
@@ -153,6 +154,7 @@ export default function AdminRouter(props) {
 				path="/admin/vendors/vendordetail"
 				component={VendorDetail}
 			/>
+			<ProtectedRoute path="/admin/vendors/allvendors" component={AllVendors} />
 		</Switch>
 	);
 }
