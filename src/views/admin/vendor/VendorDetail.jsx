@@ -41,19 +41,113 @@ export default function AllShipments(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">Vendor detail</h2>
-							</div>
-							<div className="card-body">//code here</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">Vendor detail</h2>
+								</div>
+								<div className="card-body">
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Business Name:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Email:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Contact Number:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Address:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Country:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">City:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Commercial Registration Number:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Bank Name:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">CR Copy:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Account No:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Payment Api URL</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Payment API Key</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6">Payment API ID</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left"></p>
+											</label>
+										</div>
+									</div>
+								</div>
+								
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }
