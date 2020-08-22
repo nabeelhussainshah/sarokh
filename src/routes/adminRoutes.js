@@ -228,10 +228,27 @@ export const adminRoutes = [
 				name: 'Add Point',
 				iconClass: 'nav-icon fas fa-store',
 			},
+		],
+	},
+	{
+		to: '/admin/vendors/',
+		name: 'Vendors',
+		iconClass: 'nav-icon fas fa-truck',
+		subRoutes: [
 			{
-				to: '/admin/dealer/addvendor',
+				to: '/admin/vendors/addvendor',
 				name: 'Add Vendor',
 				iconClass: 'nav-icon fas fa-store',
+			},
+			{
+				to: '/admin/vendors/vendordetail',
+				name: 'Vendor Detail',
+				iconClass: 'nav-icon fas fa-truck',
+			},
+			{
+				to: '/admin/vehicles/maintenancerecords',
+				name: 'Maintenance Records',
+				iconClass: 'nav-icon fas fa-truck',
 			},
 		],
 	},
