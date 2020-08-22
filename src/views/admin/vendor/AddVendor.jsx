@@ -4,7 +4,7 @@ import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { cities } from '../../../Utils/cities';
-import { addVendorApi } from '../../../Api/adminApi';
+import { addVendorApi, updateVendorApi } from '../../../Api/adminApi';
 import { uploadFile } from '../../../Api/generalApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
@@ -24,7 +24,7 @@ export default function AddVendor(props) {
 
 	useEffect(() => {
 		if (!isNull(hist.location.state) && !isUndefined(hist.location.state)) {
-			setfileURL(hist.location.state.crFile);
+			setfileURL({ crFile: hist.location.state.crFile });
 		}
 	}, []);
 
@@ -44,14 +44,30 @@ export default function AddVendor(props) {
 
 	const onSubmit = (formData) => {
 		console.log({ ...formData, ...fileURL });
-		addVendorApi({ ...formData, ...fileURL })
-			.then((res) => {
-				toast.success('Vendor Added');
-				hist.push('/admin/vendors/allvendors');
+		if (!isNull(hist.location.state) && !isUndefined(hist.location.state)) {
+			updateVendorApi({
+				...formData,
+				...fileURL,
+				id: hist.location.state.id,
+				userId: hist.location.state.user.userId,
+				bankAccountId: hist.location.state.bankAccountId,
 			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+				.then((res) => {
+					toast.success('Vendor Data Updated');
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		} else {
+			addVendorApi({ ...formData, ...fileURL })
+				.then((res) => {
+					toast.success('Vendor Added');
+					hist.push('/admin/vendors/allvendors');
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
 	};
 
 	const uploadCRFile = async (file) => {

@@ -783,6 +783,40 @@ export async function addVendorApi(data) {
 		});
 }
 
+export async function deleteVendorApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/vendor/delete/${id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateVendorApi(data) {
+	return await axios
+		.put(`${process.env.REACT_APP_API}/vendor/update`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function vendorListingApi() {
 	return await axios
 		.get(`${process.env.REACT_APP_API}/vendor/get-list`)
@@ -808,23 +842,6 @@ export async function vendorDetailApi(id) {
 				return res.data.data;
 			} else {
 				throw new Error(`something went wrong with status code: ${res.status}`);
-			}
-		})
-		.catch((err) => {
-			throw err;
-		});
-}
-
-export async function deleteVendorApi(id) {
-	return await axios
-		.delete(`${process.env.REACT_APP_API}/vendor/delete/${id}`)
-		.then((res) => {
-			if (res.data.status === 200) {
-				return true;
-			} else {
-				throw new Error(
-					`something went wrong with status code: ${res.data.status}`
-				);
 			}
 		})
 		.catch((err) => {

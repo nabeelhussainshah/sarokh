@@ -37,6 +37,9 @@ export default function AllVendors(props) {
 						...res,
 						userName: res.user.userName,
 						bank: res.bankAccount.bank,
+						bankAccountIban: res.bankAccount.iban,
+						bankAccountId: res.bankAccount.id,
+						update: true,
 					},
 				});
 			})

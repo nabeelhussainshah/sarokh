@@ -126,7 +126,9 @@ export default function AllShipments(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">CR Copy:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">{response.data.crFile}</p>
+											<p className=" text-left">
+												<a href={response.data.crFile}>download</a>
+											</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
