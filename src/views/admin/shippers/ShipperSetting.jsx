@@ -34,7 +34,7 @@ export default function ShipperSetting(props) {
 		console.log(formData);
 		shipperSettingApi(formData)
 			.then((res) => {
-				toast.success('shipper settings submitted');
+				toast.success('Shipper Settings Submitted');
 			})
 			.catch((err) => {
 				toast.error(err.message);
