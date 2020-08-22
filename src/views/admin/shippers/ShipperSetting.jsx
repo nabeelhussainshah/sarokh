@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allShippersApi } from '../../../Api/adminApi';
+import { allShippersApi, shipperSettingApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -32,6 +32,13 @@ export default function ShipperSetting(props) {
 
 	const onSubmit = (formData) => {
 		console.log(formData);
+		shipperSettingApi(formData)
+			.then((res) => {
+				toast.success('shipper settings submitted');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	const transitions = useTransition(!response.loading, null, {
@@ -66,15 +73,26 @@ export default function ShipperSetting(props) {
 										<select
 											name="shipperId"
 											className="form-control"
-											// ref={register({
-											// 	required: true,
-											// 	validate: (value) => value !== 'true',
-											// })}
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
 										>
 											<option value="true" disabled selected>
 												Select Shipper
 											</option>
+											{response.data.map((doc, i) => {
+												return (
+													<option key={i} value={doc.id}>
+														{doc.user.fullName}
+													</option>
+												);
+											})}
 										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.shipperId && 'Shipper is required'}
+										</span>
 									</div>
 									<div className="col">
 										<div
@@ -84,14 +102,23 @@ export default function ShipperSetting(props) {
 											<label className="btn btn-secondary active">
 												<input
 													type="radio"
-													name="options"
+													name="enable"
 													id="option1"
-													checked
+													value="false"
+													defaultChecked={true}
+													ref={register()}
 												/>{' '}
 												Disable
 											</label>
 											<label className="btn btn-secondary">
-												<input type="radio" name="options" id="option2" />{' '}
+												<input
+													name="enable"
+													type="radio"
+													name="enable"
+													value="true"
+													id="option2"
+													ref={register({ required: true })}
+												/>{' '}
 												Enable
 											</label>
 										</div>
@@ -111,6 +138,7 @@ export default function ShipperSetting(props) {
 												value="true"
 												className="form-check-input"
 												type="radio"
+												defaultChecked={true}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
@@ -137,6 +165,7 @@ export default function ShipperSetting(props) {
 												value="true"
 												className="form-check-input"
 												type="radio"
+												defaultChecked={true}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
@@ -163,6 +192,7 @@ export default function ShipperSetting(props) {
 												value="true"
 												className="form-check-input"
 												type="radio"
+												defaultChecked={true}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
@@ -191,6 +221,7 @@ export default function ShipperSetting(props) {
 												className="form-check-input"
 												value="true"
 												type="radio"
+												defaultChecked={true}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
@@ -217,6 +248,7 @@ export default function ShipperSetting(props) {
 												className="form-check-input"
 												value="true"
 												type="radio"
+												defaultChecked={true}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
@@ -243,6 +275,7 @@ export default function ShipperSetting(props) {
 												className="form-check-input"
 												value="true"
 												type="radio"
+												defaultChecked={true}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
@@ -265,6 +298,10 @@ export default function ShipperSetting(props) {
 											className="form-control"
 											ref={register({ required: true })}
 										></textarea>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.notes && 'Notes are required'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row">
@@ -282,6 +319,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.weightUptoFiveKg && 'Field required'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Last Mile</label>
@@ -292,6 +333,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.lastMile && 'Last Mile is required'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3 mt-3">
@@ -304,6 +349,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.weightFiveToTen && 'Field required'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Normal Packaging</label>
@@ -314,6 +363,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.normalPackaging && 'Field required'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3 mt-3">
@@ -326,6 +379,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.weightTenToFifteen && 'Field required'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Gift Packaging</label>
@@ -336,6 +393,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.giftPackaging && 'Field required'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3 mt-3">
@@ -348,6 +409,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Amount"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.returnCharges && 'Return Charges required'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Insurance Percentage</label>
@@ -358,6 +423,10 @@ export default function ShipperSetting(props) {
 											placeholder="Enter Percentage"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.insurance && 'Insurance is required'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row">
