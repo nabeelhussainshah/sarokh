@@ -8,7 +8,7 @@ import { addVendorApi } from '../../../Api/adminApi';
 import { uploadFile } from '../../../Api/generalApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import { isNull } from 'underscore';
+import { isNull, isUndefined } from 'underscore';
 import moment from 'moment';
 
 export default function AddVendor(props) {
@@ -21,17 +21,12 @@ export default function AddVendor(props) {
 		mode: 'onChange',
 		criteriaMode: 'all',
 	});
-	// useEffect(() => {
-	// 	if (response.loading) {
-	// 		allDealersApi()
-	// 			.then((res) => {
-	// 				setresponse({ loading: false, data: res });
-	// 			})
-	// 			.catch((err) => {
-	// 				toast.error(err.message);
-	// 			});
-	// 	}
-	// }, [response.loading]);
+
+	useEffect(() => {
+		if (!isNull(hist.location.state) && !isUndefined(hist.location.state)) {
+			setfileURL(hist.location.state.crFile);
+		}
+	}, []);
 
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
@@ -303,7 +298,13 @@ export default function AddVendor(props) {
 								</div>
 								<div className="form-row mb-3">
 									<div className="col-sm-12">
-										<button type="button" className="btn btn-danger flaot-left">
+										<button
+											type="button"
+											className="btn btn-danger flaot-left"
+											onClick={() => {
+												hist.push('/admin/vendors/allvendors');
+											}}
+										>
 											Cancel
 										</button>
 										<button
@@ -314,7 +315,7 @@ export default function AddVendor(props) {
 											}}
 											disabled={fileURL === '' ? true : false}
 										>
-											Add Vendor
+											Submit
 										</button>
 									</div>
 								</div>

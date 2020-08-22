@@ -3,7 +3,11 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { vendorListingApi, deleteVendorApi } from '../../../Api/adminApi';
+import {
+	vendorListingApi,
+	deleteVendorApi,
+	vendorDetailApi,
+} from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -25,16 +29,20 @@ export default function AllVendors(props) {
 	}, [response.loading]);
 
 	const Edit = (row) => {
-		console.log(row.row.original.id);
-		hist.push({
-			pathname: '/admin/vehicles/addvehicle',
-			state: {
-				...row.row.original,
-				createdDate: moment(row.row.original.createdDate).format(
-					moment.HTML5_FMT.DATE
-				),
-			},
-		});
+		vendorDetailApi(row.row.original.id)
+			.then((res) => {
+				hist.push({
+					pathname: '/admin/vendors/addvendor',
+					state: {
+						...res,
+						userName: res.user.userName,
+						bank: res.bankAccount.bank,
+					},
+				});
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	const details = (row) => {
@@ -66,7 +74,7 @@ export default function AllVendors(props) {
 					<Fragment>
 						<i className="fa fa-info-circle" onClick={() => details(row)} />
 						&nbsp;
-						{/* <i className="fa fa-edit" onClick={() => Edit(row)}></i> */}
+						<i className="fa fa-edit" onClick={() => Edit(row)}></i>
 						&nbsp;
 						<i className="fa fa-trash" onClick={() => deleteRecord(row)}></i>
 					</Fragment>
