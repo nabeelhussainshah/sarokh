@@ -1,26 +1,38 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Container from '../../../components/Containers/ListingContainer';
-import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
 import {
 	getUserWalletsApi,
 	getUserBillsApi,
 	getBillToDetailApi,
+	recordBillPaymentApi,
 } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import moment, { HTML5_FMT } from 'moment';
+import { useForm } from 'react-hook-form';
+import { filter } from 'underscore';
 
 export default function RecordPayment(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({
 		loading: false,
 		users: [{}],
-		wallets: [{}],
-		bills: [{}],
+		wallets: [{ id: '' }],
+		bills: [{ id: '' }],
 		search: false,
 		id: 1,
 		userType: '',
+		dueDate: '',
+		amount: '',
+	});
+	console.log(response);
+
+	const { register, errors, watch, handleSubmit, reset } = useForm({
+		shouldFocusError: true,
+		mode: 'onChange',
+		criteriaMode: 'all',
 	});
 
 	const transitions = useTransition(!response.loading, null, {
@@ -39,8 +51,17 @@ export default function RecordPayment(props) {
 
 	const getWalletAndBill = async (id) => {
 		try {
-			const wallets = await getUserWalletsApi(id);
-			const bills = await getUserBillsApi(id);
+			const data = { userId: id, userType: response.userType };
+			const wallets = await getUserWalletsApi(data);
+			const bills = await getUserBillsApi(data);
+			reset({
+				walletId: 'true',
+				billNo: 'true',
+				paymentNote: '',
+				paymentMethod: 'true',
+				paymentType: 'true',
+			});
+
 			if (wallets.length !== 0 && bills.length !== 0) {
 				setresponse({ ...response, wallets: wallets, bills: bills });
 			} else {
@@ -54,7 +75,34 @@ export default function RecordPayment(props) {
 	const getUsers = (userType) => {
 		getBillToDetailApi(userType)
 			.then((res) => {
-				setresponse({ ...response, users: res });
+				reset({ userId: 'true' });
+				setresponse({ ...response, users: res, userType: userType });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
+	const selectedBillDetails = () => {
+		const bill = watch('billNo');
+		console.log(bill);
+		response.bills.map((doc) => {
+			if (bill === doc.id.toString()) {
+				setresponse({
+					...response,
+					dueDate: moment(doc.dueDate).format('YYYY-MM-DD'),
+					amount: doc.totalAmount,
+				});
+				reset({ paymentNote: '', paymentMethod: 'true' });
+			}
+		});
+	};
+
+	const onsubmit = (formData) => {
+		recordBillPaymentApi(formData)
+			.then((res) => {
+				toast.success('Data Submitted Successfully');
+				hist.go();
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -68,7 +116,6 @@ export default function RecordPayment(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<Container>
 							<div className="card-header">
 								<h2 className="float-left">Record Payment</h2>
@@ -94,10 +141,12 @@ export default function RecordPayment(props) {
 									<div className="col">
 										<label>User Name</label>
 										<select
+											name="userId"
 											className="form-control"
 											onChange={(e) => {
 												getWalletAndBill(e.target.value);
 											}}
+											ref={register({ required: true })}
 										>
 											<option value="true">---select-user---</option>
 											{response.users.map((doc, i) => {
@@ -113,12 +162,19 @@ export default function RecordPayment(props) {
 								<div className="form-row mb-3">
 									<div className="col">
 										<label>Wallet</label>
-										<select className="form-control">
+										<select
+											className="form-control"
+											name="walletId"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
 											<option value="true">---Select-wallet---</option>
 											{response.wallets.map((doc, i) => {
 												return (
-													<option key={i} value={doc.id}>
-														{doc.name}
+													<option key={i} value={doc.walletId}>
+														{doc.walletType}
 													</option>
 												);
 											})}
@@ -126,7 +182,14 @@ export default function RecordPayment(props) {
 									</div>
 									<div className="col">
 										<label>Payment Type</label>
-										<select className="form-control">
+										<select
+											className="form-control"
+											name="paymentType"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
 											<option value="true">---select-Payment Type---</option>
 											<option value="Invoice">Invoice</option>
 											<option value="CreditNote">CreditNote</option>
@@ -138,12 +201,19 @@ export default function RecordPayment(props) {
 								<div className="form-row mb-3">
 									<div className="col">
 										<label>Bill No (If Credit Note/Invoice)</label>
-										<select className="form-control">
-											<option value="true">---Select-Bill No---</option>
+										<select
+											className="form-control"
+											name="billNo"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
+											) <option value="true">---Select-Bill No---</option>
 											{response.bills.map((doc, i) => {
 												return (
 													<option key={i} value={doc.id}>
-														{doc.name}
+														{doc.id}
 													</option>
 												);
 											})}
@@ -155,11 +225,15 @@ export default function RecordPayment(props) {
 										<button
 											type="button"
 											className="btn btn-danger float-right btnbrown"
+											onClick={() => {
+												selectedBillDetails();
+											}}
 										>
-											Get Detail
+											Get Details
 										</button>
 									</div>
 								</div>
+
 								<div className="form-row mb-3 creatbill">
 									<div className="col-sm-12">
 										<h2>Bill Information</h2>
@@ -169,20 +243,27 @@ export default function RecordPayment(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Due Date:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">[Due Date]</p>
+											<p className=" text-left">{response.dueDate}</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Amount:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">[Amount]</p>
+											<p className=" text-left">{response.amount}</p>
 										</label>
 									</div>
 								</div>
 								<div className="form-row mb-3">
 									<div className="col">
 										<label>Payment Method:</label>
-										<select className="form-control">
+										<select
+											className="form-control"
+											name="paymentMethod"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
 											<option value="true">---select Payment Method---</option>
 											<option value="Cash">Cash</option>
 											<option value="BankTransfer">BankTransfer</option>
@@ -193,10 +274,11 @@ export default function RecordPayment(props) {
 									<div className="col">
 										<label>Payment Note:</label>
 										<input
-											type="password"
-											name=""
+											type="text"
+											name="paymentNote"
 											className="form-control"
 											placeholder="Select Bill Receiver"
+											ref={register({ required: true })}
 										/>
 									</div>
 								</div>
@@ -204,20 +286,37 @@ export default function RecordPayment(props) {
 									<div className="col">
 										<label>Amount Paid:</label>
 										<input
-											type="text"
-											name=""
+											type="number"
+											name="amountPaid"
 											className="form-control"
 											placeholder="Enter Paid Amount (Auto Fill Billed Amount/COD)"
+											defaultValue={response.amount}
+											ref={register({ required: true })}
 										/>
 									</div>
 									<div className="col">
 										<label>Payment Date:</label>
 										<input
-											type="password"
-											name=""
+											type="date"
+											name="paymentDate"
 											className="form-control"
 											placeholder="Select Payment Date"
+											defaultValue={moment(new Date()).format('YYYY-MM-DD')}
+											ref={register({ required: true })}
 										/>
+									</div>
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<button
+											type="button"
+											className="btn btn-danger float-right btnbrown"
+											onClick={() => {
+												handleSubmit(onsubmit)();
+											}}
+										>
+											Submit
+										</button>
 									</div>
 								</div>
 								<div className="form-row mb-3">

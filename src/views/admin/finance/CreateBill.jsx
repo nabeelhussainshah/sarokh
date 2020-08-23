@@ -349,6 +349,10 @@ export default function CreateBill(props) {
 											placeholder="Select Due Date"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.dueDate && 'Due Date is required'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3 mt-3">

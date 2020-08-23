@@ -733,7 +733,7 @@ export async function searchShipperShipmentsApi(dates) {
 
 export async function getBillToDetailApi(user) {
 	return await axios
-		.get(`${process.env.REACT_APP_API}/bill/get-bill-to-details/${user}`)
+		.post(`${process.env.REACT_APP_API}/bill/get-bill-to-details/${user}`)
 		.then((res) => {
 			console.log(res);
 			if (res.data.status === 200) {
@@ -867,9 +867,9 @@ export async function vendorDetailApi(id) {
 		});
 }
 
-export async function getUserWalletsApi(id) {
+export async function getUserWalletsApi(data) {
 	return await axios
-		.get(`${process.env.REACT_APP_API}/wallet/get-user-wallets/${id}`)
+		.post(`${process.env.REACT_APP_API}/wallet/get-user-wallets/`, data)
 		.then((res) => {
 			console.log(res);
 			if (res.status === 200) {
@@ -883,13 +883,34 @@ export async function getUserWalletsApi(id) {
 		});
 }
 
-export async function getUserBillsApi(id) {
+export async function getUserBillsApi(data) {
 	return await axios
-		.get(`${process.env.REACT_APP_API}/bill/get-user-bills/${id}`)
+		.post(`${process.env.REACT_APP_API}/bill/get-user-bills/`, data)
 		.then((res) => {
 			console.log(res);
 			if (res.data.status === 200) {
 				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function recordBillPaymentApi(data) {
+	const payload = {
+		...data,
+		paymentDate: new Date(data.paymentDate).toISOString(),
+	};
+
+	return await axios
+		.post(`${process.env.REACT_APP_API}/bill/record-bill-payment`, payload)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
 			} else {
 				throw new Error(`something went wrong with status code: ${res.status}`);
 			}

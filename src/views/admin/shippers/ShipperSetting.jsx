@@ -159,7 +159,7 @@ export default function ShipperSetting(props) {
 										</span>
 									</div>
 									<div className="col">
-										<div className="btn-group float-right mt-4">
+										<div className="btn-group btn-group-toggle float-right mt-4">
 											<label
 												id="1"
 												className={
@@ -177,12 +177,10 @@ export default function ShipperSetting(props) {
 														response.userData.enable.toString() === 'false'
 													}
 													onChange={(e) => {
-														if (e.target.value === 'false') {
-															document.getElementById('1').className =
-																'btn btn-secondary active';
-															document.getElementById('2').className =
-																'btn btn-secondary';
-														}
+														document.getElementById('1').className =
+															'btn btn-secondary active';
+														document.getElementById('2').className =
+															'btn btn-secondary';
 													}}
 													ref={register()}
 												/>{' '}
@@ -205,12 +203,10 @@ export default function ShipperSetting(props) {
 														response.userData.enable.toString() === 'true'
 													}
 													onChange={(e) => {
-														if (e.target.value === 'true') {
-															document.getElementById('1').className =
-																'btn btn-secondary';
-															document.getElementById('2').className =
-																'btn btn-secondary active';
-														}
+														document.getElementById('1').className =
+															'btn btn-secondary';
+														document.getElementById('2').className =
+															'btn btn-secondary active';
 													}}
 													ref={register({ required: true })}
 												/>{' '}
