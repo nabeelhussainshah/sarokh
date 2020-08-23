@@ -2,27 +2,81 @@ import React, { useState, useEffect, Fragment } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allShippersApi, shipperSettingApi } from '../../../Api/adminApi';
+import {
+	allShippersApi,
+	shipperSettingApi,
+	getShipperDeliveryChargesApi,
+} from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
+const initialValues = {
+	weightUptoFiveKg: 0,
+	weightFiveToTen: 0,
+	weightTenToFifteen: 0,
+	returnCharges: 0,
+	lastMile: 0,
+	normalPackaging: 0,
+	giftPackaging: 0,
+	insurance: 0,
+	pickupSarokhPoint: 'true',
+	pickupShipperWarehouse: 'true',
+	pickupSarokhWarehouse: 'true',
+	deliverySarokhPoint: 'true',
+	deliveryLastMile: 'true',
+	deliveryCustomerChoice: 'true',
+	shipperId: '',
+	notes: '',
+	enable: 'false',
+};
+
 export default function ShipperSetting(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: true });
-	const { register, errors, watch, handleSubmit, getValues, trigger } = useForm(
-		{
-			shouldFocusError: true,
-			mode: 'onChange',
-			criteriaMode: 'all',
-		}
-	);
+	const [response, setresponse] = useState({
+		loading: true,
+		userData: initialValues,
+		userId: '',
+		getdata: false,
+	});
+	console.log(response);
+	const { register, errors, handleSubmit, watch } = useForm({
+		shouldFocusError: true,
+		mode: 'onChange',
+		criteriaMode: 'all',
+	});
 
 	useEffect(() => {
 		if (response.loading) {
 			allShippersApi()
 				.then((res) => {
-					setresponse({ loading: false, data: res });
+					setresponse({ ...response, loading: false, data: res });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	}, []);
+
+	useEffect(() => {
+		if (response.getdata) {
+			getShipperDeliveryChargesApi(response.userId)
+				.then((res) => {
+					if (res.length !== 0) {
+						setresponse({
+							...response,
+							loading: false,
+							userData: res[0],
+							getdata: false,
+						});
+					} else {
+						setresponse({
+							...response,
+							loading: false,
+							userData: initialValues,
+							getdata: false,
+						});
+					}
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -32,9 +86,10 @@ export default function ShipperSetting(props) {
 
 	const onSubmit = (formData) => {
 		console.log(formData);
-		shipperSettingApi(formData)
+		shipperSettingApi({ ...formData, id: response.userData.id })
 			.then((res) => {
 				toast.success('Shipper Settings Submitted');
+				hist.go();
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -73,14 +128,23 @@ export default function ShipperSetting(props) {
 										<select
 											name="shipperId"
 											className="form-control"
+											onChange={(e) => {
+												if (e.target.value !== 'true') {
+													setresponse({
+														...response,
+														userId: e.target.value,
+														loading: true,
+														getdata: true,
+													});
+												}
+											}}
 											ref={register({
 												required: true,
 												validate: (value) => value !== 'true',
 											})}
+											defaultValue={response.userId}
 										>
-											<option value="true" disabled selected>
-												Select Shipper
-											</option>
+											<option value="true">Select Shipper</option>
 											{response.data.map((doc, i) => {
 												return (
 													<option key={i} value={doc.id}>
@@ -95,32 +159,67 @@ export default function ShipperSetting(props) {
 										</span>
 									</div>
 									<div className="col">
-										<div
-											className="btn-group btn-group-toggle float-right mt-4"
-											data-toggle="buttons"
-										>
-											<label className="btn btn-secondary active">
+										<div className="btn-group float-right mt-4">
+											<label
+												id="1"
+												className={
+													response.userData.enable.toString() === 'true'
+														? 'btn btn-secondary'
+														: 'btn btn-secondary active'
+												}
+											>
 												<input
+													key={Math.random()}
 													type="radio"
 													name="enable"
-													id="option1"
 													value="false"
-													defaultChecked={true}
+													defaultChecked={
+														response.userData.enable.toString() === 'false'
+													}
+													onChange={(e) => {
+														if (e.target.value === 'false') {
+															document.getElementById('1').className =
+																'btn btn-secondary active';
+															document.getElementById('2').className =
+																'btn btn-secondary';
+														}
+													}}
 													ref={register()}
 												/>{' '}
 												Disable
 											</label>
-											<label className="btn btn-secondary">
+											<label
+												id="2"
+												className={
+													response.userData.enable.toString() === 'true'
+														? 'btn btn-secondary active'
+														: 'btn btn-secondary'
+												}
+											>
 												<input
-													name="enable"
+													key={Math.random()}
 													type="radio"
 													name="enable"
 													value="true"
-													id="option2"
+													defaultChecked={
+														response.userData.enable.toString() === 'true'
+													}
+													onChange={(e) => {
+														if (e.target.value === 'true') {
+															document.getElementById('1').className =
+																'btn btn-secondary';
+															document.getElementById('2').className =
+																'btn btn-secondary active';
+														}
+													}}
 													ref={register({ required: true })}
 												/>{' '}
 												Enable
 											</label>
+											<span style={{ color: 'red' }}>
+												{' '}
+												{errors.enable && 'Field required'}
+											</span>
 										</div>
 									</div>
 								</div>
@@ -134,21 +233,30 @@ export default function ShipperSetting(props) {
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="pickupSarokhPoint"
 												value="true"
 												className="form-check-input"
 												type="radio"
-												defaultChecked={true}
+												defaultChecked={
+													response.userData.pickupSarokhPoint.toString() ===
+													'true'
+												}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="pickupSarokhPoint"
 												value="false"
 												className="form-check-input"
 												type="radio"
+												defaultChecked={
+													response.userData.pickupSarokhPoint.toString() ===
+													'false'
+												}
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
@@ -161,21 +269,30 @@ export default function ShipperSetting(props) {
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="pickupSarokhWarehouse"
 												value="true"
 												className="form-check-input"
 												type="radio"
-												defaultChecked={true}
+												defaultChecked={
+													response.userData.pickupShipperWarehouse.toString() ===
+													'true'
+												}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="pickupSarokhWarehouse"
 												value="false"
 												className="form-check-input"
 												type="radio"
+												defaultChecked={
+													response.userData.pickupShipperWarehouse.toString() ===
+													'false'
+												}
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
@@ -188,21 +305,30 @@ export default function ShipperSetting(props) {
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="pickupShipperWarehouse"
 												value="true"
 												className="form-check-input"
 												type="radio"
-												defaultChecked={true}
+												defaultChecked={
+													response.userData.pickupSarokhWarehouse.toString() ===
+													'true'
+												}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="pickupShipperWarehouse"
 												className="form-check-input"
 												value="false"
 												type="radio"
+												defaultChecked={
+													response.userData.pickupSarokhWarehouse.toString() ===
+													'false'
+												}
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
@@ -217,21 +343,30 @@ export default function ShipperSetting(props) {
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="deliverySarokhPoint"
 												className="form-check-input"
 												value="true"
 												type="radio"
-												defaultChecked={true}
+												defaultChecked={
+													response.userData.deliverySarokhPoint.toString() ===
+													'true'
+												}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="deliverySarokhPoint"
 												className="form-check-input"
 												value="false"
 												type="radio"
+												defaultChecked={
+													response.userData.deliverySarokhPoint.toString() ===
+													'false'
+												}
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
@@ -244,21 +379,30 @@ export default function ShipperSetting(props) {
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="deliveryLastMile"
 												className="form-check-input"
 												value="true"
 												type="radio"
-												defaultChecked={true}
+												defaultChecked={
+													response.userData.deliveryLastMile.toString() ===
+													'true'
+												}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="deliveryLastMile"
 												className="form-check-input"
 												value="false"
 												type="radio"
+												defaultChecked={
+													response.userData.deliveryLastMile.toString() ===
+													'false'
+												}
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
@@ -271,21 +415,30 @@ export default function ShipperSetting(props) {
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="deliveryCustomerChoice"
 												className="form-check-input"
 												value="true"
 												type="radio"
-												defaultChecked={true}
+												defaultChecked={
+													response.userData.deliveryCustomerChoice.toString() ===
+													'true'
+												}
 												ref={register()}
 											/>
 											<label className="form-check-label">Enable</label>
 										</div>
 										<div className="form-check form-check-inline">
 											<input
+												key={Math.random()}
 												name="deliveryCustomerChoice"
 												className="form-check-input"
 												value="false"
 												type="radio"
+												defaultChecked={
+													response.userData.deliveryCustomerChoice.toString() ===
+													'false'
+												}
 												ref={register({ required: true })}
 											/>
 											<label className="form-check-label">Disable</label>
@@ -294,9 +447,11 @@ export default function ShipperSetting(props) {
 									<div className="col-sm-4">
 										<h3>Notes:</h3>
 										<textarea
+											key={Math.random()}
 											name="notes"
 											className="form-control"
 											ref={register({ required: true })}
+											defaultValue={response.userData.notes}
 										></textarea>
 										<span style={{ color: 'red' }}>
 											{' '}
@@ -313,10 +468,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Up to 5 Kg</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="weightUptoFiveKg"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.weightUptoFiveKg}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -327,10 +484,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Last Mile</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="lastMile"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.lastMile}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -343,10 +502,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Up to 10 kg</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="weightFiveToTen"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.weightFiveToTen}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -357,10 +518,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Normal Packaging</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="normalPackaging"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.normalPackaging}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -373,10 +536,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Upto 15 kg</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="weightTenToFifteen"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.weightTenToFifteen}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -387,10 +552,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Gift Packaging</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="giftPackaging"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.giftPackaging}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -403,10 +570,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Return Shipment Charges; (Undelivered)</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="returnCharges"
 											className="form-control"
 											placeholder="Enter Amount"
+											defaultValue={response.userData.returnCharges}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -417,10 +586,12 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Insurance Percentage</label>
 										<input
+											key={Math.random()}
 											type="number"
 											name="insurance"
 											className="form-control"
 											placeholder="Enter Percentage"
+											defaultValue={response.userData.insurance}
 											ref={register({ required: true })}
 										/>
 										<span style={{ color: 'red' }}>
@@ -431,7 +602,18 @@ export default function ShipperSetting(props) {
 								</div>
 								<div className="form-row">
 									<div className="col-sm-12">
-										<button type="button" className="btn btn-danger float-left">
+										<button
+											type="button"
+											className="btn btn-danger float-left"
+											onClick={() => {
+												setresponse({
+													...response,
+													userData: initialValues,
+													userId: '',
+													getdata: false,
+												});
+											}}
+										>
 											Discard
 										</button>
 										<button

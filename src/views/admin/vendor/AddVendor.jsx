@@ -54,6 +54,7 @@ export default function AddVendor(props) {
 			})
 				.then((res) => {
 					toast.success('Vendor Data Updated');
+					hist.push('/admin/vendors/allvendors');
 				})
 				.catch((err) => {
 					toast.error(err.message);

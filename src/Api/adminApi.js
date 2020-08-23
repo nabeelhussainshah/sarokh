@@ -765,6 +765,24 @@ export async function shipperSettingApi(data) {
 		});
 }
 
+export async function getShipperDeliveryChargesApi(user) {
+	return await axios
+		.get(
+			`${process.env.REACT_APP_API}/shipper/get-shipper-delivery-charges/${user}`
+		)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function addVendorApi(data) {
 	return await axios
 		.post(`${process.env.REACT_APP_API}/vendor/add`, data)
@@ -836,6 +854,38 @@ export async function vendorListingApi() {
 export async function vendorDetailApi(id) {
 	return await axios
 		.get(`${process.env.REACT_APP_API}/vendor/get-details/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getUserWalletsApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/wallet/get-user-wallets/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getUserBillsApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/bill/get-user-bills/${id}`)
 		.then((res) => {
 			console.log(res);
 			if (res.data.status === 200) {

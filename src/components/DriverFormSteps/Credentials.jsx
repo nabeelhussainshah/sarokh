@@ -29,6 +29,7 @@ export default function BasicInformation(props) {
 		addDriverApi(data)
 			.then((res) => {
 				toast.success('driver successfully added');
+				setdata({});
 				hist.push(props.next);
 			})
 			.catch((err) => {
@@ -39,6 +40,7 @@ export default function BasicInformation(props) {
 		updateDriverApi(data)
 			.then((res) => {
 				toast.success('driver updated');
+				setdata({});
 				hist.push(props.next);
 			})
 			.catch((err) => {

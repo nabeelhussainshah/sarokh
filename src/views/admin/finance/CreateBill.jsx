@@ -21,6 +21,7 @@ export default function CreateBill(props) {
 		data: [],
 	});
 
+	console.log(response.data);
 	const [deliveryData, setdeliveryData] = useState([]);
 
 	const [otherData, setotherData] = useState([]);
@@ -319,7 +320,7 @@ export default function CreateBill(props) {
 											</option>
 											{response.data.map((doc, i) => {
 												return (
-													<option key={i} value={doc.name}>
+													<option key={i} value={doc.id}>
 														{doc.name}
 													</option>
 												);
