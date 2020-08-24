@@ -3,6 +3,23 @@ import { sarokhWarehouseList } from './generalApi';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
+export async function adminDashboard() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/web-dashboard/admin/${user.id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function allShipmentsApi() {
 	return await axios
 		.get(`${process.env.REACT_APP_API}/admin/get-all-shipments/`)
