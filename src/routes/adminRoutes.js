@@ -14,11 +14,6 @@ export const adminRoutes = [
 				name: 'Driver Locations',
 				iconClass: 'nav-icon fas fa-map-marker-alt',
 			},
-			{
-				to: '/admin/tracking/orderlocations',
-				name: 'Order Locations',
-				iconClass: 'nav-icon fas fa-map-marker-alt',
-			},
 		],
 	},
 	{

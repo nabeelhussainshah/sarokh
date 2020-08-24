@@ -40,14 +40,9 @@ export default function DeliveredShipments(props) {
 			Cell: (row) => {
 				return (
 					<Fragment>
-						<i
-						className="fa fa-file-invoice-dollar"
-						/>
+						<i className="fa fa-file-invoice-dollar" />
 						&nbsp;&nbsp;
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						/>
+						<i className="fa fa-info-circle" onClick={() => handleClick(row)} />
 					</Fragment>
 				);
 			},
@@ -57,7 +52,7 @@ export default function DeliveredShipments(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
+			Header: 'Tracking No',
 			accessor: 'shipmentId',
 		},
 		{
@@ -76,7 +71,7 @@ export default function DeliveredShipments(props) {
 		{
 			Header: 'Shipper',
 			accessor: 'shipper',
-		}
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {
