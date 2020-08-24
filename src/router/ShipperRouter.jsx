@@ -13,7 +13,6 @@ import NewShipment from '../views/shipper/NewShipment';
 import PrintWayBill from '../views/shipper/PrintWayBill';
 import PrintBulkShipment from '../views/shipper/PrintBulkShipment';
 import BulkShipmentUpload from '../views/shipper/BulkShipmentUpload';
-import ShipperSignup from '../views/shipper/ShipperSignup';
 import AllShipments from '../views/shipper/AllShipments';
 import AddShipperWarehouseFormRoutes from '../views/shipper/AddShipperWarehouseFormRoutes';
 import { shipperRoutes } from '../routes/shipperRoutes';
@@ -66,7 +65,6 @@ function ShipperRouter(props) {
 					path="/shipper/addshipperwarehouse"
 					component={AddShipperWarehouseFormRoutes}
 				/>
-				<Route path="/shipper/signup" component={ShipperSignup} />
 			</Switch>
 		</RecoilRoot>
 	);

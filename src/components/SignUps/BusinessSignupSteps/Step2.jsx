@@ -13,25 +13,24 @@ export default function Step2(props) {
 	const { register, handleSubmit, errors } = useForm({
 		shouldFocusError: true,
 		defaultValues: data,
-		mode: "onChange",
-		criteriaMode: "all"
+		mode: 'onChange',
+		criteriaMode: 'all',
 	});
 	console.log(data);
 
 	const onSubmit = (formdata) => {
 		setdata({ ...data, ...formdata });
-		hist.push('/shipper/signup/step3');
+		hist.push('/business/signup/step3');
 	};
 
-
 	if (Object.keys(data).length === 0 && data.constructor === Object) {
-		return <Redirect to="/shipper/signup/step1" />;
+		return <Redirect to="/business/signup/step1" />;
 	}
 
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Shipper Signup</h2>
+				<h2>Business Signup</h2>
 			</div>
 			<div className="card-body">
 				<StepIndicator step1="done" step2="current" />
@@ -46,7 +45,7 @@ export default function Step2(props) {
 								placeholder="Business Name"
 								ref={register({ required: true })}
 							/>
-							{errors ?.businessName ?.types ?.required && (
+							{errors?.businessName?.types?.required && (
 								<p style={{ color: 'red' }}>first Name is required</p>
 							)}
 						</div>
@@ -55,7 +54,10 @@ export default function Step2(props) {
 							<select
 								className="form-control"
 								name="bankName"
-								ref={register({ required: true, validate: value => value !== "" })}
+								ref={register({
+									required: true,
+									validate: (value) => value !== '',
+								})}
 							>
 								<option value="">Select Bank Name</option>
 								<option value="The National Commercial Bank">
@@ -87,7 +89,7 @@ export default function Step2(props) {
 									Gulf International Bank Saudi Aribia (GIB-SA){' '}
 								</option>
 							</select>
-							{errors ?.bankName ?.types ?.required && (
+							{errors?.bankName?.types?.required && (
 								<p style={{ color: 'red' }}>Bank Name is required</p>
 							)}
 						</div>
@@ -177,19 +179,23 @@ export default function Step2(props) {
 								placeholder="IBAN"
 								ref={register({ required: true })}
 							/>
-							{errors ?.iban ?.types ?.required && (
+							{errors?.iban?.types?.required && (
 								<p style={{ color: 'red' }}>IBAN is required</p>
 							)}
 						</div>
 					</div>
 					<div className="btn-container float-right margintop30 form-row">
 						<div className="col-sm-12">
-							<button className="btn btn-primary dark-grey mr-1" type="button" onClick={()=>hist.goBack()}>
+							<button
+								className="btn btn-primary dark-grey mr-1"
+								type="button"
+								onClick={() => hist.goBack()}
+							>
 								Back
-						</button>
-							<button className="btn btn-success mr-0" type="submit" >
+							</button>
+							<button className="btn btn-success mr-0" type="submit">
 								Next
-						</button>
+							</button>
 						</div>
 					</div>
 				</form>

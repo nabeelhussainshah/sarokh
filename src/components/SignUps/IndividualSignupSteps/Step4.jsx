@@ -19,7 +19,7 @@ export default function Step4(props) {
 	});
 	console.log(data);
 	if (Object.keys(data).length === 0 && data.constructor === Object) {
-		return <Redirect to="/shipper/signup/step1" />;
+		return <Redirect to="/individual/signup/step1" />;
 	}
 
 	const OnSubmit = async (formdata) => {
@@ -49,7 +49,7 @@ export default function Step4(props) {
 					firstName: data.firstName,
 					lastName: data.lastName,
 					email: data.email,
-					// dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+					dateOfBirth: new Date(data.dateOfBirth).toISOString(),
 					contact: data.contact,
 					profilePicture: '',
 				},
@@ -70,7 +70,7 @@ export default function Step4(props) {
 				},
 			})
 			.then((res) => {
-				console.log(res)
+				console.log(res);
 				if (res.data.status === 200) {
 					toast.success(res.data.message);
 					setdata({});
@@ -82,12 +82,11 @@ export default function Step4(props) {
 			.catch((err) => {
 				toast.error(err.message);
 			});
-
 	}
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Shipper Signup</h2>
+				<h2>Individual Signup</h2>
 			</div>
 			<div className="card-body">
 				<StepIndicator step1="done" step2="done" step3="done" step4="current" />
@@ -102,7 +101,7 @@ export default function Step4(props) {
 								placeholder="User Name"
 								ref={register({ required: true })}
 							/>
-							{errors ?.username ?.types ?.required && (
+							{errors?.username?.types?.required && (
 								<p style={{ color: 'red' }}>firstName is required</p>
 							)}
 						</div>
@@ -117,7 +116,7 @@ export default function Step4(props) {
 								placeholder="Passsword"
 								ref={register({ required: true })}
 							/>
-							{errors ?.password ?.types ?.required && (
+							{errors?.password?.types?.required && (
 								<p style={{ color: 'red' }}>password is required</p>
 							)}
 						</div>
@@ -130,19 +129,23 @@ export default function Step4(props) {
 								placeholder="Confirm Passsword"
 								ref={register({ required: true })}
 							/>
-							{errors ?.confirmPassword ?.types ?.required && (
+							{errors?.confirmPassword?.types?.required && (
 								<p style={{ color: 'red' }}>confirm password is required</p>
 							)}
 						</div>
 					</div>
 					<div className="btn-container float-right form-row">
 						<div className="col-sm-12">
-							<button className="btn btn-primary dark-grey mr-1" type="button" onClick={()=>hist.goBack()}>
+							<button
+								className="btn btn-primary dark-grey mr-1"
+								type="button"
+								onClick={() => hist.goBack()}
+							>
 								Back
-						</button>
+							</button>
 							<button className="btn btn-success mr-0" type="submit">
 								Finish
-						</button>
+							</button>
 						</div>
 					</div>
 				</form>
