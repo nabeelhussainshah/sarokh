@@ -12,7 +12,6 @@ import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment, { HTML5_FMT } from 'moment';
 import { useForm } from 'react-hook-form';
-import { filter } from 'underscore';
 
 export default function RecordPayment(props) {
 	const hist = useHistory();
@@ -21,8 +20,6 @@ export default function RecordPayment(props) {
 		users: [{}],
 		wallets: [{ id: '' }],
 		bills: [{ id: '' }],
-		search: false,
-		id: 1,
 		userType: '',
 		dueDate: '',
 		amount: '',
@@ -50,6 +47,8 @@ export default function RecordPayment(props) {
 	});
 
 	const getWalletAndBill = async (id) => {
+		/* this function get the wallet and bills of the selected user */
+
 		try {
 			const data = { userId: id, userType: response.userType };
 			const wallets = await getUserWalletsApi(data);
@@ -60,12 +59,17 @@ export default function RecordPayment(props) {
 				paymentNote: '',
 				paymentMethod: 'true',
 				paymentType: 'true',
-			});
+			}); // reset function clears out the previous selected values in the field
 
 			if (wallets.length !== 0 && bills.length !== 0) {
 				setresponse({ ...response, wallets: wallets, bills: bills });
 			} else {
 				toast.error('No Bills Found For This User');
+				setresponse({
+					...response,
+					wallets: [{ id: '' }],
+					bills: [{ id: '' }],
+				});
 			}
 		} catch (err) {
 			toast.error(err.message);
@@ -73,6 +77,8 @@ export default function RecordPayment(props) {
 	};
 
 	const getUsers = (userType) => {
+		/* this function calls the api to get users list of the selected userType */
+
 		getBillToDetailApi(userType)
 			.then((res) => {
 				reset({ userId: 'true' });
@@ -84,6 +90,8 @@ export default function RecordPayment(props) {
 	};
 
 	const selectedBillDetails = () => {
+		/* this function is used to populated duedate , amount and the input field with name amountPaid */
+
 		const bill = watch('billNo');
 		console.log(bill);
 		response.bills.map((doc) => {
@@ -102,7 +110,9 @@ export default function RecordPayment(props) {
 		recordBillPaymentApi(formData)
 			.then((res) => {
 				toast.success('Data Submitted Successfully');
-				hist.go();
+				setTimeout(() => {
+					hist.go();
+				}, 3000);
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -173,7 +183,7 @@ export default function RecordPayment(props) {
 											<option value="true">---Select-wallet---</option>
 											{response.wallets.map((doc, i) => {
 												return (
-													<option key={i} value={doc.walletId}>
+													<option key={doc.id} value={doc.walletId}>
 														{doc.walletType}
 													</option>
 												);

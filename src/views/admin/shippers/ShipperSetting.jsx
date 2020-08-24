@@ -70,6 +70,9 @@ export default function ShipperSetting(props) {
 							getdata: false,
 						});
 					} else {
+						/* if the response returns empty array that means the setting for the selected shipper are not 
+						set yet so the form is set back to the default values in this check */
+
 						setresponse({
 							...response,
 							loading: false,
@@ -196,6 +199,10 @@ export default function ShipperSetting(props) {
 											>
 												<input
 													key={Math.random()}
+													/* radio values are not reset when the response changes unless the key is math.random 
+													but if default values are populated  using useForm default values then it will give an error so math,random can not be used 
+													if useform default values are being used */
+
 													type="radio"
 													name="enable"
 													value="true"
