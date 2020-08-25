@@ -3,20 +3,20 @@ import ListingContainer from '../../components/Containers/ListingContainer';
 import Table from '../../components/Generictable/generatictable';
 import axios from 'axios';
 import { useTransition, animated } from "react-spring";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function CodShipment(props) {
     const hist = useHistory();
-    const [response, setresponse] = useState({loading: true});
+    const [response, setresponse] = useState({ loading: true });
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
 
         async function fetchData() {
-           return await axios.get(`${process.env.REACT_APP_API}/order/get-COD-shipments/${user.id}`)
+            return await axios.get(`${process.env.REACT_APP_API}/order/get-COD-shipments/${user.id}`)
                 .then((response) => {
                     if (response.data.status === 200) {
-                        setresponse({loading: false,data: response.data.data});
+                        setresponse({ loading: false, data: response.data.data });
                     }
                 })
                 .catch((err) => {
@@ -30,7 +30,7 @@ export default function CodShipment(props) {
         console.log(row.row.original.id);
         hist.push({
             pathname: '/shipper/shipments/vieworder',
-            state:{
+            state: {
                 id: row.row.original.id
             }
         });
@@ -41,7 +41,7 @@ export default function CodShipment(props) {
             Header: 'Action',
             accessor: '',
             Cell: (row) => {
-                return (<i className='fa fa-info-circle' onClick={()=>handleClick(row)} ></i>)
+                return (<i className='fa fa-info-circle' onClick={() => handleClick(row)} ></i>)
             }
         },
         {
@@ -49,7 +49,7 @@ export default function CodShipment(props) {
             accessor: 'id'
         },
         {
-            Header: 'tracking No',
+            Header: 'Tracking No',
             accessor: 'orderId'
         },
         {
@@ -57,16 +57,16 @@ export default function CodShipment(props) {
             accessor: 'dateTime'
         },
         {
-            Header: 'Reciever Name',
+            Header: 'Receiver Name',
             accessor: 'receiverName'
         },
         {
-          Header: "From",
-          accessor: "shipFromCity",
+            Header: "From",
+            accessor: "shipFromCity",
         },
         {
-          Header: "To",
-          accessor: "shipToCity",
+            Header: "To",
+            accessor: "shipToCity",
         },
 
         {
@@ -74,7 +74,7 @@ export default function CodShipment(props) {
             accessor: 'codAmount'
         },
         {
-            Header: 'status',
+            Header: 'Status',
             accessor: 'status'
         }
     ];
@@ -82,33 +82,33 @@ export default function CodShipment(props) {
     const transitions = useTransition(!response.loading, null, {
         from: { opacity: 0, transform: "translate3d(-270px,0,0)" },
         enter: {
-          opacity: 1,
-          transform: "translate3d(0,0px,0)",
-          transition: "ease-out 0.3s",
+            opacity: 1,
+            transform: "translate3d(0,0px,0)",
+            transition: "ease-out 0.3s",
         },
-      });
+    });
 
     return response.loading ? <div>loading...</div> : (
         transitions.map(
             ({ item, props, key }) =>
-              item && (
-                <animated.div key={key} style={props}>
-        <ListingContainer>
-            <div className="card-header">
-                <h2>COD Shipments</h2>
-            </div>
-            <div className="card-body">
-                <Table
-                    data={response.data}
-                    columns={columns}
-                    tableclass={"table-responsive custom-table"}
-                    pagination={true}
-                    hiddenColumns={['id']}
-                />
-            </div>
-        </ListingContainer>
-        </animated.div>
+                item && (
+                    <animated.div key={key} style={props}>
+                        <ListingContainer>
+                            <div className="card-header">
+                                <h2>COD Shipments</h2>
+                            </div>
+                            <div className="card-body">
+                                <Table
+                                    data={response.data}
+                                    columns={columns}
+                                    tableclass={"table-responsive custom-table"}
+                                    pagination={true}
+                                    hiddenColumns={['id']}
+                                />
+                            </div>
+                        </ListingContainer>
+                    </animated.div>
+                )
         )
-    )
-  );
+    );
 }

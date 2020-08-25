@@ -62,14 +62,14 @@ export default function PendingShipment(props) {
       accessor: "id",
     },
     {
-      Header: "tracking No",
+      Header: "Tracking No",
       accessor: "orderId",
     },
     {
       Header: "Date/Time",
       accessor: "dateTime",
-      Cell: (row)=>{
-      return <>{moment(row.row.original.dateTime).format('YYYY-MM-DD')}</>
+      Cell: (row) => {
+        return <>{moment(row.row.original.dateTime).format('YYYY-MM-DD')}</>
       }
     },
     {
@@ -77,7 +77,7 @@ export default function PendingShipment(props) {
       accessor: "shipmentTitle",
     },
     {
-      Header: "Reciever Name",
+      Header: "Receiver Name",
       accessor: "receiverName",
     },
     {
@@ -89,7 +89,7 @@ export default function PendingShipment(props) {
       accessor: "shipToCity",
     },
     {
-      Header: "status",
+      Header: "Status",
       accessor: "status",
     },
   ];

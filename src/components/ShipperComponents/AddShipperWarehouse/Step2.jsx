@@ -86,7 +86,7 @@ export default function Step2(props) {
 								name="operationalTimeto"
 								ref={register({ required: true })}
 							/>
-							{errors?.operationalTimeto?.types?.required && (
+							{errors ?.operationalTimeto ?.types ?.required && (
 								<p style={{ color: 'red' }}>Name is required</p>
 							)}
 						</div>
@@ -99,21 +99,21 @@ export default function Step2(props) {
 								name="operationalTimefrom"
 								ref={register({ required: true })}
 							/>
-							{errors?.operationalTimefrom?.types?.required && (
+							{errors ?.operationalTimefrom ?.types ?.required && (
 								<p style={{ color: 'red' }}>Name is required</p>
 							)}
 						</div>
 					</div>
 					<div className="btn-container float-right">
 						<button
-							className="btn btn-secondary dark-grey"
+							className="btn btn-danger mr-2"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Back
 						</button>
 						<button className="btn btn-success" type="submit">
-							Next step
+							Next
 						</button>
 					</div>
 				</form>

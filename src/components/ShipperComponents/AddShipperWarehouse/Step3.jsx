@@ -188,26 +188,26 @@ export default function Step3(props) {
 								</button>
 							</div>
 						) : (
-							<div className="btn-container float-right">
-								<button
-									className="btn btn-secondary dark-grey"
-									type="button"
-									onClick={() => hist.goBack()}
-								>
-									Go to previous step
+								<div className="btn-container float-right">
+									<button
+										className="btn btn-danger"
+										type="button"
+										onClick={() => hist.goBack()}
+									>
+										Back
 								</button>
-								&nbsp;
+									&nbsp;
 								{data.update === undefined ? (
-									<button className="btn btn-success" type="submit">
-										Finish
+										<button className="btn btn-success" type="submit">
+											Finish
 									</button>
-								) : (
-									<button className="btn btn-secondary dark-grey" type="submit">
-										Update
+									) : (
+											<button className="btn btn-secondary dark-grey" type="submit">
+												Update
 									</button>
-								)}
-							</div>
-						)}
+										)}
+								</div>
+							)}
 					</form>
 				</div>
 			</div>
