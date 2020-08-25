@@ -53,7 +53,7 @@ export default function AllShipments(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
+			Header: 'Tracking No',
 			accessor: 'shipmentId',
 		},
 		{

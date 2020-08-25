@@ -584,12 +584,12 @@ value is deducted from these fields this does not include the gift packaging val
 									</button>
 								) : (
 									<>
-										<input
+										{/* <input
 											className="btn btn-success"
 											value="Clone"
 											type="button"
 											onClick={() => handleSubmit(clone)()}
-										/>
+										/> */}
 										<input
 											className="btn btn-success"
 											value="Add to way bill"

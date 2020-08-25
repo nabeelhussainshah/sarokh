@@ -53,7 +53,7 @@ export default function CodShipments(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
+			Header: 'Tracking No',
 			accessor: 'shipmentId',
 		},
 		{
@@ -72,15 +72,15 @@ export default function CodShipments(props) {
 		{
 			Header: 'Shipper',
 			accessor: 'shipper',
-        },
-        {
+		},
+		{
 			Header: 'COD',
 			accessor: 'amount',
-        },
-        {
-            Header: 'Status',
-            accessor: 'status'
-        }
+		},
+		{
+			Header: 'Status',
+			accessor: 'status',
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {
