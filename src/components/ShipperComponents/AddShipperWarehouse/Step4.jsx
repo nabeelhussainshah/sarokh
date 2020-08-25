@@ -75,7 +75,7 @@ export default function Step2(props) {
 								placeholder="Racks Per Row"
 								ref={register({ required: true })}
 							/>
-							{errors?.racksPerRow?.types?.required && (
+							{errors ?.racksPerRow ?.types ?.required && (
 								<p style={{ color: 'red' }}>Racks Per Row are required</p>
 							)}
 						</div>
@@ -88,7 +88,7 @@ export default function Step2(props) {
 								placeholder="Rows"
 								ref={register({ required: true })}
 							/>
-							{errors?.rows?.types?.required && (
+							{errors ?.rows ?.types ?.required && (
 								<p style={{ color: 'red' }}>rows are required</p>
 							)}
 						</div>
@@ -101,18 +101,18 @@ export default function Step2(props) {
 								placeholder="Columns Per Row"
 								ref={register({ required: true })}
 							/>
-							{errors?.columnsPerRow?.types?.required && (
+							{errors ?.columnsPerRow ?.types ?.required && (
 								<p style={{ color: 'red' }}>Columns per Row are required</p>
 							)}
 						</div>
 					</div>
 					<div className="btn-container float-right">
 						<button
-							className="btn btn-secondary dark-grey"
+							className="btn btn-danger"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Back
 						</button>
 						&nbsp;
 						{data.update === undefined ? (
@@ -120,10 +120,10 @@ export default function Step2(props) {
 								Finish
 							</button>
 						) : (
-							<button className="btn btn-secondary dark-grey" type="submit">
-								Update
+								<button className="btn btn-secondary dark-grey" type="submit">
+									Update
 							</button>
-						)}
+							)}
 					</div>
 				</form>
 			</div>

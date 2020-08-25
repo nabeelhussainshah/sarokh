@@ -68,7 +68,8 @@ label:not(.form-check-label):not(.custom-file-label){background: #FFF;}
     background-position: center;
     background-size: cover;
 }
-
+.btn-info{background-color:#03a9f4; }
+.btn-info.disabled, .btn-info:disabled{background-color: #CCCCCC; border: #CCCCCC solid 1px;}
 .profile__avatar {
     width: 100px;
     float: left;
