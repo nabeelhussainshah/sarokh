@@ -31,18 +31,195 @@ export default function FinanceReport(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						<Container>
-							<div className="card-header">
-								<h2 className="float-left">Finance Report</h2>
-							</div>
-							<div className="card-body">// code here</div>
-						</Container>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							<Container>
+								<div className="card-header">
+									<h2 className="float-left">Finance Report</h2>
+								</div>
+								<div className="card-body">
+									<div className="form-row">
+										<div className="col-sm-12">
+											<h4 className="fs-20 redcolor">Filters</h4>
+										</div>
+									</div>
+									<div className="form-row mb-3">
+										<div className="col">
+											<input
+												type="tel"
+												name="contact"
+												className="form-control"
+												placeholder="Select Srart Date"
+											/>
+										</div>
+										<div className="col">
+											<input
+												type="tel"
+												name="contact"
+												className="form-control"
+												placeholder="Select End Date"
+											/>
+										</div>
+									</div>
+									<div className="form-row mb-3">
+										<div className="col">
+											<input
+												type="tel"
+												name="contact"
+												className="form-control"
+												placeholder="Select User Type"
+											/>
+										</div>
+										<div className="col">
+											<input
+												type="tel"
+												name="contact"
+												className="form-control"
+												placeholder="Select User"
+											/>
+										</div>
+									</div>
+									<div className="form-row mb-3">
+										<div className="col">
+											<h4 className="fs-20 redcolor">Bill Type</h4>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Credit Note
+														</label>
+											</div>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Invoice
+														</label>
+											</div>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Credit/ Debit
+														</label>
+											</div>
+										</div>
+										<div className="col">
+											<h4 className="fs-20 redcolor">Transaction</h4>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Credit
+														</label>
+											</div>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Debit
+														</label>
+											</div>
+											<div className="clearfix"></div>
+										</div>
+										<div className="col">
+											<h4 className="fs-20 redcolor">Payment Type</h4>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Sarokh Delivery
+														</label>
+											</div>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Sarokh Pay
+														</label>
+											</div>
+										</div>
+										<div className="col">
+											<h4 className="fs-20 redcolor">Status</h4>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Paid
+														</label>
+											</div>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Unpaid
+														</label>
+											</div>
+											<div className="clearfix"></div>
+											<div className="form-check form-check-inline">
+												<input
+													className="form-check-input"
+													name="wallet"
+													type="checkbox"
+													value="Driver Collection"
+												/>
+												<label className="form-check-label">
+													Partially Paid
+														</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</Container>
+						</animated.div>
+					)
+			)
+		);
 }
