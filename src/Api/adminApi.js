@@ -541,6 +541,23 @@ export async function addPointApi(data) {
 		});
 }
 
+export async function updatePointApi(data) {
+	return await axios
+		.put(`${process.env.REACT_APP_API}/dealer-point/update`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function pointListingApi() {
 	return await axios
 		.get(`${process.env.REACT_APP_API}/dealer-point/get-list`)
