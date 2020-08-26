@@ -34,5 +34,6 @@ export const pointEditHelper = (data) => {
 				longitude: data.locationLongitude,
 			},
 		],
+		update: true,
 	};
 };

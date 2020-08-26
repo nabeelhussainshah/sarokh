@@ -2,7 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allDealersApi, addPointApi } from '../../../Api/adminApi';
+import {
+	allDealersApi,
+	addPointApi,
+	updatePointApi,
+} from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -37,14 +41,14 @@ export default function AddPoint(props) {
 		allDealersApi()
 			.then((res) => {
 				if (!isNull(hist.location.state)) {
+					const updateData = hist.location.state;
 					setdata({
-						location: hist.location.state.location,
-						commercialRegistrationFile:
-							hist.location.state.commercialRegistrationFile,
-						pointPicture: hist.location.state.pointPicture,
+						location: updateData.location,
+						commercialRegistrationFile: updateData.commercialRegistrationFile,
+						pointPicture: updateData.pointPicture,
 					});
 					setresponse({ loading: false, data: res });
-					setValue('ownerId', hist.location.state.dealerId);
+					setValue('ownerId', updateData.dealerId);
 				} else {
 					setresponse({ loading: false, data: res });
 				}
@@ -80,13 +84,31 @@ export default function AddPoint(props) {
 		delete payload['location'];
 
 		console.log(payload);
-		addPointApi(payload)
-			.then((res) => {
-				toast.success('Point added');
+		if (!isNull(hist.location.state)) {
+			const updateData = hist.location.state;
+
+			updatePointApi({
+				...payload,
+				id: updateData.id,
+				userId: updateData.user.userId,
 			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+				.then((res) => {
+					toast.success('Point Updated!!');
+					hist.push('/admin/dealer/allpoints');
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		} else {
+			addPointApi(payload)
+				.then((res) => {
+					toast.success('Point Added');
+					hist.push('/admin/dealer/allpoints');
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
 	};
 
 	const transitions = useTransition(!response.loading, null, {

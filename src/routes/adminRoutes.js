@@ -120,6 +120,11 @@ export const adminRoutes = [
 				name: 'Print Label',
 				iconClass: 'nav-icon fa fa-warehouse',
 			},
+			{
+				to: '/admin/warehouses/warehouseterminal',
+				name: 'Warehouse Terminal',
+				iconClass: 'nav-icon fa fa-warehouse',
+			},
 		],
 	},
 	{
@@ -287,13 +292,18 @@ export const adminRoutes = [
 		],
 	},
 	{
-		to: '/reports',
+		to: '/admin/reports',
 		name: 'Reports',
 		iconClass: 'nav-icon fas fa-chart-pie',
 		subRoutes: [
 			{
-				to: '/shipper/users/adduser',
-				name: 'Audit Trail',
+				to: '/admin/reports/financereport',
+				name: 'Finance Report',
+				iconClass: 'nav-icon fas fa-map',
+			},
+			{
+				to: '/admin/reports/shipmentreport',
+				name: 'Shipment Report',
 				iconClass: 'nav-icon fas fa-map',
 			},
 		],
