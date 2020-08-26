@@ -12,7 +12,7 @@ import {
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
-export default function CreateBill(props) {
+export default function CreateTrip(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const [pickData, setpickData] = useState([]);
