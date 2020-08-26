@@ -524,6 +524,56 @@ export async function maintenanceRecordsApi() {
 		});
 }
 
+export async function addPointApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/dealer-point/add`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function pointListingApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/dealer-point/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function deletePointApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/dealer-point/delete/${id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function addDealerApi(data) {
 	const payload = {
 		...data,

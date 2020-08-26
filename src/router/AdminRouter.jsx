@@ -28,6 +28,7 @@ import AllVehicles from '../views/admin/Vehicle/AllVehicle';
 import MaintenanceRecords from '../views/admin/Vehicle/MaintenanceRecords';
 import AddDealer from '../views/admin/dealer/AddDealer';
 import AddPoint from '../views/admin/dealer/AddPoint';
+import PointListing from '../views/admin/dealer/PointListing';
 import CreateBill from '../views/admin/finance/CreateBill';
 import PaymentRecord from '../views/admin/finance/RecordPayment';
 import BillDetail from '../views/admin/finance/BillDetail';
@@ -126,6 +127,7 @@ export default function AdminRouter(props) {
 				component={MaintenanceRecords}
 			/>
 
+			<ProtectedRoute path="/admin/dealer/allpoints" component={PointListing} />
 			<ProtectedRoute path="/admin/dealer/addpoint" component={AddPoint} />
 			<ProtectedRoute path="/admin/dealer/" component={AddDealer} />
 			<ProtectedRoute path="/admin/finance/createbill" component={CreateBill} />

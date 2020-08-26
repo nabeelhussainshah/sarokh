@@ -223,6 +223,11 @@ export const adminRoutes = [
 				name: 'Add Point',
 				iconClass: 'nav-icon fas fa-store',
 			},
+			{
+				to: '/admin/dealer/allpoints',
+				name: 'Points',
+				iconClass: 'nav-icon fas fa-store',
+			},
 		],
 	},
 	{

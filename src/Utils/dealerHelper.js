@@ -21,3 +21,18 @@ export const dealerEditHelper = (data) => {
 		update: true,
 	};
 };
+
+export const pointEditHelper = (data) => {
+	return {
+		...data,
+		userName: data.user.userName,
+		password: data.user.password,
+		location: [
+			{
+				label: data.address,
+				latitude: data.locationLatitude,
+				longitude: data.locationLongitude,
+			},
+		],
+	};
+};
