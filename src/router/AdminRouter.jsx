@@ -18,6 +18,7 @@ import ShipperBilling from '../views/admin/shippers/ShipperBilling';
 import AddUser from '../views/admin/users/AddUser';
 import AllUsers from '../views/admin/users/AllUsers';
 import AddShipperWarehouse from '../views/admin/warehouses/AddShipperWarehouse';
+import WarehouseTerminal from '../views/admin/warehouses/WarehouseTerminal';
 import AddDriver from '../views/admin/drivers/AddDriver';
 import FinanceDashboard from '../views/admin/finance/FinanceDashboard';
 import CreateTrip from '../views/admin/scheduling/CreateTrip';
@@ -36,6 +37,8 @@ import BillListing from '../views/admin/finance/BillListing';
 import AddVendor from '../views/admin/vendor/AddVendor';
 import AllVendors from '../views/admin/vendor/VendorListing';
 import VendorDetail from '../views/admin/vendor/VendorDetail';
+import FinanceReport from '../views/admin/reports/FinanceReport';
+import ShipmentReport from '../views/admin/reports/ShipmentReport';
 import { Switch, Redirect } from 'react-router-dom';
 import { adminRoutes } from '../routes/adminRoutes';
 import { toast } from 'react-toastify';
@@ -105,6 +108,10 @@ export default function AdminRouter(props) {
 			<ProtectedRoute path="/admin/users/adduser" component={AddUser} />
 			<ProtectedRoute path="/admin/users/allusers" component={AllUsers} />
 			<ProtectedRoute
+				path="/admin/warehouses/warehouseterminal"
+				component={WarehouseTerminal}
+			/>
+			<ProtectedRoute
 				path="/admin/warehouses/"
 				component={AddShipperWarehouse}
 			/>
@@ -157,6 +164,14 @@ export default function AdminRouter(props) {
 				component={VendorDetail}
 			/>
 			<ProtectedRoute path="/admin/vendors/allvendors" component={AllVendors} />
+			<ProtectedRoute
+				path="/admin/reports/financereport"
+				component={FinanceReport}
+			/>
+			<ProtectedRoute
+				path="/admin/reports/shipmentreport"
+				component={ShipmentReport}
+			/>
 		</Switch>
 	);
 }
