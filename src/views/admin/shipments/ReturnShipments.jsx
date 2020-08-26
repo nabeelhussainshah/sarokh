@@ -55,27 +55,27 @@ export default function ReturnShipments(props) {
 		{
 			Header: 'tracking No',
 			accessor: 'shipmentId',
-        },
+		},
 		{
 			Header: 'Date',
 			accessor: 'dateTime',
-        },
-        {
+		},
+		{
 			Header: 'Return Location',
 			accessor: '',
 		},
 		{
 			Header: 'To (City)',
-			accessor: 'cityFrom',
+			accessor: 'toCity',
 		},
 		{
 			Header: 'From (City)',
-			accessor: 'cityTo',
+			accessor: 'fromCity',
 		},
-        {
-            Header: 'Status',
-            accessor: 'status'
-        }
+		{
+			Header: 'Status',
+			accessor: 'status',
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {

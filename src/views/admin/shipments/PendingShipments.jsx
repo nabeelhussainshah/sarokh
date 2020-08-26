@@ -62,16 +62,16 @@ export default function PendingShipments(props) {
 		},
 		{
 			Header: 'Current Location',
-			accessor: 'pickupLocation',
+			accessor: 'currentLocation',
 		},
 		{
 			Header: 'From (City)',
-			accessor: 'cityFrom',
+			accessor: 'fromCity',
 		},
 
 		{
 			Header: 'To (City)',
-			accessor: 'cityTo',
+			accessor: 'toCity',
 		},
 		{
 			Header: 'Delivery Type',

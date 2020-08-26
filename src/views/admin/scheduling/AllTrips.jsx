@@ -111,7 +111,7 @@ export default function AllTrips(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Shipments</h2>
+								<h2 className="float-left">All Trips</h2>
 							</div>
 							<div className="card-body">
 								<Table

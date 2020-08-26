@@ -62,12 +62,12 @@ export default function CodShipments(props) {
 		},
 		{
 			Header: 'From (City)',
-			accessor: 'cityFrom',
+			accessor: 'fromCity',
 		},
 
 		{
 			Header: 'To (City)',
-			accessor: 'cityTo',
+			accessor: 'toCity',
 		},
 		{
 			Header: 'Shipper',

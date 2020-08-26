@@ -107,7 +107,7 @@ export default function AllShipments(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Shipments</h2>
+								<h2 className="float-left">All Vehicles</h2>
 							</div>
 							<div className="card-body">
 								<Table

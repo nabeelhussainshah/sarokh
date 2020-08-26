@@ -62,18 +62,17 @@ export default function PickupShipments(props) {
 		},
 		{
 			Header: 'Pick up Location',
-			accessor: '',
+			accessor: 'pickupLocation',
 		},
 		{
 			Header: 'Assign To Driver',
-			accessor: '',
+			accessor: 'assignToDriver',
 		},
 
 		{
 			Header: 'Status',
 			accessor: 'status',
 		},
-
 	];
 
 	const transitions = useTransition(!response.loading, null, {

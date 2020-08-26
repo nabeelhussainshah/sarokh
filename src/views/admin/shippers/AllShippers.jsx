@@ -41,11 +41,11 @@ export default function AllShippers(props) {
 		{
 			Header: 'Shipper Name',
 			accessor: 'user.fullName',
-        },
-        {
+		},
+		{
 			Header: 'Shipper Type',
 			accessor: 'shipperType',
-        },
+		},
 		{
 			Header: 'Contact No',
 			accessor: 'user.contact',
@@ -56,12 +56,12 @@ export default function AllShippers(props) {
 		},
 		{
 			Header: 'City',
-			accessor: '',
+			accessor: 'city',
 		},
-        {
-            Header: 'Status',
-            accessor: 'status'
-        }
+		{
+			Header: 'Status',
+			accessor: 'status',
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {

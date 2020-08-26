@@ -86,14 +86,14 @@ export default function WarehouseList(porps) {
 			Header: 'Name',
 			accessor: 'name',
 		},
-		{
-			Header: 'Manager Name',
-			accessor: 'managerName',
-		},
-		{
-			Header: 'Manager Contact',
-			accessor: 'mangerContact',
-		},
+		// {
+		// 	Header: 'Manager Name',
+		// 	accessor: 'managerName',
+		// },
+		// {
+		// 	Header: 'Manager Contact',
+		// 	accessor: 'mangerContact',
+		// },
 		{
 			Header: 'Address',
 			accessor: 'address',

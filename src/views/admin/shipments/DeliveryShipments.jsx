@@ -62,17 +62,16 @@ export default function DeliveryShipments(props) {
 		},
 		{
 			Header: 'Delivery Location',
-			accessor: '',
+			accessor: 'deliveryLocation',
 		},
 		{
 			Header: 'Assign To Driver',
-			accessor: '',
+			accessor: 'assignToDriver',
 		},
 		{
 			Header: 'Status',
 			accessor: 'status',
 		},
-
 	];
 
 	const transitions = useTransition(!response.loading, null, {

@@ -55,27 +55,27 @@ export default function PrepaidShipments(props) {
 		{
 			Header: 'tracking No',
 			accessor: 'shipmentId',
-        },
-        {
+		},
+		{
 			Header: 'Shipper',
 			accessor: 'shipper',
-        },
+		},
 		{
 			Header: 'Date',
 			accessor: 'dateTime',
 		},
 		{
 			Header: 'To (City)',
-			accessor: 'cityFrom',
+			accessor: 'toCity',
 		},
 		{
 			Header: 'From (City)',
-			accessor: 'cityTo',
+			accessor: 'fromCity',
 		},
-        {
-            Header: 'Status',
-            accessor: 'status'
-        }
+		{
+			Header: 'Status',
+			accessor: 'status',
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {

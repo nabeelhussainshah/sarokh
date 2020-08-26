@@ -68,7 +68,7 @@ export const adminRoutes = [
 			},
 			{
 				to: '/admin/shipments/deliveryshipments',
-				name: 'Delievery Shipments',
+				name: 'Delivery Shipments',
 				iconClass: 'nav-icon fas fa-box',
 			},
 		],
