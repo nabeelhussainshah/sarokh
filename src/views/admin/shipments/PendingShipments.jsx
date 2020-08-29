@@ -26,7 +26,7 @@ export default function PendingShipments(props) {
 	const handleClick = (row) => {
 		console.log(row.row.original.id);
 		hist.push({
-			pathname: '/shipper/shipments/vieworder',
+			pathname: '/admin/shipments/vieworder',
 			state: {
 				id: row.row.original.id,
 			},

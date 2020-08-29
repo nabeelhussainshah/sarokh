@@ -108,7 +108,6 @@ export default function AllDealers(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
 								<h2 className="float-left">Dealer Owners</h2>
