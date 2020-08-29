@@ -39,6 +39,7 @@ import AllVendors from '../views/admin/vendor/VendorListing';
 import VendorDetail from '../views/admin/vendor/VendorDetail';
 import FinanceReport from '../views/admin/reports/FinanceReport';
 import ShipmentReport from '../views/admin/reports/ShipmentReport';
+import ShipmentDetails from '../views/shipper/ShipmentDetails';
 import { Switch, Redirect } from 'react-router-dom';
 import { adminRoutes } from '../routes/adminRoutes';
 import { toast } from 'react-toastify';
@@ -59,7 +60,10 @@ export default function AdminRouter(props) {
 				path="/admin/shipments/allshipments"
 				component={AllShipments}
 			/>
-
+			<ProtectedRoute
+				path="/admin/shipments/vieworder"
+				component={ShipmentDetails}
+			/>
 			<ProtectedRoute
 				path="/admin/shipments/deliveredshipments"
 				component={DeliveredShipments}
@@ -96,6 +100,7 @@ export default function AdminRouter(props) {
 				path="/admin/shippers/allshippers"
 				component={AllShippers}
 			/>
+
 			<ProtectedRoute
 				path="/admin/shippers/shipperbilling"
 				component={ShipperBilling}

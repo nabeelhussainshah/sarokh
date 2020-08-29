@@ -6,6 +6,8 @@ import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import axios from 'axios';
+import { getShipperWarehousesApi } from '../../Api/shipperApi';
+import Loading from '../../components/Loading/Loading';
 
 export default function AllUsers(props) {
 	const hist = useHistory();
@@ -37,7 +39,17 @@ export default function AllUsers(props) {
 				.then((response) => {
 					console.log(response);
 					if (response.status === 200) {
-						setresponse({ loading: false, data: response.data });
+						getShipperWarehousesApi()
+							.then((res) => {
+								setresponse({
+									loading: false,
+									data: response.data,
+									warehouses: res.warehouseList,
+								});
+							})
+							.catch((err) => {
+								toast.error(err.message);
+							});
 					}
 				})
 				.catch((err) => {
@@ -56,7 +68,6 @@ export default function AllUsers(props) {
 		if (data !== undefined) {
 			//since the side effect will be called on component mounting this check is done so that the below code is not called
 			if (data.userPassword !== '') {
-
 				/* the data set in the handleclick function changes the data but we donot require that data to be posted, since the response from api
         does not send userpassword we can use that as a check, when ever the data is submitted from the userform that will have a password init along with the completed data we will then send the patch request to the api */
 
@@ -75,6 +86,7 @@ export default function AllUsers(props) {
 						userId: formToggle.userId,
 						roleId: 2,
 						parentTypeId: user.id,
+						warehouseId: data.warehouseId,
 					})
 					.then((response) => {
 						if (response.status === 200) {
@@ -87,8 +99,8 @@ export default function AllUsers(props) {
 					});
 			}
 		}
-  }, [data]);
-   /* when ever the edit button is clicked this side effect is called what this does is
+	}, [data]);
+	/* when ever the edit button is clicked this side effect is called what this does is
 	 updating the data object since it is being passed to the form which will then populate the fields of the
 	 form of the selected user */
 
@@ -106,6 +118,7 @@ export default function AllUsers(props) {
 			contact: data.contact,
 			gender: data.gender,
 			dob: moment(data.dob).format(moment.HTML5_FMT.DATE),
+			warehouseId: data.warehouseId,
 		});
 	};
 
@@ -179,7 +192,7 @@ export default function AllUsers(props) {
 
 	if (formToggle.form === false) {
 		return response.loading ? (
-			<div>Loading ...</div>
+			<Loading />
 		) : (
 			<Container>
 				<div className="card-header">
@@ -207,6 +220,7 @@ export default function AllUsers(props) {
 					formToggle={setformToggle}
 					operation={'update'}
 					designation={['Manager', 'Supervisor']}
+					warehouses={response.warehouses}
 				/>
 			</Container>
 		);
