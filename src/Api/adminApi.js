@@ -401,6 +401,23 @@ export async function addDriverApi(data) {
 		});
 }
 
+export async function deleteDriverApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/driver/delete/${id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function updateDriverApi(data) {
 	const payload = {
 		...data,
@@ -655,6 +672,23 @@ export async function updateDealerApi(data) {
 		});
 }
 
+export async function deleteDealerApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/dealer/delete/${id}`)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function getCreateTripDataApi() {
 	try {
 		const warehouses = await sarokhWarehouseList();
@@ -691,6 +725,23 @@ export async function tripShipmentsApi(id) {
 export async function createTrip(data) {
 	return await axios
 		.post(`${process.env.REACT_APP_API}/trip/create-trip`, data)
+		.then((res) => {
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function deleteTripApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/trip/delete/${id}`)
 		.then((res) => {
 			if (res.data.status === 200) {
 				return true;

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { financeDashboardApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import { filter } from 'underscore';
+import { filter, uniq } from 'underscore';
 
 let radioIntialValue = {
 	driverWallet: false,
