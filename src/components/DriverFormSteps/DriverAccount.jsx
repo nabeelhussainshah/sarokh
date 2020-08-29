@@ -44,7 +44,7 @@ export default function BasicInformation(props) {
 			<div className="card-header">
 				<h2>Add Driver</h2>
 			</div>
-			<div classname="card-body">
+			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
 					<StepIndicator
 						step1="done"
@@ -118,7 +118,7 @@ export default function BasicInformation(props) {
 						<div className="form-group col-md-6">
 							<label htmlFor="inputEmail4">Upload Contract</label>
 							<div className="input-group">
-								<div className="col">
+								<div className="col p-0">
 									<input
 										type="file"
 										accept=".png, .jpg, .jpeg, .pdf"
@@ -194,7 +194,7 @@ export default function BasicInformation(props) {
 					</div>
 					<div className="btn-container float-right" style={{ margin: '10px' }}>
 						<button
-							className="btn btn-secondary dark-grey"
+							className="btn btn-danger dark-grey m-2"
 							type="button"
 							onClick={() => hist.goBack()}
 						>

@@ -60,13 +60,13 @@ export default function DriverDetails(props) {
 			<div className="card-header">
 				<h2>Add Driver</h2>
 			</div>
-			<div classname="card-body">
+			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
 					<StepIndicator step1="done" step2="current" />
 				</div>
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="mt-3">
-						<label name="deliveryLocationRadio">type of driver</label>
+						<label name="deliveryLocationRadio">Type of Driver</label>
 						<div className="form-check">
 							<input
 								className="form-check-input"
@@ -189,7 +189,7 @@ export default function DriverDetails(props) {
 								Iqama/NIC/Passport Copy Upload
 							</label>
 							<div className="input-group">
-								<div className="col">
+								<div className="col p-0">
 									<input
 										type="file"
 										accept=".png, .jpg, .jpeg, .pdf"
@@ -220,7 +220,7 @@ export default function DriverDetails(props) {
 						<div className="form-group col-md-6">
 							<label htmlFor="inputEmail4">License Copy Upload</label>
 							<div className="input-group">
-								<div className="col">
+								<div className="col p-0">
 									<input
 										type="file"
 										accept=".png, .jpg, .jpeg, .pdf"
@@ -238,7 +238,7 @@ export default function DriverDetails(props) {
 						style={{ margin: '10px' }}
 					>
 						<button
-							class="btn btn-secondary dark-grey"
+							class="btn btn-danger dark-grey m-2"
 							type="button"
 							onClick={() => hist.goBack()}
 						>

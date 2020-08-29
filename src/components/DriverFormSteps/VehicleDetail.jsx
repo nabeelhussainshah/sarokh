@@ -44,7 +44,7 @@ export default function VehicleDetail(props) {
 			<div className="card-header">
 				<h2>Add Driver</h2>
 			</div>
-			<div classname="card-body">
+			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
 					<StepIndicator step1="done" step2="done" step3="current" />
 				</div>

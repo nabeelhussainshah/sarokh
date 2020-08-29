@@ -57,7 +57,7 @@ export default function BasicInformation(props) {
 			<div className="card-header">
 				<h2>Add Driver</h2>
 			</div>
-			<div classname="card-body">
+			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
 					<StepIndicator
 						step1="done"
@@ -102,7 +102,7 @@ export default function BasicInformation(props) {
 					</div>
 					<div className="btn-container float-right" style={{ margin: '10px' }}>
 						<button
-							className="btn btn-secondary dark-grey"
+							className="btn btn-danger dark-grey m-2"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
@@ -113,10 +113,10 @@ export default function BasicInformation(props) {
 								Update
 							</button>
 						) : (
-							<button className="btn btn-success" type="submit">
-								Finish
+								<button className="btn btn-success" type="submit">
+									Finish
 							</button>
-						)}
+							)}
 					</div>
 				</form>
 			</div>

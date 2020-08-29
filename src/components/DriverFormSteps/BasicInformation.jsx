@@ -40,7 +40,7 @@ export default function BasicInformation(props) {
 			<div className="card-header">
 				<h2>Add Driver</h2>
 			</div>
-			<div classname="card-body">
+			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
 					<StepIndicator step1="current" />
 				</div>
@@ -109,7 +109,7 @@ export default function BasicInformation(props) {
 						<div className="form-group col-md-6">
 							<label htmlFor="inputEmail4">Profile Picture</label>
 							<div className="input-group">
-								<div className="col">
+								<div className="col p-0">
 									<input
 										type="file"
 										accept=".png, .jpg, .jpeg, .pdf"
