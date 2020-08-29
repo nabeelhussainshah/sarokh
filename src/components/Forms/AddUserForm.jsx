@@ -5,6 +5,7 @@ import Loading from '../Loading/Loading';
 import { toast } from 'react-toastify';
 
 export default function AddUserForm(props) {
+	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const { register, handleSubmit, watch, errors } = useForm({
 		defaultValues: props.formData,
@@ -74,7 +75,7 @@ export default function AddUserForm(props) {
 								id="designation"
 								name="designation"
 								ref={register({
-									required: true,
+									required: 'Designation is required',
 									validate: (value) => value !== 'true',
 								})}
 							>
@@ -162,7 +163,7 @@ export default function AddUserForm(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.password && errors.password.message}
+								{errors.userPassword && errors.userPassword.message}
 							</span>
 						</div>
 					</div>
@@ -222,24 +223,37 @@ export default function AddUserForm(props) {
 					<div className="form-row mb-3">
 						<div className="col-sm-12">
 							{props.operation === 'new' ? (
-								<button type="submit" className="btn btn-success">
-									Submit
-								</button>
+								<>
+									<button type="submit" className="btn btn-success">
+										Submit
+									</button>
+									<button
+										type="button"
+										className="btn btn-danger"
+										onClick={() => {
+											hist.go();
+										}}
+									>
+										Cancel
+									</button>
+								</>
 							) : null}
 
-							<button
-								type="button"
-								className="btn btn-danger"
-								onClick={() => {
-									props.formToggle({ form: false }); //this will hide the form
-								}}
-							>
-								Cancel
-							</button>
 							{props.operation === 'update' ? (
-								<button type="submit" className="btn btn-warning">
-									Update
-								</button>
+								<>
+									<button
+										type="button"
+										className="btn btn-danger"
+										onClick={() => {
+											props.formToggle({ form: false }); //this will hide the form
+										}}
+									>
+										Cancel
+									</button>
+									<button type="submit" className="btn btn-warning">
+										Update
+									</button>
+								</>
 							) : null}
 						</div>
 					</div>
