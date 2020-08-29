@@ -146,34 +146,34 @@ export default function AllShipments(props) {
 	return response.loading ? (
 		<div>loading...</div>
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">All Shipments</h2>
-								<button
-									className="btn btn-info float-right"
-									onClick={() => hist.push('/shipper/newshipment/step1')}
-								>
-									Add New
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">All Shipments</h2>
+									<button
+										className="btn btn-success float-right"
+										onClick={() => hist.push('/shipper/newshipment/step1')}
+									>
+										Add New
 								</button>
-							</div>
-							<div className="card-body">
-								<Table
-									data={response.data}
-									columns={columns}
-									tableclass={'table-responsive custom-table'}
-									pagination={true}
-									filter={true}
-									hiddenColumns={['id']}
-								/>
-							</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+								</div>
+								<div className="card-body">
+									<Table
+										data={response.data}
+										columns={columns}
+										tableclass={'table-responsive custom-table'}
+										pagination={true}
+										filter={true}
+										hiddenColumns={['id']}
+									/>
+								</div>
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }

@@ -87,10 +87,10 @@ export default function AllUsers(props) {
 					});
 			}
 		}
-  }, [data]);
-   /* when ever the edit button is clicked this side effect is called what this does is
-	 updating the data object since it is being passed to the form which will then populate the fields of the
-	 form of the selected user */
+	}, [data]);
+	/* when ever the edit button is clicked this side effect is called what this does is
+	  updating the data object since it is being passed to the form which will then populate the fields of the
+	  form of the selected user */
 
 	const handleClick = (row) => {
 		let data = row.row.original; //data from the row clicked is being stored in this
@@ -181,23 +181,23 @@ export default function AllUsers(props) {
 		return response.loading ? (
 			<div>Loading ...</div>
 		) : (
-			<Container>
-				<div className="card-header">
-					<h2 className="float-left">All Users</h2>
-					<Link to="/shipper/users/adduser">
-						<button className="btn btn-primary float-right">Add Users</button>
-					</Link>
-				</div>
-				<div className="card-body">
-					<Table
-						data={response.data}
-						columns={columns}
-						tableclass={'table-responsive custom-table'}
-						pagination={true}
-					/>
-				</div>
-			</Container>
-		);
+				<Container>
+					<div className="card-header">
+						<h2 className="float-left">All Users</h2>
+						<Link to="/shipper/users/adduser">
+							<button className="btn btn-success float-right">Add User</button>
+						</Link>
+					</div>
+					<div className="card-body">
+						<Table
+							data={response.data}
+							columns={columns}
+							tableclass={'table-responsive custom-table'}
+							pagination={true}
+						/>
+					</div>
+				</Container>
+			);
 	} else {
 		return (
 			<Container>

@@ -145,9 +145,9 @@ value is deducted from these fields this does not include the gift packaging val
 					normalPackaging: data.giftPackaging ? false : true,
 					additionalCharges: check
 						? data.additionalCharges +
-						  Math.round((data.shipmentValue / 100) * 2)
+						Math.round((data.shipmentValue / 100) * 2)
 						: data.additionalCharges -
-						  Math.round((data.shipmentValue / 100) * 2),
+						Math.round((data.shipmentValue / 100) * 2),
 					total: check
 						? data.total + Math.round((data.shipmentValue / 100) * 2)
 						: data.total - Math.round((data.shipmentValue / 100) * 2),
@@ -163,7 +163,7 @@ value is deducted from these fields this does not include the gift packaging val
 						insurance: false,
 						additionalCharges: data.insurance
 							? data.additionalCharges -
-							  Math.round((data.shipmentValue / 100) * 2)
+							Math.round((data.shipmentValue / 100) * 2)
 							: data.additionalCharges,
 						total: data.insurance
 							? data.total - Math.round((data.shipmentValue / 100) * 2)
@@ -502,11 +502,11 @@ value is deducted from these fields this does not include the gift packaging val
 											ref={register({ min: 1, required: true })}
 										/>
 										<span style={{ color: 'red' }}>
-											{errors?.codValue?.types?.required &&
+											{errors ?.codValue ?.types ?.required &&
 												'COD value is required *'}
 										</span>
 										<span style={{ color: 'red' }}>
-											{errors?.codValue?.types?.min &&
+											{errors ?.codValue ?.types ?.min &&
 												'the minimum COD amount is SAR 1/-'}
 										</span>
 									</div>
@@ -583,30 +583,30 @@ value is deducted from these fields this does not include the gift packaging val
 										Update
 									</button>
 								) : (
-									<>
-										{/* <input
+										<>
+											{/* <input
 											className="btn btn-success"
 											value="Clone"
 											type="button"
 											onClick={() => handleSubmit(clone)()}
 										/> */}
-										<input
-											className="btn btn-success"
-											value="Add to way bill"
-											type="button"
-											onClick={() => handleSubmit(onSubmit)()}
-										/>
+											<input
+												className="btn btn-success"
+												value="Add to way bill"
+												type="button"
+												onClick={() => handleSubmit(onSubmit)()}
+											/>
 
-										<div className="clearfix"></div>
-										<button
-											className="btn btn-success mt-3 width206 finishbtn"
-											type="button"
-											onClick={() => submitData()}
-										>
-											Finish
+											<div className="clearfix"></div>
+											<button
+												className="btn btn-success mt-3 width130 finishbtn"
+												type="button"
+												onClick={() => submitData()}
+											>
+												Finish
 										</button>
-									</>
-								)}
+										</>
+									)}
 							</div>
 							<div className="clearfix" />
 						</div>

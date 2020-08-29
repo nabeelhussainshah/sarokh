@@ -244,7 +244,7 @@ ul.steps-indicator li a .label {
 .bordertop{border-top: none !important;}
 .order-step-detail input[type=checkbox], input[type=radio]{margin-right: 5px;}
 .form-row>.col, .form-row>[class*=col-]{padding-left:15px; padding-right: 15px; }
-.width206{width: 206px;}
+.width130{width: 130px;}
 label:not(.form-check-label):not(.custom-file-label){font-weight: normal;color: #545454;}
 .font14{font-size: 14px;}
 .font18{font-size: 18px;}

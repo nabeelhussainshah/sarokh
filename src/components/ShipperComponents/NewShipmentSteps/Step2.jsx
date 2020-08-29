@@ -318,7 +318,7 @@ export default function Step2(props) {
 						</div>
 						<div className="btn-container float-right">
 							<button
-								className="btn btn-secondary dark-grey"
+								className="btn btn-danger dark-grey"
 								onClick={() => {
 									goback();
 								}}
