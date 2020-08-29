@@ -3,7 +3,7 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allDriversApi } from '../../../Api/adminApi';
+import { allDriversApi, deleteDriverApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import { driverEditHelper } from '../../../Utils/driverHelper';
@@ -39,6 +39,16 @@ export default function AllDrivers(props) {
 		}
 	};
 
+	const deleteDriver = (row) => {
+		deleteDriverApi(row.row.original.id)
+			.then((res) => {
+				toast.success('Driver Deleted!');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
@@ -47,6 +57,8 @@ export default function AllDrivers(props) {
 				return (
 					<Fragment>
 						<i className="fa fa-edit" onClick={() => handleClick(row)}></i>
+						&nbsp;
+						<i className="fa fa-trash" onClick={() => deleteDriver(row)} />
 					</Fragment>
 				);
 			},
