@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { financeDashboardApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import { filter } from 'underscore';
+import { filter, uniq } from 'underscore';
 
 let radioIntialValue = {
 	driverWallet: false,
@@ -142,6 +142,13 @@ export default function CodShipments(props) {
 				})
 			);
 		}
+	};
+
+	const filteredData = () => {
+		let filteredData = filter(response.data, function (doc) {
+			return doc.userType === value;
+		});
+		console.log(uniq(filteredData));
 	};
 
 	return response.loading ? (

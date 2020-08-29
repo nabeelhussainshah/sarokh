@@ -3,7 +3,7 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allTripsApi } from '../../../Api/adminApi';
+import { allTripsApi, deleteTripApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
@@ -33,6 +33,17 @@ export default function AllTrips(props) {
 		});
 	};
 
+	const deleteTrip = (row) => {
+		deleteTripApi(row.row.original.tripId)
+			.then((res) => {
+				toast.success('Trip Deleted!');
+				setresponse({ ...response, loading: true });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
@@ -44,6 +55,8 @@ export default function AllTrips(props) {
 							className="fa fa-info-circle"
 							onClick={() => handleClick(row)}
 						></i>
+						&nbsp;
+						<i className="fa fa-trash" onClick={() => deleteTrip(row)} />
 					</Fragment>
 				);
 			},

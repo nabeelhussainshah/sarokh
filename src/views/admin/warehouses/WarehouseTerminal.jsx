@@ -31,18 +31,52 @@ export default function WarehouseTerminal(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						<Container>
-							<div className="card-header">
-								<h2 className="float-left">Warehouse Terminal</h2>
-							</div>
-							<div className="card-body">// code here</div>
-						</Container>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							<Container>
+								<div className="card-header">
+									<h2 className="float-left">Warehouse Terminal</h2>
+								</div>
+								<div className="card-body">
+									<div className="form-row mb-3 mt-3">
+										<div className="col">
+											<label>Warehouse</label>
+											<select
+												name="shipperId"
+												className="form-control"
+											>
+												<option value="true">Select Warehouse</option>
+											</select>
+										</div>
+										<div className="col"></div>
+									</div>
+									<div className="form-row mb-3 mt-3">
+										<div className="col">
+											<label>Tracking Number</label>
+											<div className="input-group mb-3">
+												<input type="text" class="form-control" placeholder="Recipient's username" />
+												<div className="input-group-append">
+													<button className="btn btn-success" type="button" id="button-addon2">Enter</button>
+												</div>
+											</div>
+										</div>
+										<div className="col">
+											<label>Select Driver</label>
+											<input
+												type="text"
+												name="userName"
+												className="form-control"
+												placeholder="Select Driver"
+												defaultValue={""}
+											/>
+										</div>
+									</div>
+								</div>
+							</Container>
+						</animated.div>
+					)
+			)
+		);
 }

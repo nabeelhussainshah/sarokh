@@ -3,7 +3,7 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allDealersApi } from '../../../Api/adminApi';
+import { allDealersApi, deleteDealerApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -35,6 +35,17 @@ export default function AllDealers(props) {
 		console.log(result);
 	};
 
+	const deleteDealer = (row) => {
+		deleteDealerApi(row.row.original.id)
+			.then((res) => {
+				toast.success('Dealer Has Been Deleted!');
+				setresponse({ ...response, loading: true });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
@@ -42,10 +53,9 @@ export default function AllDealers(props) {
 			Cell: (row) => {
 				return (
 					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
+						<i className="fa fa-edit" onClick={() => handleClick(row)}></i>
+						&nbsp;
+						<i className="fa fa-trash" onClick={() => deleteDealer(row)} />
 					</Fragment>
 				);
 			},
