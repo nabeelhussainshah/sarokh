@@ -74,12 +74,8 @@ export default function CodShipments(props) {
 	const filterResults = (type, value) => {
 		switch (type) {
 			case 'userType':
+				filteredData(value);
 				setradio({ ...radioIntialValue }); // to reset radio as new values are populated in the table
-				setusers(
-					filter(response.data, function (doc) {
-						return doc.userType === value;
-					})
-				);
 				setdata(
 					filter(response.data, function (doc) {
 						return doc.userType === value;
@@ -89,8 +85,13 @@ export default function CodShipments(props) {
 				break;
 			case 'user':
 				setradio({ ...radioIntialValue }); // to reset radio as new values are populated in the table
+				// setdata(
+				// 	filter(users, function (doc) {
+				// 		return doc.walletHolder === value;
+				// 	})
+				// );
 				setdata(
-					filter(users, function (doc) {
+					filter(response.data, function (doc) {
 						return doc.walletHolder === value; // to set the user and display the results of the user selected in the table
 					})
 				);
@@ -124,7 +125,7 @@ export default function CodShipments(props) {
 		setradio({ ...radioIntialValue, [type]: true }); // to check only the selected button
 		if (response.selectedUser) {
 			setdata(
-				filter(users, function (doc) {
+				filter(response.data, function (doc) {
 					return (
 						doc.walletType === value &&
 						doc.walletHolder === response.selectedUser
@@ -144,11 +145,20 @@ export default function CodShipments(props) {
 		}
 	};
 
-	const filteredData = () => {
+	const filteredData = (value) => {
+		/* the response from the api returns json with record of all users, there can be multiple documents with the same
+		wallet holder but in the user drop down only one user needs to be displayed instead of the same user having multiple enteries
+		in the drop down. This function takes care of that at the end all the users in the response are displayed without multiple entries
+		in the drop down */
+
 		let filteredData = filter(response.data, function (doc) {
 			return doc.userType === value;
 		});
-		console.log(uniq(filteredData));
+		filteredData = filteredData.map((doc) => {
+			return doc.walletHolder;
+		});
+		filteredData = uniq(filteredData);
+		setusers(filteredData);
 	};
 
 	return response.loading ? (
@@ -374,14 +384,14 @@ export default function CodShipments(props) {
 														filterResults('user', e.target.value);
 													}}
 												>
-													<option value="true" disabled selected>
+													<option value="true">
 														Select User (Filter on bases of User Type) (Show all
 														user in Drop Down)
 													</option>
-													{users.map((doc, i) => {
+													{users.map((doc) => {
 														return (
-															<option key={i} value={doc.walletHolder}>
-																{doc.walletHolder}
+															<option key={doc} value={doc}>
+																{doc}
 															</option>
 														);
 													})}
@@ -462,7 +472,7 @@ export default function CodShipments(props) {
 															name="wallet"
 															className="form-check-input"
 															type="radio"
-															value="Shipper Cod"
+															value="Shipper COD"
 															checked={radio.shipperCod}
 															onClick={(e) => {
 																filterResults('shipperCod', e.target.value);
@@ -477,7 +487,7 @@ export default function CodShipments(props) {
 															name="wallet"
 															className="form-check-input"
 															type="radio"
-															value="Shipper Delivery Charges"
+															value="ShipperDeliveryCharges"
 															checked={radio.shipperDelivery}
 															onClick={(e) => {
 																filterResults(
