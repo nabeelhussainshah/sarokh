@@ -81,7 +81,7 @@ export default function AllDrivers(props) {
 		},
 		{
 			Header: 'Warehouse',
-			accessor: 'warehouse',
+			accessor: 'warehouse.address',
 		},
 	];
 
@@ -106,7 +106,6 @@ export default function AllDrivers(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
 								<h2 className="float-left">All Drivers</h2>

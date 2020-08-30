@@ -114,7 +114,7 @@ export default function PointListing(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">Dealer Owners</h2>
+								<h2 className="float-left">Points</h2>
 							</div>
 							<div className="card-body">
 								<Table
