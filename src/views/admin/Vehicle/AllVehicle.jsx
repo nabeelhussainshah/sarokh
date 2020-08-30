@@ -79,7 +79,7 @@ export default function AllShipments(props) {
 		},
 		{
 			Header: 'Warehouse',
-			accessor: 'warehouseName',
+			accessor: 'warehouse.address',
 		},
 	];
 

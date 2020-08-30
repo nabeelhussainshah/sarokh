@@ -71,7 +71,7 @@ export default function AllShipments(props) {
 
 		{
 			Header: 'Destination City',
-			accessor: 'destinationCity',
+			accessor: 'toCity',
 		},
 		{
 			Header: 'Status',

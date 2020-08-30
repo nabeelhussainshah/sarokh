@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ListingContainer from '../../components/Containers/ListingContainer';
+import Loading from '../../components/Loading/Loading';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ReactToPrint from 'react-to-print';
@@ -42,7 +43,7 @@ export default function PrintWayBill(props) {
 	};
 
 	return response.loading ? (
-		<div>Loading...</div>
+		<Loading />
 	) : (
 			<ListingContainer>
 				<div>

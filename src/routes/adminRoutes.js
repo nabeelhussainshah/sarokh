@@ -116,11 +116,6 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fa fa-warehouse',
 			},
 			{
-				to: '/admin/tracking/orderlocations',
-				name: 'Print Label',
-				iconClass: 'nav-icon fa fa-warehouse',
-			},
-			{
 				to: '/admin/warehouses/warehouseterminal',
 				name: 'Warehouse Terminal',
 				iconClass: 'nav-icon fa fa-warehouse',
