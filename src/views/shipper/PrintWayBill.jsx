@@ -44,48 +44,48 @@ export default function PrintWayBill(props) {
 	return response.loading ? (
 		<div>Loading...</div>
 	) : (
-		<ListingContainer>
-			<div>
-				<div className="card-header">
-					<h2>Print Way Bill</h2>
-				</div>
-				<div className="card-body">
-					<label>Select Tracking Numbers</label>
-					<select
-						className="form-control mb-5"
-						id="status"
-						onChange={(e) => {
-							handleChange(e.target.value);
-						}}
-					>
-						<option value="true">---Select Order id---</option>
-						{response.list.map((doc, i) => {
-							return (
-								<option key={i} value={doc}>
-									{doc}
-								</option>
-							);
-						})}
-					</select>
+			<ListingContainer>
+				<div>
+					<div className="card-header">
+						<h2>Print Way Bill</h2>
+					</div>
+					<div className="card-body">
+						<label>Select Tracking Numbers</label>
+						<select
+							className="form-control mb-5"
+							id="status"
+							onChange={(e) => {
+								handleChange(e.target.value);
+							}}
+						>
+							<option value="true">---Select Order id---</option>
+							{response.list.map((doc, i) => {
+								return (
+									<option key={i} value={doc}>
+										{doc}
+									</option>
+								);
+							})}
+						</select>
 
-					{response.content === undefined ? null : (
-						<>
-							<ComponentToPrint1 ref={componentRef} response={response} />
-							<ReactToPrint
-								trigger={() => (
-									<button className="btn btn-primary mt-4 float-right">
-										Print this out!
+						{response.content === undefined ? null : (
+							<>
+								<ComponentToPrint1 ref={componentRef} response={response} />
+								<ReactToPrint
+									trigger={() => (
+										<button className="btn btn-primary mt-4 float-right">
+											Print this out!
 									</button>
-								)}
-								content={() => componentRef.current}
-								pageStyle="width:50%"
-							/>
-						</>
-					)}
+									)}
+									content={() => componentRef.current}
+									pageStyle="width:50%"
+								/>
+							</>
+						)}
+					</div>
 				</div>
-			</div>
-		</ListingContainer>
-	);
+			</ListingContainer>
+		);
 }
 
 class ComponentToPrint1 extends React.Component {
@@ -95,7 +95,7 @@ class ComponentToPrint1 extends React.Component {
 				<div className="print-heading">
 					<div className="form-row">
 						<div
-							style={{ width: '50%', textAlign: 'center' }}
+							style={{ width: '63%', textAlign: 'center' }}
 							className="mb-2 text-right"
 						>
 							<img
@@ -104,7 +104,7 @@ class ComponentToPrint1 extends React.Component {
 							/>
 						</div>
 						<div
-							style={{ width: '50%', textAlign: 'center' }}
+							style={{ width: '30%', textAlign: 'center' }}
 							className="text-left"
 						>
 							<img
@@ -116,7 +116,7 @@ class ComponentToPrint1 extends React.Component {
 					</div>
 				</div>
 				<div className="print-body">
-					<div className="form-row" style={{ width: '100%' }}>
+					<div className="form-row mt-3" style={{ width: '100%' }}>
 						<div
 							style={{ width: '50%', textAlign: 'center' }}
 							className="text-center"
@@ -331,17 +331,17 @@ class ComponentToPrint1 extends React.Component {
 					<div className="print-footer">
 						<div className="form-row">
 							<div
-								style={{ width: '50%', textAlign: 'center' }}
+								style={{ width: '70%', textAlign: 'center' }}
 								className="text-center"
 							>
-								<img
+								<img style={{ width: '100%', }}
 									src={this.props.response.data.shipmentOrderItems[0].barCode}
 									alt="Logo"
 								/>
 								<p>{this.props.response.data.orderId}</p>
 							</div>
 							<div
-								style={{ width: '50%', textAlign: 'center' }}
+								style={{ width: '30%', textAlign: 'center' }}
 								className="text-left font40"
 							>
 								JED
