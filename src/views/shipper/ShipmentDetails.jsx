@@ -1,13 +1,10 @@
-import OrderDetails from '../../components/ShipperComponents/ShipperDetailsComponents/OrderDetails';
-import PaymentDetails from '../../components/ShipperComponents/ShipperDetailsComponents/PaymentDetails';
-import RecieverDetails from '../../components/ShipperComponents/ShipperDetailsComponents/RecieverDetails';
-import ShipmentDelieveryStatus from '../../components/ShipperComponents/ShipperDetailsComponents/ShipmentDelieveryStatus';
-import ShipmentDetail from '../../components/ShipperComponents/ShipperDetailsComponents/ShipmentDetail';
 import Container from '../../components/Containers/OrderDetailsContainer';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { isUndefined } from 'underscore';
+import DetailContainer from '../../components/ShipperComponents/ShipperDetailsComponent/DetailComponent';
+import moment from 'moment';
 
 export default function ShipmentDetails(props) {
 	const loc = useLocation();
@@ -36,11 +33,10 @@ export default function ShipmentDetails(props) {
 		<div>Loading...</div>
 	) : (
 		<Container>
-			<OrderDetails response={response.data} />
-			<RecieverDetails response={response.data.shipmentOrderItems[0]} />
-			<ShipmentDetail response={response.data.shipmentOrderItems[0]} />
-			<PaymentDetails response={response.data.shipmentOrderItems[0]} />
-			<ShipmentDelieveryStatus />
+			<DetailContainer
+				response={response.data}
+				items={response.data.shipmentOrderItems[0]}
+			/>
 		</Container>
 	);
 }

@@ -250,7 +250,7 @@ export default function AddUserForm(props) {
 									>
 										Cancel
 									</button>
-									<button type="submit" className="btn btn-warning">
+									<button type="submit" className="btn btn-warning ml-2">
 										Update
 									</button>
 								</>

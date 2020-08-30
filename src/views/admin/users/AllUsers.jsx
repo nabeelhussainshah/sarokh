@@ -91,6 +91,7 @@ export default function AllUsers(props) {
 
 	const handleClick = (row) => {
 		let data = row.row.original; //data from the row clicked is being stored in this
+		console.log(data.dob);
 		console.log(
 			'this is the date',
 			moment(data.dob).format(moment.HTML5_FMT.DATE)
@@ -170,23 +171,23 @@ export default function AllUsers(props) {
 		return response.loading ? (
 			<Loading />
 		) : (
-				<Container>
-					<div className="card-header">
-						<h2 className="float-left">All Users</h2>
-						<Link to="/admin/users/adduser">
-							<button className="btn btn-success float-right">Add User</button>
-						</Link>
-					</div>
-					<div className="card-body">
-						<Table
-							data={response.data}
-							columns={columns}
-							tableclass={'table-responsive custom-table'}
-							pagination={true}
-						/>
-					</div>
-				</Container>
-			);
+			<Container>
+				<div className="card-header">
+					<h2 className="float-left">All Users</h2>
+					<Link to="/admin/users/adduser">
+						<button className="btn btn-success float-right">Add User</button>
+					</Link>
+				</div>
+				<div className="card-body">
+					<Table
+						data={response.data}
+						columns={columns}
+						tableclass={'table-responsive custom-table'}
+						pagination={true}
+					/>
+				</div>
+			</Container>
+		);
 	} else {
 		return (
 			<Container>
