@@ -36,7 +36,7 @@ export default function AllVendors(props) {
 					state: {
 						...res,
 						userName: res.user.userName,
-						bank: res.bankAccount.bank,
+						bankName: res.bankAccount.bank,
 						bankAccountIban: res.bankAccount.iban,
 						bankAccountId: res.bankAccount.id,
 						update: true,

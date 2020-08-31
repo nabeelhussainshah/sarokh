@@ -81,7 +81,7 @@ export default function AllDrivers(props) {
 		},
 		{
 			Header: 'Warehouse',
-			accessor: 'warehouse.address',
+			accessor: 'warehouse.name',
 		},
 	];
 

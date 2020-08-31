@@ -201,7 +201,7 @@ export default function AddVendor(props) {
 										<label htmlFor="address">Bank Name</label>
 										<select
 											className="form-control"
-											name="bank"
+											name="bankName"
 											ref={register({
 												required: true,
 												validate: (value) => value !== 'true',

@@ -377,6 +377,44 @@ export async function deleteWarehouseApi(id) {
 		});
 }
 
+export async function assignCardToShipmentApi(data) {
+	return await axios
+		.post(
+			`${process.env.REACT_APP_API}/sarokh-warehouse/assign-card-to-shipment`,
+			data
+		)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function assignDriverToShipmentApi(data) {
+	return await axios
+		.post(
+			`${process.env.REACT_APP_API}/sarokh-warehouse/assign-driver-to-shipment`,
+			data
+		)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function addDriverApi(data) {
 	const payload = {
 		...data,
