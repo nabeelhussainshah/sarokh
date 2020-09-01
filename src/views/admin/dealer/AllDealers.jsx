@@ -84,6 +84,9 @@ export default function AllDealers(props) {
 		{
 			Header: 'Current Points (No of Points Owned)',
 			accessor: '',
+			Cell: (row) => {
+				return <>{row.row.original.dealerPoints.length}</>;
+			},
 		},
 	];
 

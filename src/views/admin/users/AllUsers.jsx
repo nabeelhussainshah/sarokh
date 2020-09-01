@@ -160,6 +160,10 @@ export default function AllUsers(props) {
 		{
 			Header: 'DOB',
 			accessor: 'dob',
+			Cell: (row) => {
+				console.log(row);
+				return <>{moment(row.row.original.dob).format('DD-MM-YYYY')}</>;
+			},
 		},
 		{
 			Header: 'Designation',

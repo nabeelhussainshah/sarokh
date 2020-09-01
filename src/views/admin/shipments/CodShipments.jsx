@@ -75,7 +75,7 @@ export default function CodShipments(props) {
 		},
 		{
 			Header: 'COD',
-			accessor: 'amount',
+			accessor: 'codAmount',
 		},
 		{
 			Header: 'Status',

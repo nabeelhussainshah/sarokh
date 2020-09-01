@@ -796,10 +796,10 @@ export async function deleteTripApi(id) {
 
 export async function allTripsApi() {
 	return await axios
-		.get(`${process.env.REACT_APP_API}/admin/get-all-trips`)
+		.get(`${process.env.REACT_APP_API}/trip/get-list`)
 		.then((res) => {
-			if (res.data.status === 200) {
-				return res.data.data;
+			if (res.status === 200) {
+				return res.data;
 			} else {
 				throw new Error(`something went wrong with status code: ${res.status}`);
 			}

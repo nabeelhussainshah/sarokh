@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { shipperBillingApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 export default function ShipperBilling(props) {
 	const hist = useHistory();
@@ -40,28 +41,27 @@ export default function ShipperBilling(props) {
 		},
 		{
 			Header: 'Shipper Name',
-			accessor: 'user.fullName',
-        },
-        {
-			Header: 'Shipper Type',
-			accessor: 'shipperType',
-        },
+			accessor: 'shipperName',
+		},
 		{
 			Header: 'Transaction Type',
 			accessor: 'transactionType',
 		},
 		{
 			Header: 'Date',
-			accessor: '',
+			accessor: 'date',
+			Cell: (row) => {
+				return <>{moment(row.row.original.date).format('DD-MM-YYYY')}</>;
+			},
 		},
 		{
 			Header: 'Amount',
-			accessor: 'totalAmount',
+			accessor: 'amount',
 		},
-        {
-            Header: 'No Of Shipments',
-            accessor: ''
-        }
+		{
+			Header: 'No Of Shipments',
+			accessor: 'numberOfShipments',
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {

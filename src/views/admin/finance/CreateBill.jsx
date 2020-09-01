@@ -19,6 +19,7 @@ export default function CreateBill(props) {
 		loading: false,
 		tableData: [],
 		data: [],
+		check: false,
 	});
 
 	console.log(response.data);
@@ -38,16 +39,21 @@ export default function CreateBill(props) {
 	);
 
 	useEffect(() => {
-		if (response.data.length === 1) {
+		if (response.check) {
 			getBillToDetailApi(getValues('userType'))
 				.then((res) => {
-					setresponse({ loading: false, data: res, tableData: [] });
+					setresponse({
+						loading: false,
+						data: res,
+						tableData: [],
+						check: false,
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);
 				});
 		}
-	}, [response.data]);
+	}, [response.check]);
 
 	const columns = [
 		{
@@ -286,7 +292,7 @@ export default function CreateBill(props) {
 											onChange={(e) => {
 												setresponse({
 													...response,
-													data: [{ id: 1, name: 'temp' }],
+													check: true,
 												});
 											}}
 										>

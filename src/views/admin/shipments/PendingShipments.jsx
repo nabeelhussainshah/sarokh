@@ -75,7 +75,7 @@ export default function PendingShipments(props) {
 		},
 		{
 			Header: 'Delivery Type',
-			accessor: '',
+			accessor: 'deliveryType',
 		},
 	];
 

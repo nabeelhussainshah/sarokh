@@ -186,7 +186,7 @@ export default function AddPoint(props) {
 											type="text"
 											className="form-control"
 											name="commercialRegistrationNumber"
-											placeholder="Select Starting Date"
+											placeholder="Enter Commercial Registration Number"
 											ref={register({ required: true })}
 										/>
 										{errors?.registrationNo?.types?.required && (
@@ -303,7 +303,7 @@ export default function AddPoint(props) {
 												validate: (value) => value !== 'true',
 											})}
 										>
-											<option value="SUA">Suadi Arabia</option>
+											<option value="SUA">Saudi Arabia</option>
 										</select>
 										{errors?.country?.types?.required && (
 											<p style={{ color: 'red' }}>Country is required</p>

@@ -17,6 +17,7 @@ export default function CreateTrip(props) {
 	const [response, setresponse] = useState({ loading: true });
 	const [pickData, setpickData] = useState([]);
 	const [deliveryData, setdeliveryData] = useState([]);
+	const [pointsData, setpointsData] = useState([]);
 
 	useEffect(() => {
 		if (response.loading && response.id === undefined) {
@@ -31,6 +32,7 @@ export default function CreateTrip(props) {
 		if (response.id && response.loading) {
 			tripShipmentsApi(response.id.warehouse)
 				.then((res) => {
+					console.log(res);
 					setresponse({ ...response, loading: false, tabledata: res });
 				})
 				.catch((err) => {
@@ -46,14 +48,19 @@ export default function CreateTrip(props) {
 			(pickData.length !== 0 && deliveryData.length !== 0)
 		) {
 			let dataset1 = [];
+			let dataset2 = [];
 			pickData.map((doc) => {
 				dataset1.push(doc.original);
 			});
 			deliveryData.map((doc) => {
 				dataset1.push(doc.original);
 			});
+			pointsData.map((doc) => {
+				dataset2.push(doc.original);
+			});
 			const finalresult = {
 				shipmentsList: dataset1,
+				pointsList: dataset2,
 				warehouseId: response.id.warehouse,
 				driverId: response.id.driver,
 				vehicleId: response.id.vehicle,
@@ -111,20 +118,16 @@ export default function CreateTrip(props) {
 
 	const columns1 = [
 		{
-			Header: 'Action',
-			accessor: '',
-		},
-		{
 			Header: 'Dealer Name',
-			accessor: '',
+			accessor: 'dealerPointName',
 		},
 		{
 			Header: 'Wallet Balance',
-			accessor: '',
+			accessor: 'walletBalance',
 		},
 		{
 			Header: 'Destination Address',
-			accessor: '',
+			accessor: 'address',
 		},
 	];
 
@@ -166,6 +169,19 @@ export default function CreateTrip(props) {
 												rowToggle={true}
 												selectedData={setdeliveryData}
 												dataCheck={deliveryData}
+											/>
+										</div>
+										<div className="margintop30">
+											<h2 style={{ margin: '10px' }}> Points</h2>
+											<Table
+												data={response.tabledata.pointsList}
+												columns={columns1}
+												tableclass={'table-responsive custom-table'}
+												pagination={true}
+												filter={true}
+												rowToggle={true}
+												selectedData={setpointsData}
+												dataCheck={pointsData}
 											/>
 										</div>
 										<div className="btn-container">

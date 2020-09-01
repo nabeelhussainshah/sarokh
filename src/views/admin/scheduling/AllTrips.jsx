@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { allTripsApi, deleteTripApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 export default function AllTrips(props) {
 	const hist = useHistory();
@@ -28,7 +29,7 @@ export default function AllTrips(props) {
 		hist.push({
 			pathname: '/admin/scheduling/tripdetail',
 			state: {
-				id: row.row.original.tripId,
+				id: row.row.original.id,
 			},
 		});
 	};
@@ -63,40 +64,44 @@ export default function AllTrips(props) {
 		},
 		{
 			Header: 'Trip Id',
-			accessor: 'tripId',
+			accessor: 'id',
 		},
 		{
 			Header: 'Date',
-			accessor: 'date',
+			accessor: 'dispatchDatetime',
+			Cell: (row) => {
+				return (
+					<>{moment(row.row.original.dispatchDatetime).format('DD-MM-YYYY')}</>
+				);
+			},
 		},
 		{
 			Header: 'Sarokh Warehouse',
-			accessor: 'sarkhWarehouse',
+			accessor: 'startPoint',
 		},
 		{
 			Header: 'Driver',
-			accessor: 'driver',
+			accessor: 'driverName',
 		},
 		{
 			Header: 'Vehicle',
 			accessor: 'vehicle',
 		},
-
 		{
 			Header: 'Pick Up',
-			accessor: '',
+			accessor: 'pickupShipments',
 		},
 		{
 			Header: 'Deliveries',
-			accessor: '',
+			accessor: 'deliveryShipments',
 		},
 		{
 			Header: 'Amount Collection',
-			accessor: '',
+			accessor: 'codCollection',
 		},
 		{
 			Header: 'Status',
-			accessor: 'status',
+			accessor: 'tripStatus',
 		},
 	];
 
