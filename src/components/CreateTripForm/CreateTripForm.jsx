@@ -9,9 +9,31 @@ export default function CreateTripForm(props) {
 		criteriaMode: 'all',
 	});
 
+	const [stats, setstats] = useState({
+		pointPickup: 0,
+		shipperPickup: 0,
+		deliveriesToPoint: 0,
+		deliveriesToLastMile: 0,
+		lastMileCod: 0,
+		pointCollection: 0,
+	});
+
+	useEffect(() => {
+		if (props.pointsData.length !== 0) {
+			let sum = 0;
+			props.pickUpData.map((doc) => {
+				sum += parseInt(doc.original.walletBalance);
+			});
+			setstats({ ...stats, pointCollection: sum });
+		} else {
+			setstats({ ...stats, pointCollection: 0 });
+		}
+	}, [props]);
+
 	const onSubmit = (data) => {
 		props.setId({ ...props.listing, loading: true, id: data });
 	};
+
 	return (
 		<Fragment>
 			<div className="form-row mb-3">
@@ -33,6 +55,9 @@ export default function CreateTripForm(props) {
 							);
 						})}
 					</select>
+					{errors?.warehouse && (
+						<p style={{ color: 'red' }}>Warehouse is required *</p>
+					)}
 				</div>
 				<div className="col">
 					<select
@@ -52,6 +77,9 @@ export default function CreateTripForm(props) {
 							);
 						})}
 					</select>
+					{errors?.vehicle && (
+						<p style={{ color: 'red' }}>Vehicle is required *</p>
+					)}
 				</div>
 			</div>
 			<div className="form-row mb-3">
@@ -73,6 +101,9 @@ export default function CreateTripForm(props) {
 							);
 						})}
 					</select>
+					{errors?.driver && (
+						<p style={{ color: 'red' }}>Driver is required *</p>
+					)}
 				</div>
 			</div>
 			<div className="form-row mb-3">
@@ -95,7 +126,7 @@ export default function CreateTripForm(props) {
 						</div>
 						<div className="float-left">
 							<p>
-								<span className="font20">45</span>
+								<span className="font20">{stats.pointPickup}</span>
 								<br />
 								Point Pick up
 							</p>
@@ -110,7 +141,7 @@ export default function CreateTripForm(props) {
 						</div>
 						<div className="float-left">
 							<p>
-								<span className="font20">45</span>
+								<span className="font20">{stats.shipperPickup}</span>
 								<br />
 								Shipper Pick up
 							</p>
@@ -125,7 +156,7 @@ export default function CreateTripForm(props) {
 						</div>
 						<div className="float-left">
 							<p>
-								<span className="font20">45</span>
+								<span className="font20">{stats.deliveriesToPoint}</span>
 								<br />
 								Deliveries to Point
 							</p>
@@ -140,7 +171,7 @@ export default function CreateTripForm(props) {
 						</div>
 						<div className="float-left">
 							<p>
-								<span className="font20">45</span>
+								<span className="font20">{stats.deliveriesToLastMile}</span>
 								<br />
 								Deliveries to Lastmile
 							</p>
@@ -155,7 +186,7 @@ export default function CreateTripForm(props) {
 						</div>
 						<div className="float-left">
 							<p>
-								<span className="font20">45</span>
+								<span className="font20">{stats.lastMileCod}</span>
 								<br />
 								Lastmile COD
 							</p>
@@ -170,7 +201,7 @@ export default function CreateTripForm(props) {
 						</div>
 						<div className="float-left">
 							<p>
-								<span className="font20">45</span>
+								<span className="font20">{stats.pointCollection}</span>
 								<br />
 								Point Collection
 							</p>

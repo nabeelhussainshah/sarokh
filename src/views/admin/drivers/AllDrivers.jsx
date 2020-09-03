@@ -43,6 +43,7 @@ export default function AllDrivers(props) {
 		deleteDriverApi(row.row.original.id)
 			.then((res) => {
 				toast.success('Driver Deleted!');
+				setresponse({ ...response, loading: true });
 			})
 			.catch((err) => {
 				toast.error(err.message);

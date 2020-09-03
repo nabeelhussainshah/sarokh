@@ -45,7 +45,8 @@ export default function CreateTrip(props) {
 		if (
 			(pickData.length !== 0 && deliveryData.length === 0) ||
 			(pickData.length === 0 && deliveryData.length !== 0) ||
-			(pickData.length !== 0 && deliveryData.length !== 0)
+			(pickData.length !== 0 && deliveryData.length !== 0) ||
+			pointsData.length !== 0
 		) {
 			let dataset1 = [];
 			let dataset2 = [];
@@ -104,15 +105,15 @@ export default function CreateTrip(props) {
 		},
 		{
 			Header: 'Location Name',
-			accessor: 'toLocation',
+			accessor: 'fromLocation',
 		},
 		{
 			Header: 'Destination Address',
-			accessor: 'address',
+			accessor: 'toLocation',
 		},
 		{
 			Header: 'COD',
-			accessor: 'cod',
+			accessor: 'codcollection',
 		},
 	];
 
@@ -143,7 +144,13 @@ export default function CreateTrip(props) {
 								<h2 className="float-left">Create Trip</h2>
 							</div>
 							<div className="card-body">
-								<Form listing={response} setId={setresponse} />
+								<Form
+									listing={response}
+									setId={setresponse}
+									deliveryData={deliveryData}
+									pointsData={pointsData}
+									pickUpData={pickData}
+								/>
 								{response.tabledata ? (
 									<Fragment>
 										<h2 style={{ margin: '10px' }}> Pickups</h2>
