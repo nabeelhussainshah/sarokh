@@ -21,14 +21,74 @@ export default function CreateTripForm(props) {
 	useEffect(() => {
 		if (props.pointsData.length !== 0) {
 			let sum = 0;
-			props.pickUpData.map((doc) => {
+
+			props.pointsData.map((doc) => {
 				sum += parseInt(doc.original.walletBalance);
 			});
+
 			setstats({ ...stats, pointCollection: sum });
 		} else {
 			setstats({ ...stats, pointCollection: 0 });
 		}
-	}, [props]);
+	}, [props.pointsData]);
+
+	useEffect(() => {
+		if (props.deliveryData.length !== 0) {
+			let deliveriesToPoint = 0;
+			let deliveriesToLastMile = 0;
+			let lastMileCod = 0;
+
+			props.deliveryData.map((doc) => {
+				if (doc.original.deliveryType === 'To Sarokh Point') {
+					deliveriesToPoint += 1;
+				} else if (doc.original.deliveryType === 'Last Mile') {
+					deliveriesToLastMile += 1;
+					lastMileCod += doc.original.codcollection;
+				}
+			});
+
+			setstats({
+				...stats,
+				deliveriesToPoint: deliveriesToPoint,
+				deliveriesToLastMile: deliveriesToLastMile,
+				lastMileCod: lastMileCod,
+			});
+		} else {
+			setstats({
+				...stats,
+				deliveriesToPoint: 0,
+				deliveriesToLastMile: 0,
+				lastMileCod: 0,
+			});
+		}
+	}, [props.deliveryData]);
+
+	useEffect(() => {
+		if (props.pickUpData.length !== 0) {
+			let pointPickup = 0;
+			let shipperPickup = 0;
+
+			props.pickUpData.map((doc) => {
+				if (
+					doc.original.pickupType === 'Sarokh Point' ||
+					doc.original.pickupType === 'Sarokh Warehouse'
+				) {
+					pointPickup += 1;
+				}
+				if (doc.original.pickupType === 'Shipper Warehouse') {
+					shipperPickup += 1;
+				}
+			});
+
+			setstats({
+				...stats,
+				pointPickup: pointPickup,
+				shipperPickup: shipperPickup,
+			});
+		} else {
+			setstats({ ...stats, pointPickup: 0, shipperPickup: 0 });
+		}
+	}, [props.pickUpData]);
 
 	const onSubmit = (data) => {
 		props.setId({ ...props.listing, loading: true, id: data });

@@ -85,7 +85,7 @@ export default function AllTrips(props) {
 		},
 		{
 			Header: 'Vehicle',
-			accessor: 'vehicle',
+			accessor: 'vehicle.name',
 		},
 		{
 			Header: 'Pick Up',

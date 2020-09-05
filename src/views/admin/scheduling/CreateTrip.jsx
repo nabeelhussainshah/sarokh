@@ -101,15 +101,15 @@ export default function CreateTrip(props) {
 		},
 		{
 			Header: 'Shipper',
-			accessor: '',
+			accessor: 'shipper',
 		},
 		{
 			Header: 'Location Name',
-			accessor: 'fromLocation',
+			accessor: 'locationName',
 		},
 		{
 			Header: 'Destination Address',
-			accessor: 'toLocation',
+			accessor: 'address',
 		},
 		{
 			Header: 'COD',

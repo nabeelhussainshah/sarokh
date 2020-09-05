@@ -110,20 +110,24 @@ function GenericTable({
 
 	useEffect(() => {
 		/* logic to set the selected rows in the table and setstate in the parent component */
-
 		if (rowToggle) {
-			if (
+			/*		if (
 				(selectedFlatRows.length !== 0 && dataCheck.length === 0) ||
 				(selectedFlatRows.length === 0 && dataCheck.length !== 0)
 			) {
 				selectedData(selectedFlatRows);
 			} else if (dataCheck.length !== 0) {
 				if (
-					dataCheck[dataCheck.length - 1].id !==
-					selectedFlatRows[selectedFlatRows.length - 1].id
+					// dataCheck[dataCheck.length - 1].index !==
+					// selectedFlatRows[selectedFlatRows.length - 1].index
+					dataCheck.length !== selectedFlatRows.length
 				) {
 					selectedData(selectedFlatRows);
 				}
+			} 							*/
+
+			if (dataCheck.length !== selectedFlatRows.length) {
+				selectedData(selectedFlatRows);
 			}
 		}
 	}, [selectedFlatRows]);

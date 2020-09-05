@@ -62,7 +62,7 @@ export default function DeliveryShipments(props) {
 		},
 		{
 			Header: 'Delivery Location',
-			accessor: 'deliveryLocation',
+			accessor: 'toCity',
 		},
 		{
 			Header: 'Assign To Driver',

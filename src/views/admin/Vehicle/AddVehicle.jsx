@@ -131,7 +131,7 @@ export default function Step1(props) {
 								type="number"
 								className="form-control"
 								placeholder="Current Milage"
-								name="currentMilage"
+								name="currentMileage"
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
