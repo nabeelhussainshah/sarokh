@@ -183,6 +183,11 @@ export default function AllUsers(props) {
 		{
 			Header: 'DOB',
 			accessor: 'dob',
+			Cell: (row) => {
+				return (
+					<>{moment(row.row.original.dob).format(moment.HTML5_FMT.DATE)}</>
+				);
+			},
 		},
 		{
 			Header: 'Designation',
@@ -194,23 +199,23 @@ export default function AllUsers(props) {
 		return response.loading ? (
 			<Loading />
 		) : (
-				<Container>
-					<div className="card-header">
-						<h2 className="float-left">All Users</h2>
-						<Link to="/shipper/users/adduser">
-							<button className="btn btn-success float-right">Add User</button>
-						</Link>
-					</div>
-					<div className="card-body">
-						<Table
-							data={response.data}
-							columns={columns}
-							tableclass={'table-responsive custom-table'}
-							pagination={true}
-						/>
-					</div>
-				</Container>
-			);
+			<Container>
+				<div className="card-header">
+					<h2 className="float-left">All Users</h2>
+					<Link to="/shipper/users/adduser">
+						<button className="btn btn-success float-right">Add User</button>
+					</Link>
+				</div>
+				<div className="card-body">
+					<Table
+						data={response.data}
+						columns={columns}
+						tableclass={'table-responsive custom-table'}
+						pagination={true}
+					/>
+				</div>
+			</Container>
+		);
 	} else {
 		return (
 			<Container>

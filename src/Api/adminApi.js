@@ -488,7 +488,9 @@ export async function allDriversApi() {
 			if (res.status === 200) {
 				return res.data;
 			} else {
-				throw new Error(`something went wrong with status code: ${res.status}`);
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
 			}
 		})
 		.catch((err) => {

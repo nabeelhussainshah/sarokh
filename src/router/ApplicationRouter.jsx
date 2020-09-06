@@ -11,6 +11,7 @@ import ShipperRouter from './ShipperRouter';
 import AdminRouter from './AdminRouter';
 import BusinessSignup from '../views/sign-ups/ShipperSignup';
 import IndividualSignup from '../views/sign-ups/IndividualSignUp';
+import TrackingShipmentRouter from './TrackingShipmentRouter';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
@@ -29,13 +30,12 @@ function ApplicationRouter(porps) {
 	return (
 		<HashRouter>
 			<Switch>
-				<Route exact={true} path="/">
-					<Login />
-				</Route>
+				<Route exact={true} path="/" component={Login} />
 				<Route exact={true} path="/logout" component={Logout} />
 				<Route path="/business/signup" component={BusinessSignup} />
 				<Route path="/individual/signup" component={IndividualSignup} />
 			</Switch>
+			<TrackingShipmentRouter />
 			<AdminRouter />
 			<ShipperRouter />
 		</HashRouter>
