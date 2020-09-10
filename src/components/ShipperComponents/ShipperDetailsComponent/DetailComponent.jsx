@@ -119,7 +119,7 @@ export default function ContentContainer({ response, items }) {
 			</table>
 			<div className="shipper-detail-container mt-3">
 				<h2 className="font20 redcolor">Shipment Delivery Status</h2>
-				<label className="customise-radio-btn">
+				{/* <label className="customise-radio-btn">
 					Shipper Warehouse
 					<input type="radio" defaultChecked={false} name="radio" />
 					<span className="checkmark"></span>
@@ -133,9 +133,13 @@ export default function ContentContainer({ response, items }) {
 					Delivered
 					<input type="radio" defaultChecked={true} name="radio" />
 					<span className="checkmark"></span>
-				</label>
+				</label> */}
+
+				<div className="progress">
+					<div className="progress-bar" role="progressbar" style={{ width: "25%" }}>25%</div>
+				</div>
 				<div className="clearfix"></div>
 			</div>
-		</div>
+		</div >
 	);
 }

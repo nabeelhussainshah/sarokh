@@ -53,14 +53,14 @@ export default function ShipmentIssues(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
+			Header: 'Tracking No',
 			accessor: 'shipmentId',
-        },
+		},
 		{
 			Header: 'Date',
 			accessor: 'dateTime',
-        },
-        {
+		},
+		{
 			Header: 'Shipment Type',
 			accessor: 'shipmentType',
 		},
@@ -72,10 +72,10 @@ export default function ShipmentIssues(props) {
 			Header: 'Shipper',
 			accessor: 'shipper',
 		},
-        {
-            Header: 'Status',
-            accessor: 'status'
-        }
+		{
+			Header: 'Status',
+			accessor: 'status'
+		}
 	];
 
 	const transitions = useTransition(!response.loading, null, {
@@ -95,28 +95,28 @@ export default function ShipmentIssues(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">Shipment Issues</h2>
-							</div>
-							<div className="card-body">
-								<Table
-									data={response.data}
-									columns={columns}
-									tableclass={'table-responsive custom-table'}
-									pagination={true}
-									filter={true}
-									hiddenColumns={['id']}
-								/>
-							</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">Shipment Issues</h2>
+								</div>
+								<div className="card-body">
+									<Table
+										data={response.data}
+										columns={columns}
+										tableclass={'table-responsive custom-table'}
+										pagination={true}
+										filter={true}
+										hiddenColumns={['id']}
+									/>
+								</div>
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }
