@@ -4,6 +4,7 @@ import { sarokhWarehouseList } from './generalApi';
 const user = JSON.parse(localStorage.getItem('user'));
 
 export async function adminDashboard() {
+	const user = await JSON.parse(localStorage.getItem('user'));
 	return await axios
 		.get(`${process.env.REACT_APP_API}/web-dashboard/admin/${user.id}`)
 		.then((res) => {

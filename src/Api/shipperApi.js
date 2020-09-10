@@ -3,6 +3,7 @@ import axios from 'axios';
 const user = JSON.parse(localStorage.getItem('user'));
 
 export async function dashboardApi() {
+	const user = await JSON.parse(localStorage.getItem('user'));
 	return await axios
 		.get(`${process.env.REACT_APP_API}/web-dashboard/shipper/${user.id}`)
 		.then((res) => {
