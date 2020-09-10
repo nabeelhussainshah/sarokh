@@ -53,7 +53,7 @@ export default function ReturnShipments(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
+			Header: 'Tracking No',
 			accessor: 'shipmentId',
 		},
 		{
@@ -95,28 +95,28 @@ export default function ReturnShipments(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">Return Shipments</h2>
-							</div>
-							<div className="card-body">
-								<Table
-									data={response.data}
-									columns={columns}
-									tableclass={'table-responsive custom-table'}
-									pagination={true}
-									filter={true}
-									hiddenColumns={['id']}
-								/>
-							</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">Return Shipments</h2>
+								</div>
+								<div className="card-body">
+									<Table
+										data={response.data}
+										columns={columns}
+										tableclass={'table-responsive custom-table'}
+										pagination={true}
+										filter={true}
+										hiddenColumns={['id']}
+									/>
+								</div>
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }

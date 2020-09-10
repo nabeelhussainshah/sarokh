@@ -97,7 +97,7 @@ export default function AllShipments(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'tracking No',
+			Header: 'Tracking No',
 			accessor: 'orderId',
 		},
 		{
@@ -105,7 +105,7 @@ export default function AllShipments(props) {
 			accessor: 'pickType',
 		},
 		{
-			Header: 'Delievery',
+			Header: 'Delivery',
 			accessor: 'deliveryType',
 		},
 		{

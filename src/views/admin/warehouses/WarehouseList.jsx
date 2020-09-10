@@ -125,7 +125,7 @@ export default function WarehouseList(porps) {
 							<div className="card-header">
 								<h2 className="float-left">Warehouse List</h2>
 								<button
-									className="btn btn-info float-right"
+									className="btn btn-info btnbrown float-right"
 									onClick={() => addNewWarehouse()}
 								>
 									Add New
