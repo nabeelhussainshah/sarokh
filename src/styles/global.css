@@ -24,6 +24,7 @@ label:not(.form-check-label):not(.custom-file-label){background: #FFF;}
 .custom-dashboard-box{padding: 5px 15px 0px 15px !important;}
 .font12{font-size: 12px; margin-bottom: 0;}
 .btnbrown{background: #f6921d !important;border: #f6921d solid 1px !important;}
+.brownbg{background: #f6921d !important;}
 .btngreen{background: #28a745 !important;border: #28a745 solid 1px !important;}
 .billdetail p{margin-bottom: 0 !important;}
 .creatbill h2{font-size: 17px;color: #ec1c24;}
@@ -238,6 +239,7 @@ ul.steps-indicator li a .label {
     background-color: #E6E6E6;
 }
 .wrap-login100{text-align: center; padding-top: 180px; }
+.wrap-login100 img{width: 100%;padding: 0 150px;}
 .order-step-detail h2{font-size: 20px; color: #fa1c25; margin: 15px 0;}
 .order-step-detail h3{font-size: 16px;}
 .order-step-detail .table{border-bottom: #f6921d solid 4px; margin-bottom: 0;}
@@ -300,14 +302,12 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
     align-items: stretch;
     flex-wrap: wrap;
   }
 
 
   .wrap-login100 {
-    width: 1000px;
     min-height: 100vh;
     background: #fff;
     border-radius: 2px;
@@ -320,7 +320,6 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    width: calc(100% - 1000px);
     position: relative;
     z-index: 1;
     padding: 170px 20px 20px 20px;
@@ -345,8 +344,12 @@ li.nav-item a:hover{background: #f6921d !important; color: #FFF !important;}
 .print-heading{border-bottom:1px solid rgba(0,0,0,.1);}
 .print-heading img{width: 150px;}
   @media (max-width: 576px) {
+    .login100-more{padding-top:72px;}
+    .wrap-login100{min-height: auto; padding-top:50px;}
+    .wrap-login100 img{width: 100%;padding: 0 30px; margin-bottom: 50px;}
     .wrap-login100 {
       padding-left: 15px;
       padding-right: 15px;
     }
+    body{background-color: #f7931e !important;}
   }
