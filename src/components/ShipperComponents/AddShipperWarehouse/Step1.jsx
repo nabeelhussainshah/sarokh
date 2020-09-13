@@ -170,7 +170,7 @@ export default function Step1(props) {
 									type="text"
 									className="form-control"
 									name="postalCode"
-									placeholder="postalCode"
+									placeholder="Post Code"
 									ref={register({ required: true })}
 								/>
 								{errors ?.postalCode ?.types ?.required && (

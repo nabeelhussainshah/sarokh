@@ -67,13 +67,13 @@ export default function Step2(props) {
 								placeholder="Business Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.businessName?.types?.required && (
+							{errors ?.businessName ?.types ?.required && (
 								<p style={{ color: 'red' }}>first Name is required</p>
 							)}
 						</div>
 
 						<div className="form-group col-md-6">
-							<label htmlFor="iqamaNumber">ID license</label>
+							<label htmlFor="iqamaNumber">National ID/Iqama No</label>
 							<input
 								name="iqamaNumber"
 								type="text"
@@ -81,7 +81,7 @@ export default function Step2(props) {
 								placeholder="Iqama No"
 								ref={register({ required: true })}
 							/>
-							{errors?.iqamaNumber?.types?.required && (
+							{errors ?.iqamaNumber ?.types ?.required && (
 								<p style={{ color: 'red' }}>Business Name is required</p>
 							)}
 						</div>
@@ -127,12 +127,12 @@ export default function Step2(props) {
 									Gulf International Bank Saudi Aribia (GIB-SA){' '}
 								</option>
 							</select>
-							{errors?.bankName?.types?.required && (
+							{errors ?.bankName ?.types ?.required && (
 								<p style={{ color: 'red' }}>Bank Name is required</p>
 							)}
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="inputEmail4">Iqama Copy Upload</label>
+							<label htmlFor="inputEmail4">National ID/Iqama Picture</label>
 							<div className="input-group">
 								<div className="input-group">
 									<div className="col">
@@ -160,7 +160,7 @@ export default function Step2(props) {
 								placeholder="IBAN"
 								ref={register({ required: true })}
 							/>
-							{errors?.iban?.types?.required && (
+							{errors ?.iban ?.types ?.required && (
 								<p style={{ color: 'red' }}>IBAN is required</p>
 							)}
 						</div>

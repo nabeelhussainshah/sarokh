@@ -415,7 +415,7 @@ value is deducted from these fields this does not include the gift packaging val
                   add both these values and then whatever the sum is add that to the state.js file in the varibale
                   name 'total' so that the changes are reflected on the form because total represent the sum of both these
                   values */}
-									<td>Services Charges:</td>
+									<td>Delivery Charges:</td>
 									<td align="right">SAR 35/-</td>
 								</tr>
 								<tr>

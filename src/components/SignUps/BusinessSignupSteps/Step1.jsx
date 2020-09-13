@@ -62,7 +62,7 @@ export default function Step1(props) {
 								placeholder="First Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.firstName?.types?.required && (
+							{errors ?.firstName ?.types ?.required && (
 								<p style={{ color: 'red' }}>first Name is required</p>
 							)}
 						</div>
@@ -76,7 +76,7 @@ export default function Step1(props) {
 								placeholder="Last Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.lastName?.types?.required && (
+							{errors ?.lastName ?.types ?.required && (
 								<p style={{ color: 'red' }}>last Name is required</p>
 							)}
 						</div>
@@ -92,7 +92,7 @@ export default function Step1(props) {
 								placeholder="Contact No"
 								ref={register({ required: true })}
 							/>
-							{errors?.contact?.types?.required && (
+							{errors ?.contact ?.types ?.required && (
 								<p style={{ color: 'red' }}>contact is required</p>
 							)}
 						</div>
@@ -106,27 +106,27 @@ export default function Step1(props) {
 								placeholder="Email"
 								ref={register({ required: true })}
 							/>
-							{errors?.email?.types?.required && (
+							{errors ?.email ?.types ?.required && (
 								<p style={{ color: 'red' }}>email is required</p>
 							)}
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="iqamaNumber">ID license</label>
+							<label htmlFor="iqamaNumber">Commercial Registration (CR)</label>
 							<input
 								name="iqamaNumber"
 								type="text"
 								className="form-control"
-								placeholder="Iqama No"
+								placeholder="Commercial Registration (CR)"
 								ref={register({ required: true })}
 							/>
-							{errors?.iqamaNumber?.types?.required && (
+							{errors ?.iqamaNumber ?.types ?.required && (
 								<p style={{ color: 'red' }}>Business Name is required</p>
 							)}
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="inputEmail4">Iqama Copy Upload</label>
+							<label htmlFor="inputEmail4">Commercial Registration (CR) Upload</label>
 							<div className="input-group">
 								<div className="input-group">
 									<div className="col">

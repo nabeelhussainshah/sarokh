@@ -54,7 +54,7 @@ export default function CodShipments(props) {
 
 	const columns = [
 		{
-			Header: 'Waller Holder',
+			Header: 'Wallet Holder',
 			accessor: 'walletHolder',
 		},
 		{

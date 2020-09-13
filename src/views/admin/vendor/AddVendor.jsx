@@ -162,7 +162,7 @@ export default function AddVendor(props) {
 												validate: (value) => value !== 'true',
 											})}
 										>
-											<option value="true">---Select-city---</option>
+											<option value="true">Select City</option>
 											{cities.map((doc, i) => {
 												return (
 													<option key={i} value={doc}>
@@ -185,7 +185,7 @@ export default function AddVendor(props) {
 										/>
 									</div>
 									<div className="form-group col-md-6">
-										<label htmlFor="address">CR file Upload</label>
+										<label htmlFor="address">Commercial Registration CR Upload</label>
 										<input
 											type="file"
 											className="form-control"

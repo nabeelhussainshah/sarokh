@@ -113,12 +113,12 @@ export default function BasicInformation(props) {
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="nicNumber">National ID/iqama Number</label>
+							<label for="nicNumber">National ID/Iqama Number</label>
 							<input
 								type="text"
 								class="form-control"
 								name="nicNumber"
-								placeholder="National ID/iqama Number"
+								placeholder="National ID/Iqama Number"
 								ref={register({ required: true })}
 							/>
 							{errors ?.nicNumber ?.types ?.required && (
@@ -128,7 +128,7 @@ export default function BasicInformation(props) {
 							)}
 						</div>
 						<div class="form-group col-md-6">
-							<label for="firstName">National ID/iqama Copy:</label>
+							<label for="firstName">National ID/Iqama Copy</label>
 							<input
 								type="file"
 								accept=".png, .jpg, .jpeg, .pdf"

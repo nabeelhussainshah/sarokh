@@ -47,7 +47,7 @@ export default function ShipmentIssues(props) {
       accessor: "reportedBy",
     },
     {
-      Header: "Only Date",
+      Header: "Date",
       accessor: "",
     },
     {

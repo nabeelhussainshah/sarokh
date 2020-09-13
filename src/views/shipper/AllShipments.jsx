@@ -120,7 +120,7 @@ export default function AllShipments(props) {
 			},
 		},
 		{
-			Header: 'Reciever',
+			Header: 'Receiver',
 			accessor: 'receiverName',
 		},
 		{

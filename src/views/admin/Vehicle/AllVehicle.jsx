@@ -66,7 +66,7 @@ export default function AllShipments(props) {
 			},
 		},
 		{
-			Header: 'Car Name',
+			Header: 'Vehicle Name',
 			accessor: 'name',
 		},
 		{
@@ -100,28 +100,28 @@ export default function AllShipments(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">All Vehicles</h2>
-							</div>
-							<div className="card-body">
-								<Table
-									data={response.data}
-									columns={columns}
-									tableclass={'table-responsive custom-table'}
-									pagination={true}
-									filter={true}
-									hiddenColumns={['id']}
-								/>
-							</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">All Vehicles</h2>
+								</div>
+								<div className="card-body">
+									<Table
+										data={response.data}
+										columns={columns}
+										tableclass={'table-responsive custom-table'}
+										pagination={true}
+										filter={true}
+										hiddenColumns={['id']}
+									/>
+								</div>
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }

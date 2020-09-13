@@ -43,15 +43,15 @@ export default function MaintenanceRecords(props) {
 			accessor: '',
 		},
 		{
-			Header: 'Repair Faculty',
+			Header: 'Repair Facility',
 			accessor: '',
 		},
 		{
-			Header: 'Autorized By',
+			Header: 'Authorized By',
 			accessor: '',
 		},
 		{
-			Header: 'Repair start Date',
+			Header: 'Repair Start Date',
 			accessor: '',
 		},
 		{
@@ -77,27 +77,27 @@ export default function MaintenanceRecords(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						{console.log(item)}
-						<ListingContainer>
-							<div className="card-header">
-								<h2 className="float-left">Maintenance Records</h2>
-							</div>
-							<div className="card-body">
-								<Table
-									data={response.data}
-									columns={columns}
-									tableclass={'table-responsive custom-table'}
-									pagination={true}
-									filter={true}
-								/>
-							</div>
-						</ListingContainer>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							{console.log(item)}
+							<ListingContainer>
+								<div className="card-header">
+									<h2 className="float-left">Maintenance Records</h2>
+								</div>
+								<div className="card-body">
+									<Table
+										data={response.data}
+										columns={columns}
+										tableclass={'table-responsive custom-table'}
+										pagination={true}
+										filter={true}
+									/>
+								</div>
+							</ListingContainer>
+						</animated.div>
+					)
+			)
+		);
 }

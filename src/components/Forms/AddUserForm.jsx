@@ -79,7 +79,7 @@ export default function AddUserForm(props) {
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">--- Select Designation ---</option>
+								<option value="true">Select Designation</option>
 								{props.designation.map((doc, i) => {
 									//this will add designations that select field which will be passed from the parent component
 									return (
@@ -122,7 +122,7 @@ export default function AddUserForm(props) {
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">--- Select Gender ---</option>
+								<option value="true">Select Gender</option>
 								<option value="Male">Male</option>
 								<option value="Female">Female</option>
 							</select>
@@ -180,7 +180,7 @@ export default function AddUserForm(props) {
 									})}
 									disabled={props.operation === 'update' ? true : false}
 								>
-									<option value="true">--- Select Role ---</option>
+									<option value="true">Select Role</option>
 									{props.data.map((doc) => {
 										return (
 											<option key={doc.name} value={doc.id}>
@@ -205,7 +205,7 @@ export default function AddUserForm(props) {
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">--- Select Warehouse ---</option>
+								<option value="true">Select Warehouse</option>
 								{props.warehouses.map((doc) => {
 									return (
 										<option key={doc.name} value={doc.id}>

@@ -111,17 +111,17 @@ export default function VehicleDetail(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="cargoCapacity">Vehicle Cargo Capicity</label>
+							<label htmlFor="cargoCapacity">Vehicle Cargo Capacity</label>
 							<input
 								type="number"
 								className="form-control"
 								name="cargoCapacity"
-								placeholder="Vehicle Cargo Capicity"
+								placeholder="Vehicle Cargo Capacity"
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.cargoCapacity && 'Vehicle Cargo Capicity is required'}
+								{errors.cargoCapacity && 'Vehicle Cargo Capacity is required'}
 							</span>
 						</div>
 						<div className="form-group col-md-6">

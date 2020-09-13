@@ -74,7 +74,7 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ width: '30%' }}>{items.shipmentType}</td>
 					</tr>
 					<tr>
-						<td style={{ fontWeight: 'bold', width: '20%' }}>shipment Value</td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>Shipment Value</td>
 						<td style={{ width: '30%' }}>{items.shipmentValue}</td>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Shipment Weight
@@ -83,7 +83,7 @@ export default function ContentContainer({ response, items }) {
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
-							shipment Content
+							Shipment Content
 						</td>
 						<td style={{ width: '30%' }}>{items.shipmentContent}</td>
 					</tr>
