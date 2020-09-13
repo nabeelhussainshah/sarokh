@@ -9,66 +9,137 @@ export default function AddAddress(props) {
 
 	return (
 		<Fragment>
-			<div className="limiter">
-				<div className="container-login100">
-					<div className="login100-more">
-						<form>
-							<fieldset>
-								<h1>Sign In to your account</h1>
-								<div className="mb-3">
-									<div className="form-group">
-										<label>User Name</label>
-										<input
-											name="username"
-											type="text"
-											className="form-control"
-											formcontrolname="username"
-											placeholder="Username"
-											autoComplete="username"
-											required
-										/>
-									</div>
-								</div>
-								<div className="mb-4">
-									<div className="form-group">
-										<label>Password</label>
-										<input
-											name="password"
-											type="password"
-											className="form-control"
-											formcontrolname="password"
-											placeholder="Password"
-											autoComplete="current-password"
-											required
-										/>
-									</div>
-								</div>
-								<div className="col-12">
-									<input
-										style={{ marginRight: '5px' }}
-										type="checkbox"
-										className=" px-0"
-									/>
-									<label>Remember me</label>
-								</div>
-								<button
-									type="submit"
-									className="btn btn-danger px-4 float-right"
-								>
-									Login
-								</button>
-								<div className="clearfix"></div>
-								<div className="col-12">
-									<button type="button" className="btn btn-link px-0">
-										Forgot password?
-									</button>
-								</div>
-							</fieldset>
-						</form>
+			<div className="add-address-container">
+				<div className="progress">
+					<div className="progress-bar" role="progressbar" style={{ width: "20%" }}>20%</div>
+				</div>
+				<div className="form-row margintop30">
+					<div className="col-md-6">
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Tracking No</label>
+							</div>
+							<div class="col-md-6">
+								<p>00002000021</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Shipper</label>
+							</div>
+							<div class="col-md-6">
+								<p>Naqel</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Receiver Name</label>
+							</div>
+							<div class="col-md-6">
+								<p>Mohammad Ali</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Contact No</label>
+							</div>
+							<div class="col-md-6">
+								<p>96654547845</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Shipment Title</label>
+							</div>
+							<div class="col-md-6">
+								<p>4653468</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Creation Date</label>
+							</div>
+							<div class="col-md-6">
+								<p>15-Aug-2020</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Delivery Type</label>
+							</div>
+							<div class="col-md-6">
+								<p>Last Mile/ Point</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Point Nmae: (if Point)</label>
+							</div>
+							<div class="col-md-6">
+								<p>Point Name</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Delivery Address</label>
+							</div>
+							<div class="col-md-6">
+								<p>Point Address/Customer Address</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>City</label>
+							</div>
+							<div class="col-md-6">
+								<p>Jeddah</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Cordinates</label>
+							</div>
+							<div class="col-md-6">
+								<p>Long/Lat</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Delivery Status</label>
+							</div>
+							<div class="col-md-6">
+								<p>Pending/ Delivered</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Tracking No:</label>
+							</div>
+							<div class="col-md-6">
+								<p>00002000021</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-12">
+								<h5>Contact Support</h5>
+							</div>
+							<div class="col-md-6">
+								<label>Contact No</label>
+							</div>
+							<div class="col-md-6">
+								<p>920033995</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label>Email</label>
+							</div>
+							<div class="col-md-6">
+								<p>complaint@sarokh.sa</p>
+							</div>
+						</div>
 					</div>
-
-					<div className="wrap-login100">
-						<img src={require('../../assets/images/logo.png')} />
+					<div className="col-md-6">
 					</div>
 				</div>
 			</div>
