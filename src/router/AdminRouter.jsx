@@ -14,6 +14,7 @@ import DeliveryShipments from '../views/admin/shipments/DeliveryShipments';
 import ShipmentIssues from '../views/admin/shipments/ShipmentIssues';
 import AllShippers from '../views/admin/shippers/AllShippers';
 import ShipperSetting from '../views/admin/shippers/ShipperSetting';
+import ShipperDetail from '../views/admin/shippers/ShipperDetail';
 import ShipperBilling from '../views/admin/shippers/ShipperBilling';
 import AddUser from '../views/admin/users/AddUser';
 import AllUsers from '../views/admin/users/AllUsers';
@@ -104,6 +105,10 @@ export default function AdminRouter(props) {
 			<ProtectedRoute
 				path="/admin/shippers/shipperbilling"
 				component={ShipperBilling}
+			/>
+			<ProtectedRoute
+				path="/admin/shippers/shipperdetail"
+				component={ShipperDetail}
 			/>
 			<ProtectedRoute
 				path="/admin/shippers/shippersetting"

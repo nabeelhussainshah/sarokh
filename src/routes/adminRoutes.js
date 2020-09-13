@@ -89,6 +89,11 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-shipping-fast',
 			},
 			{
+				to: '/admin/shippers/shipperdetail',
+				name: 'Shipper Detail',
+				iconClass: 'nav-icon fas fa-shipping-fast',
+			},
+			{
 				to: '/admin/shippers/shippersetting',
 				name: 'Shipper Setting',
 				iconClass: 'nav-icon fas fa-shipping-fast',
