@@ -55,7 +55,7 @@ export default function BasicInformation(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Driver</h2>
+				<h2>{data.update ? 'Edit Driver' : 'Add Driver'}</h2>
 			</div>
 			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
@@ -113,10 +113,10 @@ export default function BasicInformation(props) {
 								Update
 							</button>
 						) : (
-								<button className="btn btn-success" type="submit">
-									Finish
+							<button className="btn btn-success" type="submit">
+								Finish
 							</button>
-							)}
+						)}
 					</div>
 				</form>
 			</div>

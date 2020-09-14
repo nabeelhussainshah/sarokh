@@ -7,6 +7,8 @@ import { driverData } from './state';
 import { uploadFile } from '../../Api/generalApi';
 import StepIndicator from './StepIndicator';
 import { toast } from 'react-toastify';
+import { joiResolver } from '@hookform/resolvers';
+import { basicInformation } from '../../formValidation/driverSchemavalidation';
 
 export default function BasicInformation(props) {
 	const hist = useHistory();
@@ -16,9 +18,10 @@ export default function BasicInformation(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(basicInformation),
 	});
 
-	console.log(data);
+	console.log(errors);
 
 	const onSubmit = (formData) => {
 		setdata({ ...data, ...formData });
@@ -38,7 +41,7 @@ export default function BasicInformation(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Driver</h2>
+				<h2>{data.update ? 'Edit Driver' : 'Add Driver'}</h2>
 			</div>
 			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
@@ -47,8 +50,9 @@ export default function BasicInformation(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="firstName">First Name</label>
+							<label for="firstName">First Name</label>
 							<input
+								id="firstName"
 								type="text"
 								className="form-control"
 								name="firstName"
@@ -57,12 +61,13 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.firstName && 'First Name is required'}
+								{errors.firstName && errors.firstName.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="lastName">Last Name</label>
+							<label for="lastName">Last Name</label>
 							<input
+								id="lastName"
 								type="text"
 								className="form-control"
 								name="lastName"
@@ -71,28 +76,31 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.lastName && 'Last Name is required'}
+								{errors.lastName && errors.lastName.message}
 							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="contact">Contact No</label>
+							<label for="contact">Contact No</label>
 							<input
+								id="contact"
 								type="text"
 								className="form-control"
 								name="contact"
 								placeholder="Contact No"
+								defaultValue={'+9665'}
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.contact && 'Contact is required'}
+								{errors.contact && errors.contact.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="email">Email</label>
+							<label for="email">Email</label>
 							<input
+								id="email"
 								type="email"
 								className="form-control"
 								name="email"
@@ -101,7 +109,7 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.email && 'Email is required'}
+								{errors.email && errors.email.message}
 							</span>
 						</div>
 					</div>
@@ -122,8 +130,9 @@ export default function BasicInformation(props) {
 							</div>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="dateOfBirth">Date of Birth</label>
+							<label for="dateOfBirth">Date of Birth</label>
 							<input
+								id="dateOfBirth"
 								type="date"
 								className="form-control"
 								name="dateOfBirth"
@@ -132,7 +141,7 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.dateOfBirth && 'DOB is required'}
+								{errors.dateOfBirth && errors.dateOfBirth.message}
 							</span>
 						</div>
 					</div>

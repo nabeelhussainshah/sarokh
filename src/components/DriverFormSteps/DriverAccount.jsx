@@ -8,6 +8,8 @@ import StepIndicator from './StepIndicator';
 import { toast } from 'react-toastify';
 import { uploadFile } from '../../Api/generalApi';
 import { Redirect } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers';
+import { driverAccount } from '../../formValidation/driverSchemavalidation';
 
 export default function BasicInformation(props) {
 	const hist = useHistory();
@@ -17,12 +19,14 @@ export default function BasicInformation(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(driverAccount),
 	});
 
 	if (Object.keys(data).length === 1 && data.constructor === Object) {
 		return <Redirect to={props.defaultPath} />;
 	}
 
+	console.log(errors);
 	const onSubmit = (formData) => {
 		console.log(formData);
 		setdata({ ...data, ...formData });
@@ -42,7 +46,7 @@ export default function BasicInformation(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Driver</h2>
+				<h2>{data.update ? 'Edit Driver' : 'Add Driver'}</h2>
 			</div>
 			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
@@ -56,8 +60,9 @@ export default function BasicInformation(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="compensationCycle">Compensation Cycle</label>
+							<label for="compensationCycle">Compensation Cycle</label>
 							<input
+								id="compensationCycle"
 								type="text"
 								className="form-control"
 								name="compensationCycle"
@@ -66,12 +71,13 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.compensationCycle && 'Compensation Cycle is required'}
+								{errors.compensationCycle && errors.compensationCycle.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="compensation">Compensation</label>
+							<label for="compensation">Compensation</label>
 							<input
+								id="compensation"
 								type="text"
 								className="form-control"
 								name="compensation"
@@ -80,14 +86,15 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.compensation && 'Compensation is required'}
+								{errors.compensation && errors.compensation.message}
 							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="contractStartDate">Contract Starting</label>
+							<label for="contractStartDate">Contract Starting</label>
 							<input
+								id="contractStartDate"
 								type="date"
 								className="form-control"
 								name="contractStartDate"
@@ -96,12 +103,13 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.contractStartDate && 'Contract date is required'}
+								{errors.contractStartDate && errors.contractStartDate.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="contactValidTill">Contract Valid Till</label>
+							<label for="contactValidTill">Contract Valid Till</label>
 							<input
+								id="contactValidTill"
 								type="date"
 								className="form-control"
 								name="contractValidTill"
@@ -110,7 +118,7 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.contactValidTill && 'Contract Valid date is required'}
+								{errors.contactValidTill && errors.contactValidTill.message}
 							</span>
 						</div>
 					</div>
@@ -131,8 +139,9 @@ export default function BasicInformation(props) {
 							</div>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="bank">Bank Name</label>
+							<label for="bank">Bank Name</label>
 							<select
+								id="bank"
 								className="form-control"
 								name="bank"
 								ref={register({
@@ -140,7 +149,7 @@ export default function BasicInformation(props) {
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">Select Bank Name</option>
+								<option value="">Select Bank Name</option>
 								<option value="The National Commercial Bank">
 									The National Commercial Bank{' '}
 								</option>
@@ -178,8 +187,9 @@ export default function BasicInformation(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="iban">IBAN</label>
+							<label for="iban">IBAN</label>
 							<input
+								id="iban"
 								type="text"
 								className="form-control"
 								name="iban"
@@ -188,7 +198,7 @@ export default function BasicInformation(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.iban && 'IBAN is required'}
+								{errors.iban && errors.iban.message}
 							</span>
 						</div>
 					</div>
@@ -198,14 +208,14 @@ export default function BasicInformation(props) {
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Back
 						</button>
 						<button
 							className="btn btn-success"
 							type="submit"
 							disabled={data.contractFile ? false : true}
 						>
-							Next step
+							Next
 						</button>
 					</div>
 				</form>

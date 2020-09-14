@@ -8,6 +8,8 @@ import StepIndicator from './StepIndicator';
 import { toast } from 'react-toastify';
 import { uploadFile } from '../../Api/generalApi';
 import { Redirect } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers';
+import { vehicleDetails } from '../../formValidation/driverSchemavalidation';
 
 export default function VehicleDetail(props) {
 	const hist = useHistory();
@@ -17,11 +19,14 @@ export default function VehicleDetail(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(vehicleDetails),
 	});
 
 	if (Object.keys(data).length === 1 && data.constructor === Object) {
 		return <Redirect to={props.defaultPath} />;
 	}
+
+	console.log(errors);
 
 	const onSubmit = (formData) => {
 		console.log(formData);
@@ -42,7 +47,7 @@ export default function VehicleDetail(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Driver</h2>
+				<h2>{data.update ? 'Edit Driver' : 'Add Driver'}</h2>
 			</div>
 			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
@@ -51,8 +56,9 @@ export default function VehicleDetail(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="name">Vehicle Name</label>
+							<label for="vehicleName">Vehicle Name</label>
 							<input
+								id="vehicleName"
 								type="text"
 								className="form-control"
 								name="vehicleName"
@@ -61,13 +67,14 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.vehicleName && 'Vehicle Name is required'}
+								{errors.vehicleName && errors.vehicleName.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="model">Vehicle Model</label>
+							<label for="vehicleModel">Vehicle Model</label>
 							<input
-								type="text"
+								id="vehicleModel"
+								type="number"
 								className="form-control"
 								name="vehicleModel"
 								placeholder="Vehicle Model"
@@ -75,14 +82,15 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.vehicleModel && 'Vehicle Model is required'}
+								{errors.vehicleModel && errors.vehicleModel.message}
 							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="make">Vehicle Maker</label>
+							<label for="make">Vehicle Maker</label>
 							<input
+								id="make"
 								type="text"
 								className="form-control"
 								placeholder="Vehicle Maker"
@@ -91,12 +99,13 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.make && 'Vehicle Maker is required'}
+								{errors.make && errors.make.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="type">Vehicle Type</label>
+							<label for="type">Vehicle Type</label>
 							<input
+								id="type"
 								type="text"
 								className="form-control"
 								name="type"
@@ -105,14 +114,15 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.type && 'Vehicle Type is required'}
+								{errors.type && errors.type.message}
 							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="cargoCapacity">Vehicle Cargo Capacity</label>
+							<label for="cargoCapacity">Vehicle Cargo Capacity</label>
 							<input
+								id="cargoCapacity"
 								type="number"
 								className="form-control"
 								name="cargoCapacity"
@@ -121,12 +131,13 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.cargoCapacity && 'Vehicle Cargo Capacity is required'}
+								{errors.cargoCapacity && errors.cargoCapacity.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="registrationNumber">Vehicle Reg No</label>
+							<label for="registrationNumber">Vehicle Reg No</label>
 							<input
+								id="registrationNumber"
 								type="text"
 								className="form-control"
 								name="registrationNumber"
@@ -135,7 +146,7 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.registrationNumber && 'Vehicle Reg No is required'}
+								{errors.registrationNumber && errors.registrationNumber.message}
 							</span>
 						</div>
 					</div>
@@ -156,8 +167,9 @@ export default function VehicleDetail(props) {
 							</div>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="productionYear">Production Year</label>
+							<label for="productionYear">Production Year</label>
 							<input
+								id="productionYear"
 								type="number"
 								className="form-control"
 								name="productionYear"
@@ -166,14 +178,15 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.productionYear && 'Production Year is required'}
+								{errors.productionYear && errors.productionYear.message}
 							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="registrationYear">Registration Year</label>
+							<label for="registrationYear">Registration Year</label>
 							<input
+								id="registrationYear"
 								type="number"
 								className="form-control"
 								name="registrationYear"
@@ -182,24 +195,24 @@ export default function VehicleDetail(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.registrationYear && 'Registration Year is required'}
+								{errors.registrationYear && errors.registrationYear.message}
 							</span>
 						</div>
 					</div>
 					<div className="btn-container float-right" style={{ margin: '10px' }}>
 						<button
-							className="btn btn-secondary dark-grey"
+							className="btn btn-danger dark-grey m-2"
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Back
 						</button>
 						<button
 							className="btn btn-success"
 							type="submit"
 							disabled={data.registrationFile ? false : true}
 						>
-							Next step
+							Next
 						</button>
 					</div>
 				</form>
