@@ -12,14 +12,14 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 const initialValues = {
-	weightUptoFiveKg: 0,
-	weightFiveToTen: 0,
-	weightTenToFifteen: 0,
-	returnCharges: 0,
-	lastMile: 0,
-	normalPackaging: 0,
-	giftPackaging: 0,
-	insurance: 0,
+	weightUptoFiveKg: '',
+	weightFiveToTen: '',
+	weightTenToFifteen: '',
+	returnCharges: '',
+	lastMile: '',
+	normalPackaging: '',
+	giftPackaging: '',
+	insurance: '',
 	pickupSarokhPoint: 'true',
 	pickupShipperWarehouse: 'true',
 	pickupSarokhWarehouse: 'true',
@@ -471,7 +471,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Up to 5 Kg</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="weightUptoFiveKg"
 											className="form-control"
@@ -487,7 +486,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Last Mile</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="lastMile"
 											className="form-control"
@@ -505,7 +503,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Up to 10 kg</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="weightFiveToTen"
 											className="form-control"
@@ -521,7 +518,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Normal Packaging</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="normalPackaging"
 											className="form-control"
@@ -539,7 +535,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Upto 15 kg</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="weightTenToFifteen"
 											className="form-control"
@@ -555,7 +550,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Gift Packaging</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="giftPackaging"
 											className="form-control"
@@ -573,7 +567,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Return Shipment Charges; (Undelivered)</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="returnCharges"
 											className="form-control"
@@ -589,7 +582,6 @@ export default function ShipperSetting(props) {
 									<div className="col">
 										<label>Insurance Percentage</label>
 										<input
-											key={Math.random()}
 											type="number"
 											name="insurance"
 											className="form-control"

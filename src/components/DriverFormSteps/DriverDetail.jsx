@@ -9,6 +9,8 @@ import { cities } from '../../Utils/cities';
 import { toast } from 'react-toastify';
 import { uploadFile } from '../../Api/generalApi';
 import { Redirect } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers';
+import { driverDetails } from '../../formValidation/driverSchemavalidation';
 
 export default function DriverDetails(props) {
 	const hist = useHistory();
@@ -18,12 +20,14 @@ export default function DriverDetails(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(driverDetails),
 	});
 
 	if (Object.keys(data).length === 1 && data.constructor === Object) {
 		return <Redirect to={props.defaultPath} />;
 	}
 
+	console.log(errors);
 	const onSubmit = (formData) => {
 		console.log(formData);
 		setdata({ ...data, ...formData });
@@ -58,7 +62,7 @@ export default function DriverDetails(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add Driver</h2>
+				<h2>{data.update ? 'Edit Driver' : 'Add Driver'}</h2>
 			</div>
 			<div style={{ padding: '25px' }} classname="card-body">
 				<div className="margintop30">
@@ -109,8 +113,9 @@ export default function DriverDetails(props) {
 
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="address">Address</label>
+							<label for="address">Address</label>
 							<input
+								id="address"
 								type="text"
 								className="form-control"
 								name="address"
@@ -119,18 +124,23 @@ export default function DriverDetails(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.address && 'Address is required'}
+								{errors.address && errors.address.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label>Select Country</label>
+							<label for="country">Select Country</label>
 							<select
+								id="country"
 								className="form-control"
 								name="country"
 								ref={register({ required: true })}
 							>
 								<option value="SAU">Saudi Arabia</option>
 							</select>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.country && errors.country.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
@@ -144,19 +154,20 @@ export default function DriverDetails(props) {
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">---Select City---</option>
+								<option value="">---Select City---</option>
 								{cities.map((city) => {
 									return <option value={city}>{city}</option>;
 								})}
 							</select>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.city && 'City is required'}
+								{errors.city && errors.city.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="postCode">Post Code</label>
+							<label for="postCode">Post Code</label>
 							<input
+								id="postCode"
 								type="text"
 								className="form-control"
 								name="postCode"
@@ -165,14 +176,15 @@ export default function DriverDetails(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.postCode && 'Post Code is required'}
+								{errors.postCode && errors.postCode.message}
 							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="nicNumber">Iqama/NIC/Passport No</label>
+							<label for="nicNumber">Iqama/NIC/Passport No</label>
 							<input
+								id="nicNumber"
 								type="text"
 								className="form-control"
 								name="nicNumber"
@@ -181,7 +193,7 @@ export default function DriverDetails(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.nicNumber && 'NIC Number is required'}
+								{errors.nicNumber && errors.nicNumber.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
@@ -204,8 +216,9 @@ export default function DriverDetails(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="licenceNumber">Driver License No</label>
+							<label for="licenceNumber">Driver License No</label>
 							<input
+								id="licenseNumber"
 								type="text"
 								className="form-control"
 								name="licenseNumber"
@@ -214,7 +227,7 @@ export default function DriverDetails(props) {
 							/>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.licenseNumber && 'license Number is required'}
+								{errors.licenseNumber && errors.licenseNumber.message}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
@@ -242,14 +255,14 @@ export default function DriverDetails(props) {
 							type="button"
 							onClick={() => hist.goBack()}
 						>
-							Go to previous step
+							Back
 						</button>
 						<button
 							class="btn btn-success"
 							type="submit"
 							disabled={data.nicFile && data.licenseFile ? false : true}
 						>
-							Next step
+							Next
 						</button>
 					</div>
 				</form>
