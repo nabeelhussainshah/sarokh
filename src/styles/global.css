@@ -1,12 +1,12 @@
 /* login page css  */
 body{
-    background-color: #e4e5e6;font-family: 'Changa', sans-serif !important;
+    background-color: #e4e5e6;font-family: 'Cairo', sans-serif !important;
 }
 body, html {
 	height: 100%;
-	font-family: Poppins-Regular, sans-serif;
+	font-family: 'Cairo', sans-serif;
 }
-h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
+h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Cairo', sans-serif !important;}
 
 .app-body .main {
     flex: 1;
@@ -19,6 +19,8 @@ h1,h2,h3,h4,h5,h6,p,strong{font-family: 'Changa', sans-serif !important;}
     padding: 2px;
     background: #FFF;border-radius: 3px;
 }
+.bordertopcustom{border-top:#c1c1c1 solid 1px;}
+.btn-info:hover{background-color: #0393F4;}
 .form-row h5{width: 100%;}
 .add-address-container .progress .progress-bar{background: #f6921d; }
 .tracking-nav{margin-left:0 !important;}
@@ -42,7 +44,7 @@ label:not(.form-check-label):not(.custom-file-label){background: #FFF;}
 .finance-detail h4{font-size: 17px;color: #ec1c24;}
 .redcolor{color: #ec1c24;}
 .nav-sidebar>.nav-item .nav-icon{margin-right: 10px;}
-.custom-table table td,th{padding: 15px 10px;border-right: #fa1c25 dotted 1px;border-top: #f6921d solid 1px; text-align: center; font-weight: normal; color: #595d6e; font-size: 15px;}
+.custom-table table td,th{padding: 15px 10px;border-right:#fcdcb6 dotted 1px;border-top: #f6921d solid 1px; text-align: center; font-weight: normal; color: #595d6e; font-size: 15px;}
 .custom-table table thead{background: #fcdcb6;}
 .custom-table table i {font-size: 20px;color: #337ab7;}
 .custom-table table{display: table;width: 100%;}

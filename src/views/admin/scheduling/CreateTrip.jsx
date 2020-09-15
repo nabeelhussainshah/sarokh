@@ -165,7 +165,7 @@ export default function CreateTrip(props) {
 												selectedData={setpickData}
 												dataCheck={pickData}
 											/>
-											<div className="margintop30">
+											<div className="margintop30 bordertopcustom">
 												<h2 style={{ margin: '10px' }}> Deliveries</h2>
 												<Table
 													data={response.tabledata.deliveries}
@@ -178,7 +178,7 @@ export default function CreateTrip(props) {
 													dataCheck={deliveryData}
 												/>
 											</div>
-											<div className="margintop30">
+											<div className="margintop30 bordertopcustom">
 												<h2 style={{ margin: '10px' }}> Payment Collection</h2>
 												<Table
 													data={response.tabledata.pointsList}

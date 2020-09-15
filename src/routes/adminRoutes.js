@@ -24,7 +24,7 @@ export const adminRoutes = [
 			{
 				to: '/admin/shipments/allshipments',
 				name: 'All Shipments',
-				iconClass: 'nav-icon fas fa-box',
+				iconClass: 'nav-icon fas fa-list-alt',
 			},
 			{
 				to: '/admin/shipments/deliveredshipments',
@@ -76,27 +76,27 @@ export const adminRoutes = [
 	{
 		to: '/admin/shippers/',
 		name: 'Shippers',
-		iconClass: 'nav-icon fas fa-shipping-fast',
+		iconClass: 'nav-icon fas fa-truck-loading',
 		subRoutes: [
 			{
 				to: '/admin/shippers/allshippers',
 				name: 'All Shippers',
-				iconClass: 'nav-icon fas fa-shipping-fast',
+				iconClass: 'nav-icon fas fa-truck-loading',
 			},
 			{
 				to: '/admin/shippers/shipperbilling',
 				name: 'Shipper Billing',
-				iconClass: 'nav-icon fas fa-shipping-fast',
+				iconClass: 'nav-icon fas fa-truck-loading',
 			},
 			{
 				to: '/admin/shippers/shipperdetail',
 				name: 'Shipper Detail',
-				iconClass: 'nav-icon fas fa-shipping-fast',
+				iconClass: 'nav-icon fas fa-truck-loading',
 			},
 			{
 				to: '/admin/shippers/shippersetting',
 				name: 'Shipper Setting',
-				iconClass: 'nav-icon fas fa-shipping-fast',
+				iconClass: 'nav-icon fas fa-truck-loading',
 			},
 		],
 	},
@@ -125,66 +125,66 @@ export const adminRoutes = [
 	{
 		to: '/admin/scheduling/',
 		name: 'Scheduling',
-		iconClass: 'nav-icon fas fa-money-bill-wave',
+		iconClass: 'nav-icon fas fa-shipping-fast',
 		subRoutes: [
 			{
 				to: '/admin/scheduling/createtrip',
 				name: 'Create Trip',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-route',
 			},
 			{
 				to: '/admin/scheduling/alltrips',
 				name: 'All Trips',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-shipping-fast',
 			},
 			{
 				to: '/admin/tracking/orderlocations',
 				name: 'Active Trips',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-shipping-fast',
 			},
 		],
 	},
 	{
 		to: '/admin/finance/',
 		name: 'Finance',
-		iconClass: 'nav-icon fas fa-money-bill-wave',
+		iconClass: 'nav-icon fas fa-wallet',
 		subRoutes: [
 			{
 				to: '/admin/finance/dasboard',
 				name: 'Finance Dashboard',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-rocket',
 			},
 			{
 				to: '/admin/finance/createbill',
 				name: 'Create Bill',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-file-invoice',
 			},
 			{
 				to: '/admin/finance/billlisting',
 				name: 'All Bills',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-wallet',
 			},
 			{
 				to: '/admin/finance/paymentrecord',
 				name: 'Payment Record',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
+				iconClass: 'nav-icon fas fa-wallet',
 			},
 		],
 	},
 	{
 		to: '/admin/drivers/',
 		name: 'Drivers',
-		iconClass: 'nav-icon fas fa-map',
+		iconClass: 'nav-icon fas fa-address-card',
 		subRoutes: [
 			{
 				to: '/admin/drivers/adddriver/step1',
 				name: 'Add Driver',
-				iconClass: 'nav-icon fas fa-map',
+				iconClass: 'nav-icon fas fa-plus-square',
 			},
 			{
 				to: '/admin/drivers/alldrivers',
 				name: 'All Drivers',
-				iconClass: 'nav-icon fas fa-map',
+				iconClass: 'nav-icon fas fa-list-alt',
 			},
 		],
 	},
@@ -233,7 +233,7 @@ export const adminRoutes = [
 	{
 		to: '/admin/vendors/',
 		name: 'Vendors',
-		iconClass: 'nav-icon fas fa-truck',
+		iconClass: 'nav-icon fas fa-tablet-alt',
 		subRoutes: [
 			{
 				to: '/admin/vendors/addvendor',
@@ -272,7 +272,7 @@ export const adminRoutes = [
 	{
 		to: '/admin/users',
 		name: 'Users',
-		iconClass: 'nav-icon fas fa-copy',
+		iconClass: 'nav-icon fas fa-users',
 		subRoutes: [
 			{
 				to: '/admin/users/adduser',
@@ -289,17 +289,17 @@ export const adminRoutes = [
 	{
 		to: '/admin/reports',
 		name: 'Reports',
-		iconClass: 'nav-icon fas fa-chart-pie',
+		iconClass: 'nav-icon fas fa-file-contract',
 		subRoutes: [
 			{
 				to: '/admin/reports/financereport',
 				name: 'Finance Report',
-				iconClass: 'nav-icon fas fa-map',
+				iconClass: 'nav-icon fas fa-wallet',
 			},
 			{
 				to: '/admin/reports/shipmentreport',
 				name: 'Shipment Report',
-				iconClass: 'nav-icon fas fa-map',
+				iconClass: 'nav-icon fas fa-box',
 			},
 		],
 	},
