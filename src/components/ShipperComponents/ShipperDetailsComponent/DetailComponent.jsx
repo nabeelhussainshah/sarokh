@@ -4,7 +4,15 @@ import moment from 'moment';
 export default function ContentContainer({ response, items }) {
 	return (
 		<div>
-			<h2 className="mt-3 mb-1 font20 redcolor">Shipment Detail</h2>
+			<div className="shipper-detail-container mt-3 mb-5">
+				<h2 className="font20 redcolor">Shipment Delivery Status</h2>
+				<div className="progress">
+					<div className="progress-bar" role="progressbar" style={{ width: "25%" }}>25%</div>
+				</div>
+				<div className="clearfix"></div>
+			</div>
+			<h2 className="mt-3 mb-1 font20 redcolor">Shipper Bill Detail</h2>
+
 			<table className="table table-resposive">
 				<tbody>
 					<tr>
@@ -90,13 +98,13 @@ export default function ContentContainer({ response, items }) {
 				</tbody>
 			</table>
 
-			<h2 className="mt-3 mb-1 font20 redcolor">Payment Detail</h2>
+			<h2 className="mt-3 mb-1 font20 redcolor">Billing Details</h2>
 			<table className="table table-resposive">
 				<tbody>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>Payment Type</td>
 						<td style={{ width: '30%' }}>{items.paymentType}</td>
-						<td style={{ fontWeight: 'bold', width: '20%' }}>COD</td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>Cash On Delivery (COD)</td>
 						<td style={{ width: '30%' }}>{items.codAmount}</td>
 					</tr>
 					<tr>
@@ -110,36 +118,32 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ width: '30%' }}>{items.additionalCharges}</td>
 					</tr>
 					<tr>
-						<td style={{ fontWeight: 'bold', width: '20%' }}>VAT</td>
-						<td style={{ width: '30%' }}>{items.vat}</td>
 						<td style={{ fontWeight: 'bold' }}>Delivery Charges</td>
 						<td style={{ width: '30%' }}>{items.shipmentDeliveryCharges}</td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>Receiver Address Surcharge</td>
+						<td style={{ width: '30%' }}>{items.vat}</td>
+					</tr>
+					<tr>
+						<td style={{ fontWeight: 'bold' }}></td>
+						<td style={{ width: '30%' }}></td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>Subtotal</td>
+						<td style={{ width: '30%' }}>{items.vat}</td>
+					</tr>
+					<tr>
+						<td style={{ fontWeight: 'bold' }}></td>
+						<td style={{ width: '30%' }}></td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>VAT (15%)</td>
+						<td style={{ width: '30%' }}>{items.vat}</td>
+					</tr>
+					<tr>
+						<td style={{ fontWeight: 'bold' }}></td>
+						<td style={{ width: '30%' }}></td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>Total</td>
+						<td style={{ width: '30%' }}>{items.vat}</td>
 					</tr>
 				</tbody>
 			</table>
-			<div className="shipper-detail-container mt-3">
-				<h2 className="font20 redcolor">Shipment Delivery Status</h2>
-				{/* <label className="customise-radio-btn">
-					Shipper Warehouse
-					<input type="radio" defaultChecked={false} name="radio" />
-					<span className="checkmark"></span>
-				</label>
-				<label className="customise-radio-btn">
-					In Process
-					<input type="radio" defaultChecked={false} name="radio" />
-					<span className="checkmark"></span>
-				</label>
-				<label className="customise-radio-btn">
-					Delivered
-					<input type="radio" defaultChecked={true} name="radio" />
-					<span className="checkmark"></span>
-				</label> */}
 
-				<div className="progress">
-					<div className="progress-bar" role="progressbar" style={{ width: "25%" }}>25%</div>
-				</div>
-				<div className="clearfix"></div>
-			</div>
 		</div >
 	);
 }

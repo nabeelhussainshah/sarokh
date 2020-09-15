@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function TopNav(props) {
 	return (
 		<div className="hold-transition sidebar-mini layout-fixed">
-			<div className="wrapper">
+			<div className="wrapper whitebg">
 				<nav className="main-header tracking-nav navbar navbar-expand navbar-white navbar-light">
 					{/* Left navbar links */}
 					<ul className="navbar-nav">
@@ -23,7 +23,7 @@ function TopNav(props) {
 					</ul>
 				</nav>
 
-				<div className="content-wrapper">{props.children}</div>
+				<div className="content-wrapper tracking-nav ">{props.children}</div>
 			</div>
 		</div>
 	);
