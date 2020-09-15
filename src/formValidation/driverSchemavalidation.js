@@ -65,7 +65,8 @@ export const driverAccount = Joi.object({
 		)
 		.required()
 		.messages({
-			'string.pattern.base': 'IBAN Is Not Valid',
+			'string.pattern.base':
+				'IBAN Is Not Valid must be like "SA4420000001234567891234"',
 		}), // follow this link for further explaination https://stackoverflow.com/questions/58408362/how-to-set-custom-error-messages-in-hapi-joi
-	// string.pattern.base sepecifies the error message name which can be replaced with a custom message, there are further more types of errors like string.base, string.empty, string.max which can be customized with custom messages
+	// string.pattern.base sepecifies the error message name variable which can be given a custom message, there are further more types of errors like string.base, string.empty, string.max which can be customized with custom messages
 });

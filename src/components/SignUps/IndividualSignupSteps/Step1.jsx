@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { state } from './state';
-import axios from 'axios';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
+import { joiResolver } from '@hookform/resolvers';
+import { basicInformation } from '../../../formValidation/individualSignupValidation';
 
 export default function Step1(props) {
 	const [data, setdata] = useRecoilState(state);
@@ -15,6 +16,7 @@ export default function Step1(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(basicInformation),
 	});
 
 	const onSubmit = (formdata) => {
@@ -32,20 +34,22 @@ export default function Step1(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="firstName">First Name</label>
+							<label for="firstName">First Name</label>
 							<input
+								id="firstName"
 								name="firstName"
 								type="text"
 								className="form-control"
 								placeholder="First Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.firstName?.types?.required && (
-								<p style={{ color: 'red' }}>first Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.firstName && errors.firstName.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="lastName">Last Name</label>
+							<label for="lastName">Last Name</label>
 							<input
 								name="lastName"
 								type="text"
@@ -54,28 +58,31 @@ export default function Step1(props) {
 								placeholder="Last Name"
 								ref={register({ required: true })}
 							/>
-							{errors?.lastName?.types?.required && (
-								<p style={{ color: 'red' }}>last Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.lastName && errors.lastName.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="contact">Contact No</label>
+							<label for="contact">Contact No</label>
 							<input
 								name="contact"
 								type="text"
 								className="form-control"
 								id="contact"
 								placeholder="Contact No"
+								defaultValue="+9665"
 								ref={register({ required: true })}
 							/>
-							{errors?.contact?.types?.required && (
-								<p style={{ color: 'red' }}>contact is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contact && errors.contact.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="email">Email</label>
+							<label for="email">Email</label>
 							<input
 								name="email"
 								type="email"
@@ -84,24 +91,27 @@ export default function Step1(props) {
 								placeholder="Email"
 								ref={register({ required: true })}
 							/>
-							{errors?.email?.types?.required && (
-								<p style={{ color: 'red' }}>email is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.email && errors.email.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="dateOfBirth">Date Of Birth</label>
+							<label for="dateOfBirth">Date Of Birth</label>
 							<input
+								id="dateOfBirth"
 								name="dateOfBirth"
 								type="date"
 								className="form-control"
 								placeholder="Date Of Birth"
 								ref={register({ required: true })}
 							/>
-							{errors?.dateOfBirth?.types?.required && (
-								<p style={{ color: 'red' }}>date of birth is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.dateOfBirth && errors.dateOfBirth.message}
+							</span>
 						</div>
 					</div>
 					<div className="btn-container float-right form-row">

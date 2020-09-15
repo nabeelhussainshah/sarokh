@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
+import { joiResolver } from '@hookform/resolvers';
+import { businessDetails } from '../../../formValidation/individualSignupValidation';
 
 export default function Step2(props) {
 	const hist = useHistory();
@@ -15,6 +17,7 @@ export default function Step2(props) {
 		defaultValues: data,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(businessDetails),
 	});
 	console.log(data);
 
@@ -59,42 +62,46 @@ export default function Step2(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="businessName">Business Name</label>
+							<label for="businessName">Business Name</label>
 							<input
+								id="businessName"
 								name="businessName"
 								type="text"
 								className="form-control"
 								placeholder="Business Name"
 								ref={register({ required: true })}
 							/>
-							{errors ?.businessName ?.types ?.required && (
-								<p style={{ color: 'red' }}>first Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.businessName && errors.businessName.message}
+							</span>
 						</div>
 
 						<div className="form-group col-md-6">
-							<label htmlFor="iqamaNumber">National ID/Iqama No</label>
+							<label for="iqamaNumber">National ID/Iqama No</label>
 							<input
+								id="iqamaNumber"
 								name="iqamaNumber"
 								type="text"
 								className="form-control"
 								placeholder="Iqama No"
 								ref={register({ required: true })}
 							/>
-							{errors ?.iqamaNumber ?.types ?.required && (
-								<p style={{ color: 'red' }}>Business Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.iqamaNumber && errors.iqamaNumber.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="bankName">Bank Name</label>
+							<label for="bankName">Bank Name</label>
 							<select
+								id="bankName"
 								className="form-control"
 								name="bankName"
 								ref={register({
 									required: true,
-									validate: (value) => value !== '',
 								})}
 							>
 								<option value="">Select Bank Name</option>
@@ -127,12 +134,13 @@ export default function Step2(props) {
 									Gulf International Bank Saudi Aribia (GIB-SA){' '}
 								</option>
 							</select>
-							{errors ?.bankName ?.types ?.required && (
-								<p style={{ color: 'red' }}>Bank Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.bankName && errors.bankName.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="inputEmail4">National ID/Iqama Picture</label>
+							<label for="inputEmail4">National ID/Iqama Picture</label>
 							<div className="input-group">
 								<div className="input-group">
 									<div className="col">
@@ -152,17 +160,19 @@ export default function Step2(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="iban">IBAN</label>
+							<label for="iban">IBAN</label>
 							<input
+								id="iban"
 								name="iban"
 								type="text"
 								className="form-control"
 								placeholder="IBAN"
 								ref={register({ required: true })}
 							/>
-							{errors ?.iban ?.types ?.required && (
-								<p style={{ color: 'red' }}>IBAN is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.iban && errors.iban.message}
+							</span>
 						</div>
 					</div>
 					<div className="btn-container float-right margintop30 form-row">
