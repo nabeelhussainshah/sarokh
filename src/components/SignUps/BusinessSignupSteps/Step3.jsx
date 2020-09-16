@@ -3,20 +3,21 @@ import { useRecoilState } from 'recoil';
 import { Redirect, useHistory } from 'react-router-dom';
 import { state } from './state';
 import { useForm, get } from 'react-hook-form';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
+import { cities } from '../../../Utils/cities';
+import { joiResolver } from '@hookform/resolvers';
+import { billingDetail } from '../../../formValidation/businessSignupValidation';
 
 export default function Step3(props) {
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(state);
-	const [response, setresponse] = useState({ loading: true });
 	const { register, handleSubmit, errors } = useForm({
 		shouldFocusError: true,
 		defaultValues: data,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(billingDetail),
 	});
 	console.log(data);
 
@@ -26,44 +27,11 @@ export default function Step3(props) {
 		hist.push('/business/signup/step4');
 	};
 
-	useEffect(() => {
-		async function fetchData() {
-			await axios
-				.get(`${process.env.REACT_APP_API}/country/get-countries-list`)
-				.then((res) => {
-					console.log(res);
-					if (res.data.status === 200) {
-						setresponse({ loading: false, countries: res.data.data });
-					}
-				})
-				.catch((err) => {
-					toast.error(err.message);
-				});
-		}
-		fetchData();
-	}, []);
-
 	if (Object.keys(data).length === 0 && data.constructor === Object) {
 		return <Redirect to="/business/signup/step1" />;
 	}
 
-	const getCities = async (countryCode) => {
-		await axios
-			.get(`${process.env.REACT_APP_API}/city/get-country-city/${countryCode}`)
-			.then((res) => {
-				console.log(res);
-				if (res.data.status === 200) {
-					setresponse({ ...response, loading: false, cities: res.data.data });
-				}
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
-	};
-
-	return response.loading ? (
-		<div>loading...</div>
-	) : (
+	return (
 		<Container>
 			<div className="card-header">
 				<h2>Business Signup</h2>
@@ -73,119 +41,113 @@ export default function Step3(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="address">Office/Billing Address</label>
+							<label for="address">Office/Billing Address</label>
 							<input
+								id="address"
 								type="text"
 								className="form-control"
 								name="address"
 								placeholder="Office/Billing Address"
 								ref={register({ required: true })}
 							/>
-							{errors?.address?.types?.required && (
-								<p style={{ color: 'red' }}>address is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.address && errors.address.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label>Select Country</label>
+							<label for="country">Select Country</label>
 							<select
-								id="selectid"
+								id="country"
 								className="form-control"
 								name="country"
-								onChange={(e) => getCities(e.target.value)}
 								ref={register({
 									required: true,
 									validate: (value) => value !== '',
 								})}
 							>
-								<option key={12345} value="">
-									---Select Country---
+								<option key={12345} value="SAU">
+									Saudi Arabia
 								</option>
-								{response.countries.map((doc, i) => {
-									return (
-										<option key={i} value={doc.code}>
-											{doc.name}
-										</option>
-									);
-								})}
 							</select>
-							{errors?.country?.types?.required && (
-								<p style={{ color: 'red' }}>country is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.country && errors.country.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label>Select City</label>
+							<label for="city">Select City</label>
 							<select
+								id="city"
 								className="form-control"
 								name="city"
 								ref={register({
 									required: true,
-									validate: (value) => value !== '',
 								})}
 							>
-								<option key={12345} value="">
-									---Select City---
-								</option>
-								{data.city === undefined ? null : (
-									<option value={data.city}>{data.city}</option>
-								)}{' '}
-								//this gets the value to get populated in this field when moving
-								between steps from the global state if this form had been filled
-								{response.cities === undefined
-									? null
-									: response.cities.map((doc, i) => {
-											return (
-												<option key={i} value={doc}>
-													{doc}
-												</option>
-											);
-									  })}
+								<option value="">---Select City---</option>
+								{cities.map((doc) => {
+									return (
+										<option key={doc} value={doc}>
+											{doc}
+										</option>
+									);
+								})}
 							</select>
-							{errors?.city?.types?.required && (
-								<p style={{ color: 'red' }}>city is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.city && errors.city.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="postCode">Post Code</label>
+							<label for="postCode">Post Code</label>
 							<input
+								id="postCode"
 								type="number"
 								className="form-control"
 								name="postCode"
 								placeholder="Post Code"
 								ref={register({ required: true })}
 							/>
-							{errors?.postCode?.types?.required && (
-								<p style={{ color: 'red' }}>post code is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.postCode && errors.postCode.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="concernedPerson">Concern Person</label>
+							<label for="concernedPerson">Concern Person</label>
 							<input
+								id="concernedPerson"
 								type="text"
 								className="form-control"
 								name="concernedPerson"
 								placeholder="Concern Person"
 								ref={register({ required: true })}
 							/>
-							{errors?.concernedPerson?.types?.required && (
-								<p style={{ color: 'red' }}>concern person is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.concernedPerson && errors.concernedPerson.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="concernedPersonDesignation">Designation</label>
+							<label for="concernedPersonDesignation">Designation</label>
 							<input
+								id="concernedPersonDesignation"
 								type="text"
 								className="form-control"
 								name="concernedPersonDesignation"
 								placeholder="Designation"
 								ref={register({ required: true })}
 							/>
-							{errors?.concernedPersonDesignation?.types?.required && (
-								<p style={{ color: 'red' }}>Designation is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.concernedPersonDesignation &&
+									errors.concernedPersonDesignation.message}
+							</span>
 						</div>
 					</div>
 					<div className="btn-container float-right form-row">

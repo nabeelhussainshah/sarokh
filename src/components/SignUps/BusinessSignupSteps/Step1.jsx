@@ -6,6 +6,8 @@ import { state } from './state';
 import axios from 'axios';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
+import { joiResolver } from '@hookform/resolvers';
+import { basicInformation } from '../../../formValidation/businessSignupValidation';
 
 export default function Step1(props) {
 	const [data, setdata] = useRecoilState(state);
@@ -15,6 +17,7 @@ export default function Step1(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(basicInformation),
 	});
 
 	const onSubmit = (formdata) => {
@@ -54,20 +57,22 @@ export default function Step1(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="firstName">First Name</label>
+							<label for="firstName">First Name</label>
 							<input
+								id="firstName"
 								name="firstName"
 								type="text"
 								className="form-control"
 								placeholder="First Name"
 								ref={register({ required: true })}
 							/>
-							{errors ?.firstName ?.types ?.required && (
-								<p style={{ color: 'red' }}>first Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.firstName && errors.firstName.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="lastName">Last Name</label>
+							<label for="lastName">Last Name</label>
 							<input
 								name="lastName"
 								type="text"
@@ -76,14 +81,15 @@ export default function Step1(props) {
 								placeholder="Last Name"
 								ref={register({ required: true })}
 							/>
-							{errors ?.lastName ?.types ?.required && (
-								<p style={{ color: 'red' }}>last Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.lastName && errors.lastName.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="contact">Contact No</label>
+							<label for="contact">Contact No</label>
 							<input
 								name="contact"
 								type="text"
@@ -92,12 +98,13 @@ export default function Step1(props) {
 								placeholder="Contact No"
 								ref={register({ required: true })}
 							/>
-							{errors ?.contact ?.types ?.required && (
-								<p style={{ color: 'red' }}>contact is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contact && errors.contact.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="email">Email</label>
+							<label for="email">Email</label>
 							<input
 								name="email"
 								type="email"
@@ -106,27 +113,32 @@ export default function Step1(props) {
 								placeholder="Email"
 								ref={register({ required: true })}
 							/>
-							{errors ?.email ?.types ?.required && (
-								<p style={{ color: 'red' }}>email is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.email && errors.email.message}
+							</span>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="iqamaNumber">Commercial Registration (CR)</label>
+							<label for="iqamaNumber">Commercial Registration (CR)</label>
 							<input
+								id="iqamaNumber"
 								name="iqamaNumber"
 								type="text"
 								className="form-control"
 								placeholder="Commercial Registration (CR)"
 								ref={register({ required: true })}
 							/>
-							{errors ?.iqamaNumber ?.types ?.required && (
-								<p style={{ color: 'red' }}>Business Name is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.iqamaNumber && errors.iqamaNumber.message}
+							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="inputEmail4">Commercial Registration (CR) Upload</label>
+							<label for="inputEmail4">
+								Commercial Registration (CR) Upload
+							</label>
 							<div className="input-group">
 								<div className="input-group">
 									<div className="col">

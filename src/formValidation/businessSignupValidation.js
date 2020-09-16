@@ -8,16 +8,15 @@ export const basicInformation = Joi.object({
 		.email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
 		.required()
 		.label('Email Address'),
-	dateOfBirth: Joi.date().required().label('Date Of Birth'),
-});
-
-export const businessDetails = Joi.object({
-	businessName: Joi.string().required(),
 	iqamaNumber: Joi.string()
 		.min(10)
 		.max(10)
 		.required()
-		.label('Iqama/NIC/Passport No'),
+		.label('Commercial Registration (CR)'),
+});
+
+export const businessDetails = Joi.object({
+	businessName: Joi.string().required(),
 	bankName: Joi.string().required().label('Bank'),
 	iban: Joi.string()
 		.pattern(
