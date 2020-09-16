@@ -73,7 +73,7 @@ export default function Step1(props) {
 								className="form-control"
 								id="contact"
 								placeholder="Contact No"
-								defaultValue="+9665"
+								defaultValue="9665"
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>

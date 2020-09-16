@@ -3,9 +3,15 @@ import Joi from 'joi';
 export const basicInformation = Joi.object({
 	firstName: Joi.string().required().label('First Name'),
 	lastName: Joi.string().required().label('Last Name'),
-	contact: Joi.string().min(13).max(13).required().label('Contact'),
+	contact: Joi.string()
+		.pattern(new RegExp(/^(9665)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/))
+		.required()
+		.label('Contact')
+		.messages({
+			'string.pattern.base': 'contact should be a valid no e.g "966562354985"',
+		}),
 	email: Joi.string()
-		.email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+		.email({ minDomainSegments: 2, tlds: false })
 		.required()
 		.label('Email Address'),
 	iqamaNumber: Joi.string()

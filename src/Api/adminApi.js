@@ -486,7 +486,7 @@ export async function allDriversApi() {
 		.get(`${process.env.REACT_APP_API}/driver/get-list`)
 		.then((res) => {
 			console.log(res);
-			if (res.data.status === 200) {
+			if (res.status === 200) {
 				return res.data;
 			} else {
 				throw new Error(
