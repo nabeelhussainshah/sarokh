@@ -108,7 +108,7 @@ export const adminRoutes = [
 			{
 				to: '/admin/warehouses/addshipperwarehouse/step1',
 				name: 'Add Warehouse',
-				iconClass: 'nav-icon fa fa-warehouse',
+				iconClass: 'nav-icon fas fa-plus-square',
 			},
 			{
 				to: '/admin/warehouses/warehouselist',
@@ -196,7 +196,7 @@ export const adminRoutes = [
 			{
 				to: '/admin/dealer/adddealer/step1',
 				name: 'Add Dealer',
-				iconClass: 'nav-icon fas fa-store',
+				iconClass: 'nav-icon fas fa-plus-square',
 			},
 			{
 				to: '/admin/dealer/alldealers',
@@ -238,7 +238,7 @@ export const adminRoutes = [
 			{
 				to: '/admin/vendors/addvendor',
 				name: 'Add Vendor',
-				iconClass: 'nav-icon fas fa-store',
+				iconClass: 'nav-icon fas fa-plus-square',
 			},
 			{
 				to: '/admin/vendors/allvendors',
@@ -255,7 +255,7 @@ export const adminRoutes = [
 			{
 				to: '/admin/vehicles/addvehicle',
 				name: 'Add Vehicles',
-				iconClass: 'nav-icon fas fa-truck',
+				iconClass: 'nav-icon fas fa-plus-square',
 			},
 			{
 				to: '/admin/vehicles/allvehicles',

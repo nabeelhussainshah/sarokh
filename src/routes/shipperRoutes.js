@@ -12,27 +12,27 @@ export const shipperRoutes = [
 	{
 		to: '/shipper/allshipments',
 		name: 'All Shipments',
-		iconClass: 'nav-icon fa fa-map',
+		iconClass: 'nav-icon fas fa-list-alt',
 	},
 	{
 		to: '/shipper/codshipments',
 		name: 'COD Shipments',
-		iconClass: 'nav-icon fa fa-map',
+		iconClass: 'nav-icon fas fa-box',
 	},
 	{
 		to: '/shipper/pendingshipments',
 		name: 'Pending Shipments',
-		iconClass: 'nav-icon fa fa-map',
+		iconClass: 'nav-icon fas fa-box',
 	},
 	{
 		to: '/shipper/shipmentissues',
 		name: 'Shipment issues',
-		iconClass: 'nav-icon fa fa-map',
+		iconClass: 'nav-icon fas fa-box',
 	},
 	{
 		to: '/shipper/users',
 		name: 'Users',
-		iconClass: 'nav-icon fas fa-copy',
+		iconClass: 'nav-icon fas fa-users',
 		subRoutes: [
 			{
 				to: '/shipper/users/adduser',
