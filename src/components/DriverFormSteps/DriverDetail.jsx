@@ -182,13 +182,13 @@ export default function DriverDetails(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label for="nicNumber">Iqama/NIC/Passport No</label>
+							<label for="nicNumber">National ID/Iqama/Passport No</label>
 							<input
 								id="nicNumber"
 								type="text"
 								className="form-control"
 								name="nicNumber"
-								placeholder="Iqama/NIC/Passport No"
+								placeholder="National ID/Iqama/Passport No"
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
@@ -198,7 +198,7 @@ export default function DriverDetails(props) {
 						</div>
 						<div className="form-group col-md-6">
 							<label htmlFor="inputEmail4">
-								Iqama/NIC/Passport Copy Upload
+								National ID/Iqama/Passport Copy Upload
 							</label>
 							<div className="input-group">
 								<div className="col p-0">
