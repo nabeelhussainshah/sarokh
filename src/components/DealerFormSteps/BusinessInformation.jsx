@@ -9,6 +9,8 @@ import { addDealerApi, updateDealerApi } from '../../Api/adminApi';
 import StepIndicator from './StepIndicator';
 import { toast } from 'react-toastify';
 import { isEmpty } from 'underscore';
+import { joiResolver } from '@hookform/resolvers';
+import { businessInformation } from '../../formValidation/dealerValidationSchema';
 
 export default function BusinessInformation(props) {
 	const hist = useHistory();
@@ -18,6 +20,7 @@ export default function BusinessInformation(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(businessInformation),
 	});
 
 	if (isEmpty(data)) {
@@ -80,15 +83,16 @@ export default function BusinessInformation(props) {
 						<div class="form-group col-md-6">
 							<label for="firstName">Contract ID</label>
 							<input
-								type="text"
+								type="number"
 								class="form-control"
 								name="contractId"
 								placeholder="Enter Contract ID"
 								ref={register({ required: true })}
 							/>
-							{errors ?.contractId ?.types ?.required && (
-								<p style={{ color: 'red' }}>Contract ID is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contractId && errors.contractId.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">Contract Upload</label>
@@ -111,11 +115,10 @@ export default function BusinessInformation(props) {
 								name="contractStartDate"
 								ref={register({ required: true })}
 							/>
-							{errors ?.contactStartDate ?.types ?.required && (
-								<p style={{ color: 'red' }}>
-									Contract Starting Date is required
-								</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contractStartDate && errors.contractStartDate.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lastName">Contract Ending Date</label>
@@ -125,9 +128,10 @@ export default function BusinessInformation(props) {
 								name="contractEndDate"
 								ref={register({ required: true })}
 							/>
-							{errors ?.contractEndDate ?.types ?.required && (
-								<p style={{ color: 'red' }}>Contract Ending Date is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contractEndDate && errors.contractEndDate.message}
+							</span>
 						</div>
 					</div>
 					<div class="form-row">
@@ -140,9 +144,11 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Amount in SAR"
 								ref={register({ required: true })}
 							/>
-							{errors ?.compensationPerShipment ?.types ?.required && (
-								<p style={{ color: 'red' }}>Amount is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.compensationPerShipment &&
+									errors.compensationPerShipment.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">Compensation Cycle</label>
@@ -153,23 +159,17 @@ export default function BusinessInformation(props) {
 								placeholder="Compensation Cycle"
 								ref={register({ required: true })}
 							/>
-							{errors ?.compensationCycle ?.types ?.required && (
-								<p style={{ color: 'red' }}>Compensation Cycles are required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.compensationCycle && errors.compensationCycle.message}
+							</span>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label htmlFor="bank">Bank Name</label>
-							<select
-								className="form-control"
-								name="bank"
-								ref={register({
-									required: true,
-									validate: (value) => value !== 'true',
-								})}
-							>
-								<option value="true">Select Bank Name</option>
+							<select className="form-control" name="bank" ref={register()}>
+								<option value="">Select Bank Name</option>
 								<option value="The National Commercial Bank">
 									The National Commercial Bank{' '}
 								</option>
@@ -201,7 +201,7 @@ export default function BusinessInformation(props) {
 							</select>
 							<span style={{ color: 'red' }}>
 								{' '}
-								{errors.bank && 'Bank is required'}
+								{errors.bank && errors.bank.message}
 							</span>
 						</div>
 						<div class="form-group col-md-6">
@@ -213,9 +213,10 @@ export default function BusinessInformation(props) {
 								placeholder="Enter IBAN"
 								ref={register({ required: true })}
 							/>
-							{errors ?.iban ?.types ?.required && (
-								<p style={{ color: 'red' }}>IBAN is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.iban && errors.iban.message}
+							</span>
 						</div>
 					</div>
 					<div class="form-row">
@@ -228,9 +229,10 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Username"
 								ref={register({ required: true })}
 							/>
-							{errors ?.userName ?.types ?.required && (
-								<p style={{ color: 'red' }}>Username is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.userName && errors.userName.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lastName">Password</label>
@@ -241,9 +243,10 @@ export default function BusinessInformation(props) {
 								placeholder="Enter Password"
 								ref={register({ required: true })}
 							/>
-							{errors ?.password ?.types ?.required && (
-								<p style={{ color: 'red' }}>Password is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.password && errors.password.message}
+							</span>
 						</div>
 					</div>
 					<div className="btn-container float-right mt-2 mb-2">
@@ -260,21 +263,23 @@ export default function BusinessInformation(props) {
 								className="btn btn-success"
 								type="button"
 								onClick={() => handleSubmit(onSubmit)()}
+								disabled={data.contractFile ? false : true}
 							>
 								Update
 							</button>
 						) : (
-								<button
-									className="btn btn-success"
-									type="button"
-									onClick={() => handleSubmit(onSubmit)()}
-								>
-									Finish
+							<button
+								className="btn btn-success"
+								type="button"
+								onClick={() => handleSubmit(onSubmit)()}
+								disabled={data.contractFile ? false : true}
+							>
+								Finish
 							</button>
-							)}
+						)}
 					</div>
 				</form>
 			</div>
-		</Container >
+		</Container>
 	);
 }

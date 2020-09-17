@@ -18,6 +18,7 @@ export const dealerEditHelper = (data) => {
 		userName: data.user.userName,
 		password: data.user.userPassword,
 		bank: data.bankAccount.bank,
+		iqamaFile: data.nicFile,
 		update: true,
 	};
 };

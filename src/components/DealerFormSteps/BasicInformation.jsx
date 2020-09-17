@@ -8,6 +8,8 @@ import { uploadFile } from '../../Api/generalApi';
 import { cities } from '../../Utils/cities';
 import StepIndicator from './StepIndicator';
 import { toast } from 'react-toastify';
+import { joiResolver } from '@hookform/resolvers';
+import { basicInformation } from '../../formValidation/dealerValidationSchema';
 
 export default function BasicInformation(props) {
 	const hist = useHistory();
@@ -17,6 +19,7 @@ export default function BasicInformation(props) {
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
+		resolver: joiResolver(basicInformation),
 	});
 
 	console.log(data);
@@ -66,9 +69,10 @@ export default function BasicInformation(props) {
 								placeholder="Owner Name"
 								ref={register({ required: true })}
 							/>
-							{errors ?.owner ?.types ?.required && (
-								<p style={{ color: 'red' }}>owner is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.owner && errors.owner.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="BusinessGroupName">
@@ -79,8 +83,12 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="businessGroupName"
 								placeholder="Business Group Name"
-								ref={register({})}
+								ref={register()}
 							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.businessGroupName && errors.businessGroupName.message}
+							</span>
 						</div>
 					</div>
 					<div class="form-row">
@@ -91,11 +99,13 @@ export default function BasicInformation(props) {
 								class="form-control"
 								name="contactNo"
 								placeholder="Contact Number"
+								defaultValue={'9665'}
 								ref={register({ required: true })}
 							/>
-							{errors ?.contactNo ?.types ?.required && (
-								<p style={{ color: 'red' }}>Contact Number is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.contactNo && errors.contactNo.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="email">Email</label>
@@ -106,9 +116,10 @@ export default function BasicInformation(props) {
 								placeholder="abc@gmail.com"
 								ref={register({ required: true })}
 							/>
-							{errors ?.email ?.types ?.required && (
-								<p style={{ color: 'red' }}>Email is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.email && errors.email.message}
+							</span>
 						</div>
 					</div>
 					<div class="form-row">
@@ -121,11 +132,10 @@ export default function BasicInformation(props) {
 								placeholder="National ID/Iqama Number"
 								ref={register({ required: true })}
 							/>
-							{errors ?.nicNumber ?.types ?.required && (
-								<p style={{ color: 'red' }}>
-									National ID/iqama Number is required
-								</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.nicNumber && errors.nicNumber.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">National ID/Iqama Copy</label>
@@ -149,9 +159,10 @@ export default function BasicInformation(props) {
 								placeholder="DOB"
 								ref={register({ required: true })}
 							/>
-							{errors ?.dateOfBirth ?.types ?.required && (
-								<p style={{ color: 'red' }}>DOB is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.dateOfBirth && errors.dateOfBirth.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">Profile Picture</label>
@@ -176,9 +187,10 @@ export default function BasicInformation(props) {
 							>
 								<option value="SAU">Saudi Arabia</option>
 							</select>
-							{errors ?.country ?.types ?.required && (
-								<p style={{ color: 'red' }}>country is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.country && errors.country.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="firstName">City</label>
@@ -197,9 +209,10 @@ export default function BasicInformation(props) {
 									);
 								})}
 							</select>
-							{errors ?.city ?.types ?.required && (
-								<p style={{ color: 'red' }}>city is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.city && errors.city.message}
+							</span>
 						</div>
 					</div>
 					<div class="form-row">
@@ -212,9 +225,10 @@ export default function BasicInformation(props) {
 								placeholder="Address"
 								ref={register({ required: true })}
 							/>
-							{errors ?.address ?.types ?.required && (
-								<p style={{ color: 'red' }}>Address is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.address && errors.address.message}
+							</span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lastName">Post Code</label>
@@ -225,9 +239,10 @@ export default function BasicInformation(props) {
 								placeholder="Post Code"
 								ref={register({ required: true })}
 							/>
-							{errors ?.postCode ?.types ?.required && (
-								<p style={{ color: 'red' }}>Post Code is required</p>
-							)}
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.postCode && errors.postCode.message}
+							</span>
 						</div>
 					</div>
 					<div className="btn-container float-right mt-2 mb-2 mr-1">
@@ -239,7 +254,16 @@ export default function BasicInformation(props) {
 							Cancel
 						</button>
 						&nbsp;
-						<button className="btn btn-success" type="submit">
+						<button
+							className="btn btn-success"
+							type="submit"
+							disabled={
+								data.profilePicture !== undefined &&
+								data.iqamaFile !== undefined
+									? false
+									: true
+							}
+						>
 							Next step
 						</button>
 					</div>
