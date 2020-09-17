@@ -58,7 +58,7 @@ export const vehicleDetails = Joi.object({
 export const driverAccount = Joi.object({
 	compensationCycle: Joi.number().min(1).max(1000).positive().required(),
 	compensation: Joi.number().min(1).max(100000).positive().required(),
-	contractStartDate: Joi.date().min('1-1-1950').required(),
+	contractStartDate: Joi.date().required(),
 	contractValidTill: Joi.date().required(),
 	bank: Joi.string().required(),
 	iban: Joi.string()

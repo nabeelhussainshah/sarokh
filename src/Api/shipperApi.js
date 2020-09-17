@@ -21,8 +21,11 @@ export async function dashboardApi() {
 }
 
 export async function allShipmentsApi() {
+	const user = await JSON.parse(localStorage.getItem('user'));
 	return await axios
-		.get(`${process.env.REACT_APP_API}/order/get-all-shipments/${user.id}`)
+		.get(
+			`${process.env.REACT_APP_API}/order/get-all-shipments/${await user.id}`
+		)
 		.then((res) => {
 			if (res.data.status === 200) {
 				return res.data.data;
@@ -75,7 +78,9 @@ export async function editShipmentApi(id) {
 export async function getShipperWarehousesApi() {
 	return await axios
 		.get(
-			`${process.env.REACT_APP_API}/shipper-warehouse/get-list-by-shipperId/${user.id}`
+			`${
+				process.env.REACT_APP_API
+			}/shipper-warehouse/get-list-by-shipperId/${await user.id}`
 		)
 		.then((res) => {
 			console.log(res);

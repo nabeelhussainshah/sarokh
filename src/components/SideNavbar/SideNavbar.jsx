@@ -6,7 +6,6 @@ import { NavLink, Link } from 'react-router-dom';
 function NavBar(props) {
 	useEffect(() => {
 		const trees = window.$('[data-widget="treeview"]');
-		console.log(trees);
 		trees.Treeview('init');
 	});
 	return (
