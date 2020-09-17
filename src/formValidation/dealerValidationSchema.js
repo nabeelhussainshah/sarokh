@@ -21,7 +21,7 @@ export const basicInformation = Joi.object({
 	country: Joi.string().required(),
 	city: Joi.string().required(),
 	address: Joi.string().min(5).max(200).required(),
-	postCode: Joi.string().min(3).max(10).required().label('Post Code'),
+	postCode: Joi.string().min(5).max(5).required().label('Post Code'),
 });
 
 export const businessInformation = Joi.object({

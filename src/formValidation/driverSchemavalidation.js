@@ -19,7 +19,7 @@ export const driverDetails = Joi.object({
 	address: Joi.string().min(5).max(200).required(),
 	country: Joi.string().required(),
 	city: Joi.string().required(),
-	postCode: Joi.string().min(3).max(10).required(),
+	postCode: Joi.string().min(5).max(5).required(),
 	nicNumber: Joi.string()
 		.min(10)
 		.max(10)

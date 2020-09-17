@@ -40,26 +40,14 @@ function Login(props) {
 					toast.success('LOGIN SUCCESS');
 					if (user.user !== undefined) {
 						if (user.user.userType === 'Shipper') {
-							setTimeout(() => {
-								hist.push('/shipper/dashboard');
-							}, 2000);
+							hist.push('/shipper/dashboard');
 						}
 					} else if (user.userType === 'Admin') {
-						setTimeout(() => {
-							hist.push('/admin/dashboard');
-						}, 2000);
+						hist.push('/admin/dashboard');
 					}
 				}
 			});
 	};
-
-	useEffect(() => {
-		// const trees = $('[data-widget="treeview"]');
-		// trees.init();
-		return () => {
-			hist.go(); //reloading the application makes the dropdown in the nav working
-		};
-	}, []);
 
 	return (
 		<Fragment>
@@ -116,18 +104,17 @@ function Login(props) {
 										className="btn btn-danger px-4 float-right"
 									>
 										Login
-								</button>
+									</button>
 									<div className="clearfix"></div>
 									<div className="col-12">
 										<button type="button" className="btn btn-link px-0">
 											Forgot password?
-									</button>
+										</button>
 									</div>
 								</fieldset>
 							</form>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</Fragment>

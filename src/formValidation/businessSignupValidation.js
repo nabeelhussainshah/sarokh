@@ -42,7 +42,7 @@ export const billingDetail = Joi.object({
 	address: Joi.string().min(5).max(200).required(),
 	country: Joi.string().required(),
 	city: Joi.string().required(),
-	postCode: Joi.string().min(3).max(10).required().label('Post Code'),
+	postCode: Joi.string().min(5).max(5).required().label('Post Code'),
 	concernedPerson: Joi.string().min(3).required().label('Concerned Person'),
 	concernedPersonDesignation: Joi.string()
 		.min(3)

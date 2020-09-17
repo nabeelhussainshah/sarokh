@@ -99,248 +99,274 @@ export default function Step1(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			<Container>
-				<div className="card-header">
-					<h2>Add Vechile</h2>
-				</div>
-				<div classname="card-body">
-					<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
-						<div className="form-row mb-3">
-							<div className="col">
-								<select
-									className="form-control"
-									name="owner"
-									ref={register({
-										required: true,
-										validate: (value) => value != 'true',
-									})}
-								>
-									<option value="true">Select Owner</option>
-									<option value="sarokh">Sarokh</option>
-									<option value="leasedoroperator">
-										Leased Or Operator Owned
-								</option>
-								</select>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.owner && 'Owner is required'}
-								</span>
-							</div>
-							<div className="col">
-								<input
-									type="number"
-									className="form-control"
-									placeholder="Current Milage"
-									name="currentMileage"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.currentMilage && 'Current Milage is required'}
-								</span>
-							</div>
-						</div>
-						<div className="form-row mb-3">
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Make"
-									name="make"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.make && 'Make is required'}
-								</span>
-							</div>
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Model"
-									name="model"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.model && 'Model is required'}
-								</span>
-							</div>
-						</div>
-						<div className="form-row mb-3">
-							<div className="col">
-								<input
-									type="date"
-									className="form-control"
-									placeholder="Created Date"
-									name="createdDate"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.createdDate && 'Creation Date is required'}
-								</span>
-							</div>
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Name"
-									name="name"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.name && 'Name is required'}
-								</span>
-							</div>
-						</div>
-						<div className="form-row mb-3">
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Cargo Capacity"
-									name="cargoCapacity"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.cargoCapacity && 'Cargo Capacity is required'}
-								</span>
-							</div>
-							<div className="col">
-								<input
-									type="file"
-									name="registrationFile"
-									accept=".png, .jpg, .jpeg, .pdf"
-									className="form-control"
-									placeholder="RegistrationFile"
-									onChange={(e) => uploadRegistration(e.target.files[0])}
-								/>
-							</div>
-						</div>
-						<div className="form-row mb-3">
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Registration Number"
-									name="registrationNumber"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.registrationNumber && 'Registration Number is required'}
-								</span>
-							</div>
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Registration Year"
-									name="registrationYear"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.registrationYear && 'Registration Year is required'}
-								</span>
-							</div>
-						</div>
-						<div className="form-row mb-3">
-							<div className="col">
-								<select
-									className="form-control"
-									name="status"
-									formcontrolname="status"
-									ref={register({
-										required: true,
-										validate: (value) => value !== 'true',
-									})}
-								>
-									<option value="true">Select Status</option>
-									<option value="active">Active</option>
-									<option value="undermaintinence">Under Maintinence</option>
-									<option value="accidented">Accidented</option>
-									<option value="sold">Sold</option>
-									<option value="returned">Returned</option>
-								</select>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.status && 'Status is required'}
-								</span>
-							</div>
-							<div className="col">
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Type"
-									name="type"
-									ref={register({ required: true })}
-								/>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.type && 'Type is required'}
-								</span>
-							</div>
-						</div>
-						<div className="form-row mb-3">
-							<div className="col-6">
-								<select
-									className="form-control"
-									name="warehouseId"
-									placeholder="Assign Warehouse"
-									ref={register({
-										required: true,
-										validate: (value) => value !== 'true',
-									})}
-								>
-									<option value="true">Select Warehouse</option>
-									{response.data.map((doc, i) => {
-										return (
-											<option key={i} value={doc.id}>
-												{doc.name}
-											</option>
-										);
-									})}
-								</select>
-								<span style={{ color: 'red' }}>
-									{' '}
-									{errors.warehouseId && 'Warehouse is required'}
-								</span>
-							</div>
-						</div>
-						<div className="btn-container float-right" style={{ margin: '10px' }}>
-							<button
-								className="btn btn-secondary dark-grey"
-								type="button"
-								onClick={() => cancel()}
+		<Container>
+			<div className="card-header">
+				<h2>Add Vechile</h2>
+			</div>
+			<div classname="card-body">
+				<form className="margintop10 p-2" onSubmit={handleSubmit(onSubmit)}>
+					<div className="form-row mb-3">
+						<div className="col">
+							<label for="owner">Vehicle Owner</label>
+							<select
+								id="owner"
+								className="form-control"
+								name="owner"
+								ref={register({
+									required: true,
+									validate: (value) => value != 'true',
+								})}
 							>
-								Cancel
-						</button>
-							&nbsp;
-						{hist.location.state ? (
-								<button
-									className="btn btn-success"
-									type="submit"
-									disabled={buttonDisabled()}
-								>
-									Update
-							</button>
-							) : (
-									<button
-										className="btn btn-success"
-										type="submit"
-										disabled={buttonDisabled()}
-									>
-										Finish
-							</button>
-								)}
+								<option value="true">Select Owner</option>
+								<option value="sarokh">Sarokh</option>
+								<option value="leasedoroperator">
+									Leased Or Operator Owned
+								</option>
+							</select>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.owner && 'Owner is required'}
+							</span>
 						</div>
-					</form>
-				</div>
-			</Container>
-		);
+						<div className="col">
+							<label for="currentMileage">Current Milage</label>
+							<input
+								id="currentMileage"
+								type="number"
+								className="form-control"
+								placeholder="Current Milage"
+								name="currentMileage"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.currentMilage && 'Current Milage is required'}
+							</span>
+						</div>
+					</div>
+					<div className="form-row mb-3">
+						<div className="col">
+							<label for="make">Vehicle Make</label>
+							<input
+								id="make"
+								type="text"
+								className="form-control"
+								placeholder="Make"
+								name="make"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.make && 'Make is required'}
+							</span>
+						</div>
+						<div className="col">
+							<label for="model">Vehicle Model</label>
+							<input
+								id="model"
+								type="text"
+								className="form-control"
+								placeholder="Model"
+								name="model"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.model && 'Model is required'}
+							</span>
+						</div>
+					</div>
+					<div className="form-row mb-3">
+						<div className="col">
+							<label for="createdDate">Vehicle Creation Date</label>
+							<input
+								id="createdDate"
+								type="date"
+								className="form-control"
+								placeholder="Created Date"
+								name="createdDate"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.createdDate && 'Creation Date is required'}
+							</span>
+						</div>
+						<div className="col">
+							<label for="name">Vehicle Name</label>
+							<input
+								id="name"
+								type="text"
+								className="form-control"
+								placeholder="Name"
+								name="name"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.name && 'Name is required'}
+							</span>
+						</div>
+					</div>
+					<div className="form-row mb-3">
+						<div className="col">
+							<label for="cargoCapacity">Vehicle Cargo Capacity</label>
+							<input
+								id="cargoCapacity"
+								type="text"
+								className="form-control"
+								placeholder="Cargo Capacity"
+								name="cargoCapacity"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.cargoCapacity && 'Cargo Capacity is required'}
+							</span>
+						</div>
+						<div className="col">
+							<label for="file">Vehicle Registration File</label>
+							<input
+								id="file"
+								type="file"
+								name="registrationFile"
+								accept=".png, .jpg, .jpeg, .pdf"
+								className="form-control"
+								placeholder="RegistrationFile"
+								onChange={(e) => uploadRegistration(e.target.files[0])}
+							/>
+						</div>
+					</div>
+					<div className="form-row mb-3">
+						<div className="col">
+							<label for="regno">Vehicle Registration Number</label>
+							<input
+								id="regno"
+								type="text"
+								className="form-control"
+								placeholder="Registration Number"
+								name="registrationNumber"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.registrationNumber && 'Registration Number is required'}
+							</span>
+						</div>
+						<div className="col">
+							<label for="vehreg">Vehicle Registration Year</label>
+							<input
+								id="vehreg"
+								type="text"
+								className="form-control"
+								placeholder="Registration Year"
+								name="registrationYear"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.registrationYear && 'Registration Year is required'}
+							</span>
+						</div>
+					</div>
+					<div className="form-row mb-3">
+						<div className="col">
+							<label for="status">Current Status</label>
+							<select
+								id="status"
+								className="form-control"
+								name="status"
+								formcontrolname="status"
+								ref={register({
+									required: true,
+									validate: (value) => value !== 'true',
+								})}
+							>
+								<option value="true">Select Status</option>
+								<option value="active">Active</option>
+								<option value="undermaintinence">Under Maintinence</option>
+								<option value="accidented">Accidented</option>
+								<option value="sold">Sold</option>
+								<option value="returned">Returned</option>
+							</select>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.status && 'Status is required'}
+							</span>
+						</div>
+						<div className="col">
+							<label for="type">Vehicle Type</label>
+							<input
+								id="type"
+								type="text"
+								className="form-control"
+								placeholder="Type"
+								name="type"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.type && 'Type is required'}
+							</span>
+						</div>
+					</div>
+					<div className="form-row mb-3">
+						<div className="col-6">
+							<label for="warehouse">Warehouse</label>
+							<select
+								id="warehouse"
+								className="form-control"
+								name="warehouseId"
+								placeholder="Assign Warehouse"
+								ref={register({
+									required: true,
+									validate: (value) => value !== 'true',
+								})}
+							>
+								<option value="true">Select Warehouse</option>
+								{response.data.map((doc, i) => {
+									return (
+										<option key={i} value={doc.id}>
+											{doc.name}
+										</option>
+									);
+								})}
+							</select>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.warehouseId && 'Warehouse is required'}
+							</span>
+						</div>
+					</div>
+					<div className="btn-container float-right" style={{ margin: '10px' }}>
+						<button
+							className="btn btn-secondary dark-grey"
+							type="button"
+							onClick={() => cancel()}
+						>
+							Cancel
+						</button>
+						&nbsp;
+						{hist.location.state ? (
+							<button
+								className="btn btn-success"
+								type="submit"
+								disabled={buttonDisabled()}
+							>
+								Update
+							</button>
+						) : (
+							<button
+								className="btn btn-success"
+								type="submit"
+								disabled={buttonDisabled()}
+							>
+								Finish
+							</button>
+						)}
+					</div>
+				</form>
+			</div>
+		</Container>
+	);
 }

@@ -4,6 +4,11 @@ import Footer from '../Footer/Footer';
 import { NavLink, Link } from 'react-router-dom';
 
 function NavBar(props) {
+	useEffect(() => {
+		const trees = window.$('[data-widget="treeview"]');
+		console.log(trees);
+		trees.Treeview('init');
+	});
 	return (
 		<div className="hold-transition sidebar-mini layout-fixed">
 			<div className="wrapper">
