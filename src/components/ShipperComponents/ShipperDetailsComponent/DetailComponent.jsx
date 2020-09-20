@@ -7,7 +7,13 @@ export default function ContentContainer({ response, items }) {
 			<div className="shipper-detail-container mt-3 mb-5">
 				<h2 className="font20 redcolor">Shipment Delivery Status</h2>
 				<div className="progress">
-					<div className="progress-bar" role="progressbar" style={{ width: "25%" }}>25%</div>
+					<div
+						className="progress-bar"
+						role="progressbar"
+						style={{ width: '25%' }}
+					>
+						25%
+					</div>
 				</div>
 				<div className="clearfix"></div>
 			</div>
@@ -31,19 +37,19 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Pickup Location
 						</td>
-						<td style={{ width: '30%' }}>{response.pickupLocation}</td>
+						<td style={{ width: '30%' }}>{response.pickupLocationDetail}</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>To City</td>
 						<td style={{ width: '30%' }}>{response.shipToCity}</td>
 						<td style={{ fontWeight: 'bold' }}>Delivery Location</td>
-						<td style={{ width: '30%' }}>{response.deliveryLocation}</td>
+						<td style={{ width: '30%' }}>{response.deliveryLocationDetail}</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Receiver Confirmation
 						</td>
-						<td>{response.receiverConfirmation}</td>
+						<td>{response.shipmentOrderItems[0].receiverConfirmation}</td>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Delivered Date/Time
 						</td>
@@ -104,7 +110,9 @@ export default function ContentContainer({ response, items }) {
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>Payment Type</td>
 						<td style={{ width: '30%' }}>{items.paymentType}</td>
-						<td style={{ fontWeight: 'bold', width: '20%' }}>Cash On Delivery (COD)</td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>
+							Cash On Delivery (COD)
+						</td>
 						<td style={{ width: '30%' }}>{items.codAmount}</td>
 					</tr>
 					<tr>
@@ -120,7 +128,9 @@ export default function ContentContainer({ response, items }) {
 					<tr>
 						<td style={{ fontWeight: 'bold' }}>Delivery Charges</td>
 						<td style={{ width: '30%' }}>{items.shipmentDeliveryCharges}</td>
-						<td style={{ fontWeight: 'bold', width: '20%' }}>Receiver Address Surcharge</td>
+						<td style={{ fontWeight: 'bold', width: '20%' }}>
+							Receiver Address Surcharge
+						</td>
 						<td style={{ width: '30%' }}>{items.vat}</td>
 					</tr>
 					<tr>
@@ -143,7 +153,6 @@ export default function ContentContainer({ response, items }) {
 					</tr>
 				</tbody>
 			</table>
-
-		</div >
+		</div>
 	);
 }

@@ -14,8 +14,7 @@ export default function AllUsers(props) {
 	const [response, setresponse] = useState({ loading: true }); //contains the response and loading state
 	const [formToggle, setformToggle] = useState({ form: false }); //decides when we display the form
 	const [data, setdata] = useState(); // the data from the api is stored here which is then passed to the form to get populated
-	const user = JSON.parse(localStorage.getItem('user'));
-	console.log(data);
+	var user;
 
 	useEffect(() => {
 		/* this side effect is used to redirect the user to the all users page, since the userform and user details
@@ -32,6 +31,7 @@ export default function AllUsers(props) {
 	useEffect(() => {
 		// in here api is called and value is stored in the response object
 		async function fetchData() {
+			user = await JSON.parse(localStorage.getItem('user'));
 			return await axios
 				.get(
 					`${process.env.REACT_APP_API}/user/get-shipper-users-list/${user.id}`

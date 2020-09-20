@@ -40,9 +40,9 @@ export default function ShipperSetting(props) {
 		getdata: false,
 	});
 	console.log(response);
-	const { register, errors, handleSubmit, watch } = useForm({
+	const { register, errors, handleSubmit } = useForm({
 		shouldFocusError: true,
-		mode: 'onChange',
+		mode: 'onSubmit',
 		criteriaMode: 'all',
 	});
 
@@ -92,7 +92,9 @@ export default function ShipperSetting(props) {
 		shipperSettingApi({ ...formData, id: response.userData.id })
 			.then((res) => {
 				toast.success('Shipper Settings Submitted');
-				hist.go();
+				setTimeout(() => {
+					hist.go();
+				}, 1500);
 			})
 			.catch((err) => {
 				toast.error(err.message);

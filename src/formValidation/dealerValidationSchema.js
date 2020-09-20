@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers';
 
 export const basicInformation = Joi.object({
 	owner: Joi.string().required(),

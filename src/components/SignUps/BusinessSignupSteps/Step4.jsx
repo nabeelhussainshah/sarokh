@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Redirect, useHistory } from 'react-router-dom';
-import { state, postData } from './state';
+import { businessSignupData } from './state';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -10,7 +10,7 @@ import StepIndicator from './StepIndicator';
 
 export default function Step4(props) {
 	const hist = useHistory();
-	const [data, setdata] = useRecoilState(state);
+	const [data, setdata] = useRecoilState(businessSignupData);
 	const { register, handleSubmit, errors } = useForm({
 		shouldFocusError: true,
 		defaultValues: data,

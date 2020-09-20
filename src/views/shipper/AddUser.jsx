@@ -11,7 +11,14 @@ export default function AddUser(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const [data, setdata] = useState({});
-	const user = JSON.parse(localStorage.getItem('user'));
+	var user;
+
+	useEffect(() => {
+		async function getuser() {
+			user = await JSON.parse(localStorage.getItem('user'));
+		}
+		getuser();
+	}, []);
 
 	useEffect(() => {
 		if (Object.keys(data).length !== 0) {

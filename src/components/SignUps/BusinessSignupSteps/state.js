@@ -1,7 +1,6 @@
 import { atom, selector } from 'recoil';
 
-export const state = atom({
-	key: 'state',
+export const businessSignupData = atom({
+	key: 'businessSignupData',
 	default: {},
 });
-

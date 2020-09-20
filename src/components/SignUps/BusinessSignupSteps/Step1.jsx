@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { state } from './state';
+import { businessSignupData } from './state';
 import axios from 'axios';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
@@ -10,7 +10,7 @@ import { joiResolver } from '@hookform/resolvers';
 import { basicInformation } from '../../../formValidation/businessSignupValidation';
 
 export default function Step1(props) {
-	const [data, setdata] = useRecoilState(state);
+	const [data, setdata] = useRecoilState(businessSignupData);
 	const hist = useHistory();
 	const { register, errors, handleSubmit } = useForm({
 		defaultValues: data,

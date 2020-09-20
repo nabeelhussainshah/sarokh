@@ -52,6 +52,9 @@ export default function Step3(props) {
 				console.log(res);
 				if (res.status === 200) {
 					toast.success('warehouse has been added');
+					setdata({
+						location: [{ latitude: '23.8859', longitude: '39.1925' }],
+					});
 					hist.push('/shipper/addshipperwarehouse/ourlocation');
 				} else {
 					toast.error('something went wrong');
@@ -91,6 +94,9 @@ export default function Step3(props) {
 				console.log(res);
 				if (res.status === 200) {
 					toast.success('warehouse data has been updated');
+					setdata({
+						location: [{ latitude: '23.8859', longitude: '39.1925' }],
+					});
 					hist.push(props.redirect);
 				} else {
 					toast.error('something went wrong');
@@ -116,7 +122,7 @@ export default function Step3(props) {
 	return (
 		<Container>
 			<div className="card-header">
-				<h2>Add New Location</h2>
+				{data.update ? <h2>Edit Location</h2> : <h2>Add New Location</h2>}
 			</div>
 			<div className="card-body">
 				<StepIndicator
@@ -188,26 +194,26 @@ export default function Step3(props) {
 								</button>
 							</div>
 						) : (
-								<div className="btn-container float-right">
-									<button
-										className="btn btn-danger"
-										type="button"
-										onClick={() => hist.goBack()}
-									>
-										Back
+							<div className="btn-container float-right">
+								<button
+									className="btn btn-danger"
+									type="button"
+									onClick={() => hist.goBack()}
+								>
+									Back
 								</button>
-									&nbsp;
+								&nbsp;
 								{data.update === undefined ? (
-										<button className="btn btn-success" type="submit">
-											Finish
+									<button className="btn btn-success" type="submit">
+										Finish
 									</button>
-									) : (
-											<button className="btn btn-secondary dark-grey" type="submit">
-												Update
+								) : (
+									<button className="btn btn-secondary dark-grey" type="submit">
+										Update
 									</button>
-										)}
-								</div>
-							)}
+								)}
+							</div>
+						)}
 					</form>
 				</div>
 			</div>

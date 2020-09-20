@@ -16,6 +16,7 @@ export default function ShipmentDetails(props) {
 			return await axios
 				.get(`${process.env.REACT_APP_API}/order/get-details/${loc.state.id}`)
 				.then((response) => {
+					console.log(response);
 					setresponse({ loading: false, data: response.data.data });
 				})
 				.catch((err) => {

@@ -76,6 +76,7 @@ export async function editShipmentApi(id) {
 }
 
 export async function getShipperWarehousesApi() {
+	const user = await JSON.parse(localStorage.getItem('user'));
 	return await axios
 		.get(
 			`${

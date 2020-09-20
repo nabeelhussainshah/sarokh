@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { Redirect, useHistory } from 'react-router-dom';
-import { state } from './state';
+import { businessSignupData } from './state';
 import { useForm } from 'react-hook-form';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
@@ -10,7 +10,7 @@ import { businessDetails } from '../../../formValidation/businessSignupValidatio
 
 export default function Step2(props) {
 	const hist = useHistory();
-	const [data, setdata] = useRecoilState(state);
+	const [data, setdata] = useRecoilState(businessSignupData);
 	const { register, handleSubmit, errors } = useForm({
 		shouldFocusError: true,
 		defaultValues: data,

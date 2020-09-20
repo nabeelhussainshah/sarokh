@@ -14,6 +14,7 @@ export const driverEditHelper = (data) => {
 			vehicleName: data.vehicle.name,
 			vehicleModel: data.vehicle.model,
 			userName: data.user.userName,
+			password: data.user.userPassword,
 			update: true,
 		};
 	} else {
@@ -26,6 +27,7 @@ export const driverEditHelper = (data) => {
 			dateOfBirth: moment(data.user.dob).format('YYYY-MM-DD'),
 			postCode: data.postalCode,
 			userName: data.user.userName,
+			password: data.user.userPassword,
 			update: true,
 		};
 	}

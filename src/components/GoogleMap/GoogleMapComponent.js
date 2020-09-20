@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
 	withScriptjs,
 	withGoogleMap,
@@ -13,6 +13,7 @@ export const GoogleMapComponent = withScriptjs(
 		const [state, setstate] = useState(false);
 
 		function changeLocation(type, data) {
+			// eslint-disable-next-line default-case
 			switch (type) {
 				case 'MarkerDrag':
 					props.changeFunction({
@@ -38,38 +39,37 @@ export const GoogleMapComponent = withScriptjs(
 					});
 			}
 		}
+
 		return (
 			<GoogleMap defaultZoom={6} defaultCenter={{ lat: 23.8859, lng: 39.1925 }}>
 				{props.isMarkerShown &&
-					props.position.map((doc) => {
+					props.position.map((doc, i) => {
 						return (
-							<Fragment>
-								<Marker
-									position={{
-										lat: parseFloat(doc.latitude),
-										lng: parseFloat(doc.longitude),
-									}}
-									draggable={props.draggable}
-									onDragEnd={(e) => changeLocation('MarkerDrag', e)}
-									onMouseOver={(e) => setstate(doc.label)}
-									onMouseOut={(e) => setstate(false)}
-								>
-									{state === doc.label && doc.label !== undefined && (
-										<InfoWindow>
-											<p
-												style={{
-													color: 'red',
-													padding: 'unset',
-													margin: 'unset',
-													fontWeight: 'bold'
-												}}
-											>
-												{doc.label}
-											</p>
-										</InfoWindow>
-									)}
-								</Marker>
-							</Fragment>
+							<Marker
+								position={{
+									lat: parseFloat(doc.latitude),
+									lng: parseFloat(doc.longitude),
+								}}
+								draggable={props.draggable}
+								onDragEnd={(e) => changeLocation('MarkerDrag', e)}
+								onMouseOver={(e) => setstate(doc.label)}
+								onMouseOut={(e) => setstate(false)}
+							>
+								{state === doc.label && doc.label !== undefined && (
+									<InfoWindow>
+										<p
+											style={{
+												color: 'red',
+												padding: 'unset',
+												margin: 'unset',
+												fontWeight: 'bold',
+											}}
+										>
+											{doc.label}
+										</p>
+									</InfoWindow>
+								)}
+							</Marker>
 						);
 					})}
 				{props.autocompleted ? (

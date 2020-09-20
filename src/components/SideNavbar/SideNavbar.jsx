@@ -7,7 +7,7 @@ function NavBar(props) {
 	useEffect(() => {
 		const trees = window.$('[data-widget="treeview"]');
 		trees.Treeview('init');
-	});
+	}, []);
 	return (
 		<div className="hold-transition sidebar-mini layout-fixed">
 			<div className="wrapper">
