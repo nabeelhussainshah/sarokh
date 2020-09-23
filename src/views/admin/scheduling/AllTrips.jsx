@@ -35,14 +35,20 @@ export default function AllTrips(props) {
 	};
 
 	const deleteTrip = (row) => {
-		deleteTripApi(row.row.original.tripId)
-			.then((res) => {
-				toast.success('Trip Deleted!');
-				setresponse({ ...response, loading: true });
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+		if (
+			window.confirm(
+				'Are you sure to delete this trip ? (CheckIn shipments at Warehouse terminal)'
+			)
+		) {
+			deleteTripApi(row.row.original.id)
+				.then((res) => {
+					toast.success('Trip Deleted!');
+					setresponse({ ...response, loading: true });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
 	};
 
 	const columns = [

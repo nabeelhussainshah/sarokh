@@ -7,6 +7,7 @@ import { tripDetailApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import { isUndefined } from 'underscore';
 
 export default function TripDetail(props) {
 	const hist = useHistory();
@@ -14,7 +15,7 @@ export default function TripDetail(props) {
 	console.log(hist.location.state);
 
 	useEffect(() => {
-		if (response.loading) {
+		if (response.loading && !isUndefined(hist.location.state)) {
 			tripDetailApi(hist.location.state.id)
 				.then((res) => {
 					setresponse({ loading: false, data: res });
@@ -22,6 +23,8 @@ export default function TripDetail(props) {
 				.catch((err) => {
 					toast.error(err.message);
 				});
+		} else {
+			hist.goBack();
 		}
 	}, []);
 
@@ -37,8 +40,8 @@ export default function TripDetail(props) {
 
 	const columns = [
 		{
-			Header: 'Serial No',
-			accessor: 'id',
+			Header: 'Tracking No',
+			accessor: 'shipmentOrderId',
 		},
 		{
 			Header: 'Location Type',
@@ -52,7 +55,7 @@ export default function TripDetail(props) {
 			},
 		},
 		{
-			Header: 'Pickups/Delievery',
+			Header: 'Pickups/Delivery',
 			accessor: 'pickupDelivery',
 		},
 		{
@@ -132,7 +135,7 @@ export default function TripDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Vehicle:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"></p>
+											<p className=" text-left">{response.data.vehicle.name}</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
@@ -140,7 +143,7 @@ export default function TripDetail(props) {
 										<label className="col-sm-6 col-6">
 											<p className=" text-left">
 												{moment(response.data.dispatchDatetime).format(
-													'YYYY-MM-DD'
+													'YYYY-MM-DD hh:mm:ss'
 												)}
 											</p>
 										</label>

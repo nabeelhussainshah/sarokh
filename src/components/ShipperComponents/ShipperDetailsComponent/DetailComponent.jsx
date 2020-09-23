@@ -4,6 +4,13 @@ import moment from 'moment';
 export default function ContentContainer({ response, items }) {
 	return (
 		<div>
+			<div className="d-flex flex-row justify-content-end">
+				<button className="btn btn-primary mr-1 btnbrown">Tracking Page</button>
+				<button className="btn btn-primary mr-1 btnbrown">
+					View Proof of delivery
+				</button>
+				<button className="btn btn-primary btnbrown">Print label</button>
+			</div>
 			<div className="shipper-detail-container mt-3 mb-5">
 				<h2 className="font20 redcolor">Shipment Delivery Status</h2>
 				<div className="progress">

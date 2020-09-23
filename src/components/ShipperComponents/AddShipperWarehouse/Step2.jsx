@@ -49,6 +49,7 @@ export default function Step2(props) {
 								className="form-control"
 								name="mangerContact"
 								placeholder="Contact No"
+								defaultValue="9665"
 								ref={register({})}
 							/>
 							<span style={{ color: 'red' }}>
@@ -59,7 +60,7 @@ export default function Step2(props) {
 
 						<div className="form-group col-sm-6" />
 						<div className="form-group col-md-6">
-							<label htmlFor="operationalTimeto">Operationl Time From</label>
+							<label htmlFor="operationalTimeto">Operational Time From</label>
 							<input
 								type="text"
 								className="form-control"
@@ -73,7 +74,7 @@ export default function Step2(props) {
 							</span>
 						</div>
 						<div className="col-md-6">
-							<label htmlFor="operationalTimeto">Operationl Time To</label>
+							<label htmlFor="operationalTimeto">Operational Time To</label>
 							<input
 								type="text"
 								className="form-control"

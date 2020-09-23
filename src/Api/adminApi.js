@@ -769,6 +769,8 @@ export async function createTrip(data) {
 		.then((res) => {
 			if (res.data.status === 200) {
 				return true;
+			} else if (res.data.status === 400) {
+				throw new Error(res.data.message);
 			} else {
 				throw new Error(
 					`something went wrong with status code: ${res.data.status}`

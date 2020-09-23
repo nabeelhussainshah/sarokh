@@ -132,7 +132,6 @@ export default function Step1(props) {
 						<div className="form-group col-md-12">
 							<label htmlFor="latitude">Select Location</label>
 							<GoogleMapComponent
-								key={data.location[0].latitude}
 								isMarkerShown={true}
 								position={data.location}
 								changeFunction={setdata}
