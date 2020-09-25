@@ -8,7 +8,7 @@ export const basicInformation = Joi.object({
 		.required()
 		.label('Contact')
 		.messages({
-			'string.pattern.base': 'Contact should be a valid no e.g "966562354985"',
+			'string.pattern.base': 'Contact should be a valid no e.g "966512345678"',
 		}),
 	email: Joi.string()
 		.email({ minDomainSegments: 2, tlds: false })

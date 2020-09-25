@@ -7,20 +7,34 @@ import { toast } from 'react-toastify';
 export default function AddArea(props) {
 	const hist = useHistory();
 
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			console.log('Latitude is :', position.coords.latitude);
+			console.log('Longitude is :', position.coords.longitude);
+		});
+	}, []);
+
 	return (
 		<Fragment>
 			<div className="add-address-container">
 				<div className="form-row margintop30">
-
 					<div class="col-md-6">
 						<label>Add Area</label>
-						<input name="username" type="text" class="form-control" formcontrolname="username" placeholder="Add Area" autocomplete="username" required="" />
+						<input
+							name="username"
+							type="text"
+							class="form-control"
+							formcontrolname="username"
+							placeholder="Add Area"
+							autocomplete="username"
+							required=""
+						/>
 						<button
 							type="submit"
 							className="btn btn-danger btnbrown px-4 mt-3 float-right"
 						>
 							Search
-								</button>
+						</button>
 					</div>
 				</div>
 			</div>

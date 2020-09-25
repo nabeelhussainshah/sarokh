@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import React from 'react';
 import SideNavBar from '../components/SideNavbar/SideNavbar';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import ShipperDashboard from '../views/shipper/ShipperDashboard';
@@ -50,6 +49,10 @@ function ShipperRouter(props) {
 				/>
 				<ProtectedRoute path="/shipper/users/allusers" component={AllUsers} />
 				<ProtectedRoute path="/shipper/printwaybill" component={PrintWayBill} />
+				<ProtectedRoute
+					path="/shipper/order/printwaybill"
+					component={PrintWayBill}
+				/>
 				<ProtectedRoute
 					path="/shipper/printbulkshipment"
 					component={PrintBulkShipment}

@@ -4,27 +4,41 @@ import Loading from '../../components/Loading/Loading';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ReactToPrint from 'react-to-print';
+import { useLocation, useHistory } from 'react-router-dom';
+import { getTrackingNumberApi } from '../../Api/shipperApi';
+import { isUndefined } from 'underscore';
 
 export default function PrintWayBill(props) {
 	const [response, setresponse] = useState({ loading: true });
 	const componentRef = useRef();
+	const hist = useHistory();
+	const loc = useLocation();
+
+	if (loc.pathname !== '/shipper/printwaybill' && isUndefined(loc.state)) {
+		hist.goBack(); /* this is a check to see if this component is being accessed in the admin console, if its not it should act
+		like the component of shipper */
+	}
 
 	useEffect(() => {
-		axios
-			.get(
-				`${process.env.REACT_APP_API}/order/get-all-shipments-trackingnumber`
-			)
-			.then((response) => {
-				if (response.status === 200) {
-					setresponse({ loading: false, list: response.data.data });
-				} else {
-					toast.error('Internal Server Error 500');
-				}
+		getTrackingNumberApi()
+			.then((res) => {
+				setresponse({ loading: false, list: res });
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.message);
 			});
 	}, []);
+
+	useEffect(() => {
+		if (!isUndefined(loc.state)) {
+			if (!response.loading && response.content === undefined) {
+				handleChange(loc.state.trackingNumber);
+			}
+		}
+	}, [
+		response.loading,
+		response.content,
+	]); /* this effect is called when ever the redirect is done from the detail page */
 
 	const handleChange = async (value) => {
 		if (value !== 'true') {
@@ -45,48 +59,61 @@ export default function PrintWayBill(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			<ListingContainer>
-				<div>
-					<div className="card-header">
-						<h2>Print Way Bill</h2>
-					</div>
-					<div className="card-body">
-						<label>Select Tracking Numbers</label>
-						<select
-							className="form-control mb-5"
-							id="status"
-							onChange={(e) => {
-								handleChange(e.target.value);
-							}}
-						>
-							<option value="true">---Select Order id---</option>
-							{response.list.map((doc, i) => {
-								return (
-									<option key={i} value={doc}>
-										{doc}
-									</option>
-								);
-							})}
-						</select>
-
-						{response.content === undefined ? null : (
-							<>
-								<ComponentToPrint1 ref={componentRef} response={response} />
-								<ReactToPrint
-									trigger={() => (
-										<button className="btn btn-primary mt-4 float-right">
-											Print this out!
-									</button>
-									)}
-									content={() => componentRef.current}
-									pageStyle="width:50%"
-								/>
-							</>
-						)}
-					</div>
+		<ListingContainer>
+			<div>
+				<div className="card-header">
+					<h2>Print Way Bill</h2>
 				</div>
-			</ListingContainer>
-		);
+				<div className="card-body">
+					{isUndefined(loc.state) ? (
+						<>
+							<label>Select Tracking Numbers</label>
+							<select
+								className="form-control mb-5"
+								id="status"
+								onChange={(e) => {
+									handleChange(e.target.value);
+								}}
+							>
+								<option value="true">---Select Order id---</option>
+								{response.list.map((doc, i) => {
+									return (
+										<option key={i} value={doc}>
+											{doc}
+										</option>
+									);
+								})}
+							</select>{' '}
+						</>
+					) : (
+						<>
+							<label>Tracking Number</label>
+							<input
+								className="form-control mb-5"
+								type="text"
+								defaultValue={loc.state.trackingNumber}
+							/>
+						</>
+					)}
+
+					{response.content === undefined ? null : (
+						<>
+							<ComponentToPrint1 ref={componentRef} response={response} />
+							<ReactToPrint
+								trigger={() => (
+									<button className="btn btn-primary mt-4 float-right">
+										Print this out!
+									</button>
+								)}
+								content={() => componentRef.current}
+								pageStyle="width:50%"
+							/>
+						</>
+					)}
+				</div>
+			</div>
+		</ListingContainer>
+	);
 }
 
 class ComponentToPrint1 extends React.Component {
@@ -335,7 +362,8 @@ class ComponentToPrint1 extends React.Component {
 								style={{ width: '70%', textAlign: 'center' }}
 								className="text-center"
 							>
-								<img style={{ width: '100%', }}
+								<img
+									style={{ width: '100%' }}
 									src={this.props.response.data.shipmentOrderItems[0].barCode}
 									alt="Logo"
 								/>

@@ -97,3 +97,22 @@ export async function getShipperWarehousesApi() {
 			throw err;
 		});
 }
+
+export async function getTrackingNumberApi() {
+	const user = await JSON.parse(localStorage.getItem('user'));
+	return await axios
+		.get(`${process.env.REACT_APP_API}/order/get-all-shipments-trackingnumber`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

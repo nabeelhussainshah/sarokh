@@ -151,7 +151,6 @@ export default function Step1(props) {
 											onChange={(e) => {
 												uploadFile(e.target.files[0]);
 											}}
-											required={true}
 										/>
 									</div>
 								</div>

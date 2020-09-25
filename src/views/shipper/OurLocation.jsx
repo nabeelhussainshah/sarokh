@@ -50,9 +50,9 @@ export default function Maps(porps) {
 				},
 			],
 			operationalTimefrom: moment(dataToEdit.operationalTimefrom).format(
-				'hh:mm'
+				'hh:mm A'
 			), //gives time for html input type='time' e.g "08:15"
-			operationalTimeto: moment(dataToEdit.operationalTimeto).format('hh:mm'),
+			operationalTimeto: moment(dataToEdit.operationalTimeto).format('hh:mm A'),
 		});
 
 		hist.push('/shipper/addshipperwarehouse/step1');
@@ -139,55 +139,55 @@ export default function Maps(porps) {
 	return response.loading ? (
 		<div>loading...</div>
 	) : (
-			transitions.map(
-				({ item, props, key }) =>
-					item && (
-						<animated.div key={key} style={props}>
-							<Container>
-								<div className="card-header">
-									<h2 className="float-left">Our Location</h2>
-									<button
-										className="btn btn-info float-right btnbrown"
-										onClick={() => addNewWarehouse()}
-									>
-										Add New
+		transitions.map(
+			({ item, props, key }) =>
+				item && (
+					<animated.div key={key} style={props}>
+						<Container>
+							<div className="card-header">
+								<h2 className="float-left">Our Location</h2>
+								<button
+									className="btn btn-info float-right btnbrown"
+									onClick={() => addNewWarehouse()}
+								>
+									Add New
 								</button>
-								</div>
-								<div className="card-body">
-									<GoogleMapComponent
-										isMarkerShown={true}
-										position={response.data.mapLocations || []}
-										changefunction={setresponse}
-										googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
-										loadingElement={
-											<div className="spinner-border" role="status">
-												<span className="sr-only">Loading...</span>
-											</div>
-										}
-										containerElement={
-											<div
-												style={{
-													height: `400px`,
-													width: `85%`,
-													margin: `0 auto`,
-												}}
-											/>
-										}
-										mapElement={<div style={{ height: `100%` }} />}
-										autocomplete={false}
-									/>
-									<div className="margintop30"></div>
-									<Table
-										data={response.data.warehouseList}
-										columns={columns}
-										tableclass={'table-responsive custom-table'}
-										pagination={true}
-										filter={true}
-									/>
-								</div>
-							</Container>
-						</animated.div>
-					)
-			)
-		);
+							</div>
+							<div className="card-body">
+								<GoogleMapComponent
+									isMarkerShown={true}
+									position={response.data.mapLocations || []}
+									changefunction={setresponse}
+									googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
+									loadingElement={
+										<div className="spinner-border" role="status">
+											<span className="sr-only">Loading...</span>
+										</div>
+									}
+									containerElement={
+										<div
+											style={{
+												height: `400px`,
+												width: `85%`,
+												margin: `0 auto`,
+											}}
+										/>
+									}
+									mapElement={<div style={{ height: `100%` }} />}
+									autocomplete={false}
+								/>
+								<div className="margintop30"></div>
+								<Table
+									data={response.data.warehouseList}
+									columns={columns}
+									tableclass={'table-responsive custom-table'}
+									pagination={true}
+									filter={true}
+								/>
+							</div>
+						</Container>
+					</animated.div>
+				)
+		)
+	);
 }

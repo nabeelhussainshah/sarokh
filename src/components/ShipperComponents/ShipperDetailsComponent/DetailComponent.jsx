@@ -1,7 +1,22 @@
 import React from 'react';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 export default function ContentContainer({ response, items }) {
+	const hist = useHistory();
+	const printBill = (trackingNo) => {
+		if (hist.location.pathname.search('admin') === 1) {
+			hist.push({
+				pathname: `/admin/printwaybill`,
+				state: { trackingNumber: trackingNo },
+			});
+		} else {
+			hist.push({
+				pathname: `/shipper/order/printwaybill`,
+				state: { trackingNumber: trackingNo },
+			});
+		}
+	};
 	return (
 		<div>
 			<div className="d-flex flex-row justify-content-end">
@@ -9,7 +24,14 @@ export default function ContentContainer({ response, items }) {
 				<button className="btn btn-primary mr-1 btnbrown">
 					View Proof of delivery
 				</button>
-				<button className="btn btn-primary btnbrown">Print label</button>
+				<button
+					className="btn btn-primary btnbrown"
+					onClick={() => {
+						printBill(items.trackingNumber);
+					}}
+				>
+					Print label
+				</button>
 			</div>
 			<div className="shipper-detail-container mt-3 mb-5">
 				<h2 className="font20 redcolor">Shipment Delivery Status</h2>
