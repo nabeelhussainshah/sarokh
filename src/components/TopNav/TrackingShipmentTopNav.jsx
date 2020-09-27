@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function TopNav(props) {
 	return (
@@ -10,14 +10,22 @@ function TopNav(props) {
 					<ul className="navbar-nav">
 						<Fragment>
 							<li className="nav-item d-none d-sm-inline-block">
-								<Link to="/shipper/printwaybill" className="nav-link">
-									Add Address
-								</Link>
+								<NavLink
+									to="/tracking/addaddress"
+									className="nav-link"
+									activeClassName="active"
+								>
+									Last Mile
+								</NavLink>
 							</li>
 							<li className="nav-item d-none d-sm-inline-block">
-								<Link to="/shipper/newshipment/step1" className="nav-link">
+								<NavLink
+									to="/tracking/addarea"
+									className="nav-link"
+									activeClassName="active"
+								>
 									Select Point
-								</Link>
+								</NavLink>
 							</li>
 						</Fragment>
 					</ul>

@@ -12,7 +12,7 @@ export const GoogleMapComponent = withScriptjs(
 	withGoogleMap((props) => {
 		const [state, setstate] = useState(false);
 
-		function changeLocation(type, data) {
+		async function changeLocation(type, data) {
 			// eslint-disable-next-line default-case
 			switch (type) {
 				case 'MarkerDrag':
@@ -41,22 +41,52 @@ export const GoogleMapComponent = withScriptjs(
 			}
 		}
 
+		function setClickedMarker(pointId, pointName) {
+			if (window.confirm(`Are you sure to select " ${pointName} " ?`)) {
+				props.changeFunction({
+					...props.globalState,
+					dealerPointId: pointId,
+					locationName: pointName,
+				});
+			}
+		}
+
 		return (
-			<GoogleMap defaultZoom={6} defaultCenter={{ lat: 23.8859, lng: 39.1925 }}>
+			<GoogleMap
+				defaultZoom={props.zoom || 6}
+				center={
+					props.defaultCenter
+						? props.defaultCenter
+						: {
+								lat: 23.8859,
+								lng: 39.1925,
+						  }
+				}
+			>
 				{props.isMarkerShown &&
 					props.position.map((doc, i) => {
 						return (
 							<Marker
+								key={i}
 								position={{
 									lat: parseFloat(doc.latitude),
 									lng: parseFloat(doc.longitude),
 								}}
 								draggable={props.draggable}
 								onDragEnd={(e) => changeLocation('MarkerDrag', e)}
-								onMouseOver={(e) => setstate(doc.label)}
-								onMouseOut={(e) => setstate(false)}
+								onMouseOver={() => setstate(doc.label)}
+								onMouseOut={() => setstate(false)}
+								onClick={() => {
+									if (
+										props.markerClickAllow &&
+										doc.dealerPointId !== undefined
+									) {
+										setClickedMarker(doc.dealerPointId, doc.label);
+									}
+								}}
 							>
-								{state === doc.label && doc.label !== undefined && (
+								{((state === doc.label && doc.label !== undefined) ||
+									(props.keepMarker && doc.label !== undefined)) && (
 									<InfoWindow>
 										<p
 											style={{

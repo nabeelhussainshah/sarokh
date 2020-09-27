@@ -54,6 +54,15 @@ export default function WarehouseList(porps) {
 			});
 	};
 
+	const warehouseDetail = (data) => {
+		hist.push({
+			pathname: '/admin/warehouses/warehouseshipments',
+			state: {
+				id: data.id,
+			},
+		});
+	};
+
 	const addNewWarehouse = () => {
 		setdata({ location: [{ latitude: '23.8859', longitude: '39.1925' }] }); //resets the global state incase any previous data was present
 		hist.push('/admin/warehouses/addshipperwarehouse/step1');
@@ -66,10 +75,13 @@ export default function WarehouseList(porps) {
 				return (
 					<>
 						<i
-							className="fa fa-edit"
+							className="fa fa-info-circle mr-2"
+							onClick={() => warehouseDetail(row.row.original)}
+						/>
+						<i
+							className="fa fa-edit mr-2"
 							onClick={() => editData(row.row.original)}
 						/>
-						&nbsp;&nbsp;
 						<i
 							className="fa fa-trash"
 							onClick={() => deleteData(row.row.original)}

@@ -1,11 +1,33 @@
 import React, { useEffect, Fragment } from 'react';
-import axios from 'axios';
-import Header from '../../components/TopNav/TrackingShipmentTopNav.jsx';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { searchOrderApi } from '../../Api/trackingApi';
+import { trackingOrderDetail } from './state';
+import { useRecoilState } from 'recoil';
 
 export default function TrackingInput(props) {
 	const hist = useHistory();
+	const [data, setData] = useRecoilState(trackingOrderDetail);
+	const { register, errors, handleSubmit } = useForm({
+		defaultValues: {},
+		shouldFocusError: true,
+		mode: 'onChange',
+		criteriaMode: 'all',
+	});
+
+	const onSubmit = (formData) => {
+		searchOrderApi(formData)
+			.then((res) => {
+				console.log(res);
+				setData(res);
+				toast.success('Success');
+				hist.push('/tracking/details');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
 
 	return (
 		<Fragment>
@@ -18,19 +40,31 @@ export default function TrackingInput(props) {
 					</div>
 					<div className="col-md-4 p-0 brownbg">
 						<div className="login100-more">
-							<form autoComplete="on">
+							<form onSubmit={handleSubmit(onSubmit)}>
 								<fieldset>
 									<div className="mb-3">
 										<div className="form-group">
-											<label>Enter Tracking Number</label>
+											<label htmlFor="1">Enter Tracking Number</label>
 											<input
-												name="username"
-												type="text"
+												id="1"
+												name="trackingNumber"
+												type="number"
 												className="form-control"
 												formcontrolname="username"
 												placeholder="Enter Tracking Number"
-												autoComplete="username"
-												required
+												ref={register}
+											/>
+										</div>
+										<div className="form-group">
+											<label htmlFor="2">Enter Pin Code</label>
+											<input
+												id="2"
+												name="otp"
+												type="number"
+												className="form-control"
+												formcontrolname="username"
+												placeholder="PIN CODE"
+												ref={register}
 											/>
 										</div>
 									</div>

@@ -55,7 +55,7 @@ export default function Maps(porps) {
 			operationalTimeto: moment(dataToEdit.operationalTimeto).format('hh:mm A'),
 		});
 
-		hist.push('/shipper/addshipperwarehouse/step1');
+		hist.push('/shipper/shipperwarehouse/add/step1');
 	};
 
 	const deleteData = async (dataToDelete) => {
@@ -76,9 +76,18 @@ export default function Maps(porps) {
 			});
 	};
 
+	const warehouseDetail = (data) => {
+		hist.push({
+			pathname: '/shipper/shipperwarehouse/ourlocation/warehouseshipments',
+			state: {
+				id: data.id,
+			},
+		});
+	};
+
 	const addNewWarehouse = () => {
 		setdata({ location: [{ latitude: '23.8859', longitude: '39.1925' }] }); //resets the global state incase any previous data was present
-		hist.push('/shipper/addshipperwarehouse/step1');
+		hist.push('/shipper/shipperwarehouse/add/step1');
 	};
 
 	const columns = [
@@ -88,10 +97,14 @@ export default function Maps(porps) {
 				return (
 					<>
 						<i
-							className="fa fa-edit"
+							className="fa fa-info-circle mr-2"
+							onClick={() => warehouseDetail(row.row.original)}
+						/>
+						<i
+							className="fa fa-edit mr-2"
 							onClick={() => editData(row.row.original)}
 						/>
-						&nbsp;&nbsp;
+
 						<i
 							className="fa fa-trash"
 							onClick={() => deleteData(row.row.original)}

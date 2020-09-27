@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '../Containers/ListingContainer';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -11,10 +11,25 @@ import { uploadFile } from '../../Api/generalApi';
 import { Redirect } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers';
 import { driverDetails } from '../../formValidation/driverSchemavalidation';
+import Loading from '../Loading/Loading';
+import { sarokhWarehouseList } from '../../Api/generalApi';
 
 export default function DriverDetails(props) {
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(driverData);
+	const [response, setResponse] = useState({ loading: true });
+	console.log(response);
+
+	useEffect(() => {
+		sarokhWarehouseList()
+			.then((res) => {
+				setResponse({ loading: false, data: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	}, []);
+
 	const { register, errors, handleSubmit } = useForm({
 		defaultValues: data,
 		shouldFocusError: true,
@@ -27,7 +42,6 @@ export default function DriverDetails(props) {
 		return <Redirect to={props.defaultPath} />;
 	}
 
-	console.log(errors);
 	const onSubmit = (formData) => {
 		console.log(formData);
 		setdata({ ...data, ...formData });
@@ -59,7 +73,9 @@ export default function DriverDetails(props) {
 			});
 	};
 
-	return (
+	return response.loading ? (
+		<Loading />
+	) : (
 		<Container>
 			<div className="card-header">
 				<h2>{data.update ? 'Edit Driver' : 'Add Driver'}</h2>
@@ -246,6 +262,31 @@ export default function DriverDetails(props) {
 							</div>
 						</div>
 					</div>
+					<div className="form-row">
+						<div className="form-group col-md-6">
+							<label htmlFor="Driver Warehouse">Driver Warehouse</label>
+							<select
+								className="form-control"
+								name="warehouseId"
+								id="driver Warehouse"
+								ref={register()}
+							>
+								<option value="">--Select Warehouse--</option>
+								{response.data.map((doc) => {
+									return (
+										<option key={doc.id} value={doc.id}>
+											{doc.name}
+										</option>
+									);
+								})}
+							</select>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.warehouseId && errors.warehouseId.message}
+							</span>
+						</div>
+					</div>
+
 					<div
 						class="btn-container float-right margintop30"
 						style={{ margin: '10px' }}

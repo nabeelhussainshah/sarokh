@@ -30,6 +30,7 @@ export const driverDetails = Joi.object({
 		.max(10)
 		.required()
 		.label('Driver License No'),
+	warehouseId: Joi.string().required().label('Driver Warehouse'),
 });
 
 export const vehicleDetails = Joi.object({
