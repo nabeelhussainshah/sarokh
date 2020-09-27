@@ -8,10 +8,10 @@ import OurLocation from '../../views/shipper/OurLocation';
 
 export default function AddShipperWarehouseFormRoutes(props) {
 	const routes = {
-		step1: '/shipper/addshipperwarehouse/step1',
-		step2: '/shipper/addshipperwarehouse/step2',
-		step3: '/shipper/addshipperwarehouse/step3',
-		redirect: '/shipper/addshipperwarehouse/ourlocation',
+		step1: '/shipper/shipperwarehouse/add/step1',
+		step2: '/shipper/shipperwarehouse/add/step2',
+		step3: '/shipper/shipperwarehouse/add/step3',
+		redirect: '/shipper/shipperwarehouse/ourlocation',
 	};
 
 	/* path in the steps define the next route after the form is submitted on a step. default path is the path that leads to
@@ -21,7 +21,7 @@ export default function AddShipperWarehouseFormRoutes(props) {
 	return (
 		<RecoilRoot>
 			<Switch>
-				<Route exact path="/shipper/addshipperwarehouse/ourlocation">
+				<Route exact path="/shipper/shipperwarehouse/ourlocation">
 					<OurLocation />
 				</Route>
 				<Route exact path={routes.step1}>

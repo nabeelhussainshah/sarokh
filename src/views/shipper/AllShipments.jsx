@@ -111,13 +111,6 @@ export default function AllShipments(props) {
 		{
 			Header: 'Date And Time',
 			accessor: 'dateTime',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						{moment(row.row.original.dateTime).format('YYYY-MM-DD')}
-					</Fragment>
-				);
-			},
 		},
 		{
 			Header: 'Receiver',

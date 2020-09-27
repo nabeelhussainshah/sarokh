@@ -14,7 +14,7 @@ export const warehouseManager = Joi.object({
 		.required()
 		.label('Contact')
 		.messages({
-			'string.pattern.base': 'Contact should be a valid no e.g "966562354985"',
+			'string.pattern.base': 'Contact should be a valid no e.g "966512345678"',
 		}),
 	operationalTimeto: Joi.string()
 		.pattern(new RegExp(/^((1[0-2]|0?[1-9]):([0-5][0-9])\s?([AaPp][Mm]))$/))

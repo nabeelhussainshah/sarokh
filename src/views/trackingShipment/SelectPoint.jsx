@@ -1,41 +1,49 @@
-import React, { useEffect, Fragment, useState, useRef } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
+import { GoogleMapComponent } from '../../components/GoogleMap/GoogleMapComponent';
+import { useHistory } from 'react-router-dom';
 import { trackingOrderDetail } from './state';
 import { useRecoilState } from 'recoil';
 import { isEmpty } from 'underscore';
 import Loading from '../../components/Loading/Loading';
-import { useHistory } from 'react-router-dom';
-import { GoogleMapComponent } from '../../components/GoogleMap/GoogleMapComponent';
+import { pointListingApi } from '../../Api/adminApi';
 import { updateDeliveryApi } from '../../Api/trackingApi';
 import { toast } from 'react-toastify';
 
-export default function AddAdress(props) {
+export default function AddArea(props) {
 	const hist = useHistory();
 	const [data, setData] = useRecoilState(trackingOrderDetail);
-	const buttonRef = useRef();
+	console.log(data);
 	const [response, setresponse] = useState({
-		location: [
-			{
-				latitude: '24.5246542',
-				longitude: '39.5691841',
-				label: 'Medina Saudi Arabia',
-			},
-		],
+		location: [{ latitude: '23.8859', longitude: '39.1925' }],
+		loading: true,
 	});
-
+	console.log(response);
 	useEffect(() => {
 		if (isEmpty(data)) {
 			hist.push('/tracking/input');
-		} else {
+		} else if (response.loading) {
+			pointListingApi()
+				.then((res) => {
+					structureData(res);
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+
+		if (response.ready) {
 			navigator.geolocation.getCurrentPosition(
 				function (position) {
 					console.log(position);
 					setresponse({
+						...response,
 						location: [
 							{
 								latitude: position.coords.latitude,
 								longitude: position.coords.longitude,
 								label: 'Your Location',
 							},
+							...response.location,
 						],
 					});
 				},
@@ -45,46 +53,61 @@ export default function AddAdress(props) {
 				{ maximumAge: 60000, timeout: 15000, enableHighAccuracy: true }
 			);
 		}
-	}, []);
+	}, [response.loading]);
 
-	console.log(response);
+	useEffect(() => {
+		if (response.dealerPointId) {
+			const payload = {
+				dealerPointId: response.dealerPointId,
+				deliveryLocation: 'Sarokh Point',
+				trackingNumber: data.order.orderId,
+			};
+			updateDeliveryApi(payload)
+				.then((res) => {
+					toast.success(res.message);
+					hist.goBack();
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	}, [response]);
 
-	const submitAddress = () => {
-		buttonRef.current.disabled = true;
-
-		const payload = {
-			address: response.location[0].label,
-			deliveryLocation: 'Last Mile',
-			trackingNumber: data.order.orderId,
-			latitude: response.location[0].latitude,
-			longitude: response.location[0].longitude,
-		};
-
-		updateDeliveryApi(payload)
-			.then((res) => {
-				toast.success(res.message);
-				hist.goBack();
-			})
-			.catch((err) => {
-				toast.error(err.message);
+	const structureData = (data) => {
+		let points = [];
+		data.map((doc) => {
+			points.push({
+				latitude: doc.locationLatitude,
+				longitude: doc.locationLongitude,
+				dealerPointId: doc.id,
+				label: doc.address,
 			});
+		});
+		setresponse({
+			loading: false,
+			ready: true,
+			location: [...points],
+		});
 	};
 
-	return isEmpty(data) ? (
+	return isEmpty(data) && response.loading ? (
 		<Loading />
 	) : (
 		<Fragment>
 			<div className="add-address-container">
 				<div className="form-row margintop30">
 					<div class="col-md-12">
-						<h5>Select Last Mile</h5>
+						<h5>Select Point</h5>
+
 						<GoogleMapComponent
-							keepMarker={true}
+							zoom={8}
+							keepMarker={false}
 							defaultCenter={{
 								lat: parseFloat(response.location[0].latitude),
 								lng: parseFloat(response.location[0].longitude),
 								label: response.location[0].label,
 							}}
+							markerClickAllow={true}
 							isMarkerShown={true}
 							position={response.location || []}
 							changeFunction={setresponse}
@@ -105,20 +128,8 @@ export default function AddAdress(props) {
 							}
 							globalState={response}
 							mapElement={<div style={{ height: `100%` }} />}
-							autocompleted={true}
+							autocompleted={false}
 						/>
-						<div
-							className="mt-5"
-							style={{ display: 'flex', justifyContent: 'center' }}
-						>
-							<button
-								className="btn btn-primary mt-2"
-								ref={buttonRef}
-								onClick={submitAddress}
-							>
-								Submit Address
-							</button>
-						</div>
 					</div>
 				</div>
 			</div>

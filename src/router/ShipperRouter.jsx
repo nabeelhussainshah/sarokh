@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import React from 'react';
 import SideNavBar from '../components/SideNavbar/SideNavbar';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import ShipperDashboard from '../views/shipper/ShipperDashboard';
@@ -15,7 +14,8 @@ import PrintBulkShipment from '../views/shipper/PrintBulkShipment';
 import BulkShipmentUpload from '../views/shipper/BulkShipmentUpload';
 import AllShipments from '../views/shipper/AllShipments';
 import AddShipperWarehouseFormRoutes from '../views/shipper/AddShipperWarehouseFormRoutes';
-import { shipperRoutes } from '../routes/shipperRoutes';
+import WarehouseDetail from '../views/genericViews/warehouse/WarehouseDetail';
+import { shipperRoutes } from '../navRoutes/shipperRoutes';
 import { RecoilRoot } from 'recoil';
 import { toast } from 'react-toastify';
 
@@ -51,6 +51,10 @@ function ShipperRouter(props) {
 				<ProtectedRoute path="/shipper/users/allusers" component={AllUsers} />
 				<ProtectedRoute path="/shipper/printwaybill" component={PrintWayBill} />
 				<ProtectedRoute
+					path="/shipper/order/printwaybill"
+					component={PrintWayBill}
+				/>
+				<ProtectedRoute
 					path="/shipper/printbulkshipment"
 					component={PrintBulkShipment}
 				/>
@@ -60,9 +64,12 @@ function ShipperRouter(props) {
 				/>
 
 				<ProtectedRoute path="/shipper/newshipment" component={NewShipment} />
-
 				<ProtectedRoute
-					path="/shipper/addshipperwarehouse"
+					path="/shipper/shipperwarehouse/ourlocation/warehouseshipments"
+					component={WarehouseDetail}
+				/>
+				<ProtectedRoute
+					path="/shipper/shipperwarehouse"
 					component={AddShipperWarehouseFormRoutes}
 				/>
 			</Switch>

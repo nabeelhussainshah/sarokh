@@ -8,10 +8,10 @@ export const basicInformation = Joi.object({
 		.required()
 		.label('Contact')
 		.messages({
-			'string.pattern.base': 'Contact should be a valid no e.g "966562354985"',
+			'string.pattern.base': 'Contact should be a valid no e.g "966512345678"',
 		}),
 	email: Joi.string().email({ minDomainSegments: 2, tlds: false }).required(),
-	dateOfBirth: Joi.date().required().label('Date Of Birth'),
+	dateOfBirth: Joi.string().required().label('Date Of Birth'),
 });
 
 export const driverDetails = Joi.object({
@@ -30,6 +30,7 @@ export const driverDetails = Joi.object({
 		.max(10)
 		.required()
 		.label('Driver License No'),
+	warehouseId: Joi.string().required().label('Driver Warehouse'),
 });
 
 export const vehicleDetails = Joi.object({
@@ -58,8 +59,8 @@ export const vehicleDetails = Joi.object({
 export const driverAccount = Joi.object({
 	compensationCycle: Joi.number().min(1).max(1000).positive().required(),
 	compensation: Joi.number().min(1).max(100000).positive().required(),
-	contractStartDate: Joi.date().required(),
-	contractValidTill: Joi.date().required(),
+	contractStartDate: Joi.string().required(),
+	contractValidTill: Joi.string().required(),
 	bank: Joi.string().required(),
 	iban: Joi.string()
 		.pattern(

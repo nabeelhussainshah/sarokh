@@ -21,7 +21,9 @@ export default function AddUserForm(props) {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row mb-3">
 						<div className="col">
+							<label htmlFor="fullname">Full Name</label>
 							<input
+								id="fullname"
 								type="text"
 								name="fullName"
 								className="form-control"
@@ -35,7 +37,9 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
+							<label htmlFor="email">Email</label>
 							<input
+								id="email"
 								type="text"
 								className="form-control"
 								name="email"
@@ -54,7 +58,9 @@ export default function AddUserForm(props) {
 					</div>
 					<div className="form-row mb-3">
 						<div className="col">
+							<label htmlFor="contact">Contact No</label>
 							<input
+								id="contact"
 								type="tel"
 								name="contact"
 								className="form-control"
@@ -70,6 +76,7 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
+							<label htmlFor="designation">Designation</label>
 							<select
 								className="form-control"
 								id="designation"
@@ -97,7 +104,9 @@ export default function AddUserForm(props) {
 					</div>
 					<div className="form-row mb-3">
 						<div className="col">
+							<label htmlFor="dob">Date Of Birth</label>
 							<input
+								id="dob"
 								type="date"
 								name="dob"
 								className="form-control"
@@ -113,6 +122,7 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
+							<label htmlFor="gender">Gender</label>
 							<select
 								className="form-control"
 								id="gender"
@@ -134,7 +144,9 @@ export default function AddUserForm(props) {
 					</div>
 					<div className="form-row mb-3">
 						<div className="col">
+							<label htmlFor="username">User Name</label>
 							<input
+								id="username"
 								type="text"
 								name="userName"
 								className="form-control"
@@ -151,7 +163,9 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
+							<label htmlFor="password">Password</label>
 							<input
+								id="password"
 								type="password"
 								name="userPassword"
 								className="form-control"
@@ -170,6 +184,7 @@ export default function AddUserForm(props) {
 					<div className="form-row mb-3">
 						{props.userType === 'Admin' ? ( //this will be only displayed for admin
 							<div className="col-6">
+								<label htmlFor="roleId">Role</label>
 								<select
 									name="roleId"
 									className="form-control"
@@ -197,7 +212,9 @@ export default function AddUserForm(props) {
 						) : null}
 
 						<div className="col-6">
+							<label htmlFor="warehouse">Warehouse</label>
 							<select
+								id="warehouse"
 								name="warehouseId"
 								className="form-control"
 								ref={register({

@@ -1,14 +1,12 @@
 import React from 'react';
 import { warehouseData } from './state';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useHistory, Redirect } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
-import DatePicker from 'react-datepicker';
 import { warehouseManager } from '../../../formValidation/warehouseSchemaValidation';
 import { joiResolver } from '@hookform/resolvers';
-import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Step2(props) {
 	const hist = useHistory();

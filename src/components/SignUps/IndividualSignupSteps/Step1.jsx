@@ -19,6 +19,7 @@ export default function Step1(props) {
 		resolver: joiResolver(basicInformation),
 	});
 
+	console.log(data);
 	const onSubmit = (formdata) => {
 		setdata({ ...data, ...formdata });
 		hist.push('/individual/signup/step2');
@@ -34,7 +35,7 @@ export default function Step1(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label for="firstName">First Name</label>
+							<label htmlFor="firstName">First Name</label>
 							<input
 								id="firstName"
 								name="firstName"
@@ -49,7 +50,7 @@ export default function Step1(props) {
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label for="lastName">Last Name</label>
+							<label htmlFor="lastName">Last Name</label>
 							<input
 								name="lastName"
 								type="text"
@@ -66,7 +67,7 @@ export default function Step1(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label for="contact">Contact No</label>
+							<label htmlFor="contact">Contact No</label>
 							<input
 								name="contact"
 								type="text"
@@ -82,7 +83,7 @@ export default function Step1(props) {
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label for="email">Email</label>
+							<label htmlFor="email">Email</label>
 							<input
 								name="email"
 								type="email"
@@ -99,7 +100,7 @@ export default function Step1(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label for="dateOfBirth">Date Of Birth</label>
+							<label htmlFor="dateOfBirth">Date Of Birth</label>
 							<input
 								id="dateOfBirth"
 								name="dateOfBirth"

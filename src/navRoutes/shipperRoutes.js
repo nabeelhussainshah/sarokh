@@ -5,7 +5,7 @@ export const shipperRoutes = [
 		iconClass: 'nav-icon fas fa-rocket',
 	},
 	{
-		to: '/shipper/addshipperwarehouse/ourlocation',
+		to: '/shipper/shipperwarehouse/ourlocation',
 		name: 'Our Location',
 		iconClass: 'nav-icon fa fa-warehouse',
 	},

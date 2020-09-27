@@ -8,7 +8,7 @@ export const basicInformation = Joi.object({
 		.required()
 		.label('Contact')
 		.messages({
-			'string.pattern.base': 'Contact should be a valid no e.g "966562354985"',
+			'string.pattern.base': 'Contact should be a valid no e.g "966512345678"',
 		}),
 	email: Joi.string().email({ minDomainSegments: 2, tlds: false }).required(),
 	nicNumber: Joi.string()
@@ -16,7 +16,7 @@ export const basicInformation = Joi.object({
 		.max(10)
 		.required()
 		.label('Iqama/NIC/Passport No'),
-	dateOfBirth: Joi.date().required().label('Date Of Birth'),
+	dateOfBirth: Joi.string().required().label('Date Of Birth'),
 	country: Joi.string().required(),
 	city: Joi.string().required(),
 	address: Joi.string().min(5).max(200).required(),
@@ -25,8 +25,8 @@ export const basicInformation = Joi.object({
 
 export const businessInformation = Joi.object({
 	contractId: Joi.number().integer().positive().label('Contact ID'),
-	contractStartDate: Joi.date().required().label('Contract Start Date'),
-	contractEndDate: Joi.date().required().label('Contract End Date'),
+	contractStartDate: Joi.string().required().label('Contract Start Date'),
+	contractEndDate: Joi.string().required().label('Contract End Date'),
 	compensationPerShipment: Joi.number()
 		.min(0)
 		.max(100000)

@@ -8,13 +8,13 @@ export const basicInformation = Joi.object({
 		.required()
 		.label('Contact')
 		.messages({
-			'string.pattern.base': 'Contact should be a valid no e.g "966562354985"',
+			'string.pattern.base': 'Contact should be a valid no e.g "966512345678"',
 		}),
 	email: Joi.string()
 		.email({ minDomainSegments: 2, tlds: false })
 		.required()
 		.label('Email Address'),
-	dateOfBirth: Joi.date().required().label('Date Of Birth'),
+	dateOfBirth: Joi.string().required().label('Date Of Birth'),
 });
 
 export const businessDetails = Joi.object({
