@@ -3,18 +3,17 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { billListApi } from '../../../Api/adminApi';
+import { deliveryShipmentsApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import moment from 'moment';
 
-export default function BillListing(props) {
+export default function DeliveryShipments(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			billListApi()
+			deliveryShipmentsApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -24,69 +23,30 @@ export default function BillListing(props) {
 		}
 	}, [response.loading]);
 
-	const handleClick = (row) => {
-		console.log(row.row.original.id);
-		hist.push({
-			pathname: '/admin/finance/billdetail',
-			state: {
-				id: row.row.original.id,
-			},
-		});
-	};
-
 	const columns = [
 		{
-			Header: 'Action',
-			accessor: '',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
-					</Fragment>
-				);
-			},
-		},
-		{
-			Header: 'Bill No',
+			Header: 'id',
 			accessor: 'id',
 		},
 		{
-			Header: 'User Type',
-			accessor: 'userType',
+			Header: 'Tracking No',
+			accessor: 'shipmentId',
 		},
 		{
-			Header: 'Bill To',
-			accessor: 'billTo',
+			Header: 'Date',
+			accessor: 'dateTime',
 		},
 		{
-			Header: 'Bill Type',
-			accessor: 'billType',
+			Header: 'Delivery Location',
+			accessor: 'toCity',
 		},
 		{
-			Header: 'Bill Category',
-			accessor: 'billCategory',
-		},
-		{
-			Header: 'Due Date',
-			accessor: 'dueDate',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						{moment(row.row.original.dueDate).format('YYYY-MM-DD')}
-					</Fragment>
-				);
-			},
-		},
-		{
-			Header: 'Amount',
-			accessor: 'totalAmount',
+			Header: 'Assign To Driver',
+			accessor: 'assignToDriver',
 		},
 		{
 			Header: 'Status',
-			accessor: 'paymentStatus',
+			accessor: 'status',
 		},
 	];
 
@@ -114,7 +74,7 @@ export default function BillListing(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Bill Details</h2>
+								<h2 className="float-left">Delivery Shipments</h2>
 							</div>
 							<div className="card-body">
 								<Table

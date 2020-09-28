@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import Container from '../../components/Containers/ListingContainer';
+import Loading from '../../components/Loading/Loading';
 
 export default function BulkShipmentUpload(props) {
 	const hist = useHistory();
@@ -101,7 +102,7 @@ export default function BulkShipmentUpload(props) {
 	};
 
 	return response.loading ? (
-		<div>loading...</div>
+		<Loading />
 	) : (
 		<Container>
 			<div className="card-header">
@@ -397,7 +398,7 @@ export default function BulkShipmentUpload(props) {
 							/>
 						</div>
 						<div className="form-group col-md-6">
-						<p style={{paddingTop: 38, float: 'left'}}>
+							<p style={{ paddingTop: 38, float: 'left' }}>
 								Download bulk shipment sample file
 								<a
 									href="http://app.sarokh.net/web/order_file/order.xlsx"

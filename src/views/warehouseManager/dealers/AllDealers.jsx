@@ -1,20 +1,20 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { billListApi } from '../../../Api/adminApi';
+import { allDealersApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
-export default function BillListing(props) {
+export default function AllDealers(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			billListApi()
+			allDealersApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -24,69 +24,34 @@ export default function BillListing(props) {
 		}
 	}, [response.loading]);
 
-	const handleClick = (row) => {
-		console.log(row.row.original.id);
-		hist.push({
-			pathname: '/admin/finance/billdetail',
-			state: {
-				id: row.row.original.id,
-			},
-		});
-	};
-
 	const columns = [
 		{
-			Header: 'Action',
+			Header: 'Owner Name',
+			accessor: 'ownerName',
+		},
+		{
+			Header: 'Contact No',
+			accessor: 'contact',
+		},
+		{
+			Header: 'Contract Ending',
+			accessor: 'contractEndDate',
+			Cell: (row) => {
+				return (
+					<>{moment(row.row.original.contractEndDate).format('YYYY-MM-DD')}</>
+				);
+			},
+		},
+		{
+			Header: 'Compensation Rate',
+			accessor: 'perShipmentsCompensation',
+		},
+		{
+			Header: 'Current Points (No of Points Owned)',
 			accessor: '',
 			Cell: (row) => {
-				return (
-					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
-					</Fragment>
-				);
+				return <>{row.row.original.dealerPoints.length}</>;
 			},
-		},
-		{
-			Header: 'Bill No',
-			accessor: 'id',
-		},
-		{
-			Header: 'User Type',
-			accessor: 'userType',
-		},
-		{
-			Header: 'Bill To',
-			accessor: 'billTo',
-		},
-		{
-			Header: 'Bill Type',
-			accessor: 'billType',
-		},
-		{
-			Header: 'Bill Category',
-			accessor: 'billCategory',
-		},
-		{
-			Header: 'Due Date',
-			accessor: 'dueDate',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						{moment(row.row.original.dueDate).format('YYYY-MM-DD')}
-					</Fragment>
-				);
-			},
-		},
-		{
-			Header: 'Amount',
-			accessor: 'totalAmount',
-		},
-		{
-			Header: 'Status',
-			accessor: 'paymentStatus',
 		},
 	];
 
@@ -111,10 +76,9 @@ export default function BillListing(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Bill Details</h2>
+								<h2 className="float-left">Dealer Owners</h2>
 							</div>
 							<div className="card-body">
 								<Table

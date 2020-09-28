@@ -38,7 +38,7 @@ export default function TrackingProgress(props) {
 					<div className="col-md-6">
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Tracking No</label>
+								<label className="font-weight-bold">Tracking No</label>
 							</div>
 							<div class="col-md-6">
 								<p>{data.order.orderId}</p>
@@ -46,7 +46,7 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Shipper</label>
+								<label className="font-weight-bold">Shipper</label>
 							</div>
 							<div class="col-md-6">
 								<p>{data.shipperName}</p>
@@ -54,7 +54,7 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Receiver Name</label>
+								<label className="font-weight-bold">Receiver Name</label>
 							</div>
 							<div class="col-md-6">
 								<p>{data.order.shipmentOrderItems[0].receiverName}</p>
@@ -62,7 +62,7 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Contact No</label>
+								<label className="font-weight-bold">Contact No</label>
 							</div>
 							<div class="col-md-6">
 								<p>{data.order.shipmentOrderItems[0].contact}</p>
@@ -70,15 +70,15 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Shipment Title</label>
+								<label className="font-weight-bold">Shipment Title</label>
 							</div>
 							<div class="col-md-6">
-								<p>{data.order.shipmentOrderItems[0].shipmentType}</p>
+								<p>{data.order.shipmentOrderItems[0].shipmentTitle}</p>
 							</div>
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Creation Date</label>
+								<label className="font-weight-bold">Creation Date</label>
 							</div>
 							<div class="col-md-6">
 								<p>{moment(data.order.createdDatetime).format('DD-MM-YYYY')}</p>
@@ -86,31 +86,33 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Delivery Type</label>
+								<label className="font-weight-bold">Delivery Type</label>
 							</div>
 							<div class="col-md-6">
-								<p>{data.order.pickupLocation}</p>
-							</div>
-						</div>
-						<div className="form-row">
-							<div class="col-md-6">
-								<label>Point Name: (if Point)</label>
-							</div>
-							<div class="col-md-6">
-								<p>{data.order.pickupLocationDetail}</p>
+								<p>{data.order.deliveryLocation}</p>
 							</div>
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Delivery Address</label>
+								<label className="font-weight-bold">
+									Point Name: (if Point)
+								</label>
 							</div>
 							<div class="col-md-6">
-								<p>{data.order.address}</p>
+								<p>{data.order.deliveryLocationDetail}</p>
 							</div>
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>City</label>
+								<label className="font-weight-bold">Delivery Address</label>
+							</div>
+							<div class="col-md-6">
+								<p>{data.order.shipmentOrderItems[0].address}</p>
+							</div>
+						</div>
+						<div className="form-row">
+							<div class="col-md-6">
+								<label className="font-weight-bold">City</label>
 							</div>
 							<div class="col-md-6">
 								<p>{data.order.shipToCity}</p>
@@ -118,26 +120,32 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Cordinates</label>
+								<label className="font-weight-bold">
+									Cordinates( Lat/Lng )
+								</label>
 							</div>
 							<div class="col-md-6">
-								<p>Long/Lat</p>
+								<p>
+									{data.order.shipmentOrderItems[0].locationLatitude}
+									&nbsp;/&nbsp;
+									{data.order.shipmentOrderItems[0].locationLongitude}
+								</p>
 							</div>
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Delivery Status</label>
+								<label className="font-weight-bold">Delivery Status</label>
 							</div>
 							<div class="col-md-6">
 								<p>{data.order.status}</p>
 							</div>
 						</div>
 						<div className="form-row">
-							<div class="col-md-12 mb-2 mt-2">
-								<h5>Contact Support:</h5>
+							<div class="col-md-12 mb-2 mt-3">
+								<h5 className="font-weight-bolder">Contact Support:</h5>
 							</div>
 							<div class="col-md-6">
-								<label>Contact No</label>
+								<label className="font-weight-bold">Contact No</label>
 							</div>
 							<div class="col-md-6">
 								<p>920033995</p>
@@ -145,7 +153,7 @@ export default function TrackingProgress(props) {
 						</div>
 						<div className="form-row">
 							<div class="col-md-6">
-								<label>Email</label>
+								<label className="font-weight-bold">Email</label>
 							</div>
 							<div class="col-md-6">
 								<p>complaint@sarokh.sa</p>

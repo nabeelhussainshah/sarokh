@@ -1,67 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import ListingContainer from '../../components/Containers/ListingContainer';
-import Table from '../../components/Generictable/generatictable';
-import axios from 'axios';
+import ListingContainer from '../../../components/Containers/ListingContainer';
+import Table from '../../../components/Generictable/generatictable';
+import Loading from '../../../components/Loading/Loading';
+import { useHistory } from 'react-router-dom';
+import { prepaidShipmentsApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
-import Loading from '../../components/Loading/Loading';
+import { toast } from 'react-toastify';
 
-export default function ShipmentIssues(props) {
+export default function PrepaidShipments(props) {
+	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
-	const user = JSON.parse(localStorage.getItem('user'));
 
 	useEffect(() => {
-		async function fetchData() {
-			return await axios
-				.get(
-					`${process.env.REACT_APP_API}/order/get-issue-shipments/${user.id}`
-				)
-				.then((response) => {
-					if (response.data.status === 200) {
-						setresponse({ loading: false, data: response.data.data });
-					}
+		if (response.loading) {
+			prepaidShipmentsApi()
+				.then((res) => {
+					setresponse({ loading: false, data: res });
 				})
 				.catch((err) => {
-					window.alert(err.message);
+					toast.error(err.message);
 				});
 		}
-		fetchData();
-	}, []);
+	}, [response.loading]);
 
 	const columns = [
 		{
-			Header: 'Info',
-			accessor: '',
-			Cell: (row) => {
-				return <i className="fa fa-info-circle"></i>;
-			},
-		},
-		{
-			Header: 'ID',
-			accessor: '',
+			Header: 'id',
+			accessor: 'id',
 		},
 		{
 			Header: 'Tracking No',
-			accessor: '',
+			accessor: 'shipmentId',
 		},
 		{
-			Header: 'Creation Date',
-			accessor: 'reportedBy',
+			Header: 'Shipper',
+			accessor: 'shipper',
 		},
 		{
 			Header: 'Date',
-			accessor: '',
+			accessor: 'dateTime',
 		},
 		{
-			Header: 'Description',
-			accessor: '',
+			Header: 'To (City)',
+			accessor: 'toCity',
 		},
 		{
-			Header: 'Resolution',
-			accessor: '',
+			Header: 'From (City)',
+			accessor: 'fromCity',
 		},
 		{
 			Header: 'Status',
-			accessor: '',
+			accessor: 'status',
 		},
 	];
 
@@ -70,6 +59,11 @@ export default function ShipmentIssues(props) {
 		enter: {
 			opacity: 1,
 			transform: 'translate3d(0,0px,0)',
+			transition: 'ease-out 0.3s',
+		},
+		leave: {
+			opacity: 0,
+			transform: 'translate3d(-270px,0,0)',
 			transition: 'ease-out 0.3s',
 		},
 	});
@@ -83,7 +77,7 @@ export default function ShipmentIssues(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2>Shipment Issues</h2>
+								<h2 className="float-left">Prepaid Shipments</h2>
 							</div>
 							<div className="card-body">
 								<Table
@@ -91,6 +85,8 @@ export default function ShipmentIssues(props) {
 									columns={columns}
 									tableclass={'table-responsive custom-table'}
 									pagination={true}
+									filter={true}
+									hiddenColumns={['id']}
 								/>
 							</div>
 						</ListingContainer>

@@ -1,20 +1,19 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { billListApi } from '../../../Api/adminApi';
+import { allDriversApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import moment from 'moment';
 
-export default function BillListing(props) {
+export default function AllDrivers(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			billListApi()
+			allDriversApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -24,69 +23,26 @@ export default function BillListing(props) {
 		}
 	}, [response.loading]);
 
-	const handleClick = (row) => {
-		console.log(row.row.original.id);
-		hist.push({
-			pathname: '/admin/finance/billdetail',
-			state: {
-				id: row.row.original.id,
-			},
-		});
-	};
-
 	const columns = [
 		{
-			Header: 'Action',
-			accessor: '',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
-					</Fragment>
-				);
-			},
+			Header: 'First Name',
+			accessor: 'firstName',
 		},
 		{
-			Header: 'Bill No',
-			accessor: 'id',
+			Header: 'Last Name',
+			accessor: 'lastName',
 		},
 		{
-			Header: 'User Type',
-			accessor: 'userType',
+			Header: 'Contact No',
+			accessor: 'user.contact',
 		},
 		{
-			Header: 'Bill To',
-			accessor: 'billTo',
+			Header: 'Driver Type',
+			accessor: 'driverType',
 		},
 		{
-			Header: 'Bill Type',
-			accessor: 'billType',
-		},
-		{
-			Header: 'Bill Category',
-			accessor: 'billCategory',
-		},
-		{
-			Header: 'Due Date',
-			accessor: 'dueDate',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						{moment(row.row.original.dueDate).format('YYYY-MM-DD')}
-					</Fragment>
-				);
-			},
-		},
-		{
-			Header: 'Amount',
-			accessor: 'totalAmount',
-		},
-		{
-			Header: 'Status',
-			accessor: 'paymentStatus',
+			Header: 'Warehouse',
+			accessor: 'warehouse.name',
 		},
 	];
 
@@ -111,10 +67,9 @@ export default function BillListing(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Bill Details</h2>
+								<h2 className="float-left">All Drivers</h2>
 							</div>
 							<div className="card-body">
 								<Table
@@ -123,7 +78,6 @@ export default function BillListing(props) {
 									tableclass={'table-responsive custom-table'}
 									pagination={true}
 									filter={true}
-									hiddenColumns={['id']}
 								/>
 							</div>
 						</ListingContainer>

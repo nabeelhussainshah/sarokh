@@ -49,7 +49,13 @@ export default function BasicInformation(props) {
 	}
 
 	const onSubmit = (formData) => {
-		setdata({ ...data, ...formData, ready: true });
+		let driverData = { ...data };
+		delete driverData['warehouse'];
+		delete driverData['user'];
+		delete driverData['role'];
+		delete driverData['bankAccount'];
+
+		setdata({ ...driverData, ...formData, ready: true });
 	};
 
 	return (

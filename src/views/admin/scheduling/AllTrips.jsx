@@ -132,7 +132,6 @@ export default function AllTrips(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
 								<h2 className="float-left">All Trips</h2>

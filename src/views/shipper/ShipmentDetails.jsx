@@ -5,6 +5,7 @@ import axios from 'axios';
 import { isUndefined } from 'underscore';
 import DetailContainer from '../../components/ShipperComponents/ShipperDetailsComponent/DetailComponent';
 import moment from 'moment';
+import Loading from '../../components/Loading/Loading';
 
 export default function ShipmentDetails(props) {
 	const loc = useLocation();
@@ -31,7 +32,7 @@ export default function ShipmentDetails(props) {
 	}, []);
 
 	return response.loading ? (
-		<div>Loading...</div>
+		<Loading />
 	) : (
 		<Container>
 			<DetailContainer

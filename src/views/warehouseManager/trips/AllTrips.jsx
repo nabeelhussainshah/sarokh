@@ -3,18 +3,18 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { billListApi } from '../../../Api/adminApi';
+import { allTripsApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
-export default function BillListing(props) {
+export default function AllTrips(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			billListApi()
+			allTripsApi()
 				.then((res) => {
 					setresponse({ loading: false, data: res });
 				})
@@ -24,69 +24,47 @@ export default function BillListing(props) {
 		}
 	}, [response.loading]);
 
-	const handleClick = (row) => {
-		console.log(row.row.original.id);
-		hist.push({
-			pathname: '/admin/finance/billdetail',
-			state: {
-				id: row.row.original.id,
-			},
-		});
-	};
-
 	const columns = [
 		{
-			Header: 'Action',
-			accessor: '',
-			Cell: (row) => {
-				return (
-					<Fragment>
-						<i
-							className="fa fa-info-circle"
-							onClick={() => handleClick(row)}
-						></i>
-					</Fragment>
-				);
-			},
-		},
-		{
-			Header: 'Bill No',
+			Header: 'Trip Id',
 			accessor: 'id',
 		},
 		{
-			Header: 'User Type',
-			accessor: 'userType',
-		},
-		{
-			Header: 'Bill To',
-			accessor: 'billTo',
-		},
-		{
-			Header: 'Bill Type',
-			accessor: 'billType',
-		},
-		{
-			Header: 'Bill Category',
-			accessor: 'billCategory',
-		},
-		{
-			Header: 'Due Date',
-			accessor: 'dueDate',
+			Header: 'Date',
+			accessor: 'dispatchDatetime',
 			Cell: (row) => {
 				return (
-					<Fragment>
-						{moment(row.row.original.dueDate).format('YYYY-MM-DD')}
-					</Fragment>
+					<>{moment(row.row.original.dispatchDatetime).format('DD-MM-YYYY')}</>
 				);
 			},
 		},
 		{
-			Header: 'Amount',
-			accessor: 'totalAmount',
+			Header: 'Sarokh Warehouse',
+			accessor: 'startPoint',
+		},
+		{
+			Header: 'Driver',
+			accessor: 'driverName',
+		},
+		{
+			Header: 'Vehicle',
+			accessor: 'vehicle.name',
+		},
+		{
+			Header: 'Pick Up',
+			accessor: 'pickupShipments',
+		},
+		{
+			Header: 'Deliveries',
+			accessor: 'deliveryShipments',
+		},
+		{
+			Header: 'Amount Collection',
+			accessor: 'codCollection',
 		},
 		{
 			Header: 'Status',
-			accessor: 'paymentStatus',
+			accessor: 'tripStatus',
 		},
 	];
 
@@ -111,10 +89,9 @@ export default function BillListing(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Bill Details</h2>
+								<h2 className="float-left">All Trips</h2>
 							</div>
 							<div className="card-body">
 								<Table
