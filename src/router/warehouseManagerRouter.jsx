@@ -14,7 +14,7 @@ import CodShipments from '../views/warehouseManager/shipments/CodShipments';
 import PrepaidShipments from '../views/warehouseManager/shipments/PrepaidShipments';
 import PickupShipments from '../views/warehouseManager/shipments/PickupShipments';
 import DeliveryShipments from '../views/warehouseManager/shipments/DeliveryShipments';
-import { warehouseManagerRoutes } from '../navRoutes/warehouseManager';
+import { warehouseManagerRoutes } from '../navRoutes/warehouseManagerRoutes';
 import { RecoilRoot } from 'recoil';
 import { toast } from 'react-toastify';
 

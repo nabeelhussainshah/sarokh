@@ -121,7 +121,7 @@ export default function TrackingProgress(props) {
 						<div className="form-row">
 							<div class="col-md-6">
 								<label className="font-weight-bold">
-									Cordinates( Lat/Lng )
+									Coordinates( Lat/Lng )
 								</label>
 							</div>
 							<div class="col-md-6">

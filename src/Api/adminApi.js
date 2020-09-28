@@ -389,7 +389,7 @@ export async function assignCardToShipmentApi(data) {
 			if (res.data.status === 200) {
 				return res.data.data;
 			} else {
-				throw new Error(`something went wrong with status code: ${res.status}`);
+				throw new Error(res.data.message);
 			}
 		})
 		.catch((err) => {

@@ -13,6 +13,7 @@ import BusinessSignup from '../views/sign-ups/ShipperSignup';
 import IndividualSignup from '../views/sign-ups/IndividualSignUp';
 import TrackingShipmentRouter from './TrackingShipmentRouter';
 import WarehouseManagerRouter from './warehouseManagerRouter';
+import WarehouseSupervisorRouter from './WarehouseSupervisorRouter';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
@@ -40,6 +41,7 @@ function ApplicationRouter(porps) {
 			<AdminRouter />
 			<ShipperRouter />
 			<WarehouseManagerRouter />
+			<WarehouseSupervisorRouter />
 		</HashRouter>
 	);
 }
