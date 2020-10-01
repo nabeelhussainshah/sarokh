@@ -1,9 +1,13 @@
 import React from 'react';
 
-export default function Loading(porps) {
+export default function Loading({ marginTop = '25%' }) {
 	return (
 		<div
-			style={{ display: 'flex', justifyContent: 'center', marginTop: '25%' }}
+			style={{
+				display: 'flex',
+				justifyContent: 'center',
+				marginTop: marginTop,
+			}}
 		>
 			<div
 				class="spinner-border"

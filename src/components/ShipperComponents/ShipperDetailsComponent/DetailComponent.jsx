@@ -20,7 +20,14 @@ export default function ContentContainer({ response, items }) {
 	return (
 		<div>
 			<div className="d-flex flex-row justify-content-end">
-				<button className="btn btn-primary mr-1 btnbrown">Tracking Page</button>
+				<button
+					className="btn btn-primary mr-1 btnbrown"
+					onClick={() => {
+						hist.push('/tracking/input');
+					}}
+				>
+					Tracking Page
+				</button>
 				<button className="btn btn-primary mr-1 btnbrown">
 					View Proof of delivery
 				</button>
@@ -57,7 +64,7 @@ export default function ContentContainer({ response, items }) {
 							Creation (Date & Time)
 						</td>
 						<td style={{ width: '30%' }}>
-							{moment(response.createdDatetime).format('DD MM YYYY hh:mm:ss')}
+							{moment(response.createdDatetime).format('DD-MM-YYYY hh:mm:ss')}
 						</td>
 					</tr>
 					<tr>

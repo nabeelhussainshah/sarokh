@@ -55,10 +55,6 @@ export default function AllShippers(props) {
 			accessor: 'user.email',
 		},
 		{
-			Header: 'City',
-			accessor: 'city',
-		},
-		{
 			Header: 'Status',
 			accessor: 'status',
 		},

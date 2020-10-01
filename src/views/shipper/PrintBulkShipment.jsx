@@ -4,27 +4,25 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading/Loading';
+import { getPendingTrackingNumberApi } from '../../Api/shipperApi';
 
 export default function PrintBulkShipment(props) {
 	const { register, errors, handleSubmit } = useForm();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
-		async function fetchData() {
-			await axios
-				.get(
-					`${process.env.REACT_APP_API}/order/get-all-shipments-trackingnumber`
-				)
-				.then((response) => {
-					console.log(response);
-					setresponse({ loading: false, data: response.data.data });
-				})
-				.catch((err) => {
-					window.alert(err.message);
-				});
-		}
-		fetchData();
+		getPendingTrackingNumberApi()
+			.then((res) => {
+				if (res.length === 0) {
+					toast.info('No Tracking Numbers found');
+				}
+				setresponse({ loading: false, data: res });
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	}, []);
+
 	console.log(response);
 	const onSubmit = async (data) => {
 		setresponse({ ...response, link: undefined });
@@ -70,8 +68,8 @@ export default function PrintBulkShipment(props) {
 								</option>
 								{response.data.map((doc, i) => {
 									return (
-										<option key={i} value={doc}>
-											{doc}
+										<option key={i} value={doc.id}>
+											{doc.id}
 										</option>
 									);
 								})}
@@ -97,8 +95,8 @@ export default function PrintBulkShipment(props) {
 								</option>
 								{response.data.map((doc, i) => {
 									return (
-										<option key={i} value={doc}>
-											{doc}
+										<option key={i} value={doc.id}>
+											{doc.id}
 										</option>
 									);
 								})}

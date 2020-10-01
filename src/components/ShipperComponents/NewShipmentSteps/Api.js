@@ -5,7 +5,7 @@ export const postData = async (data, operation) => {
 
 	let finalData = [];
 	data.map((doc) => {
-		if (doc.deliveryLocationRadio === 'customerAddress') {
+		if (doc.deliveryLocation === 'To Customer Address') {
 			return finalData.push({
 				...doc,
 				shipperWarehouseId:
@@ -16,14 +16,10 @@ export const postData = async (data, operation) => {
 					doc.pickupType !== 'Sarokh Warehouse'
 						? undefined
 						: doc.sarokhWarehouseId,
-				deliveryLocationRadio:
-					doc.deliveryLocation !== 'To Sarokh Point'
-						? undefined
-						: doc.deliveryLocationRadio,
-				dealerPointId:
-					doc.deliveryLocationRadio !== 'sarokhPoint'
-						? undefined
-						: doc.dealerPointId,
+
+				deliveryLocation: 'To Sarokh Point',
+				deliveryLocationRadio: 'customerAddress',
+				dealerPointId: undefined,
 				address:
 					doc.location[0].label === undefined
 						? undefined
@@ -32,7 +28,7 @@ export const postData = async (data, operation) => {
 				locationLongitude: doc.location[0].longitude,
 				shipperId: user.id,
 			});
-		} else {
+		} else if (doc.deliveryLocation === 'To Sarokh Point') {
 			return finalData.push({
 				...doc,
 				shipperWarehouseId:
@@ -43,14 +39,22 @@ export const postData = async (data, operation) => {
 					doc.pickupType !== 'Sarokh Warehouse'
 						? undefined
 						: doc.sarokhWarehouseId,
-				deliveryLocationRadio:
-					doc.deliveryLocation !== 'To Sarokh Point'
+				deliveryLocationRadio: 'sarokhPoint',
+				dealerPointId: '10',
+				shipperId: user.id,
+			});
+		} else {
+			return finalData.push({
+				...doc,
+				deliveryLocation: 'To Predefined Location',
+				shipperWarehouseId:
+					doc.pickupType !== 'Shipper Warehouse'
 						? undefined
-						: doc.deliveryLocationRadio,
-				dealerPointId:
-					doc.deliveryLocationRadio !== 'sarokhPoint'
+						: doc.shipperWarehouseId,
+				sarokhWarehouseId:
+					doc.pickupType !== 'Sarokh Warehouse'
 						? undefined
-						: doc.dealerPointId,
+						: doc.sarokhWarehouseId,
 				shipperId: user.id,
 			});
 		}

@@ -321,7 +321,7 @@ export default function BulkShipmentUpload(props) {
 											className="form-check-label"
 											htmlFor="indeliverycase"
 										>
-											Last Mile
+											Customer Address
 										</label>
 									</div>
 									<div className="form-check">

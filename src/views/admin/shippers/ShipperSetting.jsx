@@ -62,11 +62,11 @@ export default function ShipperSetting(props) {
 		if (response.getdata) {
 			getShipperDeliveryChargesApi(response.userId)
 				.then((res) => {
-					if (res.length !== 0) {
+					if (res !== null) {
 						setresponse({
 							...response,
 							loading: false,
-							userData: res[0],
+							userData: res,
 							getdata: false,
 						});
 					} else {

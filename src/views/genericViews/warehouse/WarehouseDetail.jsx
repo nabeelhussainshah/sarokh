@@ -4,40 +4,63 @@ import Table from '../../../components/Generictable/generatictable';
 import { useTransition, animated } from 'react-spring';
 import { useHistory } from 'react-router-dom';
 import { isUndefined } from 'underscore';
+import { warehouseShipmentsApi } from '../../../Api/generalApi';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 
 export default function WarehouseDetail(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: false, data: [{}] });
+	const [response, setresponse] = useState({ loading: true });
 	useEffect(() => {
 		if (isUndefined(hist.location.state)) {
 			hist.goBack();
+		} else {
+			warehouseShipmentsApi(hist.location.state.id)
+				.then((res) => {
+					if (res.length !== 0) {
+						setresponse({ loading: false, data: res });
+					} else {
+						setresponse({ loading: false, data: [] });
+					}
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
 		}
 	}, []);
 
 	const columns = [
 		{
 			Header: 'Tracking No',
-			accessor: '',
+			accessor: 'shipmentOrderItems[0].trackingNumber',
 		},
 		{
 			Header: 'Shipper',
-			accessor: '',
+			accessor: 'shipperId',
 		},
 		{
-			Header: 'Delivery Type',
-			accessor: 'deliveryType',
+			Header: 'Delivery Location',
+			accessor: 'deliveryLocationDetail',
 		},
 		{
 			Header: 'Check In',
-			accessor: '',
+			Cell: (row) => {
+				return (
+					<>
+						{moment(row.row.original.updatedDatetime).format(
+							'DD-MM-YYYY hh:mm:ss'
+						)}
+					</>
+				);
+			},
 		},
 		{
 			Header: 'Receiver',
-			accessor: 'receiverName',
+			accessor: 'shipmentOrderItems[0].receiverName',
 		},
 		{
 			Header: 'Status',
-			accessor: 'status',
+			accessor: 'shipmentOrderItems[0].deliveryStatus',
 		},
 	];
 

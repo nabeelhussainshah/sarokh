@@ -1,33 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import StepIndicator from './StepIndicator';
 import { useForm } from 'react-hook-form';
-import { useHistory, Redirect } from 'react-router-dom';
-import axios from 'axios';
-import { newShipment, newShipmentList } from './state';
+import { useHistory } from 'react-router-dom';
+import { newShipment, newShipmentList, shipperSetting } from './state';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { cities } from '../../../Utils/cities';
+import { getShipperDeliveryChargesApi } from '../../../Api/adminApi';
+import { toast } from 'react-toastify';
+import { isEmpty } from 'underscore';
+import Loading from '../../Loading/Loading';
 
 export default function Step1(props) {
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(newShipment);
-	const [response, setresponse] = useState({ loading: true });
 	const setState = useSetRecoilState(newShipmentList);
+	const [shipperSettings, setShipperSettings] = useRecoilState(shipperSetting);
 
 	useEffect(() => {
 		async function fetchData() {
-			await axios
-				.get(`${process.env.REACT_APP_API}/city/get-list`)
-				.then((response) => {
-					if (response.status === 200) {
-						console.log(response);
-						setresponse({ loading: false, data: response.data.data });
-					}
+			const user = await JSON.parse(localStorage.getItem('user'));
+			getShipperDeliveryChargesApi(user.id)
+				.then((res) => {
+					shipperSettingCheck(res);
 				})
 				.catch((err) => {
-					window.alert(err.message);
+					toast.error(err.message);
 				});
 		}
 		fetchData();
 	}, []);
+
+	const shipperSettingCheck = (data) => {
+		if (data === null) {
+			toast.info('ACCOUNT NOT ACTIVE CONTACT SUPPORT');
+			hist.push('/shipper/dashboard');
+		} else if (!data.enable) {
+			toast.info('YOUR ACCOUNT IS DISABLED PLEASE CONTACT SUPPORT');
+			hist.push('/shipper/dashboard');
+		} else {
+			if (
+				(!data.pickupSarokhPoint &&
+					!data.pickupShipperWarehouse &&
+					!data.pickupSarokhWarehouse) ||
+				(!data.deliverySarokhPoint &&
+					!data.deliveryLastMile &&
+					!data.deliveryCustomerChoice)
+			) {
+				toast.info(
+					'ALL YOUR SETTINGS HAVE BEEN DISABLED PLEASE CONTACT SUPPORT'
+				);
+				hist.push('/shipper/dashboard');
+			} else {
+				setShipperSettings(data);
+			}
+		}
+	};
 
 	const { register, errors, handleSubmit } = useForm({
 		defaultValues: data,
@@ -56,8 +83,8 @@ export default function Step1(props) {
 		hist.push('/shipper/allshipments');
 	};
 
-	return response.loading ? (
-		<div>Loading...</div>
+	return isEmpty(shipperSettings) ? (
+		<Loading marginTop="0%" />
 	) : (
 		<>
 			<StepIndicator step1={'current'} />
@@ -80,7 +107,7 @@ export default function Step1(props) {
 								validate: (value) => value !== 'true',
 							})}
 						>
-							{response.data.map((doc, i) => {
+							{cities.map((doc, i) => {
 								return (
 									<option key={i} value={doc}>
 										{doc}
@@ -104,7 +131,7 @@ export default function Step1(props) {
 								validate: (value) => value !== 'true',
 							})}
 						>
-							{response.data.map((doc, i) => {
+							{cities.map((doc, i) => {
 								return (
 									<option key={i} value={doc}>
 										{doc}

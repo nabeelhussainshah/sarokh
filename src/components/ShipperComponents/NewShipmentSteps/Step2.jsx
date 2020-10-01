@@ -3,15 +3,21 @@ import StepIndicator from './StepIndicator';
 import { useHistory, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { newShipment, newShipmentList } from './state';
-import axios from 'axios';
+import { newShipment, newShipmentList, shipperSetting } from './state';
+import { getDeliveryLocationsApi } from '../../../Api/shipperApi';
+import { shipmentDropdownOptions } from '../../../Utils/newShipmentHelper';
+import { toast } from 'react-toastify';
+import { useRecoilValue } from 'recoil';
+import Loading from '../../Loading/Loading';
+import { isEmpty } from 'underscore';
 
 export default function Step2(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: true });
+	const [response, setresponse] = useState({ loading: true, dropDowns: {} });
 	const user = JSON.parse(localStorage.getItem('user'));
 	const [data, setdata] = useRecoilState(newShipment);
 	const setState = useSetRecoilState(newShipmentList);
+	const shipperSettings = useRecoilValue(shipperSetting);
 
 	console.log(data);
 
@@ -29,24 +35,26 @@ export default function Step2(props) {
 	};
 
 	useEffect(() => {
-		async function fetchData() {
-			await axios
-				.get(
-					`${process.env.REACT_APP_API}/order/get-pickup-delivery-locations/${user.id}`
-				)
-				.then((response) => {
-					if (response.status === 200) {
-						setresponse({ loading: false, data: response.data });
-					}
-				})
-				.catch((err) => {
-					window.alert(err.message);
-				});
-		}
-		fetchData();
+		getDeliveryLocationsApi()
+			.then((res) => {
+				dropDownOptions(res);
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	}, []);
 
-	if (Object.keys(data).length <= 8 && data.constructor === Object) {
+	const dropDownOptions = (data) => {
+		try {
+			let dropDowns = shipmentDropdownOptions(shipperSettings);
+
+			setresponse({ loading: false, data: data, dropDowns: dropDowns });
+		} catch (err) {
+			toast.error('somethings went wrong');
+		}
+	};
+
+	if (isEmpty(data) || isEmpty(shipperSettings)) {
 		// this is to check if the values exist from step1 if they dont page will be redirected to step 1 the default values have the length of 8
 		return <Redirect to="/shipper/newshipment/step1" />;
 	}
@@ -87,252 +95,261 @@ export default function Step2(props) {
 	};
 
 	return response.loading ? (
-		<div>Loading...</div>
+		<Loading marginTop="0%" />
 	) : (
-			<>
-				<StepIndicator step1={'done'} step2={'current'} />
-				<form className="margintop30" onSubmit={handleSubmit(onsubmit)}>
-					<div className="form-row">
-						<div className="form-group col-md-6">
-							<label htmlFor="pickupType">Pickup Location</label>
-							<select
-								className="form-control"
-								id="pickupType"
-								name="pickupType"
-								onChange={(e) => {
-									setdata({ ...data, pickupType: e.target.value });
-								}}
-								ref={register({
-									required: true,
-									validate: (value) => value !== 'true',
-								})}
-							>
-								<option key={1} value="true">
-									Pickup Location
+		<>
+			<StepIndicator step1={'done'} step2={'current'} />
+			<form className="margintop30" onSubmit={handleSubmit(onsubmit)}>
+				<div className="form-row">
+					<div className="form-group col-md-6">
+						<label htmlFor="pickupType">Pickup Location</label>
+						<select
+							className="form-control"
+							id="pickupType"
+							name="pickupType"
+							onChange={(e) => {
+								setdata({ ...data, pickupType: e.target.value });
+							}}
+							ref={register({
+								required: true,
+								validate: (value) => value !== 'true',
+							})}
+						>
+							<option value="true" style={{ fontWeight: 'bold' }}>
+								Select location
 							</option>
-								<option key={2} value="Sarokh Point">
-									Sarokh Points
-							</option>
-								<option key={3} value="Shipper Warehouse">
-									Shipper Warehouse
-							</option>
-								<option key={4} value="Sarokh Warehouse">
-									Sarokh Warehouse
-							</option>
-							</select>
-							<span style={{ color: 'red' }}>
-								{' '}
-								{errors.pickupType && 'Pickup Location is required'}
-							</span>
-							{data.pickupType === 'Sarokh Warehouse' ? (
-								<div className="mt-3">
-									<label htmlFor="sarokhWarehouseId">Sarokh Warehouse</label>
-									<select
-										className="form-control"
-										id="sarokhWarehouseId"
-										name="sarokhWarehouseId"
-										onChange={(e) => {
-											setdata({ ...data, sarokhWarehouseId: e.target.value });
-										}}
-										ref={register({
-											required: true,
-											validate: (value) => value !== 'true',
-										})}
-									>
-										<option key={12345} value="true">
-											--- Select Sarokh Warehouse ---
+							{response.dropDowns.pickupLocationDD.map((doc) => {
+								return (
+									<option key={doc} value={doc}>
+										{doc}
 									</option>
-										{response.data.sarokhWarehouses.map((doc, i) => {
-											return (
-												<option key={i} value={doc.id}>
-													{doc.name}
-												</option>
-											);
-										})}
-									</select>
-									<span style={{ color: 'red' }}>
-										{' '}
-										{errors.sarokhWarehouseId && 'sarokh warehouse is required'}
-									</span>
-								</div>
-							) : null}
-							{data.pickupType === 'Shipper Warehouse' ? (
-								<div className="mt-3">
-									<label htmlFor="shipperWarehouseId">Shipper Warehouse</label>
-									<select
-										className="form-control"
-										id="shipperWarehouseId"
-										name="shipperWarehouseId"
-										onChange={(e) => {
-											setdata({ ...data, shipperWarehouseId: e.target.value });
-										}}
-										ref={register({
-											required: true,
-											validate: (value) => value !== 'true',
-										})}
-									>
-										<option key={12345} value="true">
-											--- Select Shipper Warehouse ---
+								);
+							})}
+						</select>
+						<span style={{ color: 'red' }}>
+							{' '}
+							{errors.pickupType && 'Pickup Location is required'}
+						</span>
+						{data.pickupType === 'Sarokh Warehouse' ? (
+							<div className="mt-3">
+								<label htmlFor="sarokhWarehouseId">Sarokh Warehouse</label>
+								<select
+									className="form-control"
+									id="sarokhWarehouseId"
+									name="sarokhWarehouseId"
+									onChange={(e) => {
+										setdata({ ...data, sarokhWarehouseId: e.target.value });
+									}}
+									ref={register({
+										required: true,
+										validate: (value) => value !== 'true',
+									})}
+								>
+									<option key={12345} value="true">
+										--- Select Sarokh Warehouse ---
 									</option>
-										{response.data.shipperWarehouses.map((doc, i) => {
-											return (
-												<option key={i} value={doc.id}>
-													{doc.name}
-												</option>
-											);
-										})}
-									</select>
-									<span style={{ color: 'red' }}>
-										{' '}
-										{errors.shipperWarehouseId && 'Shipper Warehouse is required'}
-									</span>
-								</div>
-							) : null}
-						</div>
-						<div className="form-group col-md-6">
-							<label htmlFor="deliveryLocation">Delivery Location</label>
-							<select
-								className="form-control"
-								id="deliveryLocation"
-								name="deliveryLocation"
-								defaultValue={data.deliveryLocation}
-								onChange={(e) => {
-									setdata({ ...data, deliveryLocation: e.target.value });
-								}}
-								ref={register({
-									required: true,
-									validate: (value) => value !== 'true',
-								})}
-							>
-								<option key={1} value="true">
-									Delivery Location{' '}
-								</option>
-								<option key={2} value="To Sarokh Point">
-									Select Delivery Location Now
+									{response.data.sarokhWarehouses.map((doc, i) => {
+										return (
+											<option key={i} value={doc.id}>
+												{doc.name}
+											</option>
+										);
+									})}
+								</select>
+								<span style={{ color: 'red' }}>
+									{' '}
+									{errors.sarokhWarehouseId && 'sarokh warehouse is required'}
+								</span>
+							</div>
+						) : null}
+						{data.pickupType === 'Shipper Warehouse' ? (
+							<div className="mt-3">
+								<label htmlFor="shipperWarehouseId">Shipper Warehouse</label>
+								<select
+									className="form-control"
+									id="shipperWarehouseId"
+									name="shipperWarehouseId"
+									onChange={(e) => {
+										setdata({ ...data, shipperWarehouseId: e.target.value });
+									}}
+									ref={register({
+										required: true,
+										validate: (value) => value !== 'true',
+									})}
+								>
+									<option key={12345} value="true">
+										--- Select Shipper Warehouse ---
+									</option>
+									{response.data.shipperWarehouses.map((doc, i) => {
+										return (
+											<option key={i} value={doc.id}>
+												{doc.name}
+											</option>
+										);
+									})}
+								</select>
+								<span style={{ color: 'red' }}>
+									{' '}
+									{errors.shipperWarehouseId && 'Shipper Warehouse is required'}
+								</span>
+							</div>
+						) : null}
+					</div>
+					<div className="form-group col-md-6">
+						<label htmlFor="deliveryLocation">Delivery Location</label>
+						<select
+							className="form-control"
+							id="deliveryLocation"
+							name="deliveryLocation"
+							defaultValue={data.deliveryLocation}
+							onChange={(e) => {
+								setdata({ ...data, deliveryLocation: e.target.value });
+							}}
+							ref={register({
+								required: true,
+								validate: (value) => value !== 'true',
+							})}
+						>
+							<option key={1} value="true">
+								Delivery Location{' '}
 							</option>
-								<option key={3} value="To Predefined Location">
-									Let the Receiver Choose
+							{response.dropDowns.deliveryLocationDD.map((doc) => {
+								return (
+									<option key={doc} value={doc}>
+										{doc}
+									</option>
+								);
+							})}
+						</select>
+						<span style={{ color: 'red' }}>
+							{' '}
+							{errors.deliveryLocation && 'Delivery location is required'}
+						</span>
+						{/* 
+						<option key={1} value="true">
+								Delivery Location{' '}
 							</option>
-							</select>
-							<span style={{ color: 'red' }}>
-								{' '}
-								{errors.deliveryLocation && 'Delivery location is required'}
-							</span>
-							{data.deliveryLocation === 'To Sarokh Point' ? (
-								<div className="mt-3">
-									<label name="deliveryLocationRadio">
-										Choose the type of delivery location
+							<option key={2} value="To Sarokh Point">
+								Select Delivery Location Now
+							</option>
+							<option key={3} value="To Predefined Location">
+								Let the Receiver Choose
+							</option>
+						{data.deliveryLocation === 'To Sarokh Point' ? (
+							<div className="mt-3">
+								<label name="deliveryLocationRadio">
+									Choose the type of delivery location
 								</label>
-									<div className="form-check">
-										<input
-											className="form-check-input"
-											type="radio"
-											name="deliveryLocationRadio"
-											value="customerAddress"
-											onClick={(e) => {
-												setdata({
-													...data,
-													deliveryLocationRadio: 'customerAddress',
-												});
-											}}
-											ref={register()}
-										/>
-										<span style={{ color: 'red' }}>
-											{' '}
-											{errors.deliveryLocationRadio && 'this is required'}
-										</span>
-										<label className="form-check-label" htmlFor="indeliverycase">
-											Customer's Address
+								<div className="form-check">
+									<input
+										className="form-check-input"
+										type="radio"
+										name="deliveryLocationRadio"
+										value="customerAddress"
+										onClick={(e) => {
+											setdata({
+												...data,
+												deliveryLocationRadio: 'customerAddress',
+											});
+										}}
+										ref={register()}
+									/>
+									<span style={{ color: 'red' }}>
+										{' '}
+										{errors.deliveryLocationRadio && 'this is required'}
+									</span>
+									<label className="form-check-label" htmlFor="indeliverycase">
+										Customer's Address
 									</label>
-									</div>
-									<div className="form-check">
-										<input
-											className="form-check-input"
-											type="radio"
-											name="deliveryLocationRadio"
-											value="sarokhPoint"
-											onClick={(e) => {
-												setdata({
-													...data,
-													deliveryLocationRadio: 'sarokhPoint',
-												});
-											}}
-											ref={register({ required: true })}
-										/>
-										<span style={{ color: 'red' }}>
-											{' '}
-											{errors.deliveryLocationRadio && 'This field is required'}
-										</span>
-										<label className="form-check-label" htmlFor="selectNow">
-											Sarokh Point
-									</label>
-									</div>
 								</div>
-							) : null}
-							{data.deliveryLocationRadio === 'sarokhPoint' &&
-								data.deliveryLocation === 'To Sarokh Point' ? (
-									<div className="mt-3">
-										<label htmlFor="concernPerson">Sarokh Point</label>
-										<select
-											className="form-control"
-											name="dealerPointId"
-											onChange={(e) => {
-												setdata({ ...data, dealerPointId: e.target.value });
-											}}
-											ref={register({
-												required: true,
-												validate: (value) => value !== 'true',
-											})}
-										>
-											<option key={12345} value="true">
-												--- Select Sarokh Point ---
+								<div className="form-check">
+									<input
+										className="form-check-input"
+										type="radio"
+										name="deliveryLocationRadio"
+										value="sarokhPoint"
+										onClick={(e) => {
+											setdata({
+												...data,
+												deliveryLocationRadio: 'sarokhPoint',
+											});
+										}}
+										ref={register({ required: true })}
+									/>
+									<span style={{ color: 'red' }}>
+										{' '}
+										{errors.deliveryLocationRadio && 'This field is required'}
+									</span>
+									<label className="form-check-label" htmlFor="selectNow">
+										Sarokh Point
+									</label>
+								</div>
+							</div>
+						) : null}
+						{data.deliveryLocationRadio === 'sarokhPoint' &&
+						data.deliveryLocation === 'To Sarokh Point' ? (
+							<div className="mt-3">
+								<label htmlFor="concernPerson">Sarokh Point</label>
+								<select
+									className="form-control"
+									name="dealerPointId"
+									onChange={(e) => {
+										setdata({ ...data, dealerPointId: e.target.value });
+									}}
+									ref={register({
+										required: true,
+										validate: (value) => value !== 'true',
+									})}
+								>
+									<option key={12345} value="true">
+										--- Select Sarokh Point ---
 									</option>
-											{response.data.sarokhPoints.map((doc, i) => {
-												return (
-													<option key={i} value={doc.id}>
-														{doc.dealerPointName}
-													</option>
-												);
-											})}
-										</select>
-										<span style={{ color: 'red' }}>
-											{' '}
-											{errors.dealerPointId && 'Sarokh Point is required'}
-										</span>
-									</div>
-								) : null}
-						</div>
-					</div>
-					<div className="form-row">
-						<div className="col-sm-12">
-							<div className="btn-container float-left">
-								<button
-									type="button"
-									className="btn btn-danger"
-									onClick={() => {
-										cancel();
-									}}
-								>
-									Cancel
-							</button>
+									{response.data.sarokhPoints.map((doc, i) => {
+										return (
+											<option key={i} value={doc.id}>
+												{doc.dealerPointName}
+											</option>
+										);
+									})}
+								</select>
+								<span style={{ color: 'red' }}>
+									{' '}
+									{errors.dealerPointId && 'Sarokh Point is required'}
+								</span>
 							</div>
-							<div className="btn-container float-right">
-								<button
-									className="btn btn-danger dark-grey"
-									onClick={() => {
-										goback();
-									}}
-								>
-									Go to previous step
+						) : null} */}
+					</div>
+				</div>
+				<div className="form-row">
+					<div className="col-sm-12">
+						<div className="btn-container float-left">
+							<button
+								type="button"
+								className="btn btn-danger"
+								onClick={() => {
+									cancel();
+								}}
+							>
+								Cancel
 							</button>
-								&nbsp;&nbsp;
+						</div>
+						<div className="btn-container float-right">
+							<button
+								className="btn btn-danger dark-grey"
+								onClick={() => {
+									goback();
+								}}
+							>
+								Go to previous step
+							</button>
+							&nbsp;&nbsp;
 							<button className="btn btn-success" type="submit">
-									Next step
+								Next step
 							</button>
-							</div>
 						</div>
 					</div>
-				</form>
-			</>
-		);
+				</div>
+			</form>
+		</>
+	);
 }

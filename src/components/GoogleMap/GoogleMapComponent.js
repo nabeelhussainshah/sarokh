@@ -54,6 +54,14 @@ export const GoogleMapComponent = withScriptjs(
 		return (
 			<GoogleMap
 				defaultZoom={props.zoom || 6}
+				defaultCenter={
+					props.defaultCenter
+						? props.defaultCenter
+						: {
+								lat: 23.8859,
+								lng: 39.1925,
+						  }
+				}
 				center={
 					props.defaultCenter
 						? props.defaultCenter
