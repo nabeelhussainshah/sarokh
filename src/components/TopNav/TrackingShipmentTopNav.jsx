@@ -9,7 +9,7 @@ function TopNav(props) {
 					{/* Left navbar links */}
 					<ul className="navbar-nav">
 						<Fragment>
-							<li className="nav-item d-none d-sm-inline-block">
+							<li className="nav-item">
 								<NavLink
 									to="/tracking/addaddress"
 									className="nav-link"
@@ -18,7 +18,7 @@ function TopNav(props) {
 									Last Mile
 								</NavLink>
 							</li>
-							<li className="nav-item d-none d-sm-inline-block">
+							<li className="nav-item">
 								<NavLink
 									to="/tracking/addarea"
 									className="nav-link"
