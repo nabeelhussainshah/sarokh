@@ -13,6 +13,7 @@ import { useTransition, animated } from 'react-spring';
 import { useRecoilState } from 'recoil';
 import { newShipment } from '../../components/ShipperComponents/NewShipmentSteps/state';
 import { toast } from 'react-toastify';
+import Loading from '../../components/Loading/Loading';
 
 export default function AllShipments(props) {
 	const hist = useHistory();
@@ -137,7 +138,7 @@ export default function AllShipments(props) {
 	});
 
 	return response.loading ? (
-		<div>loading...</div>
+		<Loading />
 	) : (
 		transitions.map(
 			({ item, props, key }) =>

@@ -5,18 +5,6 @@ export const adminRoutes = [
 		iconClass: 'nav-icon fas fa-rocket',
 	},
 	{
-		to: '/admin/tracking/',
-		name: 'Tracking',
-		iconClass: 'nav-icon fas fa-map-marker-alt',
-		subRoutes: [
-			{
-				to: '/admin/tracking/driverlocations',
-				name: 'Driver Locations',
-				iconClass: 'nav-icon fas fa-map-marker-alt',
-			},
-		],
-	},
-	{
 		to: '/admin/shipments/',
 		name: 'Shipments',
 		iconClass: 'nav-icon fas fa-box',

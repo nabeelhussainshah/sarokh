@@ -44,6 +44,8 @@ function Login(props) {
 						}
 					} else if (user.userType === 'Admin') {
 						hist.push('/admin/dashboard');
+					} else if (user.userType === 'WarehouseManager') {
+						hist.push('/warehousemanager/dashboard');
 					}
 				}
 			});

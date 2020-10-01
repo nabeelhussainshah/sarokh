@@ -5,9 +5,7 @@ import { GoogleMapComponent } from '../../GoogleMap/GoogleMapComponent';
 
 export default function Map(props) {
 	const [data, setdata] = useRecoilState(newShipment);
-	return data.deliveryLocationRadio !== undefined &&
-		data.deliveryLocationRadio === 'customerAddress' &&
-		data.deliveryLocation === 'To Sarokh Point' ? (
+	return data.deliveryLocation === 'To Customer Address' ? (
 		<>
 			<label htmlFor="receiverAddress">Receiver Address</label>
 			<GoogleMapComponent

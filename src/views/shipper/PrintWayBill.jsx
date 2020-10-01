@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import ReactToPrint from 'react-to-print';
 import { useLocation, useHistory } from 'react-router-dom';
-import { getTrackingNumberApi } from '../../Api/shipperApi';
+import { getPendingTrackingNumberApi } from '../../Api/shipperApi';
 import { isUndefined } from 'underscore';
 
 export default function PrintWayBill(props) {
@@ -20,8 +20,11 @@ export default function PrintWayBill(props) {
 	}
 
 	useEffect(() => {
-		getTrackingNumberApi()
+		getPendingTrackingNumberApi()
 			.then((res) => {
+				if (res.length === 0) {
+					toast.info('No Tracking Numbers found');
+				}
 				setresponse({ loading: false, list: res });
 			})
 			.catch((err) => {
@@ -78,8 +81,8 @@ export default function PrintWayBill(props) {
 								<option value="true">---Select Order id---</option>
 								{response.list.map((doc, i) => {
 									return (
-										<option key={i} value={doc}>
-											{doc}
+										<option key={i} value={doc.orderId}>
+											{doc.orderId}
 										</option>
 									);
 								})}

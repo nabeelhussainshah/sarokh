@@ -122,217 +122,217 @@ export default function RecordPayment(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			transitions.map(
-				({ item, props, key }) =>
-					item && (
-						<animated.div key={key} style={props}>
-							<Container>
-								<div className="card-header">
-									<h2 className="float-left">Record Payment</h2>
+		transitions.map(
+			({ item, props, key }) =>
+				item && (
+					<animated.div key={key} style={props}>
+						<Container>
+							<div className="card-header">
+								<h2 className="float-left">Record Payment</h2>
+							</div>
+							<div className="card-body">
+								<div className="form-row mb-3">
+									<div className="col">
+										<label>User Type</label>
+										<select
+											className="form-control"
+											onChange={(e) => {
+												if (e.target.value !== 'true') {
+													getUsers(e.target.value);
+												}
+											}}
+										>
+											<option value="true">Select User Type</option>
+											<option value="Shipper">Shipper</option>
+											<option value="Dealer">Dealer</option>
+											<option value="Driver">Driver</option>
+										</select>
+									</div>
+									<div className="col">
+										<label>User Name</label>
+										<select
+											name="userId"
+											className="form-control"
+											onChange={(e) => {
+												getWalletAndBill(e.target.value);
+											}}
+											ref={register({ required: true })}
+										>
+											<option value="true">Select User</option>
+											{response.users.map((doc, i) => {
+												return (
+													<option key={i} value={doc.id}>
+														{doc.name}
+													</option>
+												);
+											})}
+										</select>
+									</div>
 								</div>
-								<div className="card-body">
-									<div className="form-row mb-3">
-										<div className="col">
-											<label>User Type</label>
-											<select
-												className="form-control"
-												onChange={(e) => {
-													if (e.target.value !== 'true') {
-														getUsers(e.target.value);
-													}
-												}}
-											>
-												<option value="true">Select User Type</option>
-												<option value="Shipper">Shipper</option>
-												<option value="Dealer">Dealer</option>
-												<option value="Driver">Driver</option>
-											</select>
-										</div>
-										<div className="col">
-											<label>User Name</label>
-											<select
-												name="userId"
-												className="form-control"
-												onChange={(e) => {
-													getWalletAndBill(e.target.value);
-												}}
-												ref={register({ required: true })}
-											>
-												<option value="true">Select User</option>
-												{response.users.map((doc, i) => {
-													return (
-														<option key={i} value={doc.id}>
-															{doc.name}
-														</option>
-													);
-												})}
-											</select>
-										</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<label>Wallet</label>
+										<select
+											className="form-control"
+											name="walletId"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
+											<option value="true">Select wallet</option>
+											{response.wallets.map((doc, i) => {
+												return (
+													<option key={doc.id} value={doc.walletId}>
+														{doc.walletType}
+													</option>
+												);
+											})}
+										</select>
 									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<label>Wallet</label>
-											<select
-												className="form-control"
-												name="walletId"
-												ref={register({
-													required: true,
-													validate: (value) => value !== 'true',
-												})}
-											>
-												<option value="true">Select wallet</option>
-												{response.wallets.map((doc, i) => {
-													return (
-														<option key={doc.id} value={doc.walletId}>
-															{doc.walletType}
-														</option>
-													);
-												})}
-											</select>
-										</div>
-										<div className="col">
-											<label>Payment Type</label>
-											<select
-												className="form-control"
-												name="paymentType"
-												ref={register({
-													required: true,
-													validate: (value) => value !== 'true',
-												})}
-											>
-												<option value="true">Select Payment Type</option>
-												<option value="Invoice">Invoice</option>
-												<option value="CreditNote">CreditNote</option>
-												<option value="Credit">Credit</option>
-												<option value="Debit">Debit</option>
-											</select>
-										</div>
+									<div className="col">
+										<label>Payment Type</label>
+										<select
+											className="form-control"
+											name="paymentType"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
+											<option value="true">Select Payment Type</option>
+											<option value="Invoice">Invoice</option>
+											<option value="CreditNote">CreditNote</option>
+											<option value="Credit">Credit</option>
+											<option value="Debit">Debit</option>
+										</select>
 									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<label>Bill No (If Credit Note/Invoice)</label>
-											<select
-												className="form-control"
-												name="billNo"
-												ref={register({
-													required: true,
-													validate: (value) => value !== 'true',
-												})}
-											>
-												) <option value="true">Select Bill No</option>
-												{response.bills.map((doc, i) => {
-													return (
-														<option key={i} value={doc.id}>
-															{doc.id}
-														</option>
-													);
-												})}
-											</select>
-										</div>
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<label>Bill No (If Credit Note/Invoice)</label>
+										<select
+											className="form-control"
+											name="billNo"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
+											) <option value="true">Select Bill No</option>
+											{response.bills.map((doc, i) => {
+												return (
+													<option key={i} value={doc.id}>
+														{doc.id}
+													</option>
+												);
+											})}
+										</select>
 									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<button
-												type="button"
-												className="btn btn-danger float-right btnbrown"
-												onClick={() => {
-													selectedBillDetails();
-												}}
-											>
-												Get Details
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<button
+											type="button"
+											className="btn btn-danger float-right btnbrown"
+											onClick={() => {
+												selectedBillDetails();
+											}}
+										>
+											Get Details
 										</button>
-										</div>
 									</div>
+								</div>
 
-									<div className="form-row mb-3 creatbill">
-										<div className="col-sm-12">
-											<h2>Bill Information</h2>
-										</div>
-									</div>
-									<div className="form-row billdetail mb-3">
-										<div className="col-sm-6">
-											<label className="col-sm-6 col-6">Due Date:</label>
-											<label className="col-sm-6 col-6">
-												<p className=" text-left">{response.dueDate}</p>
-											</label>
-										</div>
-										<div className="col-sm-6">
-											<label className="col-sm-6 col-6">Amount:</label>
-											<label className="col-sm-6 col-6">
-												<p className=" text-left">{response.amount}</p>
-											</label>
-										</div>
-									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<label>Payment Method</label>
-											<select
-												className="form-control"
-												name="paymentMethod"
-												ref={register({
-													required: true,
-													validate: (value) => value !== 'true',
-												})}
-											>
-												<option value="true">Select Payment Method</option>
-												<option value="Cash">Cash</option>
-												<option value="BankTransfer">BankTransfer</option>
-												<option value="Cheque">Cheque</option>
-												<option value="InternalTransfer">InternalTransfer</option>
-											</select>
-										</div>
-										<div className="col">
-											<label>Payment Note:</label>
-											<input
-												type="text"
-												name="paymentNote"
-												className="form-control"
-												placeholder="Select Bill Receiver"
-												ref={register({ required: true })}
-											/>
-										</div>
-									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<label>Amount Paid:</label>
-											<input
-												type="number"
-												name="amountPaid"
-												className="form-control"
-												placeholder="Enter Paid Amount (Auto Fill Billed Amount/COD)"
-												defaultValue={response.amount}
-												ref={register({ required: true })}
-											/>
-										</div>
-										<div className="col">
-											<label>Payment Date:</label>
-											<input
-												type="date"
-												name="paymentDate"
-												className="form-control"
-												placeholder="Select Payment Date"
-												defaultValue={moment(new Date()).format('YYYY-MM-DD')}
-												ref={register({ required: true })}
-											/>
-										</div>
-									</div>
-									<div className="form-row mb-3">
-										<div className="col">
-											<button
-												type="button"
-												className="btn btn-danger float-right btnbrown"
-												onClick={() => {
-													handleSubmit(onsubmit)();
-												}}
-											>
-												Submit
-										</button>
-										</div>
+								<div className="form-row mb-3 creatbill">
+									<div className="col-sm-12">
+										<h2>Bill Information</h2>
 									</div>
 								</div>
-							</Container>
-						</animated.div>
-					)
-			)
-		);
+								<div className="form-row billdetail mb-3">
+									<div className="col-sm-6">
+										<label className="col-sm-6 col-6">Due Date:</label>
+										<label className="col-sm-6 col-6">
+											<p className=" text-left">{response.dueDate}</p>
+										</label>
+									</div>
+									<div className="col-sm-6">
+										<label className="col-sm-6 col-6">Amount:</label>
+										<label className="col-sm-6 col-6">
+											<p className=" text-left">{response.amount}</p>
+										</label>
+									</div>
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<label>Payment Method</label>
+										<select
+											className="form-control"
+											name="paymentMethod"
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
+										>
+											<option value="true">Select Payment Method</option>
+											<option value="Cash">Cash</option>
+											<option value="BankTransfer">BankTransfer</option>
+											<option value="Cheque">Cheque</option>
+											<option value="InternalTransfer">InternalTransfer</option>
+										</select>
+									</div>
+									<div className="col">
+										<label>Payment Note:</label>
+										<input
+											type="text"
+											name="paymentNote"
+											className="form-control"
+											placeholder="Write Note"
+											ref={register({ required: true })}
+										/>
+									</div>
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<label>Amount Paid:</label>
+										<input
+											type="number"
+											name="amountPaid"
+											className="form-control"
+											placeholder="Enter Paid Amount (Auto Fill Billed Amount/COD)"
+											defaultValue={response.amount}
+											ref={register({ required: true })}
+										/>
+									</div>
+									<div className="col">
+										<label>Payment Date:</label>
+										<input
+											type="date"
+											name="paymentDate"
+											className="form-control"
+											placeholder="Select Payment Date"
+											defaultValue={moment(new Date()).format('YYYY-MM-DD')}
+											ref={register({ required: true })}
+										/>
+									</div>
+								</div>
+								<div className="form-row mb-3">
+									<div className="col">
+										<button
+											type="button"
+											className="btn btn-danger float-right btnbrown"
+											onClick={() => {
+												handleSubmit(onsubmit)();
+											}}
+										>
+											Submit
+										</button>
+									</div>
+								</div>
+							</div>
+						</Container>
+					</animated.div>
+				)
+		)
+	);
 }

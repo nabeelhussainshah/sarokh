@@ -5,6 +5,7 @@ import MainContainer from '../../components/Containers/MainContainer';
 import { useTransition, animated } from 'react-spring';
 import { dashboardApi } from '../../Api/shipperApi';
 import { toast } from 'react-toastify';
+import Loading from '../../components/Loading/Loading';
 
 function ShipperDashboard(props) {
 	const user = JSON.parse(localStorage.getItem('user'));
@@ -31,7 +32,7 @@ function ShipperDashboard(props) {
 	});
 
 	return response.loading ? (
-		<div>Loading...</div>
+		<Loading />
 	) : (
 		transitions.map(
 			({ item, props, key }) =>

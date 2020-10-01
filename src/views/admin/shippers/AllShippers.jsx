@@ -55,10 +55,6 @@ export default function AllShippers(props) {
 			accessor: 'user.email',
 		},
 		{
-			Header: 'City',
-			accessor: 'city',
-		},
-		{
 			Header: 'Status',
 			accessor: 'status',
 		},
@@ -85,7 +81,6 @@ export default function AllShippers(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
 								<h2 className="float-left">All Shippers</h2>

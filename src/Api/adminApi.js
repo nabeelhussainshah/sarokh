@@ -389,7 +389,7 @@ export async function assignCardToShipmentApi(data) {
 			if (res.data.status === 200) {
 				return res.data.data;
 			} else {
-				throw new Error(`something went wrong with status code: ${res.status}`);
+				throw new Error(res.data.message);
 			}
 		})
 		.catch((err) => {
@@ -854,6 +854,24 @@ export async function billListApi() {
 				return res.data.data;
 			} else {
 				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function billDetailApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/bill/get-details/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
 			}
 		})
 		.catch((err) => {

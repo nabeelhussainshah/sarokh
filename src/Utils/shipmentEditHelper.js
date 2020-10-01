@@ -2,13 +2,14 @@
 
 export const shipmentEditHelper = (data, id) => {
 	console.log('this is the data and id', data, id);
+
 	return {
 		...data,
 		id: id,
 		deliveryLocation:
 			data.deliveryLocation === 'Last Mile'
-				? 'To Sarokh Point'
-				: data.deliveryLocation,
+				? 'To Customer Address'
+				: 'To Sarokh Point',
 		location: [
 			{
 				label: data.address,

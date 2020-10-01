@@ -99,13 +99,52 @@ export async function getShipperWarehousesApi() {
 }
 
 export async function getTrackingNumberApi() {
-	const user = await JSON.parse(localStorage.getItem('user'));
 	return await axios
 		.get(`${process.env.REACT_APP_API}/order/get-all-shipments-trackingnumber`)
 		.then((res) => {
 			console.log(res);
 			if (res.data.status === 200) {
 				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getPendingTrackingNumberApi() {
+	const user = await JSON.parse(localStorage.getItem('user'));
+	return await axios
+		.get(`${process.env.REACT_APP_API}/order/get-pending-orders/${user.id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getDeliveryLocationsApi() {
+	const user = await JSON.parse(localStorage.getItem('user'));
+	return await axios
+		.get(
+			`${process.env.REACT_APP_API}/order/get-pickup-delivery-locations/${user.id}`
+		)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
 			} else {
 				throw new Error(
 					`something went wrong with status code: ${res.data.status}`

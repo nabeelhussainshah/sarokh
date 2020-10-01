@@ -12,7 +12,7 @@ export default function NewShipment(props) {
 		<Switch>
 			<Container>
 				<div className="card-header">
-					<h2>NEW Shipment</h2>
+					<h2>New Shipment</h2>
 				</div>
 				<div className="card-body">
 					<Route exact path="/shipper/newshipment/step1">

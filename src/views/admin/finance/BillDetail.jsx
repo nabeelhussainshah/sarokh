@@ -3,13 +3,29 @@ import Container from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { CODShipmentsApi } from '../../../Api/adminApi';
+import { billDetailApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import { isUndefined } from 'underscore';
+import moment from 'moment';
 
 export default function BillDetail(props) {
 	const hist = useHistory();
-	const [response, setresponse] = useState({ loading: false });
+	const [response, setresponse] = useState({ loading: true });
+
+	useEffect(() => {
+		if (isUndefined(hist.location.state)) {
+			hist.goBack();
+		} else {
+			billDetailApi(hist.location.state.id)
+				.then((res) => {
+					setresponse({ loading: false, data: res });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	}, []);
 
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
@@ -47,19 +63,19 @@ export default function BillDetail(props) {
 	const column2 = [
 		{
 			Header: 'Tracking NO',
-			accessor: '',
+			accessor: 'trackingNumber',
 		},
 		{
 			Header: 'Date',
-			accessor: '',
+			accessor: 'date',
 		},
 		{
 			Header: 'Units',
-			accessor: '',
+			accessor: 'units',
 		},
 		{
 			Header: 'Amount',
-			accessor: '',
+			accessor: 'amount',
 		},
 	];
 
@@ -80,13 +96,16 @@ export default function BillDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6"> Bill Type:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"> [Bill Type]</p>
+											<p className=" text-left"> {response.data.billType}</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6"> Bill Category:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"> [Bill Category]</p>
+											<p className=" text-left">
+												{' '}
+												{response.data.billCategory}
+											</p>
 										</label>
 									</div>
 								</div>
@@ -94,13 +113,13 @@ export default function BillDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6"> User Type</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"> Shipper/Driver/Dealer</p>
+											<p className=" text-left"> {response.data.userType}</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Bill To</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">[Biller Name]</p>
+											<p className=" text-left">{response.data.billTo}</p>
 										</label>
 									</div>
 								</div>
@@ -108,13 +127,21 @@ export default function BillDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Creation Date:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"> [Creation Date]</p>
+											<p className=" text-left">
+												{' '}
+												{moment(response.data.creationDate).format(
+													'DD-MM-YYYY'
+												)}
+											</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Due Date:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"> [Due Date]</p>
+											<p className=" text-left">
+												{' '}
+												{moment(response.data.dueDate).format('DD-MM-YYYY')}
+											</p>
 										</label>
 									</div>
 								</div>
@@ -122,13 +149,19 @@ export default function BillDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Starting Date:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">[Starting Date]</p>
+											<p className=" text-left">
+												{moment(response.data.startingDate).format(
+													'DD-MM-YYYY'
+												)}
+											</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Ending Date:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">[Ending Date]</p>
+											<p className=" text-left">
+												{moment(response.data.endingDate).format('DD-MM-YYYY')}
+											</p>
 										</label>
 									</div>
 								</div>
@@ -136,13 +169,13 @@ export default function BillDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Wallet Name:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"> [Bill Type]</p>
+											<p className=" text-left"> {response.data.walletName}</p>
 										</label>
 									</div>
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">Status:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left">Paid/ Unpaid/ Partially Paid</p>
+											<p className=" text-left">{response.data.status}</p>
 										</label>
 									</div>
 								</div>
@@ -162,7 +195,7 @@ export default function BillDetail(props) {
 									Bill Summary
 								</h4>
 								<Table
-									data={[]}
+									data={response.data.billSummary}
 									columns={column2}
 									tableclass={'table-responsive custom-table'}
 									pagination={true}

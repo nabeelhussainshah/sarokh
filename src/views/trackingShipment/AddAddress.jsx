@@ -34,7 +34,7 @@ export default function AddAdress(props) {
 							{
 								latitude: position.coords.latitude,
 								longitude: position.coords.longitude,
-								label: 'Your Location',
+								label: '',
 							},
 						],
 					});
@@ -56,8 +56,8 @@ export default function AddAdress(props) {
 			address: response.location[0].label,
 			deliveryLocation: 'Last Mile',
 			trackingNumber: data.order.orderId,
-			latitude: response.location[0].latitude,
-			longitude: response.location[0].longitude,
+			locationLatitude: response.location[0].latitude,
+			locationLongitude: response.location[0].longitude,
 		};
 
 		updateDeliveryApi(payload)
