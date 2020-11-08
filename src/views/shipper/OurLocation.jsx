@@ -149,7 +149,7 @@ export default function Maps(porps) {
 		},
 		leave: { opacity: 0 },
 	});
-
+	console.log(response);
 	return response.loading ? (
 		<Loading />
 	) : (
@@ -170,6 +170,22 @@ export default function Maps(porps) {
 							<div className="card-body">
 								<GoogleMapComponent
 									isMarkerShown={true}
+									defaultCenter={
+										response.data.mapLocations === undefined
+											? {
+													lat: 23.8859,
+													lng: 39.1925,
+											  }
+											: {
+													lat: parseFloat(
+														response.data.mapLocations[0].latitude
+													),
+													lng: parseFloat(
+														response.data.mapLocations[0].longitude
+													),
+													label: response.data.mapLocations[0].label,
+											  }
+									}
 									position={response.data.mapLocations || []}
 									changefunction={setresponse}
 									googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}

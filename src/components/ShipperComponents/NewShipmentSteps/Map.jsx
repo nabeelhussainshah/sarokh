@@ -9,6 +9,11 @@ export default function Map(props) {
 		<>
 			<label htmlFor="receiverAddress">Receiver Address</label>
 			<GoogleMapComponent
+				defaultCenter={{
+					lat: parseFloat(data.location[0].latitude),
+					lng: parseFloat(data.location[0].longitude),
+					label: data.location[0].label,
+				}}
 				isMarkerShown={true}
 				position={data.location}
 				changeFunction={setdata}

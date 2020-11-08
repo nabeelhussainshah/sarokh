@@ -7,7 +7,7 @@ export const newShipment = atom({
 	key: 'newShipment',
 	default: {
 		shipmentValue: 10,
-		normalPackaging: true,
+		normalPackaging: false,
 		giftPackaging: false,
 		insurance: false,
 		additionalCharges: 0,
@@ -30,7 +30,7 @@ the user can enter new values again in the form */
 
 export const defaultData = {
 	shipmentValue: 10,
-	normalPackaging: true,
+	normalPackaging: false,
 	giftPackaging: false,
 	insurance: false,
 	additionalCharges: 0,

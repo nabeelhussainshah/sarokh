@@ -226,7 +226,7 @@ export default function AddUserForm(props) {
 								{props.warehouses.map((doc) => {
 									return (
 										<option key={doc.name} value={doc.id}>
-											{doc.address}
+											{doc.name}
 										</option>
 									);
 								})}

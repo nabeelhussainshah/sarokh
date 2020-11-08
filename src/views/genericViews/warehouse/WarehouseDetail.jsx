@@ -5,6 +5,7 @@ import { useTransition, animated } from 'react-spring';
 import { useHistory } from 'react-router-dom';
 import { isUndefined } from 'underscore';
 import { warehouseShipmentsApi } from '../../../Api/generalApi';
+import Loading from '../../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
@@ -55,6 +56,14 @@ export default function WarehouseDetail(props) {
 			},
 		},
 		{
+			Header: 'From City',
+			accessor: 'shipFromCity',
+		},
+		{
+			Header: 'To City',
+			accessor: 'shipToCity',
+		},
+		{
 			Header: 'Receiver',
 			accessor: 'shipmentOrderItems[0].receiverName',
 		},
@@ -79,7 +88,7 @@ export default function WarehouseDetail(props) {
 	});
 
 	return response.loading ? (
-		<div>loading...</div>
+		<Loading />
 	) : (
 		transitions.map(
 			({ item, props, key }) =>

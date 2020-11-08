@@ -119,7 +119,7 @@ export default function Step3(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label for="concernedPerson">Concern Person</label>
+							<label for="concernedPerson">Contact Person</label>
 							<input
 								id="concernedPerson"
 								type="text"

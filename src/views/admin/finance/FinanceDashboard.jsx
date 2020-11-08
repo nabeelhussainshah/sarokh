@@ -368,13 +368,14 @@ export default function CodShipments(props) {
 													}}
 												>
 													<option value="true" disabled selected>
-														Select User Type (Shipper, Dealer, Driver, Vendor)
-														(Drop down)
+														Select User Type (Shipper, Dealer, Driver, Vendor,
+														Dealer Point) (Drop down)
 													</option>
 													<option value="Shipper">Shipper</option>
 													<option value="Dealer">Dealer</option>
 													<option value="Driver">Driver</option>
 													<option value="Vendor">Vendor</option>
+													<option value="DealerPoint">Dealer Point</option>
 												</select>
 											</div>
 											<div className="col pr-2">

@@ -76,7 +76,7 @@ export default function Step4(props) {
 					setdata({});
 					hist.push('/');
 				} else {
-					toast.error('something went wrong');
+					toast.error(res.data.message);
 				}
 			})
 			.catch((err) => {
@@ -108,12 +108,12 @@ export default function Step4(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="password">Passsword</label>
+							<label htmlFor="password">Password</label>
 							<input
 								type="password"
 								className="form-control"
 								name="password"
-								placeholder="Passsword"
+								placeholder="Password"
 								ref={register({ required: true })}
 							/>
 							{errors?.password?.types?.required && (
@@ -121,12 +121,12 @@ export default function Step4(props) {
 							)}
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="confirmPassword">Confirm Passsword</label>
+							<label htmlFor="confirmPassword">Confirm Password</label>
 							<input
 								type="password"
 								className="form-control"
 								name="confirmPassword"
-								placeholder="Confirm Passsword"
+								placeholder="Confirm Password"
 								ref={register({ required: true })}
 							/>
 							{errors?.confirmPassword?.types?.required && (

@@ -9,12 +9,11 @@ import { shipmentDropdownOptions } from '../../../Utils/newShipmentHelper';
 import { toast } from 'react-toastify';
 import { useRecoilValue } from 'recoil';
 import Loading from '../../Loading/Loading';
-import { isEmpty } from 'underscore';
+import { isEmpty, filter } from 'underscore';
 
 export default function Step2(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true, dropDowns: {} });
-	const user = JSON.parse(localStorage.getItem('user'));
 	const [data, setdata] = useRecoilState(newShipment);
 	const setState = useSetRecoilState(newShipmentList);
 	const shipperSettings = useRecoilValue(shipperSetting);
@@ -30,7 +29,14 @@ export default function Step2(props) {
 
 	const onsubmit = (formData) => {
 		console.log(formData);
-		setdata({ ...data, ...formData });
+		setdata({
+			...data,
+			...formData,
+			shipperWarehouseAddress:
+				data.deliveryLocation === 'Shipper Location'
+					? getShipperWarehouseLocation(data.shipperWarehouseId)
+					: undefined,
+		});
 		hist.push('/shipper/newshipment/step3');
 	};
 
@@ -47,11 +53,22 @@ export default function Step2(props) {
 	const dropDownOptions = (data) => {
 		try {
 			let dropDowns = shipmentDropdownOptions(shipperSettings);
-
 			setresponse({ loading: false, data: data, dropDowns: dropDowns });
 		} catch (err) {
 			toast.error('somethings went wrong');
 		}
+	};
+
+	const getShipperWarehouseLocation = (id) => {
+		let location = filter(response.data.shipperWarehouses, function (doc) {
+			return doc.id == id;
+		});
+
+		return {
+			address: location[0].address,
+			latitude: location[0].locationLatitude,
+			longitude: location[0].locationLongitude,
+		};
 	};
 
 	if (isEmpty(data) || isEmpty(shipperSettings)) {
@@ -82,11 +99,10 @@ export default function Step2(props) {
 	const cancel = () => {
 		setdata({
 			shipmentValue: 10,
-			normalPackaging: true,
+			normalPackaging: false,
 			giftPackaging: false,
 			insurance: false,
 			additionalCharges: 0,
-			total: 45,
 			billingType: 'true',
 			location: [{ latitude: '23.8859', longitude: '39.1925' }],
 		});
@@ -162,7 +178,8 @@ export default function Step2(props) {
 								</span>
 							</div>
 						) : null}
-						{data.pickupType === 'Shipper Warehouse' ? (
+						{data.pickupType === 'Shipper Warehouse' ||
+						data.deliveryLocation === 'Shipper Location' ? (
 							<div className="mt-3">
 								<label htmlFor="shipperWarehouseId">Shipper Warehouse</label>
 								<select
@@ -170,7 +187,13 @@ export default function Step2(props) {
 									id="shipperWarehouseId"
 									name="shipperWarehouseId"
 									onChange={(e) => {
-										setdata({ ...data, shipperWarehouseId: e.target.value });
+										setdata({
+											...data,
+											shipperWarehouseId: e.target.value,
+											shipperWarehouseAddress: getShipperWarehouseLocation(
+												e.target.value
+											),
+										});
 									}}
 									ref={register({
 										required: true,

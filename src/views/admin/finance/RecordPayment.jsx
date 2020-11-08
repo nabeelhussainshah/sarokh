@@ -10,7 +10,7 @@ import {
 } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
-import moment, { HTML5_FMT } from 'moment';
+import moment from 'moment';
 import { useForm } from 'react-hook-form';
 
 export default function RecordPayment(props) {
@@ -61,7 +61,7 @@ export default function RecordPayment(props) {
 				paymentType: 'true',
 			}); // reset function clears out the previous selected values in the field
 
-			if (wallets.length !== 0 && bills.length !== 0) {
+			if (wallets.length !== 0 || bills.length !== 0) {
 				setresponse({ ...response, wallets: wallets, bills: bills });
 			} else {
 				toast.error('No Bills Found For This User');
@@ -184,7 +184,7 @@ export default function RecordPayment(props) {
 											{response.wallets.map((doc, i) => {
 												return (
 													<option key={doc.id} value={doc.walletId}>
-														{doc.walletType}
+														{doc.description}
 													</option>
 												);
 											})}

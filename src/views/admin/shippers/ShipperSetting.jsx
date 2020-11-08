@@ -455,7 +455,7 @@ export default function ShipperSetting(props) {
 											key={Math.random()}
 											name="notes"
 											className="form-control"
-											ref={register({ required: true })}
+											ref={register()}
 											defaultValue={response.userData.notes}
 										></textarea>
 										<span style={{ color: 'red' }}>

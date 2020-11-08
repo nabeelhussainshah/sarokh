@@ -44,14 +44,16 @@ export default function WarehouseList(porps) {
 	};
 
 	const deleteData = async (dataToDelete) => {
-		deleteWarehouseApi(dataToDelete.id)
-			.then((res) => {
-				toast.success('warehouse deleted!');
-				setresponse({ loading: true });
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+		if (window.confirm(`Are you sure to delete this warehouse?`)) {
+			deleteWarehouseApi(dataToDelete.id)
+				.then((res) => {
+					toast.success('warehouse deleted!');
+					setresponse({ loading: true });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
 	};
 
 	const warehouseDetail = (data) => {
@@ -145,6 +147,22 @@ export default function WarehouseList(porps) {
 							</div>
 							<div className="card-body">
 								<GoogleMapComponent
+									defaultCenter={
+										response.data.mapLocations === undefined
+											? {
+													lat: 23.8859,
+													lng: 39.1925,
+											  }
+											: {
+													lat: parseFloat(
+														response.data.mapLocations[0].latitude
+													),
+													lng: parseFloat(
+														response.data.mapLocations[0].longitude
+													),
+													label: response.data.mapLocations[0].label,
+											  }
+									}
 									isMarkerShown={true}
 									position={response.data.mapLocations || []}
 									changefunction={setresponse}

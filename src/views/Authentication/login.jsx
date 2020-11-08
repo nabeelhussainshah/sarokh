@@ -1,21 +1,14 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useRef } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 function Login(props) {
 	const hist = useHistory();
-	toast.configure({
-		position: 'bottom-right',
-		autoClose: 2000,
-		hideProgressBar: false,
-		closeOnClick: true,
-		pauseOnHover: true,
-		draggable: true,
-		progress: undefined,
-	});
+	const buttonRef = useRef();
 
 	const onSubmit = async (event) => {
+		buttonRef.current.disabled = true;
 		event.preventDefault();
 		const Form = new FormData(event.target);
 		let data = {};
@@ -30,13 +23,13 @@ function Login(props) {
 			.then(async (response) => {
 				if (response.data.status === 401) {
 					toast.error('WRONG USERNAME OR PASSWORD');
+					buttonRef.current.disabled = false;
 				} else {
 					await localStorage.setItem(
 						'user',
 						JSON.stringify(response.data.data)
 					);
 					const user = await JSON.parse(localStorage.getItem('user'));
-					console.log(user);
 					toast.success('LOGIN SUCCESS');
 					if (user.user !== undefined) {
 						if (user.user.userType === 'Shipper') {
@@ -48,6 +41,10 @@ function Login(props) {
 						hist.push('/warehousemanager/dashboard');
 					}
 				}
+			})
+			.catch((err) => {
+				toast.error(err.message);
+				buttonRef.current.disabled = true;
 			});
 	};
 
@@ -57,7 +54,7 @@ function Login(props) {
 				<div className="container-login100">
 					<div className="col-md-8 p-0">
 						<div className="wrap-login100">
-							<img src={require('../assets/images/logo.png')} />
+							<img src={require('../../assets/images/logo.png')} />
 						</div>
 					</div>
 					<div className="col-md-4 p-0 brownbg">
@@ -104,6 +101,7 @@ function Login(props) {
 									<button
 										type="submit"
 										className="btn btn-danger px-4 float-right"
+										ref={buttonRef}
 									>
 										Login
 									</button>

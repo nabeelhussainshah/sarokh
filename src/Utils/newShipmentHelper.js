@@ -18,7 +18,7 @@ export const shipmentDropdownOptions = (settings) => {
 		deliveryLocationDD.push('To Customer Address');
 	}
 	if (settings.deliveryCustomerChoice) {
-		deliveryLocationDD.push('Let The Receiver Choose');
+		deliveryLocationDD.push('Shipper Location');
 	}
 	return { pickupLocationDD, deliveryLocationDD };
 };

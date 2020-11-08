@@ -20,34 +20,38 @@ export default function Step3(props) {
 	const [data, setdata] = useRecoilState(newShipment);
 	const [list, setlist] = useRecoilState(newShipmentList);
 	const [shipperSettings, setShipperSettings] = useRecoilState(shipperSetting);
+	const [nopackaging, setNoPackaging] = useState(false);
 
-	const { register, errors, handleSubmit, reset } = useForm({
+	const { register, errors, handleSubmit, reset, setValue } = useForm({
 		defaultValues: data,
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
 	});
 
-	const defaultValuesSetting = (option) => {
+	const defaultValuesSetting = () => {
 		if (
 			data.deliveryLocation === 'To Customer Address' &&
-			!data.update &&
-			!data.editing
+			(data.update !== true || data.update === undefined)
 		) {
+			/* when the delivery location is set to customer address, then the customer will be charged for the delivery to his
+			her address, the delivery charges are as according to the shipper settings */
+
 			setdata({
 				...data,
 				...defaultData,
-				additionalCharges: shipperSettings.normalPackaging,
+				additionalCharges: 0,
 				deliveryCharges: 0,
 				customerAddressCharges: shipperSettings.lastMile,
 			});
-		} else if (!data.update && !data.editing) {
+		} else if (data.update !== true || data.update === undefined) {
 			setdata({
 				...data,
 				...defaultData,
-				additionalCharges: shipperSettings.normalPackaging,
+				additionalCharges: 0,
 				customerAddressCharges: 0,
 				deliveryCharges: 0,
+				shipmentValue: 10,
 			});
 		} else if (data.update && data.deliveryLocation === 'To Customer Address') {
 			setdata({
@@ -66,9 +70,32 @@ export default function Step3(props) {
 		}
 	};
 
+	/* this effect below intializes the default values for the form when the form is not being updated */
+
 	useEffect(() => {
 		defaultValuesSetting();
+		if (!data.normalPackaging && !data.giftPackaging) {
+			setNoPackaging(true);
+		}
+		if (!data.update) {
+			setValue(
+				'receiverContact',
+				'9665'
+			); /* to set the defailt value of the contact. */
+		}
 	}, []);
+
+	/* this effect prefilles the value of cod input as soon as the billing Type of COD is selected, since we want to have a prefilled value of
+	the shipment value input field for cod input field */
+
+	useEffect(() => {
+		if (data.billingType === 'COD') {
+			setValue('codValue', data.shipmentValue);
+		}
+	}, [data.billingType, data.shipmentValue]);
+
+	/* this effect will take place is form is being updated, since the form is being updated we want the delivery charges to be set
+	according to the values from the api, this sets the deliveryCharges which is then reflected in the deliveryCharges in the UI */
 
 	useEffect(() => {
 		if (
@@ -83,78 +110,40 @@ export default function Step3(props) {
 		return <Redirect to="/shipper/newshipment/step1" />;
 	}
 
-	console.log(data);
+	console.log(data.additionalCharges);
 
 	/* on submit function which is triggered when add to way bill button is pressed is adds the submitted data of form to the
   array of global list state, after that step3 form data is reset so that new values can be added */
 
 	const onSubmit = (value) => {
-		if (data.editing) {
-			setlist([
-				...list,
-				{
-					...data,
-					...value,
-					additionalCharges: data.additionalCharges,
-					shipmentCost:
-						data.additionalCharges +
+		setlist([
+			...list,
+			{
+				...data,
+				...value,
+				additionalCharges: data.additionalCharges,
+				shipmentCost: (
+					data.additionalCharges +
+					data.deliveryCharges +
+					data.customerAddressCharges +
+					((data.additionalCharges +
 						data.deliveryCharges +
-						data.customerAddressCharges +
-						Math.round(
-							((data.additionalCharges +
-								data.deliveryCharges +
-								data.customerAddressCharges) /
-								100) *
-								15
-						),
-				},
-			]);
-			reset();
-			if (data.deliveryLocation === 'To Customer Address' && !data.update) {
-				setdata({
-					...data,
-					...defaultData,
-					additionalCharges: shipperSettings.normalPackaging,
-					deliveryCharges: 0,
-					customerAddressCharges: shipperSettings.lastMile,
-					editing: false,
-				});
-			} else if (!data.update) {
-				setdata({
-					...data,
-					...defaultData,
-					additionalCharges: shipperSettings.normalPackaging,
-					customerAddressCharges: 0,
-					deliveryCharges: 0,
-					editing: false,
-				});
-			}
-		} else {
-			setlist([
-				...list,
-				{
-					...data,
-					...value,
-					additionalCharges: data.additionalCharges,
-					shipmentCost:
-						data.additionalCharges +
-						data.deliveryCharges +
-						data.customerAddressCharges +
-						Math.round(
-							((data.additionalCharges +
-								data.deliveryCharges +
-								data.customerAddressCharges) /
-								100) *
-								15
-						),
-				},
-			]);
-
-			defaultValuesSetting('reset');
-			reset();
-		}
+						data.customerAddressCharges) /
+						100) *
+						15
+				).toFixed(2),
+				total:
+					data.additionalCharges +
+					data.deliveryCharges +
+					data.customerAddressCharges,
+			},
+		]);
+		defaultValuesSetting();
+		setNoPackaging(true);
+		reset();
 	};
 	console.log(list);
+	console.log(data);
 
 	/* when the finish button is clicked submitData function is executed which firstly check if the list state which contains the array of previosly submiited data
   or the global state array is empty, if its empty the length will probably be zero so first condition is fired other wise the data is passed to the api function for
@@ -175,6 +164,9 @@ export default function Step3(props) {
 		}
 	};
 
+	/* this checkes if the list has the the key of name 'updateReady' if it is present the data is posted, this occurs if the data
+	is being updated, since only one shipment at a time can be updated so therefore this condition is put */
+
 	if (has(list[0], 'updateReady')) {
 		postData(list, 'update')
 			.then((res) => {
@@ -194,8 +186,16 @@ export default function Step3(props) {
 					...data,
 					...value,
 					additionalCharges: data.additionalCharges,
-					shipmentCost:
-						data.additionalCharges + Math.round((data.total / 100) * 15),
+					shipmentCost: (
+						data.additionalCharges +
+						data.deliveryCharges +
+						data.customerAddressCharges +
+						((data.additionalCharges +
+							data.deliveryCharges +
+							data.customerAddressCharges) /
+							100) *
+							15
+					).toFixed(2),
 					updateReady: true,
 				},
 			]);
@@ -212,8 +212,21 @@ value is deducted from these fields this does not include the gift packaging val
 	const addCharges = (type, check) => {
 		// eslint-disable-next-line default-case
 		switch (type) {
+			case 'noPackaging':
+				if (!nopackaging && (data.giftPackaging || data.normalPackaging)) {
+					setdata({
+						...data,
+						normalPackaging: false,
+						giftPackaging: false,
+						additionalCharges: 0,
+						insurance: false,
+					});
+					setNoPackaging(true);
+				}
+				break;
+
 			case 'normalPackaging':
-				if (data.giftPackaging && !data.normalPackaging) {
+				if ((nopackaging || data.giftPackaging) && !data.normalPackaging) {
 					setdata({
 						...data,
 						normalPackaging: check,
@@ -223,36 +236,41 @@ value is deducted from these fields this does not include the gift packaging val
 							: data.additionalCharges - shipperSettings.normalPackaging,
 						insurance: check ? false : data.insurance,
 					});
+					if (nopackaging) {
+						setNoPackaging(false);
+					}
 				}
 				break;
 
 			case 'giftPackaging':
-				if (data.normalPackaging && !data.giftPackaging) {
+				if ((data.normalPackaging || nopackaging) && !data.giftPackaging) {
 					setdata({
 						...data,
 						giftPackaging: check,
 						normalPackaging: check ? false : true,
-						additionalCharges: check
+						additionalCharges: data.normalPackaging
 							? data.additionalCharges +
 							  shipperSettings.giftPackaging -
 							  shipperSettings.normalPackaging
-							: data.additionalCharges - shipperSettings.giftPackaging,
+							: data.additionalCharges + shipperSettings.giftPackaging,
 					});
+					if (nopackaging) {
+						setNoPackaging(false);
+					}
 				}
+
 				break;
 
 			case 'insurance':
 				setdata({
 					...data,
 					insurance: check,
-					normalPackaging: data.giftPackaging ? false : true,
+					// normalPackaging: data.giftPackaging ? false : true,
 					additionalCharges: check
 						? data.additionalCharges +
-						  Math.round((data.shipmentValue / 100) * shipperSettings.insurance)
+						  (data.shipmentValue / 100) * shipperSettings.insurance
 						: data.additionalCharges -
-						  Math.round(
-								(data.shipmentValue / 100) * shipperSettings.insurance
-						  ),
+						  (data.shipmentValue / 100) * shipperSettings.insurance,
 				});
 				break;
 
@@ -265,9 +283,10 @@ value is deducted from these fields this does not include the gift packaging val
 						insurance: false,
 						additionalCharges: data.insurance
 							? data.additionalCharges -
-							  Math.round(
-									(data.shipmentValue / 100) * shipperSettings.insurance
-							  )
+							  (
+									(data.shipmentValue / 100) *
+									shipperSettings.insurance
+							  ).toFixed(2)
 							: data.additionalCharges,
 					});
 					break;
@@ -297,7 +316,7 @@ value is deducted from these fields this does not include the gift packaging val
 	const cancel = () => {
 		setdata({
 			shipmentValue: 10,
-			normalPackaging: true,
+			normalPackaging: false,
 			giftPackaging: false,
 			insurance: false,
 			additionalCharges: 0,
@@ -307,7 +326,6 @@ value is deducted from these fields this does not include the gift packaging val
 		setlist([]);
 		hist.push('/shipper/allshipments');
 	};
-	console.log(errors);
 
 	return (
 		<>
@@ -343,7 +361,7 @@ value is deducted from these fields this does not include the gift packaging val
 								id="receiverMobileNumber"
 								name="receiverContact"
 								placeholder="Receiver Contact No"
-								defaultValue={'9665'}
+								Value={'9665'}
 								ref={register({
 									required: true,
 									pattern: new RegExp(/^(9665)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/),
@@ -357,11 +375,6 @@ value is deducted from these fields this does not include the gift packaging val
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-12">
-							{/* <div className="input-group">
-                <div className="input-group-append">
-                  <span className="input-group-text">map</span>
-                </div>
-              </div> */}
 							<Map />
 						</div>
 					</div>
@@ -477,6 +490,22 @@ value is deducted from these fields this does not include the gift packaging val
 											<input
 												key={756}
 												type="checkbox"
+												checked={nopackaging}
+												onClick={(e) =>
+													addCharges('noPackaging', e.target.checked)
+												}
+											/>
+											Shipper Packaging
+										</td>
+										<td className="bordertop font14" align="right">
+											SAR 0/-
+										</td>
+									</tr>
+									<tr>
+										<td className="bordertop font14" align="left">
+											<input
+												key={756}
+												type="checkbox"
 												name="normalPackaging"
 												checked={data.normalPackaging}
 												onClick={(e) =>
@@ -484,7 +513,7 @@ value is deducted from these fields this does not include the gift packaging val
 												}
 												ref={register()}
 											/>
-											Normal Packaging
+											Sarokh Packaging
 										</td>
 										<td className="bordertop font14" align="right">
 											SAR {shipperSettings.normalPackaging}/-
@@ -525,9 +554,10 @@ value is deducted from these fields this does not include the gift packaging val
 										</td>
 										<td className="font14" align="right">
 											SAR{' '}
-											{Math.round(
-												(data.shipmentValue / 100) * shipperSettings.insurance
-											)}
+											{(
+												(data.shipmentValue / 100) *
+												shipperSettings.insurance
+											).toFixed(2)}
 											/-
 										</td>
 									</tr>
@@ -565,9 +595,11 @@ value is deducted from these fields this does not include the gift packaging val
 									</td>
 									<td className="bordertop" align="right">
 										SAR{' '}
-										{data.additionalCharges +
+										{(
+											data.additionalCharges +
 											data.deliveryCharges +
-											data.customerAddressCharges}
+											data.customerAddressCharges
+										).toFixed(2)}
 										/-
 									</td>
 								</tr>
@@ -575,13 +607,13 @@ value is deducted from these fields this does not include the gift packaging val
 									<td align="left">VAT: (15%)</td>
 									<td align="right">
 										SAR{' '}
-										{Math.round(
+										{(
 											((data.additionalCharges +
 												data.deliveryCharges +
 												data.customerAddressCharges) /
 												100) *
-												15
-										)}
+											15
+										).toFixed(2)}
 										/-
 									</td>{' '}
 									{/* calculation of 15% of the total of all charges */}
@@ -590,20 +622,20 @@ value is deducted from these fields this does not include the gift packaging val
 							<table className="table">
 								<tr>
 									<td className="font18" align="left">
-										Total: (VAT Incusive)
+										Total: (VAT Inclusive)
 									</td>
 									<td className="font18" align="right">
 										SAR{' '}
-										{data.additionalCharges +
+										{(
+											data.additionalCharges +
 											data.deliveryCharges +
 											data.customerAddressCharges +
-											Math.round(
-												((data.additionalCharges +
-													data.deliveryCharges +
-													data.customerAddressCharges) /
-													100) *
-													15
-											)}
+											((data.additionalCharges +
+												data.deliveryCharges +
+												data.customerAddressCharges) /
+												100) *
+												15
+										).toFixed(2)}
 										/-
 									</td>{' '}
 									{/* this is the total including the tax of 15% */}
@@ -676,7 +708,7 @@ value is deducted from these fields this does not include the gift packaging val
 										<thead>
 											<tr>
 												<td className="font18 bordernone redcolor" align="left">
-													Cash to be collected by Receiver
+													Cash to be collected from Receiver
 												</td>
 												<td
 													className="font18 bordernone redcolor"
@@ -690,9 +722,9 @@ value is deducted from these fields this does not include the gift packaging val
 									<div className="form-row">
 										<div className="col-sm-12">
 											<p>
-												Note: COD does not include delivery charges and shipper
-												is liable to pay all delivery and additional service
-												changes
+												Note: COD does not include delivery charges. Shipper is
+												liable to pay all delivery and additional service
+												charges
 											</p>
 										</div>
 									</div>

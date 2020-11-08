@@ -25,11 +25,6 @@ export const adminRoutes = [
 				iconClass: 'nav-icon fas fa-box',
 			},
 			{
-				to: '/admin/tracking/orderlocations',
-				name: 'No Response Shipments',
-				iconClass: 'nav-icon fas fa-box',
-			},
-			{
 				to: '/admin/shipments/CODshipments',
 				name: 'COD Shipments',
 				iconClass: 'nav-icon fas fa-box',
@@ -42,11 +37,6 @@ export const adminRoutes = [
 			{
 				to: '/admin/shipments/returnshipments',
 				name: 'Return Shipments',
-				iconClass: 'nav-icon fas fa-box',
-			},
-			{
-				to: '/admin/shipments/shipmentissues',
-				name: 'Shipment issues',
 				iconClass: 'nav-icon fas fa-box',
 			},
 			{
@@ -125,11 +115,6 @@ export const adminRoutes = [
 				name: 'All Trips',
 				iconClass: 'nav-icon fas fa-shipping-fast',
 			},
-			{
-				to: '/admin/tracking/orderlocations',
-				name: 'Active Trips',
-				iconClass: 'nav-icon fas fa-shipping-fast',
-			},
 		],
 	},
 	{
@@ -198,7 +183,7 @@ export const adminRoutes = [
 			},
 			{
 				to: '/ledger/allledger',
-				name: 'Recieved Ledgers',
+				name: 'Received Ledgers',
 				iconClass: 'nav-icon fas fa-store',
 			},
 			{

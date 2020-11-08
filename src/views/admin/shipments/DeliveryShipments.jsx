@@ -26,7 +26,7 @@ export default function DeliveryShipments(props) {
 	const handleClick = (row) => {
 		console.log(row.row.original.id);
 		hist.push({
-			pathname: '/shipper/shipments/vieworder',
+			pathname: '/admin/shipments/vieworder',
 			state: {
 				id: row.row.original.id,
 			},
@@ -91,28 +91,28 @@ export default function DeliveryShipments(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			transitions.map(
-				({ item, props, key }) =>
-					item && (
-						<animated.div key={key} style={props}>
-							{console.log(item)}
-							<ListingContainer>
-								<div className="card-header">
-									<h2 className="float-left">Delivery Shipments</h2>
-								</div>
-								<div className="card-body">
-									<Table
-										data={response.data}
-										columns={columns}
-										tableclass={'table-responsive custom-table'}
-										pagination={true}
-										filter={true}
-										hiddenColumns={['id']}
-									/>
-								</div>
-							</ListingContainer>
-						</animated.div>
-					)
-			)
-		);
+		transitions.map(
+			({ item, props, key }) =>
+				item && (
+					<animated.div key={key} style={props}>
+						{console.log(item)}
+						<ListingContainer>
+							<div className="card-header">
+								<h2 className="float-left">Delivery Shipments</h2>
+							</div>
+							<div className="card-body">
+								<Table
+									data={response.data}
+									columns={columns}
+									tableclass={'table-responsive custom-table'}
+									pagination={true}
+									filter={true}
+									hiddenColumns={['id']}
+								/>
+							</div>
+						</ListingContainer>
+					</animated.div>
+				)
+		)
+	);
 }

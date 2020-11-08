@@ -9,6 +9,7 @@ import {
 	tripShipmentsApi,
 	createTrip,
 } from '../../../Api/adminApi';
+import { createTripTableListingHelper } from '../../../Utils/tripHelper';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
@@ -18,6 +19,7 @@ export default function CreateTrip(props) {
 	const [pickData, setpickData] = useState([]);
 	const [deliveryData, setdeliveryData] = useState([]);
 	const [pointsData, setpointsData] = useState([]);
+	console.log(response);
 
 	useEffect(() => {
 		if (response.loading && response.id === undefined) {
@@ -33,7 +35,11 @@ export default function CreateTrip(props) {
 			tripShipmentsApi(response.id.warehouse)
 				.then((res) => {
 					console.log(res);
-					setresponse({ ...response, loading: false, tabledata: res });
+					setresponse({
+						...response,
+						loading: false,
+						tabledata: createTripTableListingHelper(res),
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -135,76 +141,76 @@ export default function CreateTrip(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			transitions.map(
-				({ item, props, key }) =>
-					item && (
-						<animated.div key={key} style={props}>
-							<Container>
-								<div className="card-header">
-									<h2 className="float-left">Create Trip</h2>
-								</div>
-								<div className="card-body">
-									<Form
-										listing={response}
-										setId={setresponse}
-										deliveryData={deliveryData}
-										pointsData={pointsData}
-										pickUpData={pickData}
-									/>
-									{response.tabledata ? (
-										<Fragment>
-											<h2 style={{ margin: '10px' }}> Pickups</h2>
+		transitions.map(
+			({ item, props, key }) =>
+				item && (
+					<animated.div key={key} style={props}>
+						<Container>
+							<div className="card-header">
+								<h2 className="float-left">Create Trip</h2>
+							</div>
+							<div className="card-body">
+								<Form
+									listing={response}
+									setId={setresponse}
+									deliveryData={deliveryData}
+									pointsData={pointsData}
+									pickUpData={pickData}
+								/>
+								{response.tabledata ? (
+									<Fragment>
+										<h2 style={{ margin: '10px' }}> Pickups</h2>
+										<Table
+											data={response.tabledata.pickups}
+											columns={columns}
+											tableclass={'table-responsive custom-table'}
+											pagination={true}
+											filter={true}
+											selectionToggle={true}
+											rowToggle={true}
+											selectedData={setpickData}
+											dataCheck={pickData}
+										/>
+										<div className="margintop30 bordertopcustom">
+											<h2 style={{ margin: '10px' }}> Deliveries</h2>
 											<Table
-												data={response.tabledata.pickups}
+												data={response.tabledata.deliveries}
 												columns={columns}
 												tableclass={'table-responsive custom-table'}
 												pagination={true}
 												filter={true}
-												selectionToggle={true}
 												rowToggle={true}
-												selectedData={setpickData}
-												dataCheck={pickData}
+												selectedData={setdeliveryData}
+												dataCheck={deliveryData}
 											/>
-											<div className="margintop30 bordertopcustom">
-												<h2 style={{ margin: '10px' }}> Deliveries</h2>
-												<Table
-													data={response.tabledata.deliveries}
-													columns={columns}
-													tableclass={'table-responsive custom-table'}
-													pagination={true}
-													filter={true}
-													rowToggle={true}
-													selectedData={setdeliveryData}
-													dataCheck={deliveryData}
-												/>
-											</div>
-											<div className="margintop30 bordertopcustom">
-												<h2 style={{ margin: '10px' }}> Payment Collection</h2>
-												<Table
-													data={response.tabledata.pointsList}
-													columns={columns1}
-													tableclass={'table-responsive custom-table'}
-													pagination={true}
-													filter={true}
-													rowToggle={true}
-													selectedData={setpointsData}
-													dataCheck={pointsData}
-												/>
-											</div>
-											<div className="btn-container">
-												<button
-													className="btn btn-success float-right"
-													onClick={() => submitResponse()}
-												>
-													Create Trip
+										</div>
+										<div className="margintop30 bordertopcustom">
+											<h2 style={{ margin: '10px' }}> Payment Collection</h2>
+											<Table
+												data={response.tabledata.pointsList}
+												columns={columns1}
+												tableclass={'table-responsive custom-table'}
+												pagination={true}
+												filter={true}
+												rowToggle={true}
+												selectedData={setpointsData}
+												dataCheck={pointsData}
+											/>
+										</div>
+										<div className="btn-container">
+											<button
+												className="btn btn-success float-right"
+												onClick={() => submitResponse()}
+											>
+												Create Trip
 											</button>
-											</div>
-										</Fragment>
-									) : null}
-								</div>
-							</Container>
-						</animated.div>
-					)
-			)
-		);
+										</div>
+									</Fragment>
+								) : null}
+							</div>
+						</Container>
+					</animated.div>
+				)
+		)
+	);
 }

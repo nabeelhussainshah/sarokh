@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
+import { filter } from 'underscore';
 
 export default function CreateTripForm(props) {
 	const { register, errors, handleSubmit } = useForm({
@@ -16,6 +17,11 @@ export default function CreateTripForm(props) {
 		deliveriesToLastMile: 0,
 		lastMileCod: 0,
 		pointCollection: 0,
+	});
+
+	const [filteredData, setFilteredData] = useState({
+		drivers: [],
+		vehicles: [],
 	});
 
 	useEffect(() => {
@@ -94,6 +100,19 @@ export default function CreateTripForm(props) {
 		props.setId({ ...props.listing, loading: true, id: data });
 	};
 
+	const filterData = (id) => {
+		let drivers = filter(props.listing.data.drivers, function (doc) {
+			return doc.warehouse.id == id;
+		});
+
+		let vehicles = filter(props.listing.data.vehicles, function (doc) {
+			return doc.warehouse.id == id;
+		});
+
+		console.log(drivers, vehicles);
+		setFilteredData({ drivers: drivers, vehicles: vehicles });
+	};
+
 	return (
 		<Fragment>
 			<div className="form-row mb-3">
@@ -101,6 +120,7 @@ export default function CreateTripForm(props) {
 					<select
 						className="form-control"
 						name="warehouse"
+						onChange={(e) => filterData(e.target.value)}
 						ref={register({
 							required: true,
 							validate: (value) => value !== 'true',
@@ -110,7 +130,7 @@ export default function CreateTripForm(props) {
 						{props.listing.data.warehouses.map((doc, i) => {
 							return (
 								<option key={i} value={doc.id}>
-									{doc.address}
+									{doc.name}
 								</option>
 							);
 						})}
@@ -129,7 +149,7 @@ export default function CreateTripForm(props) {
 						})}
 					>
 						<option value="true">--- Select Vehicle ---</option>
-						{props.listing.data.vehicles.map((doc, i) => {
+						{filteredData.vehicles.map((doc, i) => {
 							return (
 								<option key={i} value={doc.id}>
 									{doc.name}
@@ -153,7 +173,7 @@ export default function CreateTripForm(props) {
 						})}
 					>
 						<option value="true">--- Select Driver ---</option>
-						{props.listing.data.drivers.map((doc, i) => {
+						{filteredData.drivers.map((doc, i) => {
 							return (
 								<option key={i} value={doc.id}>
 									{doc.user.fullName}

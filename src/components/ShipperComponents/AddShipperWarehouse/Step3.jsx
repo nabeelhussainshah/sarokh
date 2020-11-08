@@ -55,7 +55,7 @@ export default function Step3(props) {
 					setdata({
 						location: [{ latitude: '23.8859', longitude: '39.1925' }],
 					});
-					hist.push('/shipper/addshipperwarehouse/ourlocation');
+					hist.push('/shipper/shipperwarehouse/ourlocation');
 				} else {
 					toast.error('something went wrong');
 				}

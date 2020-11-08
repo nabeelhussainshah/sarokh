@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ListingContainer from '../../components/Containers/ListingContainer';
-import Loading from '../../components/Loading/Loading';
+import ListingContainer from '../../../components/Containers/ListingContainer';
+import Loading from '../../../components/Loading/Loading';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ReactToPrint from 'react-to-print';
 import { useLocation, useHistory } from 'react-router-dom';
-import { getPendingTrackingNumberApi } from '../../Api/shipperApi';
+import { getPendingTrackingNumberApi } from '../../../Api/shipperApi';
 import { isUndefined } from 'underscore';
 
 export default function PrintWayBill(props) {
@@ -20,16 +20,20 @@ export default function PrintWayBill(props) {
 	}
 
 	useEffect(() => {
-		getPendingTrackingNumberApi()
-			.then((res) => {
-				if (res.length === 0) {
-					toast.info('No Tracking Numbers found');
-				}
-				setresponse({ loading: false, list: res });
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
+		if (isUndefined(loc.state)) {
+			getPendingTrackingNumberApi()
+				.then((res) => {
+					if (res.length === 0) {
+						toast.info('No Tracking Numbers found');
+					}
+					setresponse({ loading: false, list: res });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		} else {
+			setresponse({ loading: false });
+		}
 	}, []);
 
 	useEffect(() => {
@@ -95,6 +99,7 @@ export default function PrintWayBill(props) {
 								className="form-control mb-5"
 								type="text"
 								defaultValue={loc.state.trackingNumber}
+								disabled={true}
 							/>
 						</>
 					)}
@@ -105,7 +110,7 @@ export default function PrintWayBill(props) {
 							<ReactToPrint
 								trigger={() => (
 									<button className="btn btn-primary mt-4 float-right">
-										Print this out!
+										Print WayBill
 									</button>
 								)}
 								content={() => componentRef.current}
@@ -131,7 +136,7 @@ class ComponentToPrint1 extends React.Component {
 						>
 							<img
 								className="mr-3"
-								src={require('../../assets/images/sarokh-logo.png')}
+								src={require('../../../assets/images/sarokh-logo.png')}
 							/>
 						</div>
 						<div
@@ -186,7 +191,7 @@ class ComponentToPrint1 extends React.Component {
 							style={{ width: '50%', textAlign: 'center' }}
 							className="text-center"
 						>
-							dfadfdf
+							N/A
 						</div>
 					</div>
 					<div className="form-row">
@@ -204,7 +209,7 @@ class ComponentToPrint1 extends React.Component {
 							style={{ width: '50%', textAlign: 'center' }}
 							className="text-center"
 						>
-							dfadfdf
+							{this.props.response.data.shipToCity}
 						</div>
 					</div>
 					<hr />
@@ -296,7 +301,7 @@ class ComponentToPrint1 extends React.Component {
 							style={{ width: '50%', textAlign: 'center' }}
 							className="text-center"
 						>
-							dfadfdf
+							N/A
 						</div>
 					</div>
 					<div className="form-row">
@@ -310,7 +315,7 @@ class ComponentToPrint1 extends React.Component {
 							style={{ width: '50%', textAlign: 'center' }}
 							className="text-center"
 						>
-							dfadfdf
+							1 of 1
 						</div>
 					</div>
 					<div className="form-row">

@@ -73,13 +73,25 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Pickup Location
 						</td>
-						<td style={{ width: '30%' }}>{response.pickupLocationDetail}</td>
+						<td style={{ width: '30%' }}>
+							{response.pickupLocationDetail || 'N/A'}
+						</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>To City</td>
 						<td style={{ width: '30%' }}>{response.shipToCity}</td>
 						<td style={{ fontWeight: 'bold' }}>Delivery Location</td>
-						<td style={{ width: '30%' }}>{response.deliveryLocationDetail}</td>
+						<td
+							style={{
+								width: '30%',
+								color: response.deliveryLocationDetail ? 'inherit' : 'red',
+								fontWeight: response.deliveryLocationDetail
+									? 'inherit'
+									: 'bolder',
+							}}
+						>
+							{response.deliveryLocationDetail || 'Pending Receiver Selection'}
+						</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
@@ -89,7 +101,7 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Delivered Date/Time
 						</td>
-						<td>{response.deliveryDate}</td>
+						<td>{response.deliveryDate || 'N/A'}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -149,7 +161,7 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Cash On Delivery (COD)
 						</td>
-						<td style={{ width: '30%' }}>{items.codAmount}</td>
+						<td style={{ width: '30%' }}>{items.codAmount || 'N/A'}</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
@@ -167,25 +179,25 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Receiver Address Surcharge
 						</td>
-						<td style={{ width: '30%' }}>{items.vat}</td>
+						<td style={{ width: '30%' }}>{items.vat || 'N/A'}</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold' }}></td>
 						<td style={{ width: '30%' }}></td>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>Subtotal</td>
-						<td style={{ width: '30%' }}>{items.vat}</td>
+						<td style={{ width: '30%' }}>{items.vat || 'N/A'}</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold' }}></td>
 						<td style={{ width: '30%' }}></td>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>VAT (15%)</td>
-						<td style={{ width: '30%' }}>{items.vat}</td>
+						<td style={{ width: '30%' }}>{items.vat || 'N/A'}</td>
 					</tr>
 					<tr>
 						<td style={{ fontWeight: 'bold' }}></td>
 						<td style={{ width: '30%' }}></td>
 						<td style={{ fontWeight: 'bold', width: '20%' }}>Total</td>
-						<td style={{ width: '30%' }}>{items.vat}</td>
+						<td style={{ width: '30%' }}>{items.vat || 'N/A'}</td>
 					</tr>
 				</tbody>
 			</table>

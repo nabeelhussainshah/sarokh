@@ -10,16 +10,16 @@ export default function BusinessSignup(props) {
 	return (
 		<RecoilRoot>
 			<Switch>
-				<Route exact path="/individual/signup/step1">
+				<Route path="/individual/signup/step1">
 					<Step1 />
 				</Route>
-				<Route exact path="/individual/signup/step2">
+				<Route path="/individual/signup/step2">
 					<Step2 />
 				</Route>
-				<Route exact path="/individual/signup/step3">
+				<Route path="/individual/signup/step3">
 					<Step3 />
 				</Route>
-				<Route exact path="/individual/signup/step4">
+				<Route path="/individual/signup/step4">
 					<Step4 />
 				</Route>
 			</Switch>

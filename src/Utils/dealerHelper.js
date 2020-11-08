@@ -27,7 +27,7 @@ export const pointEditHelper = (data) => {
 	return {
 		...data,
 		userName: data.user.userName,
-		password: data.user.password,
+		password: data.user.userPassword,
 		location: [
 			{
 				label: data.address,

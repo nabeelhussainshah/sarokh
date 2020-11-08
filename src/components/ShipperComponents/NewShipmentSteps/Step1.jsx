@@ -51,7 +51,9 @@ export default function Step1(props) {
 				);
 				hist.push('/shipper/dashboard');
 			} else {
-				setShipperSettings(data);
+				setShipperSettings(
+					data
+				); /* this  contains all the shipper setting data from the api in the shippersettings state */
 			}
 		}
 	};
@@ -71,11 +73,10 @@ export default function Step1(props) {
 	const cancel = () => {
 		setdata({
 			shipmentValue: 10,
-			normalPackaging: true,
+			normalPackaging: false,
 			giftPackaging: false,
 			insurance: false,
 			additionalCharges: 0,
-			total: 45,
 			billingType: 'true',
 			location: [{ latitude: '23.8859', longitude: '39.1925' }],
 		});

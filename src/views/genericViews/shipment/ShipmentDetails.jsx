@@ -1,11 +1,10 @@
-import Container from '../../components/Containers/OrderDetailsContainer';
+import Container from '../../../components/Containers/OrderDetailsContainer';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { isUndefined } from 'underscore';
-import DetailContainer from '../../components/ShipperComponents/ShipperDetailsComponent/DetailComponent';
-import moment from 'moment';
-import Loading from '../../components/Loading/Loading';
+import DetailContainer from '../../../components/ShipperComponents/ShipperDetailsComponent/DetailComponent';
+import Loading from '../../../components/Loading/Loading';
 
 export default function ShipmentDetails(props) {
 	const loc = useLocation();

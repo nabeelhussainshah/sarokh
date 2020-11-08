@@ -26,7 +26,7 @@ export default function DeliveredShipments(props) {
 	const handleClick = (row) => {
 		console.log(row.row.original.id);
 		hist.push({
-			pathname: '/shipper/shipments/vieworder',
+			pathname: '/admin/shipments/vieworder',
 			state: {
 				id: row.row.original.id,
 			},
@@ -65,7 +65,7 @@ export default function DeliveredShipments(props) {
 		},
 		{
 			Header: 'Delivery Charges',
-			accessor: 'amount',
+			accessor: 'deliveryCharges',
 		},
 
 		{

@@ -14,6 +14,7 @@ import CodShipments from '../views/warehouseManager/shipments/CodShipments';
 import PrepaidShipments from '../views/warehouseManager/shipments/PrepaidShipments';
 import PickupShipments from '../views/warehouseManager/shipments/PickupShipments';
 import DeliveryShipments from '../views/warehouseManager/shipments/DeliveryShipments';
+import TripDetail from '../views/genericViews/trips/TripDetail';
 import { warehouseManagerRoutes } from '../navRoutes/warehouseManagerRoutes';
 import { RecoilRoot } from 'recoil';
 import { toast } from 'react-toastify';
@@ -33,6 +34,10 @@ function WarehouseManagerRouter(props) {
 				<ProtectedRoute
 					path="/warehouseManager/alltrips"
 					component={AllTrips}
+				/>
+				<ProtectedRoute
+					path="/warehouseManager/tripdetail"
+					component={TripDetail}
 				/>
 				<ProtectedRoute
 					path="/warehouseManager/drivers"

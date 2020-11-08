@@ -861,6 +861,24 @@ export async function billListApi() {
 		});
 }
 
+export async function deleteBillApi(id) {
+	return await axios
+		.delete(`${process.env.REACT_APP_API}/bill/delete/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
 export async function billDetailApi(id) {
 	return await axios
 		.get(`${process.env.REACT_APP_API}/bill/get-details/${id}`)
@@ -938,6 +956,40 @@ export async function getBillToDetailApi(user) {
 				return res.data.data;
 			} else {
 				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getShipperDetailApi() {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/shipper/get-list`)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return res.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function updateShipperDetailApi(payload) {
+	return await axios
+		.put(`${process.env.REACT_APP_API}/shipper/update`, payload)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
 			}
 		})
 		.catch((err) => {

@@ -8,7 +8,7 @@ export async function uploadFile(file) {
 	return await axios
 		.post(`${process.env.REACT_APP_API}/upload-file`, formdata, {
 			headers: {
-				'Content-Type': 'multipart/form-data;',
+				'Content-Type': '',
 			},
 		})
 		.then((res) => {

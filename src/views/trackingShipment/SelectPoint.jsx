@@ -8,6 +8,7 @@ import Loading from '../../components/Loading/Loading';
 import { pointListingApi } from '../../Api/adminApi';
 import { updateDeliveryApi } from '../../Api/trackingApi';
 import { toast } from 'react-toastify';
+import { filter } from 'underscore';
 
 export default function AddArea(props) {
 	const hist = useHistory();
@@ -18,13 +19,17 @@ export default function AddArea(props) {
 		loading: true,
 	});
 	console.log(response);
+
 	useEffect(() => {
 		if (isEmpty(data)) {
 			hist.push('/tracking/input');
 		} else if (response.loading) {
 			pointListingApi()
 				.then((res) => {
-					structureData(res);
+					let points = filter(res, function (doc) {
+						return doc.city === data.order.shipToCity;
+					});
+					structureData(points);
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -65,7 +70,7 @@ export default function AddArea(props) {
 			updateDeliveryApi(payload)
 				.then((res) => {
 					toast.success(res.message);
-					hist.goBack();
+					setData({});
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -80,9 +85,10 @@ export default function AddArea(props) {
 				latitude: doc.locationLatitude,
 				longitude: doc.locationLongitude,
 				dealerPointId: doc.id,
-				label: doc.address,
+				label: doc.dealerPointName,
 			});
 		});
+
 		setresponse({
 			loading: false,
 			ready: true,
@@ -102,11 +108,18 @@ export default function AddArea(props) {
 						<GoogleMapComponent
 							zoom={8}
 							keepMarker={false}
-							defaultCenter={{
-								lat: parseFloat(response.location[0].latitude),
-								lng: parseFloat(response.location[0].longitude),
-								label: response.location[0].label,
-							}}
+							defaultCenter={
+								response.location.length === 0
+									? {
+											lat: 23.8859,
+											lng: 39.1925,
+									  }
+									: {
+											lat: parseFloat(response.location[0].latitude),
+											lng: parseFloat(response.location[0].longitude),
+											label: response.location[0].label,
+									  }
+							}
 							markerClickAllow={true}
 							isMarkerShown={true}
 							position={response.location || []}

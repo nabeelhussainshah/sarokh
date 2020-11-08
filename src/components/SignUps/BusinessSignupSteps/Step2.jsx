@@ -2,11 +2,13 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { Redirect, useHistory } from 'react-router-dom';
 import { businessSignupData } from './state';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
 import { joiResolver } from '@hookform/resolvers';
 import { businessDetails } from '../../../formValidation/businessSignupValidation';
+import { uploadFile } from '../../../Api/generalApi';
 
 export default function Step2(props) {
 	const hist = useHistory();
@@ -28,6 +30,16 @@ export default function Step2(props) {
 	if (Object.keys(data).length === 0 && data.constructor === Object) {
 		return <Redirect to="/business/signup/step1" />;
 	}
+
+	const uploadContent = async (file, name) => {
+		await uploadFile(file)
+			.then((res) => {
+				setdata({ ...data, [name]: res.data.data });
+			})
+			.catch((err) => {
+				window.alert(err.message);
+			});
+	};
 
 	return (
 		<Container>
@@ -98,6 +110,78 @@ export default function Step2(props) {
 						</div>
 					</div>
 
+					<div className="form-row">
+						<div className="form-group col-md-6">
+							<label for="iqamaNumber">Commercial Registration (CR)</label>
+							<input
+								id="iqamaNumber"
+								name="iqamaNumber"
+								type="text"
+								accept="application/pdf,application/vnd.ms-excel"
+								className="form-control"
+								placeholder="Commercial Registration (CR)"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.iqamaNumber && errors.iqamaNumber.message}
+							</span>
+						</div>
+						<div className="form-group col-md-6">
+							<label for="inputEmail4">
+								Commercial Registration (CR) Upload
+							</label>
+							<div className="input-group">
+								<div className="input-group">
+									<div className="col">
+										<input
+											type="file"
+											accept=".pdf"
+											className="form-control"
+											placeholder="RegistrationFile"
+											onChange={(e) => {
+												uploadContent(e.target.files[0], 'iqamaFile');
+											}}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="form-row">
+						<div className="form-group col-md-6">
+							<label htmlFor="iban"> VAT Registration No</label>
+							<input
+								name="vatNumber"
+								type="text"
+								className="form-control"
+								placeholder="VAT Registration No"
+								ref={register({ required: true })}
+							/>
+							<span style={{ color: 'red' }}>
+								{' '}
+								{errors.vatNumber && errors.vatNumber.message}
+							</span>
+						</div>
+						<div className="form-group col-md-6">
+							<label htmlFor="iban">VAT Upload</label>
+							<div className="input-group">
+								<div className="input-group">
+									<div className="col">
+										<input
+											type="file"
+											accept=".pdf"
+											className="form-control"
+											placeholder="RegistrationFile"
+											onChange={(e) => {
+												uploadContent(e.target.files[0], 'vatFile');
+											}}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
 							<label htmlFor="iban">IBAN</label>

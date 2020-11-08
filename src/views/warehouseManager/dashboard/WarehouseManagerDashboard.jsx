@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { useTransition, animated } from 'react-spring';
 import Loading from '../../../components/Loading/Loading';
 import { dashboardApi } from '../../../Api/warehouseManagerApi';
-import { sarokhWarehouseList } from '../../../Api/generalApi';
 
 export default function WarehouseManagerDashboard() {
 	const [response, setresponse] = useState({
@@ -14,10 +13,9 @@ export default function WarehouseManagerDashboard() {
 	});
 
 	useEffect(() => {
-		sarokhWarehouseList()
+		dashboardApi()
 			.then((res) => {
-				console.log(res);
-				setresponse({ ...response, loading: false, warehouses: res });
+				setresponse({ loading: false, warehouseDetail: res });
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -55,18 +53,6 @@ export default function WarehouseManagerDashboard() {
 		},
 	];
 
-	const getWarehouseDetail = async (e) => {
-		if (e.target.value !== 'none') {
-			await dashboardApi(e.target.value)
-				.then((res) => {
-					setresponse({ ...response, warehouseDetail: res });
-				})
-				.catch((err) => {
-					toast.error(err.message);
-				});
-		}
-	};
-
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
 		enter: {
@@ -93,21 +79,6 @@ export default function WarehouseManagerDashboard() {
 								<h2 className="float-left">Warehouse Dashboard</h2>
 							</div>
 							<div className="card-body">
-								<div className="form-row mt-3">
-									<div className="col-md-6">
-										<label htmlFor="1">Select Warehouse</label>
-										<select
-											id="1"
-											className="form-control"
-											onChange={getWarehouseDetail}
-										>
-											<option value="none">--select warehouse---</option>
-											{response.warehouses.map((doc) => {
-												return <option value={doc.id}>{doc.name}</option>;
-											})}
-										</select>
-									</div>
-								</div>
 								<div className="row mt-4">
 									<div className="col-sm-6 col-lg-4">
 										<div className="card text-white bg-info">

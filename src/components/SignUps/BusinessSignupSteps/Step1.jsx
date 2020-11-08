@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { businessSignupData } from './state';
-import axios from 'axios';
 import Container from '../../Containers/ListingContainer';
 import StepIndicator from './StepIndicator';
 import { joiResolver } from '@hookform/resolvers';
@@ -23,28 +22,6 @@ export default function Step1(props) {
 	const onSubmit = (formdata) => {
 		setdata({ ...data, ...formdata });
 		hist.push('/business/signup/step2');
-	};
-
-	const uploadFile = async (file) => {
-		const formdata = new FormData();
-		formdata.append('file', file);
-		formdata.append('filename', file.name);
-
-		await axios
-			.post(`${process.env.REACT_APP_API}/upload-file`, formdata, {
-				headers: {
-					'Content-Type': 'multipart/form-data;',
-				},
-			})
-			.then((res) => {
-				if (res.data.status === 200) {
-					console.log(res.data.data);
-					setdata({ ...data, iqamaFile: res.data.data });
-				}
-			})
-			.catch((err) => {
-				window.alert(err.message);
-			});
 	};
 
 	return (
@@ -120,50 +97,9 @@ export default function Step1(props) {
 							</span>
 						</div>
 					</div>
-					<div className="form-row">
-						<div className="form-group col-md-6">
-							<label for="iqamaNumber">Commercial Registration (CR)</label>
-							<input
-								id="iqamaNumber"
-								name="iqamaNumber"
-								type="text"
-								className="form-control"
-								placeholder="Commercial Registration (CR)"
-								ref={register({ required: true })}
-							/>
-							<span style={{ color: 'red' }}>
-								{' '}
-								{errors.iqamaNumber && errors.iqamaNumber.message}
-							</span>
-						</div>
-						<div className="form-group col-md-6">
-							<label for="inputEmail4">
-								Commercial Registration (CR) Upload
-							</label>
-							<div className="input-group">
-								<div className="input-group">
-									<div className="col">
-										<input
-											type="file"
-											accept=".png, .jpg, .jpeg, .pdf"
-											className="form-control"
-											placeholder="RegistrationFile"
-											onChange={(e) => {
-												uploadFile(e.target.files[0]);
-											}}
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div className="btn-container float-right form-row">
 						<div className="col-sm-12">
-							<button
-								className="btn btn-success mr-0"
-								type="submit"
-								disabled={data.iqamaFile === undefined ? true : false}
-							>
+							<button className="btn btn-success mr-0" type="submit">
 								Next
 							</button>
 						</div>

@@ -40,7 +40,7 @@ export default function AllShippers(props) {
 		},
 		{
 			Header: 'Shipper Name',
-			accessor: 'user.fullName',
+			accessor: 'user.userName',
 		},
 		{
 			Header: 'Shipper Type',

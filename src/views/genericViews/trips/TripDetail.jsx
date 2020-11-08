@@ -127,7 +127,9 @@ export default function TripDetail(props) {
 									<div className="col-sm-6">
 										<label className="col-sm-6 col-6">City:</label>
 										<label className="col-sm-6 col-6">
-											<p className=" text-left"></p>
+											<p className=" text-left">
+												{response.data.vehicle.warehouse.city}
+											</p>
 										</label>
 									</div>
 								</div>

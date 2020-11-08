@@ -30,22 +30,22 @@ export default function DataTable(props) {
 				return (
 					<>
 						<i className="fa fa-trash" onClick={() => deleteData(row)}></i>
-						&nbsp;&nbsp;
-						<i className="fa fa-edit" onClick={() => editData(row)}></i>
+						{/* &nbsp;&nbsp;
+						<i className="fa fa-edit" onClick={() => editData(row)}></i> */}
 					</>
 				);
 			},
 		},
 		{
-			Header: 'Reciever Name',
+			Header: 'Receiver Name',
 			accessor: 'receiverName',
 		},
 		{
-			Header: 'Reciever Contact',
+			Header: 'Receiver Contact',
 			accessor: 'receiverContact',
 		},
 		{
-			Header: 'Reciever Address',
+			Header: 'Receiver Address',
 			accessor: 'location[0].label',
 		},
 		{

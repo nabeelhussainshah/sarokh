@@ -14,28 +14,33 @@ export const basicInformation = Joi.object({
 		.email({ minDomainSegments: 2, tlds: false })
 		.required()
 		.label('Email Address'),
-	iqamaNumber: Joi.string()
-		.min(10)
-		.max(10)
-		.required()
-		.label('Commercial Registration (CR)'),
 });
 
-export const businessDetails = Joi.object({
-	businessName: Joi.string().required(),
-	bankName: Joi.string().required().label('Bank'),
+export const businessDetails = Joi.object().keys({
+	businessName: Joi.string().required().label('Business Name'),
+	bankName: Joi.string().label('Bank').allow(''),
 	iban: Joi.string()
+		.allow('')
 		.pattern(
 			new RegExp(
 				'SA[a-zA-Z0-9]{2}s?([0-9]{2})([a-zA-Z0-9]{2}s?)([a-zA-Z0-9]{4}s?){4}s?'
 			)
 		)
-		.required()
 		.messages({
 			'string.pattern.base':
 				'IBAN Is Not Valid must be like "SA4420000001234567891234"',
 		})
 		.label('IBAN'),
+	iqamaNumber: Joi.string()
+		.min(10)
+		.max(10)
+		.required()
+		.label('Commercial Registration (CR)'),
+	vatNumber: Joi.string()
+		.allow('')
+		.min(15)
+		.max(15)
+		.label('VAT Registration No'),
 });
 
 export const billingDetail = Joi.object({
@@ -43,9 +48,9 @@ export const billingDetail = Joi.object({
 	country: Joi.string().required(),
 	city: Joi.string().required(),
 	postCode: Joi.string().min(5).max(5).required().label('Post Code'),
-	concernedPerson: Joi.string().min(3).required().label('Concerned Person'),
+	concernedPerson: Joi.string().allow('').min(3).label('Concerned Person'),
 	concernedPersonDesignation: Joi.string()
+		.allow('')
 		.min(3)
-		.required()
 		.label('Designation'),
 });

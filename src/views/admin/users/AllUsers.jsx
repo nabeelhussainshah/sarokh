@@ -71,9 +71,9 @@ export default function AllUsers(props) {
 		//this function is called when ever the data is submitted in the userdata form
 		if (data !== undefined) {
 			//since the side effect will be called on component mounting this check is done so that the below code is not called
-			if (data.userPassword !== '') {
-				/* the data set in the handleclick function changes the data but we donot require that data to be posted, since the response from api
-        does not send userpassword we can use that as a check, when ever the data is submitted from the userform that will have a password init along with the completed data we will then send the patch request to the api */
+			if (data.update === undefined) {
+				/* whenever the form update button is clicked the data will be reset according to the form field values and with that the update field
+				in the data hook will not longer exist so data.update will be a check when updating the user*/
 				updateUserApi(data, formToggle.userId)
 					.then((res) => {
 						toast.success('User Data Updated!!');
@@ -91,16 +91,17 @@ export default function AllUsers(props) {
 
 	const handleClick = (row) => {
 		let data = row.row.original; //data from the row clicked is being stored in this
-		console.log(data.dob);
-		console.log(
-			'this is the date',
-			moment(data.dob).format(moment.HTML5_FMT.DATE)
-		);
+		// console.log(data.dob);
+		// console.log(
+		// 	'this is the date',
+		// 	moment(data.dob).format(moment.HTML5_FMT.DATE)
+		// );
 		setformToggle({ form: true, userId: data.userId }); //userId is the id that will be send along with the updated user data to update the user information
 		setdata({
 			//this function sets the state of the form which will be passed to the userForm component to get populated there
 			...data,
-			userPassword: '',
+			// userPassword: '',
+			update: false,
 			dob: moment(data.dob).format(moment.HTML5_FMT.DATE),
 		});
 	};

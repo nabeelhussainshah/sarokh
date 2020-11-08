@@ -95,7 +95,7 @@ export const GoogleMapComponent = withScriptjs(
 							>
 								{((state === doc.label && doc.label !== undefined) ||
 									(props.keepMarker && doc.label !== undefined)) && (
-									<InfoWindow>
+									<InfoWindow options={{ disableAutoPan: true }}>
 										<p
 											style={{
 												color: 'red',

@@ -3,13 +3,24 @@
 export const shipmentEditHelper = (data, id) => {
 	console.log('this is the data and id', data, id);
 
+	let deliveryLocation = "";
+
+	if(data.deliveryLocation === 'Last Mile' && data.deliveryLocation !== 'To Predefined Location')
+	{
+		deliveryLocation = 'To Customer Address'
+	}
+	else if(data.deliveryLocation !== 'Last Mile' && data.deliveryLocation !== 'To Predefined Location')
+	{
+		deliveryLocation = 'To Sarokh Point'
+	}
+	else{
+		deliveryLocation = 'Shipper Location'
+	}
+
 	return {
 		...data,
 		id: id,
-		deliveryLocation:
-			data.deliveryLocation === 'Last Mile'
-				? 'To Customer Address'
-				: 'To Sarokh Point',
+		deliveryLocation: deliveryLocation,
 		location: [
 			{
 				label: data.address,

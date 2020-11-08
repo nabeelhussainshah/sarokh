@@ -1,22 +1,28 @@
-import React from 'react';
-import {
-	BrowserRouter,
-	Route,
-	Switch,
-	HashRouter,
-	Redirect,
-} from 'react-router-dom';
-import Login from '../views/login';
-import ShipperRouter from './ShipperRouter';
-import AdminRouter from './AdminRouter';
-import BusinessSignup from '../views/sign-ups/ShipperSignup';
-import IndividualSignup from '../views/sign-ups/IndividualSignUp';
-import TrackingShipmentRouter from './TrackingShipmentRouter';
-import WarehouseManagerRouter from './warehouseManagerRouter';
-import WarehouseSupervisorRouter from './WarehouseSupervisorRouter';
+import React, { Suspense } from 'react';
+import { Route, Redirect, BrowserRouter } from 'react-router-dom';
+import Login from '../views/Authentication/login';
+import Loader from '../components/Loading/Loading';
+import DealerPoints from '../views/publicViews/dealerPoints/DealerPoints';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
+const AdminRouter = React.lazy(() => import('./AdminRouter'));
+const ShipperRouter = React.lazy(() => import('./ShipperRouter'));
+const BusinessSignup = React.lazy(() =>
+	import('../views/sign-ups/ShipperSignup')
+);
+const IndividualSignup = React.lazy(() =>
+	import('../views/sign-ups/IndividualSignUp')
+);
+const TrackingShipmentRouter = React.lazy(() =>
+	import('./TrackingShipmentRouter')
+);
+const WarehouseManagerRouter = React.lazy(() =>
+	import('./warehouseManagerRouter')
+);
+const WarehouseSupervisorRouter = React.lazy(() =>
+	import('./WarehouseSupervisorRouter')
+);
 
 function ApplicationRouter(porps) {
 	toast.configure({
@@ -30,19 +36,21 @@ function ApplicationRouter(porps) {
 	});
 
 	return (
-		<HashRouter>
-			<Switch>
+		<Suspense fallback={<Loader />}>
+			<BrowserRouter>
 				<Route exact={true} path="/" component={Login} />
 				<Route exact={true} path="/logout" component={Logout} />
 				<Route path="/business/signup" component={BusinessSignup} />
 				<Route path="/individual/signup" component={IndividualSignup} />
-			</Switch>
-			<TrackingShipmentRouter />
-			<AdminRouter />
-			<ShipperRouter />
-			<WarehouseManagerRouter />
-			<WarehouseSupervisorRouter />
-		</HashRouter>
+				<Route path="/dealerPoints" component={DealerPoints} />
+
+				<TrackingShipmentRouter />
+				<AdminRouter />
+				<ShipperRouter />
+				<WarehouseManagerRouter />
+				<WarehouseSupervisorRouter />
+			</BrowserRouter>
+		</Suspense>
 	);
 }
 

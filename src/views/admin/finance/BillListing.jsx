@@ -3,7 +3,7 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { billListApi } from '../../../Api/adminApi';
+import { billListApi, deleteBillApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -34,6 +34,19 @@ export default function BillListing(props) {
 		});
 	};
 
+	const deleteRecord = (row) => {
+		if (window.confirm(`do you want to delete this bill?`)) {
+			deleteBillApi(row.row.original.id)
+				.then((res) => {
+					toast.success('Bill has been deleted');
+					setresponse({ ...response, loading: true });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
@@ -44,6 +57,10 @@ export default function BillListing(props) {
 						<i
 							className="fa fa-info-circle"
 							onClick={() => handleClick(row)}
+						></i>
+						<i
+							className="ml-1 fa fa-trash"
+							onClick={() => deleteRecord(row)}
 						></i>
 					</Fragment>
 				);

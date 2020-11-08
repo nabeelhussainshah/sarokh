@@ -132,6 +132,11 @@ export default function Step1(props) {
 						<div className="form-group col-md-12">
 							<label htmlFor="latitude">Select Location</label>
 							<GoogleMapComponent
+								defaultCenter={{
+									lat: parseFloat(data.location[0].latitude),
+									lng: parseFloat(data.location[0].longitude),
+									label: data.location[0].label,
+								}}
 								isMarkerShown={true}
 								position={data.location}
 								changeFunction={setdata}

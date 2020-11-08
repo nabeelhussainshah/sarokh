@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-export async function dashboardApi(id) {
+export async function dashboardApi() {
+	const user = JSON.parse(localStorage.getItem('user'));
 	return await axios
 		.get(
-			`${process.env.REACT_APP_API}/sarokh-warehouse/get-warehouse-dashboard/${id}`
+			`${process.env.REACT_APP_API}/sarokh-warehouse/get-warehouse-dashboard/${user.warehouseId}`
 		)
 		.then((res) => {
 			console.log(res);

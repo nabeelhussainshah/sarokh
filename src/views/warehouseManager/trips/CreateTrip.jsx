@@ -9,6 +9,10 @@ import {
 	tripShipmentsApi,
 	createTrip,
 } from '../../../Api/adminApi';
+import {
+	createTripTableListingHelper,
+	warehouseManagerCreateTripFilter,
+} from '../../../Utils/tripHelper';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 
@@ -23,7 +27,12 @@ export default function CreateTrip(props) {
 		if (response.loading && response.id === undefined) {
 			getCreateTripDataApi()
 				.then((res) => {
-					setresponse({ loading: false, data: res });
+					console.log(res);
+
+					setresponse({
+						loading: false,
+						data: warehouseManagerCreateTripFilter(res),
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -33,7 +42,11 @@ export default function CreateTrip(props) {
 			tripShipmentsApi(response.id.warehouse)
 				.then((res) => {
 					console.log(res);
-					setresponse({ ...response, loading: false, tabledata: res });
+					setresponse({
+						...response,
+						loading: false,
+						tabledata: createTripTableListingHelper(res),
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);

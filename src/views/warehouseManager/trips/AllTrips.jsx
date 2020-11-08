@@ -3,7 +3,7 @@ import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allTripsApi } from '../../../Api/adminApi';
+import { allTripsApi, deleteTripApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -24,7 +24,50 @@ export default function AllTrips(props) {
 		}
 	}, [response.loading]);
 
+	const handleClick = (row) => {
+		console.log(row.row.original.tripId);
+		hist.push({
+			pathname: '/warehouseManager/tripdetail',
+			state: {
+				id: row.row.original.id,
+			},
+		});
+	};
+
+	const deleteTrip = (row) => {
+		if (
+			window.confirm(
+				'Are you sure to delete this trip ? (CheckIn shipments at Warehouse terminal)'
+			)
+		) {
+			deleteTripApi(row.row.original.id)
+				.then((res) => {
+					toast.success('Trip Deleted!');
+					setresponse({ ...response, loading: true });
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+	};
+
 	const columns = [
+		{
+			Header: 'Action',
+			accessor: '',
+			Cell: (row) => {
+				return (
+					<Fragment>
+						<i
+							className="fa fa-info-circle"
+							onClick={() => handleClick(row)}
+						></i>
+						&nbsp;
+						<i className="fa fa-trash" onClick={() => deleteTrip(row)} />
+					</Fragment>
+				);
+			},
+		},
 		{
 			Header: 'Trip Id',
 			accessor: 'id',

@@ -40,13 +40,12 @@ export const postData = async (data, operation) => {
 						? undefined
 						: doc.sarokhWarehouseId,
 				deliveryLocationRadio: 'sarokhPoint',
-				dealerPointId: '10',
+				dealerPointId: undefined,
 				shipperId: user.id,
 			});
 		} else {
 			return finalData.push({
 				...doc,
-				deliveryLocation: 'To Predefined Location',
 				shipperWarehouseId:
 					doc.pickupType !== 'Shipper Warehouse'
 						? undefined
@@ -55,9 +54,32 @@ export const postData = async (data, operation) => {
 					doc.pickupType !== 'Sarokh Warehouse'
 						? undefined
 						: doc.sarokhWarehouseId,
+
+				deliveryLocation: 'To Sarokh Point',
+				deliveryLocationRadio: 'customerAddress',
+				dealerPointId: undefined,
+				address: doc.shipperWarehouseAddress.address,
+				locationLatitude: doc.shipperWarehouseAddress.latitude,
+				locationLongitude: doc.shipperWarehouseAddress.longitude,
 				shipperId: user.id,
 			});
 		}
+		// else {
+		// 	return finalData.push({
+		// 		...doc,
+		// 		deliveryLocation: 'To Predefined Location',
+		// 		shipperWarehouseId:
+		// 			doc.pickupType !== 'Shipper Warehouse'
+		// 				? undefined
+		// 				: doc.shipperWarehouseId,
+		// 		sarokhWarehouseId:
+		// 			doc.pickupType !== 'Sarokh Warehouse'
+		// 				? undefined
+		// 				: doc.sarokhWarehouseId,
+		// 		shipperId: user.id,
+		// 	});
+
+		// }
 	});
 	console.log(finalData);
 
