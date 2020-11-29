@@ -6,7 +6,7 @@ import Loading from '../../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
-export default function SarokhTask(props) {
+export default function ReceiveShipment(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
 
@@ -33,7 +33,7 @@ export default function SarokhTask(props) {
 					<animated.div key={key} style={props}>
 						<Container>
 							<div className="card-header">
-								<h2 className="float-left">Sarokh Task</h2>
+								<h2 className="float-left">Receive Shipment</h2>
 							</div>
 							<div className="card-body">code here</div>
 						</Container>

@@ -6,7 +6,7 @@ import Loading from '../../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
-export default function WarehouseDetail(props) {
+export default function DealerDashboard(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
 
