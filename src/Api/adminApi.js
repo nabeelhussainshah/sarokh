@@ -1169,3 +1169,59 @@ export async function recordBillPaymentApi(data) {
 			throw err;
 		});
 }
+
+export async function updateWalletApi(data) {
+	return await axios
+		.put(`${process.env.REACT_APP_API}/wallet/update`, data)
+		.then((res) => {
+			console.log(res);
+			if (res.status === 200) {
+				return true;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function getCreateBillDetailApi(data) {
+	const payload = {
+		...data,
+		startDate: new Date(data.startDate).toISOString(),
+		endDate: new Date(data.endDate).toISOString(),
+	};
+
+	return await axios
+		.post(`${process.env.REACT_APP_API}/bill/get-create-bill-detail/`, payload)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+export async function transactionAddApi(data) {
+	return await axios
+		.post(`${process.env.REACT_APP_API}/transaction/add`, data)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

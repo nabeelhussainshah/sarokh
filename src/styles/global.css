@@ -630,6 +630,12 @@ li.nav-item a:hover {
 .print-heading img {
 	width: 150px;
 }
+/* .transition_query {
+	transition: all 0.5s !important;
+}
+.main-sidebar {
+	transition: all 0.5s !important;
+} */
 @media (max-width: 576px) {
 	.login100-more {
 		padding-top: 72px;

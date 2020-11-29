@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
 export default function ContentContainer({ response, items }) {
 	const hist = useHistory();
+	const [width, setWidth] = useState('0%');
+
+	useEffect(() => {
+		setTimeout(() => {
+			setWidth('25%');
+		}, 200);
+	}, []);
+
 	const printBill = (trackingNo) => {
 		if (hist.location.pathname.search('admin') === 1) {
 			hist.push({
@@ -46,7 +54,10 @@ export default function ContentContainer({ response, items }) {
 					<div
 						className="progress-bar"
 						role="progressbar"
-						style={{ width: '25%' }}
+						style={{
+							width: width,
+							transition: 'width 1s ease-in-out',
+						}}
 					>
 						25%
 					</div>
@@ -101,7 +112,11 @@ export default function ContentContainer({ response, items }) {
 						<td style={{ fontWeight: 'bold', width: '20%' }}>
 							Delivered Date/Time
 						</td>
-						<td>{response.deliveryDate || 'N/A'}</td>
+						<td>
+							{response.updatedDatetime
+								? moment(response.updatedDatetime).format('YYYY-MM-DD hh:mm:ss')
+								: 'N/A'}
+						</td>
 					</tr>
 				</tbody>
 			</table>

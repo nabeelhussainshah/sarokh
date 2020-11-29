@@ -7,31 +7,44 @@ import {
 	getUserBillsApi,
 	getBillToDetailApi,
 	recordBillPaymentApi,
+	updateWalletApi,
+	transactionAddApi,
 } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
+import { filter, isEmpty } from 'underscore';
 
 export default function RecordPayment(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({
 		loading: false,
-		users: [{}],
-		wallets: [{ id: '' }],
-		bills: [{ id: '' }],
+		users: [],
+		wallets: [],
+		bills: [],
 		userType: '',
 		dueDate: '',
 		amount: '',
 	});
 	console.log(response);
 
-	const { register, errors, watch, handleSubmit, reset } = useForm({
+	const {
+		register,
+		errors,
+		watch,
+		handleSubmit,
+		reset,
+		getValues,
+		trigger,
+		unregister,
+	} = useForm({
 		shouldFocusError: true,
 		mode: 'onChange',
 		criteriaMode: 'all',
 	});
 
+	console.log(errors);
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
 		enter: {
@@ -62,13 +75,21 @@ export default function RecordPayment(props) {
 			}); // reset function clears out the previous selected values in the field
 
 			if (wallets.length !== 0 || bills.length !== 0) {
-				setresponse({ ...response, wallets: wallets, bills: bills });
-			} else {
-				toast.error('No Bills Found For This User');
 				setresponse({
 					...response,
-					wallets: [{ id: '' }],
-					bills: [{ id: '' }],
+					wallets: wallets,
+					bills: bills,
+					dueDate: null,
+					amount: null,
+				});
+			} else {
+				toast.error('No Bills and Wallets Found For This User');
+				setresponse({
+					...response,
+					wallets: [],
+					bills: [],
+					dueDate: null,
+					amount: null,
 				});
 			}
 		} catch (err) {
@@ -82,41 +103,211 @@ export default function RecordPayment(props) {
 		getBillToDetailApi(userType)
 			.then((res) => {
 				reset({ userId: 'true' });
-				setresponse({ ...response, users: res, userType: userType });
-			})
-			.catch((err) => {
-				toast.error(err.message);
-			});
-	};
-
-	const selectedBillDetails = () => {
-		/* this function is used to populated duedate , amount and the input field with name amountPaid */
-
-		const bill = watch('billNo');
-		console.log(bill);
-		response.bills.map((doc) => {
-			if (bill === doc.id.toString()) {
 				setresponse({
 					...response,
-					dueDate: moment(doc.dueDate).format('YYYY-MM-DD'),
-					amount: doc.totalAmount,
+					users: res,
+					userType: userType,
+					wallets: [],
+					dueDate: null,
+					amount: null,
 				});
-				reset({ paymentNote: '', paymentMethod: 'true' });
-			}
-		});
-	};
-
-	const onsubmit = (formData) => {
-		recordBillPaymentApi(formData)
-			.then((res) => {
-				toast.success('Data Submitted Successfully');
-				setTimeout(() => {
-					hist.go();
-				}, 3000);
 			})
 			.catch((err) => {
 				toast.error(err.message);
 			});
+	};
+
+	// const selectedBillDetails = () => {
+	// 	/* this function is used to populated duedate , amount and the input field with name amountPaid */
+
+	// 	if (
+	// 		(response.userType === 'Dealer' || response.userType === 'Driver') &&
+	// 		(getValues('paymentType') === 'Credit' ||
+	// 			getValues('paymentType') === 'Debit') &&
+	// 		getValues('billNo') === ''
+	// 	) {
+	// 		const wallet = filter(response.wallets, function (doc) {
+	// 			return doc.walletId == getValues('walletId');
+	// 		});
+
+	// 		if (wallet.length !== 0) {
+	// 			setresponse({
+	// 				...response,
+	// 				amount: wallet[0].currentBalance,
+	// 			});
+	// 		}
+	// 	} else if (getValues('BillNo') !== '') {
+	// 		const bill = getValues('billNo');
+	// 		console.log(bill);
+	// 		response.bills.map((doc) => {
+	// 			if (bill === doc.id.toString()) {
+	// 				setresponse({
+	// 					...response,
+	// 					dueDate: moment(doc.dueDate).format('YYYY-MM-DD'),
+	// 					amount: doc.totalAmount,
+	// 				});
+	// 				reset({ paymentNote: '', paymentMethod: 'true' });
+	// 			}
+	// 		});
+	// 	} else {
+	// 		setresponse({
+	// 			...response,
+	// 			amount: null,
+	// 			dueDate: null,
+	// 		});
+	// 	}
+	// };
+
+	// const onsubmit = (formData) => {
+	// 	if (response.userType === 'Shipper') {
+	// 		/* incase of shipper there must a billNo to post request */
+
+	// 		if (formData.billNo === '') {
+	// 			toast.error('Please select a bill No to submit');
+	// 		}
+	// 	} else {
+	// 		formData = {
+	// 			...formData,
+	// 			amountPaid: response.amount - formData.amountPaid,
+	// 		};
+
+	// 		recordBillPaymentApi(formData)
+	// 			.then((res) => {
+	// 				toast.success('Data Submitted Successfully');
+	// 			})
+	// 			.catch((err) => {
+	// 				toast.error(err.message);
+	// 			});
+	// 		formData = {
+	// 			...formData,
+	// 			currentBalance: formData.amountPaid,
+	// 		};
+
+	// 		updateWalletApi(formData)
+	// 			.then((res) => {
+	// 				console.log(res);
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err.message);
+	// 			});
+	// 	}
+	// };
+
+	const selectedBillDetails = () => {
+		if (getValues('userId') === 'true') {
+			trigger(['userId', 'walletId', 'paymentType', 'billNo']);
+		} else {
+			if (
+				getValues('paymentType') === 'true' ||
+				getValues('walletId') === 'true'
+			) {
+				trigger(['paymentType', 'walletId']);
+			} else {
+				if (
+					(response.userType === 'Driver' ||
+						response.userType === 'DealerPoint') &&
+					(getValues('paymentType') === 'Credit' ||
+						getValues('paymentType') === 'Debit')
+				) {
+					let wallet = filter(response.wallets, function (doc) {
+						return doc.walletId == getValues('walletId');
+					});
+
+					if (
+						wallet[0].description === 'Driver Collection Wallet' ||
+						wallet[0].description === 'Point Collection Wallet'
+					) {
+						unregister('billNo');
+						setresponse({
+							...response,
+							amount: wallet[0].currentBalance,
+						});
+					}
+				} else {
+					if (isEmpty(getValues('billNo'))) {
+						register(
+							{ name: 'billNo' }
+							// { required: true, validate: (value) => value !== 'true' }
+						);
+					} else {
+						console.log('this is called');
+						console.log(getValues('billNo'));
+						if (getValues('billNo') !== 'true') {
+							response.bills.map((doc) => {
+								console.log(doc.id, getValues('billNo'));
+								if (getValues('billNo') === doc.id.toString()) {
+									setresponse({
+										...response,
+										dueDate: moment(doc.dueDate).format('YYYY-MM-DD'),
+										amount: doc.totalAmount,
+									});
+									reset({ paymentNote: '', paymentMethod: 'true' });
+								}
+							});
+						} else {
+							trigger('billNo');
+						}
+					}
+				}
+			}
+		}
+	};
+
+	const onSubmit = (formData) => {
+		console.log(formData);
+		if (response.userType === 'DealerPoint' || response.userType === 'Driver') {
+			let wallet = filter(response.wallets, function (doc) {
+				return doc.walletId == getValues('walletId');
+			});
+
+			if (
+				wallet[0].description === 'Driver Collection Wallet' ||
+				wallet[0].description === 'Point Collection Wallet'
+			) {
+				if (response.amount !== '' || response.amount !== null) {
+					formData = {
+						...formData,
+						billNo: 0,
+					};
+
+					recordBillPaymentApi(formData)
+						.then((res) => {
+							toast.success('Data Submitted Successfully');
+						})
+						.catch((err) => {
+							toast.error(err.message);
+						});
+				} else {
+					toast.error("Please click 'Get Details' before proceding");
+				}
+			} else {
+				if (getValues('billNo') == 'true' || isEmpty(getValues('billNo'))) {
+					toast.warning('Please select a Bill No to proceed');
+				} else {
+					recordBillPaymentApi(formData)
+						.then((res) => {
+							toast.success('Data Submitted Successfully');
+						})
+						.catch((err) => {
+							toast.error(err.message);
+						});
+				}
+			}
+		} else {
+			if (getValues('billNo') == 'true' || isEmpty(getValues('billNo'))) {
+				toast.warning(
+					"Please select a Bill No and then click 'Get Details' to proceed "
+				);
+			} else {
+				recordBillPaymentApi(formData)
+					.then((res) => {
+						toast.success('Data Submitted Successfully');
+					})
+					.catch((err) => {
+						toast.error(err.message);
+					});
+			}
+		}
 	};
 
 	return response.loading ? (
@@ -144,7 +335,7 @@ export default function RecordPayment(props) {
 										>
 											<option value="true">Select User Type</option>
 											<option value="Shipper">Shipper</option>
-											<option value="Dealer">Dealer</option>
+											<option value="DealerPoint">Dealer Point</option>
 											<option value="Driver">Driver</option>
 										</select>
 									</div>
@@ -156,7 +347,10 @@ export default function RecordPayment(props) {
 											onChange={(e) => {
 												getWalletAndBill(e.target.value);
 											}}
-											ref={register({ required: true })}
+											ref={register({
+												required: true,
+												validate: (value) => value !== 'true',
+											})}
 										>
 											<option value="true">Select User</option>
 											{response.users.map((doc, i) => {
@@ -167,6 +361,10 @@ export default function RecordPayment(props) {
 												);
 											})}
 										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.userId && 'Please select a user'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3">
@@ -189,6 +387,10 @@ export default function RecordPayment(props) {
 												);
 											})}
 										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.walletId && 'Please select a wallet'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Payment Type</label>
@@ -206,6 +408,10 @@ export default function RecordPayment(props) {
 											<option value="Credit">Credit</option>
 											<option value="Debit">Debit</option>
 										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.paymentType && 'Please select payment type'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3">
@@ -214,10 +420,7 @@ export default function RecordPayment(props) {
 										<select
 											className="form-control"
 											name="billNo"
-											ref={register({
-												required: true,
-												validate: (value) => value !== 'true',
-											})}
+											ref={register}
 										>
 											) <option value="true">Select Bill No</option>
 											{response.bills.map((doc, i) => {
@@ -228,6 +431,10 @@ export default function RecordPayment(props) {
 												);
 											})}
 										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.billNo && 'please select a bill No'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3">
@@ -280,6 +487,10 @@ export default function RecordPayment(props) {
 											<option value="Cheque">Cheque</option>
 											<option value="InternalTransfer">InternalTransfer</option>
 										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.paymentMethod && 'Please select a payment method'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Payment Note:</label>
@@ -290,6 +501,10 @@ export default function RecordPayment(props) {
 											placeholder="Write Note"
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.paymentNote && 'please select a payment note'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3">
@@ -303,6 +518,10 @@ export default function RecordPayment(props) {
 											defaultValue={response.amount}
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.amountPaid && 'please add amount paid'}
+										</span>
 									</div>
 									<div className="col">
 										<label>Payment Date:</label>
@@ -314,6 +533,10 @@ export default function RecordPayment(props) {
 											defaultValue={moment(new Date()).format('YYYY-MM-DD')}
 											ref={register({ required: true })}
 										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.paymentDate && 'Please select date'}
+										</span>
 									</div>
 								</div>
 								<div className="form-row mb-3">
@@ -322,7 +545,7 @@ export default function RecordPayment(props) {
 											type="button"
 											className="btn btn-danger float-right btnbrown"
 											onClick={() => {
-												handleSubmit(onsubmit)();
+												handleSubmit(onSubmit)();
 											}}
 										>
 											Submit

@@ -27,6 +27,21 @@ export default function BillDetail(props) {
 		}
 	}, []);
 
+	// const calculatePendingAmount = (data) => {
+	// 	if (data.paymentTransaction) {
+	// 		let pendingAmount = 0;
+	// 		let newData = { ...data };
+	// 		data.billSummary.map((doc) => {
+	// 			pendingAmount += doc.amount;
+	// 		});
+	// 		pendingAmount -= data.paymentTransaction.amountPaid;
+	// 		newData.paymentTransaction.amountPending = pendingAmount;
+	// 		return newData;
+	// 	} else {
+	// 		return data;
+	// 	}
+	// };
+
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
 		enter: {
@@ -44,19 +59,23 @@ export default function BillDetail(props) {
 	const column1 = [
 		{
 			Header: 'Date',
-			accessor: '',
+			Cell: (row) => {
+				return (
+					<>{moment(row.row.original.datetime).format('YYYY-MM-DD hh:mm:ss')}</>
+				);
+			},
 		},
 		{
 			Header: 'Amount Paid',
-			accessor: '',
+			accessor: 'amountPaid',
 		},
 		{
 			Header: 'Payment Type',
-			accessor: '',
+			accessor: 'paymentMethod',
 		},
 		{
 			Header: 'Pending Amount',
-			accessor: '',
+			accessor: 'amountPending',
 		},
 	];
 
@@ -86,7 +105,6 @@ export default function BillDetail(props) {
 			({ item, props, key }) =>
 				item && (
 					<animated.div key={key} style={props}>
-						{console.log(item)}
 						<Container>
 							<div className="card-header">
 								<h2 className="float-left">Bill Detail</h2>
@@ -180,7 +198,11 @@ export default function BillDetail(props) {
 									</div>
 								</div>
 								<Table
-									data={[]}
+									data={
+										response.data.paymentTransaction
+											? [response.data.paymentTransaction]
+											: []
+									}
 									columns={column1}
 									tableclass={'table-responsive custom-table margintop10'}
 									hiddenColumns={['id']}
