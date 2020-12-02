@@ -9,6 +9,10 @@ import SarokhTask from '../views/dealer/sarokhTask/SarokhTask';
 import DeliverShipment from '../views/dealer/DeliverShipment/DeliverShipment';
 import ReceiveShipment from '../views/dealer/ReceiveShipment/ReceiveShipment';
 import SarokhPay from '../views/dealer/sarokhPay/SarokhPay';
+import TransactionConfirmation from '../views/dealer/temp/TransactionConfirmation';
+import ShipmentBill from '../views/dealer/temp/ShipmentBill';
+import ShipmentDetail from '../views/dealer/temp/ShipmentDetail';
+import ShipmentPayment from '../views/dealer/temp/ShipmentPayment';
 
 function DealerRouter(props) {
 	return (
@@ -25,6 +29,19 @@ function DealerRouter(props) {
 					component={ReceiveShipment}
 				/>
 				<ProtectedRoute path="/dealer/SarokhPay" component={SarokhPay} />
+				<ProtectedRoute
+					path="/dealer/confirmation"
+					component={TransactionConfirmation}
+				/>
+				<ProtectedRoute path="/dealer/shipmentBill" component={ShipmentBill} />
+				<ProtectedRoute
+					path="/dealer/shipmentDetail"
+					component={ShipmentDetail}
+				/>
+				<ProtectedRoute
+					path="/dealer/shipmentPayment"
+					component={ShipmentPayment}
+				/>
 			</Switch>
 		</RecoilRoot>
 	);
