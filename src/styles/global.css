@@ -113,7 +113,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 	color: #ec1c24;
 }
 .redcolor {
-	color: #ec1c24;
+	color: #ec1c24 !important;
 }
 .nav-sidebar > .nav-item .nav-icon {
 	margin-right: 10px;
@@ -582,6 +582,12 @@ li.nav-item a:hover {
 .add-address-container {
 	padding: 25px 100px;
 }
+.dashboard-heading h2{font-size: 16px;color:#fa1c25; text-align: center;font-weight: bold !important;}
+.dashboard-heading label{font-size: 16px; font-weight: bold !important; color: #fa1c25 !important;}
+.shop-img img{width: 100%; margin-bottom: 25px;}
+.sarokh-pay-detail h3{font-size: 16px;color:#fa1c25;font-weight: bold !important;}
+.right-align{font-size: 20px;}
+.right-align .text-right{text-align: right; font-weight: bold !important; }
 
 /*------------------------------------------------------------------
   [ Login100 more ]*/

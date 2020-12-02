@@ -27,18 +27,24 @@ export default function ReceiveShipment(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						<Container>
-							<div className="card-header">
-								<h2 className="float-left">Receive Shipment</h2>
-							</div>
-							<div className="card-body">code here</div>
-						</Container>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							<Container>
+								<div className="card-header">
+									<h2 className="float-left">Receive Shipment</h2>
+									<button className="btn btn-info float-right btnbrown">Complete</button>
+								</div>
+								<div className="card-body">
+									<label for="fullname">Traking No</label>
+									<input id="fullname" type="text" name="fullName" class="form-control" placeholder="  Enter Tracking No
+" value="" />
+									<button className="btn btn-info float-right btnbrown mt-2">Receive</button>
+								</div>
+							</Container>
+						</animated.div>
+					)
+			)
+		);
 }
