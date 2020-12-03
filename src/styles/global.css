@@ -588,6 +588,8 @@ li.nav-item a:hover {
 .sarokh-pay-detail h3{font-size: 16px;color:#fa1c25;font-weight: bold !important;}
 .right-align{font-size: 20px;}
 .right-align .text-right{text-align: right; font-weight: bold !important; }
+.transaction-detail{display: flex;}
+.transaction-detail label{color: #fa1c25 !important;width: 206px;font-weight: bold !important;}
 
 /*------------------------------------------------------------------
   [ Login100 more ]*/

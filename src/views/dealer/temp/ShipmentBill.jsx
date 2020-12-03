@@ -27,18 +27,53 @@ export default function DealerDashboard(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						<Container>
-							<div className="card-header">
-								<h2 className="float-left">Dashboard</h2>
-							</div>
-							<div className="card-body">code here</div>
-						</Container>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							<Container>
+								<div className="card-header">
+									<h2 className="float-left"> Create Shipment - Shipment Bill</h2>
+								</div>
+								<div className="card-body">
+									<div className="form-row">
+										<div className="col-sm-6">
+											<div className="row">
+												<label className="col-sm-6 col-6 redcolor">Bill No:</label>
+												<label className="col-sm-6 col-6">
+													<p className=" text-left">1258</p>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div className="form-row">
+										<div className="col-sm-6">
+											<div className="row">
+												<label className="col-sm-6 col-6 redcolor">Tracking No:</label>
+												<label className="col-sm-6 col-6">
+													<p className=" text-left">00007000125</p>
+												</label>
+											</div>
+										</div>
+										<div className="col-sm-6">
+											<label className="col-sm-6 col-6 redcolor">Sender Name:</label>
+											<label className="col-sm-6 col-6">
+												<p className=" text-left">Salman Arif</p>
+											</label>
+										</div>
+										<div className="col-sm-12 right-align">
+											<label className="col-sm-6 col-6 redcolor">Amount:</label>
+											<label className="col-sm-6 col-6 text-right">Sar 175/-</label>
+										</div>
+										<div className="col-md-12">
+											<button className="btn btn-info float-right btnbrown mt-2">Paid</button>
+											<button className="btn btn-info float-right btn-danger mt-2 mr-2">Discard</button>
+										</div>
+									</div>
+								</div>
+							</Container>
+						</animated.div>
+					)
+			)
+		);
 }

@@ -27,18 +27,51 @@ export default function DealerDashboard(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-		transitions.map(
-			({ item, props, key }) =>
-				item && (
-					<animated.div key={key} style={props}>
-						<Container>
-							<div className="card-header">
-								<h2 className="float-left">Dashboard</h2>
-							</div>
-							<div className="card-body">code here</div>
-						</Container>
-					</animated.div>
-				)
-		)
-	);
+			transitions.map(
+				({ item, props, key }) =>
+					item && (
+						<animated.div key={key} style={props}>
+							<Container>
+								<div className="card-header">
+									<h2 className="float-left">Dashboard</h2>
+									<button class="btn btn-info float-right btnbrown">Confirm</button>
+								</div>
+								<div className="card-body">
+									<div className="row">
+										<div className="col-md-8">
+											<p>Transaction from dealer [Point Name] having ID [Point ID] to Driver [Driver Name] having ID [Driver ID] in Trip having ID [Trip ID] on [Date] at [Time].</p>
+										</div>
+										<div className="col-md-4">
+											<div className="transaction-detail">
+												<label>Give Shipment:</label>
+												<p></p>
+											</div>
+											<div className="transaction-detail">
+												<label>Pending Give Shipment:</label>
+												<p></p>
+											</div>
+											<div className="transaction-detail">
+												<label>Receive Shipment:</label>
+												<p></p>
+											</div>
+											<div className="transaction-detail">
+												<label>Pending Receive Shipment:</label>
+												<p></p>
+											</div>
+											<div className="transaction-detail">
+												<label>Amount Paid:</label>
+												<p></p>
+											</div>
+											<div className="transaction-detail">
+												<label>Pending Amount:</label>
+												<p></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</Container>
+						</animated.div>
+					)
+			)
+		);
 }
