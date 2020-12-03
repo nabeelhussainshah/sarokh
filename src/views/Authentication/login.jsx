@@ -17,9 +17,16 @@ function Login(props) {
 		}
 
 		await axios
-			.post(`http://vps789305.ovh.net:8443/user/login`, {
-				...data,
-			})
+			.post(
+				`http://vps789305.ovh.net:8443/user/login`,
+				{
+					...data,
+				},
+				{
+					timeout: 20000,
+					timeoutErrorMessage: 'No Internet Connection',
+				}
+			)
 			.then(async (response) => {
 				if (response.data.status === 401) {
 					toast.error('WRONG USERNAME OR PASSWORD');
@@ -31,10 +38,10 @@ function Login(props) {
 					);
 					const user = await JSON.parse(localStorage.getItem('user'));
 					toast.success('LOGIN SUCCESS');
-					if (user.user !== undefined) {
-						if (user.user.userType === 'Shipper') {
-							hist.push('/shipper/dashboard');
-						}
+					if (user.user?.userType === 'Shipper') {
+						hist.push('/shipper/dashboard');
+					} else if (user.user?.userType === 'DealerPoint') {
+						hist.push('/dealer/dashboard');
 					} else if (user.userType === 'Admin') {
 						hist.push('/admin/dashboard');
 					} else if (user.userType === 'WarehouseManager') {
@@ -44,7 +51,7 @@ function Login(props) {
 			})
 			.catch((err) => {
 				toast.error(err.message);
-				buttonRef.current.disabled = true;
+				buttonRef.current.disabled = false;
 			});
 	};
 
