@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
@@ -8,9 +8,12 @@ import { useTransition, animated } from 'react-spring';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { isUndefined } from 'underscore';
+import ReactToPrint from 'react-to-print';
+import PrintTripDetail from './PrintTripDetail';
 
 export default function TripDetail(props) {
 	const hist = useHistory();
+	const componentRef = useRef();
 	const [response, setresponse] = useState({ loading: true });
 	console.log(hist.location.state);
 
@@ -220,6 +223,26 @@ export default function TripDetail(props) {
 											<div className="clearfix"></div>
 										</div>
 									</div>
+									{response.data.tripDetailItemsList && (
+										<div style={{ width: '100%' }}>
+											<div style={{ display: 'none' }}>
+												<PrintTripDetail
+													ref={componentRef}
+													response={response}
+													columns={columns}
+												/>
+											</div>
+											<ReactToPrint
+												trigger={() => (
+													<button className="btn btn-primary mt-4 float-right">
+														Print Table
+													</button>
+												)}
+												content={() => componentRef.current}
+												pageStyle="width:100%"
+											/>
+										</div>
+									)}
 									<div class="col-sm-12 creatbill">
 										<h2>Trip Summary</h2>
 										<Table
