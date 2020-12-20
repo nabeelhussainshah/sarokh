@@ -80,7 +80,11 @@ function ShipperRouter(props) {
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	if (JSON.parse(localStorage.getItem('user'))) {
 		return (
-			<SideNavBar routes={shipperRoutes} links={'shipper'}>
+			<SideNavBar
+				routes={shipperRoutes}
+				links={'shipper'}
+				redirect={'/shipper/dashboard'}
+			>
 				<Component />
 			</SideNavBar>
 		);

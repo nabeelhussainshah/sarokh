@@ -3,6 +3,7 @@ import { Route, Redirect, BrowserRouter } from 'react-router-dom';
 import Login from '../views/Authentication/login';
 import Loader from '../components/Loading/Loading';
 import DealerPoints from '../views/publicViews/dealerPoints/DealerPoints';
+import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
@@ -37,31 +38,33 @@ function ApplicationRouter(porps) {
 	});
 
 	return (
-		<Suspense fallback={<Loader />}>
-			<BrowserRouter>
-				<Route exact={true} path="/" component={Login} />
-				<Route exact={true} path="/logout" component={Logout} />
-				<Route path="/business/signup" component={BusinessSignup} />
-				<Route path="/individual/signup" component={IndividualSignup} />
-				<Route path="/dealerPoints" component={DealerPoints} />
-				<Route path="/tracking" component={TrackingShipmentRouter} />
-				<Route path="/admin" component={AdminRouter} />
-				<Route path="/shipper" component={ShipperRouter} />
-				<Route path="/warehouseManager" component={WarehouseManagerRouter} />
-				<Route
-					path="/warehouseSupervisor"
-					component={WarehouseSupervisorRouter}
-				/>
-				<Route path="/dealer" component={DealerRouter} />
-			</BrowserRouter>
-		</Suspense>
+		<ErrorBoundary>
+			<Suspense fallback={<Loader />}>
+				<BrowserRouter>
+					<Route exact={true} path="/" component={Login} />
+					<Route exact={true} path="/logout" component={Logout} />
+					<Route path="/business/signup" component={BusinessSignup} />
+					<Route path="/individual/signup" component={IndividualSignup} />
+					<Route path="/dealerPoints" component={DealerPoints} />
+					<Route path="/tracking" component={TrackingShipmentRouter} />
+					<Route path="/admin" component={AdminRouter} />
+					<Route path="/shipper" component={ShipperRouter} />
+					<Route path="/warehouseManager" component={WarehouseManagerRouter} />
+					<Route
+						path="/warehouseSupervisor"
+						component={WarehouseSupervisorRouter}
+					/>
+					<Route path="/dealer" component={DealerRouter} />
+				</BrowserRouter>
+			</Suspense>
+		</ErrorBoundary>
 	);
 }
 
-const Logout = () => {
+function Logout() {
 	localStorage.clear();
 	toast.success('LOGOUT SUCCESSFUL');
 	return <Redirect to="/" />;
-};
+}
 
 export default React.memo(ApplicationRouter);

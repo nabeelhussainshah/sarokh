@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { allVehiclesApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import { filter } from 'underscore';
 
 export default function AllShipments(props) {
 	const hist = useHistory();
@@ -15,13 +16,21 @@ export default function AllShipments(props) {
 		if (response.loading) {
 			allVehiclesApi()
 				.then((res) => {
-					setresponse({ loading: false, data: res });
+					setresponse({ loading: false, data: filterVehicles(res) });
 				})
 				.catch((err) => {
 					toast.error(err.message);
 				});
 		}
 	}, [response.loading]);
+
+	function filterVehicles(data) {
+		// this function returns vehicles which belong to the same warehouse as the warehouse manager
+		let user = JSON.parse(localStorage.getItem('user'));
+		return filter(data, function (doc) {
+			return user.warehouseId === doc.warehouseId;
+		});
+	}
 
 	const columns = [
 		{

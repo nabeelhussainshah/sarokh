@@ -30,6 +30,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 			<SideNavBar
 				routes={warehouseSupervisorRoutes}
 				links={'warehouseSupervisor'}
+				redirect={'/warehouseSupervisor/dashboard'}
 			>
 				<Component />
 			</SideNavBar>

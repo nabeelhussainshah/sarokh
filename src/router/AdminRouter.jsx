@@ -197,7 +197,11 @@ export default function AdminRouter(props) {
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	if (JSON.parse(localStorage.getItem('user'))) {
 		return (
-			<SideNavBar routes={adminRoutes} links={'admin'}>
+			<SideNavBar
+				routes={adminRoutes}
+				links={'admin'}
+				redirect={'/admin/dashboard'}
+			>
 				<Component />
 			</SideNavBar>
 		);

@@ -1,7 +1,7 @@
 export const warehouseManagerRoutes = [
 	{
 		to: '/warehouseManager/dashboard',
-		name: 'Dashboard',
+		name: 'Warehouse Inventory',
 		iconClass: 'nav-icon fas fa-rocket',
 	},
 	{
@@ -21,13 +21,8 @@ export const warehouseManagerRoutes = [
 	},
 	{
 		to: '/warehouseManager/dealers',
-		name: 'Dealers',
+		name: 'Dealer Points',
 		iconClass: 'nav-icon fas fa-store',
-	},
-	{
-		to: '/warehouseManager/shippers',
-		name: 'Shippers',
-		iconClass: 'nav-icon fas fa-truck-loading',
 	},
 	{
 		to: '/warehouseManager/vehicles',
@@ -35,23 +30,8 @@ export const warehouseManagerRoutes = [
 		iconClass: 'nav-icon fas fa-truck',
 	},
 	{
-		to: '/warehouseManager/allshipments',
-		name: 'All Shipments',
-		iconClass: 'nav-icon fas fa-list-alt',
-	},
-	{
 		to: '/warehouseManager/pendingshipments',
 		name: 'Pending Shipments',
-		iconClass: 'nav-icon fas fa-list-alt',
-	},
-	{
-		to: '/warehouseManager/codshipments',
-		name: 'COD Shipments',
-		iconClass: 'nav-icon fas fa-list-alt',
-	},
-	{
-		to: '/warehouseManager/prepaidshipments',
-		name: 'Prepaid Shipments',
 		iconClass: 'nav-icon fas fa-list-alt',
 	},
 	{

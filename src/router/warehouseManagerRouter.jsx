@@ -5,13 +5,9 @@ import Dashboard from '../views/warehouseManager/dashboard/WarehouseManagerDashb
 import CreateTrip from '../views/warehouseManager/trips/CreateTrip';
 import AllTrips from '../views/warehouseManager/trips/AllTrips';
 import AllDrivers from '../views/warehouseManager/drivers/AllDrivers';
-import AllDealers from '../views/warehouseManager/dealers/AllDealers';
-import AllShippers from '../views/warehouseManager/shippers/AllShippers';
+import AllDealerPoints from '../views/warehouseManager/dealerPoints/AllDealerPoints';
 import AllVehicles from '../views/warehouseManager/vehicles/AllVehicles';
-import AllShipments from '../views/warehouseManager/shipments/AllShipments';
 import PendingShipments from '../views/warehouseManager/shipments/PendingShipments';
-import CodShipments from '../views/warehouseManager/shipments/CodShipments';
-import PrepaidShipments from '../views/warehouseManager/shipments/PrepaidShipments';
 import PickupShipments from '../views/warehouseManager/shipments/PickupShipments';
 import DeliveryShipments from '../views/warehouseManager/shipments/DeliveryShipments';
 import TripDetail from '../views/genericViews/trips/TripDetail';
@@ -45,31 +41,15 @@ function WarehouseManagerRouter(props) {
 				/>
 				<ProtectedRoute
 					path="/warehouseManager/dealers"
-					component={AllDealers}
-				/>
-				<ProtectedRoute
-					path="/warehouseManager/shippers"
-					component={AllShippers}
+					component={AllDealerPoints}
 				/>
 				<ProtectedRoute
 					path="/warehouseManager/vehicles"
 					component={AllVehicles}
 				/>
 				<ProtectedRoute
-					path="/warehouseManager/allshipments"
-					component={AllShipments}
-				/>
-				<ProtectedRoute
 					path="/warehouseManager/pendingshipments"
 					component={PendingShipments}
-				/>
-				<ProtectedRoute
-					path="/warehouseManager/codshipments"
-					component={CodShipments}
-				/>
-				<ProtectedRoute
-					path="/warehouseManager/prepaidshipments"
-					component={PrepaidShipments}
 				/>
 				<ProtectedRoute
 					path="/warehouseManager/pickupshipments"
@@ -87,7 +67,11 @@ function WarehouseManagerRouter(props) {
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	if (JSON.parse(localStorage.getItem('user'))) {
 		return (
-			<SideNavBar routes={warehouseManagerRoutes} links={'warehouseManager'}>
+			<SideNavBar
+				routes={warehouseManagerRoutes}
+				links={'warehouseManager'}
+				redirect="/warehouseManager/dashboard"
+			>
 				<Component />
 			</SideNavBar>
 		);

@@ -50,7 +50,11 @@ function DealerRouter(props) {
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	if (JSON.parse(localStorage.getItem('user'))) {
 		return (
-			<SideNavBar routes={dealerRoutes} links={'dealer'}>
+			<SideNavBar
+				routes={dealerRoutes}
+				links={'dealer'}
+				redirect={'/dealer/dashboard'}
+			>
 				<Component />
 			</SideNavBar>
 		);

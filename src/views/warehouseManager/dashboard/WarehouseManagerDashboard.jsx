@@ -76,10 +76,10 @@ export default function WarehouseManagerDashboard() {
 					<animated.div key={key} style={props}>
 						<Container>
 							<div className="card-header">
-								<h2 className="float-left">Warehouse Dashboard</h2>
+								<h2 className="float-left">Warehouse Inventory</h2>
 							</div>
 							<div className="card-body">
-								<div className="row mt-4">
+								{/* <div className="row mt-4">
 									<div className="col-sm-6 col-lg-4">
 										<div className="card text-white bg-info">
 											<div className="card-body pb-4">
@@ -110,7 +110,7 @@ export default function WarehouseManagerDashboard() {
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> */}
 								<div className="mt-2">
 									<Table
 										data={response.warehouseDetail.shipments || []}

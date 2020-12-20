@@ -59,3 +59,21 @@ export async function warehouseShipmentsApi(id) {
 			throw err;
 		});
 }
+
+export async function warehouseDetailsApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/sarokh-warehouse/get-details/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data !== null) {
+				return res.data;
+			} else {
+				throw new Error(
+					`something went wrong with status code: ${res.data.status}`
+				);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}

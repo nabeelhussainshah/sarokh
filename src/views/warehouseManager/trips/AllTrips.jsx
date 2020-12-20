@@ -5,6 +5,7 @@ import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
 import { allTripsApi, deleteTripApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
+import { warehouseFilter } from '../../../Utils/warehouseManagerWarehouseFilter';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
@@ -15,8 +16,11 @@ export default function AllTrips(props) {
 	useEffect(() => {
 		if (response.loading) {
 			allTripsApi()
-				.then((res) => {
-					setresponse({ loading: false, data: res });
+				.then(async (res) => {
+					setresponse({
+						loading: false,
+						data: await warehouseFilter(res, 'startPoint', 'name'),
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);

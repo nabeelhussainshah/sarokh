@@ -1,21 +1,25 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListingContainer from '../../../components/Containers/ListingContainer';
 import Table from '../../../components/Generictable/generatictable';
 import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
-import { allShipmentsApi } from '../../../Api/adminApi';
+import { pointListingApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import { warehouseFilter } from '../../../Utils/warehouseManagerWarehouseFilter';
 
-export default function AllShipments(props) {
+export default function DealerPoints(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 
 	useEffect(() => {
 		if (response.loading) {
-			allShipmentsApi()
-				.then((res) => {
-					setresponse({ loading: false, data: res });
+			pointListingApi()
+				.then(async (res) => {
+					setresponse({
+						loading: false,
+						data: await warehouseFilter(res, 'city', 'city'),
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -25,33 +29,28 @@ export default function AllShipments(props) {
 
 	const columns = [
 		{
-			Header: 'id',
-			accessor: 'id',
+			Header: 'Owner Name',
+			accessor: 'owner',
 		},
 		{
-			Header: 'Tracking No',
-			accessor: 'shipmentId',
+			Header: 'Point Name',
+			accessor: 'dealerPointName',
 		},
 		{
-			Header: 'Date And Time',
-			accessor: 'dateTime',
+			Header: 'City',
+			accessor: 'city',
 		},
 		{
-			Header: 'Shipper',
-			accessor: 'shipper',
+			Header: 'Contact No',
+			accessor: 'operatorContact',
 		},
 		{
-			Header: 'Current Location',
-			accessor: 'currentLocation',
-		},
-
-		{
-			Header: 'Destination City',
-			accessor: 'toCity',
+			Header: 'Wallet Balance',
+			accessor: '',
 		},
 		{
-			Header: 'Status',
-			accessor: 'status',
+			Header: 'Current Inventory',
+			accessor: '',
 		},
 	];
 
@@ -78,7 +77,7 @@ export default function AllShipments(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Shipments</h2>
+								<h2 className="float-left">Dealer Points</h2>
 							</div>
 							<div className="card-body">
 								<Table

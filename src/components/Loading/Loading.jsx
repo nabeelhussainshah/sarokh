@@ -10,7 +10,7 @@ export default function Loading({ marginTop = '25%' }) {
 			}}
 		>
 			<div
-				class="spinner-border"
+				className="spinner-border"
 				style={{ width: '4rem', height: '4rem' }}
 			></div>
 		</div>

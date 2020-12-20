@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { allDriversApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
 import { toast } from 'react-toastify';
+import { filter } from 'underscore';
 
 export default function AllDrivers(props) {
 	const hist = useHistory();
@@ -15,13 +16,21 @@ export default function AllDrivers(props) {
 		if (response.loading) {
 			allDriversApi()
 				.then((res) => {
-					setresponse({ loading: false, data: res });
+					setresponse({ loading: false, data: filterDrivers(res) });
 				})
 				.catch((err) => {
 					toast.error(err.message);
 				});
 		}
 	}, [response.loading]);
+
+	function filterDrivers(data) {
+		// this function returns driver which belong to the same warehouse as the warehouse manager
+		let user = JSON.parse(localStorage.getItem('user'));
+		return filter(data, function (doc) {
+			return user.warehouseId === doc.warehouseId;
+		});
+	}
 
 	const columns = [
 		{

@@ -5,6 +5,7 @@ import Loading from '../../../components/Loading/Loading';
 import { useHistory } from 'react-router-dom';
 import { pendingShipmentsApi } from '../../../Api/adminApi';
 import { useTransition, animated } from 'react-spring';
+import { warehouseFilter } from '../../../Utils/warehouseManagerWarehouseFilter';
 import { toast } from 'react-toastify';
 
 export default function PendingShipments(props) {
@@ -14,8 +15,11 @@ export default function PendingShipments(props) {
 	useEffect(() => {
 		if (response.loading) {
 			pendingShipmentsApi()
-				.then((res) => {
-					setresponse({ loading: false, data: res });
+				.then(async (res) => {
+					setresponse({
+						loading: false,
+						data: await warehouseFilter(res, 'fromCity', 'city'),
+					});
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -24,10 +28,6 @@ export default function PendingShipments(props) {
 	}, [response.loading]);
 
 	const columns = [
-		{
-			Header: 'id',
-			accessor: 'id',
-		},
 		{
 			Header: 'Tracking No',
 			accessor: 'shipmentId',
@@ -87,7 +87,6 @@ export default function PendingShipments(props) {
 									tableclass={'table-responsive custom-table'}
 									pagination={true}
 									filter={true}
-									hiddenColumns={['id']}
 								/>
 							</div>
 						</ListingContainer>

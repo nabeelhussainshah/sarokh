@@ -14,14 +14,7 @@ function NavBar(props) {
 				<TopNav links={props.links} />
 
 				<aside className="main-sidebar sidebar-dark-primary elevation-4">
-					<Link
-						to={
-							props.links === 'admin'
-								? '/admin/dashboard'
-								: '/shipper/dashboard'
-						}
-						className="brand-link"
-					>
+					<Link to={props.redirect} className="brand-link">
 						<img
 							src="http://app.sarokh.net/web/assets/img/brand/sarokh-logo.png"
 							alt="AdminLTE Logo"

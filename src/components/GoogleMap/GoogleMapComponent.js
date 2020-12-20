@@ -50,8 +50,75 @@ export const GoogleMapComponent = withScriptjs(
 				});
 			}
 		}
+	const [modal, setModal] = useState(false);
 
 		return (
+		<div>
+								{modal ? (
+				<div className="maincontainer ">
+					<div className="gray">Sarokh Point</div>
+					<div><img src="/shop-img.jpg" width="100%"  alt="" /></div>
+
+
+						<div className="red"> 
+						<div className="med">MED 17</div>
+						<div>Mobile Store</div>
+
+						</div>
+						<div className="green"> Select this Location</div>
+						<div><table>
+							<tr>
+							<th>Address</th>
+							<th>Meed 17, Jeddah, Saudi Arabia</th>
+							
+							</tr>
+							<tr>
+							<td>Saturday to sunday timings</td>
+							<td>9:00 AM to 11:00 PM</td>
+							</tr>
+							<tr>
+							<td>FRIDAY TIMING</td>
+							<td>03:00 PM TO 11:00 PM</td>
+							</tr>
+							
+							
+						</table>
+							</div>	
+													</div>
+	
+			):(
+				<div className="maincontainer d-none">
+					<div className="gray">Sarokh Point</div>
+					<div><img src="/shop-img.jpg" width="100%"  alt="" /></div>
+
+
+						<div className="red"> 
+						<div className="med">MED 17</div>
+						<div>Mobile Store</div>
+
+						</div>
+						<div className="green"> Select this Location</div>
+						<div><table>
+							<tr>
+							<th>Address</th>
+							<th>Meed 17, Jeddah, Saudi Arabia</th>
+							
+							</tr>
+							<tr>
+							<td>Saturday to sunday timings</td>
+							<td>9:00 AM to 11:00 PM</td>
+							</tr>
+							<tr>
+							<td>FRIDAY TIMING</td>
+							<td>03:00 PM TO 11:00 PM</td>
+							</tr>
+							
+							
+						</table>
+								</div>
+															</div>
+
+			)}
 			<GoogleMap
 				defaultZoom={props.zoom || 6}
 				defaultCenter={
@@ -80,6 +147,7 @@ export const GoogleMapComponent = withScriptjs(
 									lat: parseFloat(doc.latitude),
 									lng: parseFloat(doc.longitude),
 								}}
+								icon={{url: "/favicon.ico"}}
 								draggable={props.draggable}
 								onDragEnd={(e) => changeLocation('MarkerDrag', e)}
 								onMouseOver={() => setstate(doc.label)}
@@ -89,7 +157,8 @@ export const GoogleMapComponent = withScriptjs(
 										props.markerClickAllow &&
 										doc.dealerPointId !== undefined
 									) {
-										setClickedMarker(doc.dealerPointId, doc.label);
+										setModal(true);
+										// setClickedMarker(doc.dealerPointId, doc.label);
 									}
 								}}
 							>
@@ -119,7 +188,9 @@ export const GoogleMapComponent = withScriptjs(
 						componentRestrictions={{ country: 'SA' }}
 					/>
 				) : null}
-			</GoogleMap>
+
+				</GoogleMap>
+</div>
 		);
 	})
 );
