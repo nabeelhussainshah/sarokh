@@ -10,6 +10,7 @@
 		"@testing-library/user-event": "^7.2.1",
 		"axios": "^0.19.2",
 		"core-js": "^3.6.5",
+		"formik": "^2.2.6",
 		"joi": "^17.2.1",
 		"lodash": "^4.17.20",
 		"moment": "^2.27.0",
@@ -26,7 +27,8 @@
 		"react-to-print": "^2.9.0",
 		"react-toastify": "^6.0.8",
 		"recoil": "0.0.10",
-		"underscore": "^1.10.2"
+		"underscore": "^1.10.2",
+		"yup": "^0.32.8"
 	},
 	"scripts": {
 		"start": "react-scripts start",

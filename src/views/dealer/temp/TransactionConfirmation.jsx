@@ -5,10 +5,17 @@ import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import { requestTaskConfirmationApi } from '../../../Api/dealerApi';
 
 export default function DealerDashboard(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
+
+	useEffect(async () => {
+		await requestTaskConfirmationApi().then(res => {
+			console.log("resssssssssssss => ", res)
+		});
+	}, []);
 
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
