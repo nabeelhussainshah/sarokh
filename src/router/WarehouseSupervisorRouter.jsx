@@ -12,7 +12,7 @@ function WarehouseManagerRouter(props) {
 		<RecoilRoot>
 			<Switch>
 				<ProtectedRoute
-					path="/warehouseSupervisor/dashboard"
+					path="/warehouseSupervisor/inventory"
 					component={Dashboard}
 				/>
 				<ProtectedRoute

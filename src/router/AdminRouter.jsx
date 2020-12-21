@@ -20,6 +20,7 @@ import AddUser from '../views/admin/users/AddUser';
 import AllUsers from '../views/admin/users/AllUsers';
 import AddShipperWarehouse from '../views/admin/warehouses/AddShipperWarehouse';
 import WarehouseTerminal from '../views/admin/warehouses/WarehouseTerminal';
+import TransporterReport from '../views/admin/warehouses/TransporterReport';
 import WarehouseDetail from '../views/genericViews/warehouse/WarehouseDetail';
 import AddDriver from '../views/admin/drivers/AddDriver';
 import FinanceDashboard from '../views/admin/finance/FinanceDashboard';
@@ -123,6 +124,10 @@ export default function AdminRouter(props) {
 			<ProtectedRoute
 				path="/admin/warehouses/warehouseterminal"
 				component={WarehouseTerminal}
+			/>
+			<ProtectedRoute
+				path="/admin/warehouses/transporterReport"
+				component={TransporterReport}
 			/>
 			<ProtectedRoute
 				path="/admin/warehouses/warehouseshipments"

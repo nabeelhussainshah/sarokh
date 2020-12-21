@@ -25,6 +25,7 @@ const WarehouseSupervisorRouter = React.lazy(() =>
 	import('./WarehouseSupervisorRouter')
 );
 const DealerRouter = React.lazy(() => import('./DealerRouter'));
+const dealerNetworkManager = React.lazy(() => import('./DealerNetworkManager'));
 
 function ApplicationRouter(porps) {
 	toast.configure({
@@ -55,6 +56,7 @@ function ApplicationRouter(porps) {
 					component={WarehouseSupervisorRouter}
 				/>
 				<Route path="/dealer" component={DealerRouter} />
+				<Route path="/dealerNetworkManager" component={dealerNetworkManager} />
 			</BrowserRouter>
 		</Suspense>
 		//</ErrorBoundary>

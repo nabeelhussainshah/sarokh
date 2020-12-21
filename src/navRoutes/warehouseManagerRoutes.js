@@ -5,6 +5,11 @@ export const warehouseManagerRoutes = [
 		iconClass: 'nav-icon fas fa-rocket',
 	},
 	{
+		to: '/warehouseManager/transporterReport',
+		name: 'Transporter Report',
+		iconClass: 'nav-icon fa fa-warehouse',
+	},
+	{
 		to: '/warehouseManager/createtrip',
 		name: 'Create Trip',
 		iconClass: 'nav-icon fas fa-route',

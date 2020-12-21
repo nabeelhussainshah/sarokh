@@ -11,6 +11,7 @@ import PendingShipments from '../views/warehouseManager/shipments/PendingShipmen
 import PickupShipments from '../views/warehouseManager/shipments/PickupShipments';
 import DeliveryShipments from '../views/warehouseManager/shipments/DeliveryShipments';
 import TripDetail from '../views/genericViews/trips/TripDetail';
+import TransportReport from '../views/warehouseManager/warehouse/TransporterReport';
 import { warehouseManagerRoutes } from '../navRoutes/warehouseManagerRoutes';
 import { RecoilRoot } from 'recoil';
 import { toast } from 'react-toastify';
@@ -22,6 +23,10 @@ function WarehouseManagerRouter(props) {
 				<ProtectedRoute
 					path="/warehouseManager/dashboard"
 					component={Dashboard}
+				/>
+				<ProtectedRoute
+					path="/warehouseManager/transporterReport"
+					component={TransportReport}
 				/>
 				<ProtectedRoute
 					path="/warehouseManager/createtrip"
