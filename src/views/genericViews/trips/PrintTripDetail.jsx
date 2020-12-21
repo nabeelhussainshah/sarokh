@@ -43,6 +43,25 @@ class PrintTripDetail extends React.Component {
 	render() {
 		return (
 			<div>
+				<table className="table custom-table w-100">
+					<thead>
+						<th colSpan="6">Run Sheet</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="center">Trip Date & Time:</td>
+							<td align="center">(autofill from system)</td>
+							<td align="center">Trip ID:</td>
+							<td align="center">(autofill from system)</td>
+						</tr>
+						<tr>
+							<td align="center">Trip Date & Time:</td>
+							<td align="center">(autofill from system)</td>
+							<td align="center">Trip ID:</td>
+							<td align="center">(autofill from system)</td>
+						</tr>
+					</tbody>
+				</table>
 				<div className="form-row">
 					<div className="col-sm-6">
 						<label className="col-sm-6 col-6"> Trip ID:</label>
@@ -97,6 +116,8 @@ class PrintTripDetail extends React.Component {
 						</label>
 					</div>
 				</div>
+				<h2>Deliveries</h2>
+				<br/>
 				<Table
 					data={this.props.response.data.tripDetailItemsList}
 					columns={this.columns}
