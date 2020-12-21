@@ -35,12 +35,27 @@ export default function Bills(props) {
 		}
 	}
 
+	const handleClick = (row) => {
+		console.log(row.row.original.id);
+		hist.push({
+			pathname: '/admin/shipments/vieworder',
+			state: {
+				id: row.row.original.id,
+			},
+		});
+	};
+
 	const columns = [
 		{
 			Header: 'Action',
 			accessor: '',
 			Cell: (row) => {
-				return <i className="fa fa-info-circle"></i>;
+				return (
+					<i
+						className="fa fa-info-circle"
+						handleClick={() => handleClick(row)}
+					></i>
+				);
 			},
 		},
 		{
