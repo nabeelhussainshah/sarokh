@@ -39,6 +39,35 @@ export default function DeliverShipment(props) {
 									<label for="fullname">Traking No</label>
 									<input id="fullname" type="text" name="fullName" class="form-control" placeholder="  Enter Tracking No" value="" />
 									<button className="btn btn-info float-right btnbrown mt-2">Search</button>
+									
+									{/* <Formik
+											initialValues={initialValues}
+											validationSchema={formSchema}
+											onSubmit={(values) => {
+													onSubmitForm(values);
+											}}														>
+											{(formik) => {
+												const { errors, touched, isValid, dirty } = formik;
+													return (
+														<Form>
+															<div className="form-row mb-3">
+																<div className="col">
+																	<label for="trackingNo">Traking No</label>
+																	<Field
+																		name="trackingNo" 
+																		type="number" 
+																		placeholder="Enter Tracking Number"
+																		className={errors.trackingNo && touched.trackingNo ? 
+																		"input-error form-control" : "form-control"}
+																	/>
+																	<ErrorMessage style={{color: 'red'}} name="trackingNo" component="span" className="error" />
+																</div>
+															</div>
+															<button className="btn btn-info float-right btnbrown mt-2">Search</button>
+														</Form>
+												)}}
+										</Formik> */}
+									
 									<div className="clearfix"></div>
 									<div className="form-row">
 										<div className="col-sm-6">

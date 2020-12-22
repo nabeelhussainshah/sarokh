@@ -13,8 +13,8 @@ export default function TrackingShipmentRouter(props) {
 			<Switch>
 				<Route path="/tracking/input" component={TrackingInput} />
 				<NavRoute path="/tracking/details" component={TrackingProgress} />
-				{/* <NavRoute path="/tracking/addaddress" component={AddAddress} />
-				<NavRoute path="/tracking/addarea" component={SelectPoint} /> */}
+				<NavRoute path="/tracking/addaddress" component={AddAddress} />
+				<NavRoute path="/tracking/addarea" component={SelectPoint} />
 			</Switch>
 		</RecoilRoot>
 	);

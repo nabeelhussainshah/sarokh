@@ -38,26 +38,26 @@ function ApplicationRouter(porps) {
 	});
 
 	return (
-		//	<ErrorBoundary>
-		<Suspense fallback={<Loader />}>
-			<BrowserRouter>
-				<Route exact={true} path="/" component={Login} />
-				<Route exact={true} path="/logout" component={Logout} />
-				<Route path="/business/signup" component={BusinessSignup} />
-				<Route path="/individual/signup" component={IndividualSignup} />
-				<Route path="/dealerPoints" component={DealerPoints} />
-				<Route path="/tracking" component={TrackingShipmentRouter} />
-				<Route path="/admin" component={AdminRouter} />
-				<Route path="/shipper" component={ShipperRouter} />
-				<Route path="/warehouseManager" component={WarehouseManagerRouter} />
-				<Route
-					path="/warehouseSupervisor"
-					component={WarehouseSupervisorRouter}
-				/>
-				<Route path="/dealer" component={DealerRouter} />
-			</BrowserRouter>
-		</Suspense>
-		//</ErrorBoundary>
+		<ErrorBoundary>
+			<Suspense fallback={<Loader />}>
+				<BrowserRouter>
+					<Route exact={true} path="/" component={Login} />
+					<Route exact={true} path="/logout" component={Logout} />
+					<Route path="/business/signup" component={BusinessSignup} />
+					<Route path="/individual/signup" component={IndividualSignup} />
+					<Route path="/dealerPoints" component={DealerPoints} />
+					<Route path="/tracking" component={TrackingShipmentRouter} />
+					<Route path="/admin" component={AdminRouter} />
+					<Route path="/shipper" component={ShipperRouter} />
+					<Route path="/warehouseManager" component={WarehouseManagerRouter} />
+					<Route
+						path="/warehouseSupervisor"
+						component={WarehouseSupervisorRouter}
+					/>
+					<Route path="/dealer" component={DealerRouter} />
+				</BrowserRouter>
+			</Suspense>
+		</ErrorBoundary>
 	);
 }
 
