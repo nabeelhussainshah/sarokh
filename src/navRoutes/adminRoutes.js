@@ -98,6 +98,11 @@ export const adminRoutes = [
 				name: 'Warehouse Terminal',
 				iconClass: 'nav-icon fa fa-warehouse',
 			},
+			{
+				to: '/admin/warehouses/transporterReport',
+				name: 'Transporter Report',
+				iconClass: 'nav-icon fa fa-warehouse',
+			},
 		],
 	},
 	{

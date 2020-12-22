@@ -47,21 +47,9 @@ export const shipperRoutes = [
 		],
 	},
 	{
-		to: '/shipper/ledger',
-		name: 'Ledger',
-		iconClass: 'nav-icon fas fa-money-bill-wave',
-		subRoutes: [
-			{
-				to: '/ledger/addledger',
-				name: 'Add Ledger',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
-			},
-			{
-				to: '/ledger/allledger',
-				name: 'All Ledger',
-				iconClass: 'nav-icon fas fa-money-bill-wave',
-			},
-		],
+		to: '/shipper/bills',
+		name: 'Bills',
+		iconClass: 'nav-icon fas fa-box',
 	},
 	{
 		to: '/reports',
