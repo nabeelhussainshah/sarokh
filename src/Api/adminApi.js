@@ -1232,7 +1232,7 @@ export async function getWarehouseShipmentsApi(id) {
 		.then((res) => {
 			console.log(res);
 			if (res.data.status === 200) {
-				return res.data.data[0];
+				return res.data.data;
 			} else {
 				throw new Error(`something went wrong with status code: ${res.status}`);
 			}
