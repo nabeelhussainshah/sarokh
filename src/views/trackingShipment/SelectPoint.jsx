@@ -95,7 +95,6 @@ export default function AddArea(props) {
 			location: [...points],
 		});
 	};
-
 	return isEmpty(data) && response.loading ? (
 		<Loading />
 	) : (

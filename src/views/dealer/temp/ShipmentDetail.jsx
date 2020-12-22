@@ -7,29 +7,28 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { createBillApi, deleteBillApi, deleteShipmentApi, getCityListApi, getShipperDeliveryChargesApi, createMobileShipmentApi, recordBillPaymentApi } from '../../../Api/dealerApi';
-
+import { getCityListApi, getShipperDeliveryChargesApi } from '../../../Api/dealerApi';
 
 export default function DealerDashboard(props) {
 
 	const user = JSON.parse(localStorage.getItem("user"));
-	console.log("USer => ", user);
 
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
-	const [secondForm, setSecondForm] = useState(0);
+	const [secondForm, setSecondForm] = useState(false);
 	const [firstFormValues, setFirstFormValues] = useState({});
 	const [cities, setCities] = useState([]);
 	const [shipperDeliveryCharges, setShipperDeliveryCharges] = useState({});
 	const [giftPackaging, setGiftPackaging] = useState(false);
 	const [insuranceCharges, setInsuranceCharges] = useState(false);
-	const [normalPackaging, setNormalPackaging] = useState(false);
-	const [billId, setBillId] = useState(0);
-	const [shipmentId, setShipmentId] = useState(0);
 
 	useEffect(async () => {
 		await getCityListApi().then(res => {
 			res && setCities(res);
+		})
+		await getShipperDeliveryChargesApi().then(res => {
+			console.log("Shipper DileveryCharges", res);
+			res && setShipperDeliveryCharges(res);
 		})
 	}, []);
 
@@ -50,6 +49,7 @@ export default function DealerDashboard(props) {
 	const initialValues1 = {
 		codAmount: 0,
 		dealerId: user.dealerId,
+		deliveryCharges: 0,
 		deliverySarokhPointId: 0,
 		deliveryType: "",
 		giftPackaging: true,
@@ -57,6 +57,7 @@ export default function DealerDashboard(props) {
 		locationLatitude: "",
 		locationLongitude: "",
 		normalPackaging: true,
+		paymentMethod: "",
 		receiverAddress: "",
 		receiverCity: "",
 		receiverContact: "",
@@ -67,10 +68,16 @@ export default function DealerDashboard(props) {
 		senderIdFile: "",
 		senderIdNumber: "",
 		senderName: "",
+		serviceCharges: 0,
 		shipmentContent: "",
 		shipmentType: "",
 		shipmentValue: 0,
-		shipmentWeight: ""
+		shipmentWeight: "",
+		totalAmount: 0
+	  };
+
+	  const initialValues2 = {
+		deliveryType: "",
 	  };
 
 	const firstFormSchema = Yup.object().shape({
@@ -90,85 +97,18 @@ export default function DealerDashboard(props) {
 	});
 
 	const secondFormSchema = Yup.object().shape({
-		paymentMethod: Yup.string().required('Required'),
-	});
-
-	const initialValues2 = {
-		totalAdditionalCharges: 0,
-		deliveryCharges: 0,
-		totalAmount: 0,
-		paymentMethod: "",
-	};
+		deliveryType: Yup.string().required('Required'),
+	})
 
 	const onSubmitFirstForm = async (values) => {
-		alert("First");
 		setFirstFormValues(values);
-		setSecondForm(1);
+		setSecondForm(true);
 		await getShipperDeliveryChargesApi().then(res => {
 			console.log("Shipper DileveryCharges");
-			res && setShipperDeliveryCharges(res);
 		})
 	}
 
-	const onSubmitSecondForm = async (values) => {
-		alert("Second");
-		values.giftPackaging = giftPackaging;
-		values.insurance = insuranceCharges;
-		values.normalPackaging = normalPackaging;
-		
-		setFirstFormValues(values);
-
-		let createBillPayload = {};
-		
-		await createMobileShipmentApi(values).then(res => {
-			console.log("Res => ", res);
-			setShipmentId(res);
-			createBillPayload = {
-				"billCategory": "Shipment Charges",
-				"billTo": 1,
-				"billType": "Invoice",
-				"dueDate": new Date().setDate(new Date().getDate() - 1),
-				"endDate": new Date().setDate(new Date().getDate() + 1),
-				"shipmentsIdList": res.trackingNo,
-				"startDate": new Date(),
-				"totalAmount": values.paymentMethod === "COD" ? 0 : "",
-				"transactionType": ""
-			  }
-		})
-
-
-		await createBillApi(createBillPayload).then(res => {
-			setBillId(res.id);
-		})
-		
-		setSecondForm(3);
-	}
-
-	const onPaidClick = async () => {
-		const recordBillPayload = {
-			"amountPaid": firstFormValues.totalAmount,
-			"billNo": billId,
-			"paymentDate": new Date(),
-			"paymentMethod": "COD",
-			"paymentNote": JSON.parse(localStorage.getItem('user')).dealerPointName,
-			"paymentType": firstFormValues.paymentMethod,
-			"userId": 3,
-			"walletId": 2
-		}
-		await recordBillPaymentApi(recordBillPayload).then(res => {
-			console.log("res => ", res);
-		})
-	}
-
-	const discardBill = async () => {
-		
-		await deleteBillApi(billId).then(res => {
-			console.log("Bill Deleted => ", res);
-		});
-		
-		await deleteShipmentApi(shipmentId).then(res => {
-			console.log("Shipment Deleted => ", res);
-		})
+	const onSubmitSecondForm = (values) => {
 
 	}
 
@@ -180,7 +120,7 @@ export default function DealerDashboard(props) {
 					item && (
 						<animated.div key={key} style={props}>
 							<Container>
-								{ secondForm === 0 ? (
+								{ !secondForm ? (
 									<>
 									<div className="card-header">
 									<h2 className="float-left"> Create Shipment - Shipment Detail</h2>
@@ -385,7 +325,7 @@ export default function DealerDashboard(props) {
 										</Formik>
 									</div>
 									</>
-								): secondForm === 1 ? (
+								): (
 									<>
 										<div className="card-header">
 									<h2 className="float-left"> Create Shipment - Shipment Payment</h2>
@@ -399,39 +339,22 @@ export default function DealerDashboard(props) {
 											}}														
 										>
 											{(formik) => {
-												const { errors, touched, isValid, dirty, values, setFieldValue } = formik;
+												const { errors, touched, isValid, dirty, values } = formik;
 													return (
 														<Form>
-															<Field
-																name="serviceCharges" 
-																type="hidden"
-																value="0"
-															/>
-															<Field
-																name="deliveryCharges" 
-																type="hidden"
-																value="0"
-															/>
-															<Field
-																name="totalAmount" 
-																type="hidden"
-																value="0"
-															/>
 															<div className="form-row">
 																<div className="col-md-6">
-																	<div>
-																		<label htmlFor="email">Payment Method</label>
-																		<Field
-																			name="paymentMethod" 
-																			as="select"
-																			className={errors.paymentMethod && touched.paymentMethod ? 
-																			"input-error form-control" : "form-control"}
-																		>
-																			<option value="Prepaid">Prepaid</option>
-																			<option value="COD">COD</option>
-																		</Field>
-																		<ErrorMessage style={{color: 'red'}} name="paymentMethod" component="span" className="error" />
-																	</div>
+																	<label htmlFor="email">Delivery Type</label>
+																	<Field
+																		name="deliveryType" 
+																		as="select"
+																		className={errors.deliveryType && touched.deliveryType ? 
+																		"input-error form-control" : "form-control"}
+																	>
+																		<option value="">--- Select Delivery Type ---</option>
+																		<option value="Customer Address">Customer Address</option>
+																		<option value="Sarokh point">Sarokh point</option>
+																    </Field>
 																	<br/>
 																	<h5 style={{color: '#fa1c25'}}>Shipper Bill</h5>
 																	<p>Additional Services</p>
@@ -458,10 +381,11 @@ export default function DealerDashboard(props) {
 																						key={756}
 																						type="checkbox"
 																						name="normalPackaging"
-																						checked={normalPackaging}
-																						onClick={(e) =>
-																							setNormalPackaging(e.target.checked)
-																						}
+																						// checked={data.normalPackaging}
+																						// onClick={(e) =>
+																						// 	addCharges('normalPackaging', e.target.checked)
+																						// }
+																						// ref={register()}
 																					/>
 																					Sarokh Packaging
 																				</td>
@@ -501,7 +425,7 @@ export default function DealerDashboard(props) {
 																					Value)
 																				</td>
 																				<td className="font14" align="right">
-																					SAR { 100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue }
+																					SAR {100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue }
 																					/-
 																				</td>
 																			</tr>
@@ -531,7 +455,7 @@ export default function DealerDashboard(props) {
 																			<td>Receiver Address Surcharge:</td>
 																			<td align="right">
 																				SAR {
-																					firstFormValues.deliveryType === "Customer Address" ? shipperDeliveryCharges.lastMile : 0
+																					values.deliveryType === "Customer Address" ? shipperDeliveryCharges.lastMile : 0
 																				}
 																				/-
 																			</td>
@@ -543,37 +467,17 @@ export default function DealerDashboard(props) {
 																				Sub Total:
 																			</td>
 																			<td className="bordertop" align="right">
-																				SAR 
-																				{ 
-																					parseFloat((giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																					(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																					parseFloat(firstFormValues.shipmentValue) ) + 
-																					parseFloat(
-																						firstFormValues.shipmentWeight === "Upto 5 kg" ? parseFloat(shipperDeliveryCharges.weightUptoFiveKg) :
-																						firstFormValues.shipmentWeight === "5 kg to 10 kg" ? parseFloat(shipperDeliveryCharges.weightFiveToTen) :
-																						firstFormValues.shipmentWeight === "Above 15 kg" ? parseFloat(shipperDeliveryCharges.weightTenToFifteen) : parseFloat(0)
-																					) + 
-																					parseFloat(values.deliveryType === "Customer Address" ? parseFloat(shipperDeliveryCharges.lastMile) : parseFloat(0))																					
-																				}/-
+																				SAR{' '}
+																				/-
 																			</td>
 																		</tr>
 																		<tr>
 																			<td align="left">VAT: (15%)</td>
 																			<td align="right">
-																				SAR 
-																				{ 
-																					(parseFloat(parseFloat((giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																					(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																					parseFloat(firstFormValues.shipmentValue) ) + 
-																					parseFloat(
-																						firstFormValues.shipmentWeight === "Upto 5 kg" ? parseFloat(shipperDeliveryCharges.weightUptoFiveKg) :
-																						firstFormValues.shipmentWeight === "5 kg to 10 kg" ? parseFloat(shipperDeliveryCharges.weightFiveToTen) :
-																						firstFormValues.shipmentWeight === "Above 15 kg" ? parseFloat(shipperDeliveryCharges.weightTenToFifteen) : parseFloat(0)
-																					) + 
-																					parseFloat(values.deliveryType === "Customer Address" ? parseFloat(shipperDeliveryCharges.lastMile) : parseFloat(0))) * 15 / 100).toFixed(2)
-																				}
+																				SAR{' '}
 																				/-
-																			</td>					
+																			</td>{' '}
+																			{/* calculation of 15% of the total of all charges */}
 																		</tr>
 																	</table>
 																	<table className="table">
@@ -582,27 +486,7 @@ export default function DealerDashboard(props) {
 																				Total: (VAT Inclusive)
 																			</td>
 																			<td className="font18" align="right">
-																				SAR 
-																				{
-																					parseFloat(parseFloat((giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																					(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																					parseFloat(firstFormValues.shipmentValue) ) + 
-																					parseFloat(
-																						firstFormValues.shipmentWeight === "Upto 5 kg" ? parseFloat(shipperDeliveryCharges.weightUptoFiveKg) :
-																						firstFormValues.shipmentWeight === "5 kg to 10 kg" ? parseFloat(shipperDeliveryCharges.weightFiveToTen) :
-																						firstFormValues.shipmentWeight === "Above 15 kg" ? parseFloat(shipperDeliveryCharges.weightTenToFifteen) : parseFloat(0)
-																					) + 
-																					parseFloat(values.deliveryType === "Customer Address" ? parseFloat(shipperDeliveryCharges.lastMile) : parseFloat(0))) + 
-																					parseFloat(parseFloat(parseFloat((giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																					(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																					parseFloat(firstFormValues.shipmentValue) ) + 
-																					parseFloat(
-																						firstFormValues.shipmentWeight === "Upto 5 kg" ? parseFloat(shipperDeliveryCharges.weightUptoFiveKg) :
-																						firstFormValues.shipmentWeight === "5 kg to 10 kg" ? parseFloat(shipperDeliveryCharges.weightFiveToTen) :
-																						firstFormValues.shipmentWeight === "Above 15 kg" ? parseFloat(shipperDeliveryCharges.weightTenToFifteen) : parseFloat(0)
-																					) + 
-																					parseFloat(values.deliveryType === "Customer Address" ? parseFloat(shipperDeliveryCharges.lastMile) : parseFloat(0))) * 15 / 100)
-																				}
+																				SAR{' '}
 																				/-
 																			</td>{' '}
 																			{/* this is the total including the tax of 15% */}
@@ -610,97 +494,11 @@ export default function DealerDashboard(props) {
 																	</table>
 																</div>
 															</div>
-															<button
-																type="submit"
-																className={!(dirty && isValid) ? "disabled-btn btn btn-info float-right btnbrown mt-2" : "btn btn-info float-right btnbrown mt-2"}
-																disabled={!(dirty && isValid)}
-																onClick={() => {
-																	setFieldValue("serviceCharges", 
-																		(giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																		(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																		parseFloat(firstFormValues.shipmentValue)
-																	);
-																	setFieldValue("deliveryCharges", 
-																		firstFormValues.shipmentWeight === "Upto 5 kg" ? shipperDeliveryCharges.weightUptoFiveKg :
-																		firstFormValues.shipmentWeight === "5 kg to 10 kg" ? shipperDeliveryCharges.weightFiveToTen :
-																		firstFormValues.shipmentWeight === "Above 15 kg" ? shipperDeliveryCharges.weightTenToFifteen : 0
-																	)
-																	setFieldValue("totalAmount", 
-																		parseFloat(parseFloat((giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																		(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																		parseFloat(firstFormValues.shipmentValue) ) + 
-																		parseFloat(
-																			firstFormValues.shipmentWeight === "Upto 5 kg" ? parseFloat(shipperDeliveryCharges.weightUptoFiveKg) :
-																			firstFormValues.shipmentWeight === "5 kg to 10 kg" ? parseFloat(shipperDeliveryCharges.weightFiveToTen) :
-																			firstFormValues.shipmentWeight === "Above 15 kg" ? parseFloat(shipperDeliveryCharges.weightTenToFifteen) : parseFloat(0)
-																		) + 
-																		parseFloat(values.deliveryType === "Customer Address" ? parseFloat(shipperDeliveryCharges.lastMile) : parseFloat(0))) + 
-																		parseFloat(parseFloat(parseFloat((giftPackaging ? parseFloat(shipperDeliveryCharges.giftPackaging) : parseFloat(0)) + 
-																		(insuranceCharges ? parseFloat(100 * shipperDeliveryCharges.insurance / firstFormValues.shipmentValue) : parseFloat(0) ) +
-																		parseFloat(firstFormValues.shipmentValue) ) + 
-																		parseFloat(
-																			firstFormValues.shipmentWeight === "Upto 5 kg" ? parseFloat(shipperDeliveryCharges.weightUptoFiveKg) :
-																			firstFormValues.shipmentWeight === "5 kg to 10 kg" ? parseFloat(shipperDeliveryCharges.weightFiveToTen) :
-																			firstFormValues.shipmentWeight === "Above 15 kg" ? parseFloat(shipperDeliveryCharges.weightTenToFifteen) : parseFloat(0)
-																		) + 
-																		parseFloat(values.deliveryType === "Customer Address" ? parseFloat(shipperDeliveryCharges.lastMile) : parseFloat(0))) * 15 / 100)
-																	)
-																}}
-															>
-																Next
-															</button>
-															<button 
-																type="button"
-																onClick={() => setSecondForm(0)}
-																className={"btn btn-info float-right btn-danger mt-2 mr-10"}
-															>Go Back</button>
 														</Form>
 													);
 												}}
 										</Formik>
 									</div>
-									</>
-								) : (
-									<>
-										<div className="card-header">
-											<h2 className="float-left"> Create Shipment - Shipment Bill</h2>
-										</div>
-										<div className="card-body">
-											<div className="form-row">
-												<div className="col-sm-6">
-													<div className="row">
-														<label className="col-sm-6 col-6 redcolor">Bill No:</label>
-														<label className="col-sm-6 col-6">
-															<p className=" text-left">1258</p>
-														</label>
-													</div>
-												</div>
-											</div>
-											<div className="form-row">
-												<div className="col-sm-6">
-													<div className="row">
-														<label className="col-sm-6 col-6 redcolor">Tracking No:</label>
-														<label className="col-sm-6 col-6">
-															<p className=" text-left">00007000125</p>
-														</label>
-													</div>
-												</div>
-												<div className="col-sm-6">
-													<label className="col-sm-6 col-6 redcolor">Sender Name:</label>
-													<label className="col-sm-6 col-6">
-														<p className=" text-left">Salman Arif</p>
-													</label>
-												</div>
-												<div className="col-sm-12 right-align">
-													<label className="col-sm-6 col-6 redcolor">Amount:</label>
-													<label className="col-sm-6 col-6 text-right">Sar 175/-</label>
-												</div>
-												<div className="col-md-12">
-													<button className="btn btn-info float-right btnbrown mt-2" onClick={onPaidClick}>Paid</button>
-													<button className="btn btn-info float-right btn-danger mt-2 mr-2" onClick={discardBill}>Discard</button>
-												</div>
-											</div>
-										</div>
 									</>
 								)}
 							</Container>
