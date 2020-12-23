@@ -10,10 +10,17 @@ import { requestTaskConfirmationApi } from '../../../Api/dealerApi';
 export default function DealerDashboard(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
+	const [data, setData] = useState({});
+	const taskDetails = JSON.parse(localStorage.getItem("taskDetails"));
+	const giveShipments = JSON.parse(localStorage.getItem("giveShipments"));
+	const recievedShipments = JSON.parse(localStorage.getItem("recievedShipments"));
+
+	const user = JSON.parse(localStorage.getItem("user"));
 
 	useEffect(async () => {
 		await requestTaskConfirmationApi().then(res => {
-			console.log("resssssssssssss => ", res)
+			setData(res);
+			console.log("Res => ", res);
 		});
 	}, []);
 
@@ -46,32 +53,52 @@ export default function DealerDashboard(props) {
 								<div className="card-body">
 									<div className="row">
 										<div className="col-md-8">
-											<p>Transaction from dealer [Point Name] having ID [Point ID] to Driver [Driver Name] having ID [Driver ID] in Trip having ID [Trip ID] on [Date] at [Time].</p>
+											<p>Transaction from dealer [{user.dealerPointName}] having ID [{user.dealerId}] to Driver [{ taskDetails && taskDetails.driverName }] having ID [{ taskDetails && taskDetails.driverId }] in Trip having ID [{ taskDetails && taskDetails.tripId }] on [ { moment(new Date).format('LLLL') } ].</p>
 										</div>
 										<div className="col-md-4">
 											<div className="transaction-detail">
 												<label>Give Shipment:</label>
-												<p></p>
+												<p>{
+													taskDetails && taskDetails.giveShipments
+												}</p>
 											</div>
 											<div className="transaction-detail">
 												<label>Pending Give Shipment:</label>
-												<p></p>
+												<p> 
+													{
+												 		taskDetails && giveShipments && giveShipments.length - taskDetails.giveShipments 
+												 	} 
+												 </p>
 											</div>
 											<div className="transaction-detail">
 												<label>Receive Shipment:</label>
-												<p></p>
+												<p>
+													{
+														taskDetails && taskDetails.receiveShipments
+													}
+												</p>
 											</div>
 											<div className="transaction-detail">
 												<label>Pending Receive Shipment:</label>
-												<p></p>
+												<p>
+													{
+												 		taskDetails && recievedShipments && recievedShipments.length - taskDetails.receiveShipments 
+													}
+												</p>
 											</div>
 											<div className="transaction-detail">
 												<label>Amount Paid:</label>
-												<p></p>
+												<p>
+													{ taskDetails && taskDetails.payCOD }
+												</p>
 											</div>
 											<div className="transaction-detail">
 												<label>Pending Amount:</label>
-												<p></p>
+												<p>
+													{ 
+														taskDetails && taskDetails.pendingCOD ? taskDetails.pendingCOD : 0
+													}
+												</p>
 											</div>
 										</div>
 									</div>

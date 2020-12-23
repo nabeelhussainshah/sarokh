@@ -46,10 +46,6 @@ function Login(props) {
 						hist.push('/admin/dashboard');
 					} else if (user.userType === 'WarehouseManager') {
 						hist.push('/warehousemanager/dashboard');
-					} else if (user.userType === 'Supervisor') {
-						hist.push('/warehouseSupervisor/inventory');
-					} else if (user.userType === 'Dealer Network Manager') {
-						hist.push('/dealerNetworkManager/adddealer/step1');
 					}
 				}
 			})

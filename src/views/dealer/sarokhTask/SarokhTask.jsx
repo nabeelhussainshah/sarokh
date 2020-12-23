@@ -24,15 +24,18 @@ export default function SarokhTask(props) {
 	useEffect(async () => {
 		await getSarokhTaskApi().then(res => {
 			res && setDriverId(res.driverId);
+			localStorage.setItem("taskDetails", JSON.stringify(res));
 			res && setDriverName(res.driverName);
 			res && setAmountToPay(res.payCOD);
 		})
 		await getGiveShipmentDetailsApi().then(res => {
 			console.log("Give => ", res);
+			localStorage.setItem("giveShipments", JSON.stringify(res));
 			setGiveShipmentList(res);
 		})
 		await getRecieveShipmentDetailsApi().then(res => {
 			console.log("Recieved -> ", res);
+			localStorage.setItem("recievedShipments", JSON.stringify(res));
 			setRecieveShipmentList(res);
 		})
 	}, []);
