@@ -51,9 +51,9 @@ export default function DealerDashboard(props) {
 									<button class="btn btn-info float-right btnbrown">Confirm</button>
 								</div>
 								<div className="card-body">
-									<div className="row">
+									<div className="row justify-content-center align-items-center h-100">
 										<div className="col-md-8">
-											<p>Transaction from dealer [{user.dealerPointName}] having ID [{user.dealerId}] to Driver [{ taskDetails && taskDetails.driverName }] having ID [{ taskDetails && taskDetails.driverId }] in Trip having ID [{ taskDetails && taskDetails.tripId }] on [ { moment(new Date).format('LLLL') } ].</p>
+											<p className="w-75 m-auto">Transaction from dealer [{user.dealerPointName}] having ID [{user.dealerId}] to Driver [{ taskDetails && taskDetails.driverName }] having ID [{ taskDetails && taskDetails.driverId }] in Trip having ID [{ taskDetails && taskDetails.tripId }] on [ { moment(new Date).format('LLLL') } ].</p>
 										</div>
 										<div className="col-md-4">
 											<div className="transaction-detail">
