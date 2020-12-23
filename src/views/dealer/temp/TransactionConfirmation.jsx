@@ -11,16 +11,18 @@ export default function DealerDashboard(props) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: false });
 	const [data, setData] = useState({});
-	const taskDetails = JSON.parse(localStorage.getItem("taskDetails"));
-	const giveShipments = JSON.parse(localStorage.getItem("giveShipments"));
-	const recievedShipments = JSON.parse(localStorage.getItem("recievedShipments"));
+	const taskDetails = JSON.parse(localStorage.getItem('taskDetails'));
+	const giveShipments = JSON.parse(localStorage.getItem('giveShipments'));
+	const recievedShipments = JSON.parse(
+		localStorage.getItem('recievedShipments')
+	);
 
-	const user = JSON.parse(localStorage.getItem("user"));
+	const user = JSON.parse(localStorage.getItem('user'));
 
 	useEffect(async () => {
-		await requestTaskConfirmationApi().then(res => {
+		await requestTaskConfirmationApi().then((res) => {
 			setData(res);
-			console.log("Res => ", res);
+			console.log('Res => ', res);
 		});
 	}, []);
 
@@ -41,71 +43,73 @@ export default function DealerDashboard(props) {
 	return response.loading ? (
 		<Loading />
 	) : (
-			transitions.map(
-				({ item, props, key }) =>
-					item && (
-						<animated.div key={key} style={props}>
-							<Container>
-								<div className="card-header">
-									<h2 className="float-left">Dashboard</h2>
-									<button class="btn btn-info float-right btnbrown">Confirm</button>
-								</div>
-								<div className="card-body">
-									<div className="row justify-content-center align-items-center h-100">
-										<div className="col-md-8">
-											<p className="w-75 m-auto">Transaction from dealer [{user.dealerPointName}] having ID [{user.dealerId}] to Driver [{ taskDetails && taskDetails.driverName }] having ID [{ taskDetails && taskDetails.driverId }] in Trip having ID [{ taskDetails && taskDetails.tripId }] on [ { moment(new Date).format('LLLL') } ].</p>
+		transitions.map(
+			({ item, props, key }) =>
+				item && (
+					<animated.div key={key} style={props}>
+						<Container>
+							<div className="card-header">
+								<h2 className="float-left">Dashboard</h2>
+								<button class="btn btn-info float-right btnbrown">
+									Confirm
+								</button>
+							</div>
+							<div className="card-body">
+								<div className="row justify-content-center align-items-center h-100">
+									<div className="col-md-8">
+										<p>
+											Transaction from dealer [{user.dealerPointName}] having ID
+											[{user.dealerId}] to Driver [
+											{taskDetails && taskDetails.driverName}] having ID [
+											{taskDetails && taskDetails.driverId}] in Trip having ID [
+											{taskDetails && taskDetails.tripId}] on [{' '}
+											{moment(new Date()).format('LLLL')} ].
+										</p>
+									</div>
+									<div className="col-md-4">
+										<div className="transaction-detail">
+											<label>Give Shipment:</label>
+											<p>{taskDetails && taskDetails.giveShipments}</p>
 										</div>
-										<div className="col-md-4">
-											<div className="transaction-detail">
-												<label>Give Shipment:</label>
-												<p>{
-													taskDetails && taskDetails.giveShipments
-												}</p>
-											</div>
-											<div className="transaction-detail">
-												<label>Pending Give Shipment:</label>
-												<p> 
-													{
-												 		taskDetails && giveShipments && giveShipments.length - taskDetails.giveShipments 
-												 	} 
-												 </p>
-											</div>
-											<div className="transaction-detail">
-												<label>Receive Shipment:</label>
-												<p>
-													{
-														taskDetails && taskDetails.receiveShipments
-													}
-												</p>
-											</div>
-											<div className="transaction-detail">
-												<label>Pending Receive Shipment:</label>
-												<p>
-													{
-												 		taskDetails && recievedShipments && recievedShipments.length - taskDetails.receiveShipments 
-													}
-												</p>
-											</div>
-											<div className="transaction-detail">
-												<label>Amount Paid:</label>
-												<p>
-													{ taskDetails && taskDetails.payCOD }
-												</p>
-											</div>
-											<div className="transaction-detail">
-												<label>Pending Amount:</label>
-												<p>
-													{ 
-														taskDetails && taskDetails.pendingCOD ? taskDetails.pendingCOD : 0
-													}
-												</p>
-											</div>
+										<div className="transaction-detail">
+											<label>Pending Give Shipment:</label>
+											<p>
+												{taskDetails &&
+													giveShipments &&
+													giveShipments.length - taskDetails.giveShipments}
+											</p>
+										</div>
+										<div className="transaction-detail">
+											<label>Receive Shipment:</label>
+											<p>{taskDetails && taskDetails.receiveShipments}</p>
+										</div>
+										<div className="transaction-detail">
+											<label>Pending Receive Shipment:</label>
+											<p>
+												{taskDetails &&
+													recievedShipments &&
+													recievedShipments.length -
+														taskDetails.receiveShipments}
+											</p>
+										</div>
+										<div className="transaction-detail">
+											<label>Amount Paid:</label>
+											<p>{taskDetails && taskDetails.payCOD}</p>
+										</div>
+										<div className="transaction-detail">
+											<label>Pending Amount:</label>
+											<p>
+												{taskDetails && taskDetails.pendingCOD
+													? taskDetails.pendingCOD
+													: 0}
+											</p>
 										</div>
 									</div>
 								</div>
-							</Container>
-						</animated.div>
-					)
-			)
-		);
+							</div>
+						</Container>
+					</animated.div>
+				)
+		)
+	);
 }
