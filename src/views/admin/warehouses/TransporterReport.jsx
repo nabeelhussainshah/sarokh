@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import {
@@ -11,11 +11,14 @@ import { useTransition, animated } from 'react-spring';
 import Loading from '../../../components/Loading/Loading';
 import { useForm } from 'react-hook-form';
 import { filter } from 'underscore';
+import ReactToPrint from 'react-to-print';
+import TransporterWayBill from '../../genericViews/warehouse/TransporterWayBill';
 
 export default function TransporterReport(porps) {
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const { register, handleSubmit, errors } = useForm();
+	const componentRef = useRef();
 
 	useEffect(() => {
 		warehouseListApi()
@@ -76,6 +79,7 @@ export default function TransporterReport(porps) {
 			})
 			.catch((err) => {
 				toast.error(err.message);
+				setresponse({ loading: false, data: response.data });
 			});
 	};
 
@@ -101,14 +105,26 @@ export default function TransporterReport(porps) {
 						<Container>
 							<div className="card-header">
 								<h2 className="float-left">Transporter Report</h2>
-								<button
-									className="btn btn-info btnbrown float-right"
-									onClick={() => {
-										console.log('sup');
-									}}
-								>
-									Print Report
-								</button>
+								{response.list?.shipmentOrderItems && (
+									<div style={{ width: '100%' }}>
+										<div style={{ display: 'none' }}>
+											<TransporterWayBill
+												ref={componentRef}
+												response={response}
+												columns={columns}
+											/>
+										</div>
+										<ReactToPrint
+											trigger={() => (
+												<button className="btn btn-primary mt-4 float-right">
+													Print Report
+												</button>
+											)}
+											content={() => componentRef.current}
+											pageStyle="width:100%"
+										/>
+									</div>
+								)}
 							</div>
 							<div className="card-body">
 								<div className="form-row">

@@ -11,6 +11,13 @@ class PrintTripDetail extends React.Component {
 				accessor: 'shipmentOrderId',
 			},
 			{
+				Header: 'Location Name',
+				accessor: '',
+				Cell: (row) => {
+					return <>{row.row.original.pickupLocation}</>;
+				},
+			},
+			{
 				Header: 'Long/lat',
 				Cell: (row) => {
 					return (
@@ -23,19 +30,16 @@ class PrintTripDetail extends React.Component {
 				},
 			},
 			{
-				Header: 'Location',
+				Header: 'Contact',
+				accessor: 'contact',
+			},
+			{
+				Header: 'COD/PPD',
 				accessor: '',
-				Cell: (row) => {
-					return <>{row.row.original.pickupLocation}</>;
-				},
 			},
 			{
-				Header: 'Pickups/Delivery',
-				accessor: 'pickupDelivery',
-			},
-			{
-				Header: 'Amount Collect',
-				accessor: 'codCollection',
+				Header: 'Notes',
+				accessor: '',
 			},
 		];
 	}
@@ -43,60 +47,33 @@ class PrintTripDetail extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="form-row">
-					<div className="col-sm-6">
-						<label className="col-sm-6 col-6"> Trip ID:</label>
-						<label className="col-sm-6 col-6">
-							<p className=" text-left">{this.props.response.data.id}</p>
-						</label>
-					</div>
-					<div className="col-sm-6">
-						<label className="col-sm-6 col-6">Warehouse:</label>
-						<label className="col-sm-6 col-6">
-							<p className=" text-left">
-								{this.props.response.data.startPoint}
-							</p>
-						</label>
-					</div>
-				</div>
-				<div className="form-row">
-					<div className="col-sm-6">
-						<label className="col-sm-6 col-6">Driver Name:</label>
-						<label className="col-sm-6 col-6">
-							<p className=" text-left">
-								{this.props.response.data.driverName}
-							</p>
-						</label>
-					</div>
-					<div className="col-sm-6">
-						<label className="col-sm-6 col-6">City:</label>
-						<label className="col-sm-6 col-6">
-							<p className=" text-left">
-								{this.props.response.data.vehicle.warehouse.city}
-							</p>
-						</label>
-					</div>
-				</div>
-				<div className="form-row">
-					<div className="col-sm-6">
-						<label className="col-sm-6 col-6">Vehicle:</label>
-						<label className="col-sm-6 col-6">
-							<p className=" text-left">
-								{this.props.response.data.vehicle.name}
-							</p>
-						</label>
-					</div>
-					<div className="col-sm-6">
-						<label className="col-sm-6 col-6">Date:</label>
-						<label className="col-sm-6 col-6">
-							<p className=" text-left">
+				<table className="table custom-table w-100">
+					<thead>
+						<th colSpan="6">Run Sheet</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="center">Trip Date & Time:</td>
+							<td align="center">
+								{' '}
 								{moment(this.props.response.data.dispatchDatetime).format(
 									'YYYY-MM-DD hh:mm:ss'
 								)}
-							</p>
-						</label>
-					</div>
-				</div>
+							</td>
+							<td align="center">Trip ID:</td>
+							<td align="center">{this.props.response.data.id}</td>
+						</tr>
+						<tr>
+							<td align="center">Warehouse Name</td>
+							<td align="center"> {this.props.response.data.startPoint}</td>
+							<td align="center">Driver</td>
+							<td align="center">{this.props.response.data.driverName}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h2>Deliveries</h2>
+				<br />
 				<Table
 					data={this.props.response.data.tripDetailItemsList}
 					columns={this.columns}

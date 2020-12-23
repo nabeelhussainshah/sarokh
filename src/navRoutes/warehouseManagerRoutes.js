@@ -49,4 +49,9 @@ export const warehouseManagerRoutes = [
 		name: 'Delivery Shipments',
 		iconClass: 'nav-icon fas fa-list-alt',
 	},
+	{
+		to: '/warehouseManager/paymentrecord',
+		name: 'Payment Record',
+		iconClass: 'nav-icon fas fa-wallet',
+	},
 ];

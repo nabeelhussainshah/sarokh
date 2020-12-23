@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment, useState } from 'react';
-import { GoogleMapComponent } from '../../components/GoogleMap/GoogleMapComponent';
+import { GoogleMapWithPopup } from '../../components/GoogleMapWithPopup/GoogleMapPopup';
 import { useHistory } from 'react-router-dom';
 import { trackingOrderDetail } from './state';
 import { useRecoilState } from 'recoil';
@@ -99,7 +99,55 @@ export default function AddArea(props) {
 		<Loading />
 	) : (
 		<Fragment>
-			
+				<div>	
+
+			<div className="add-address-container">
+				<div className="form-row margintop30">
+					<div class="col-md-12">
+						<h5 className="instruction">Please select the nearest Shipment Pick Up point to your location. Please note that this location cannot be changed once confirmed.</h5>
+						<GoogleMapWithPopup
+							zoom={8}
+							keepMarker={false}
+							defaultCenter={
+								response.location.length === 0
+									? {
+											lat: 23.8859,
+											lng: 39.1925,
+									  }
+									: {
+											lat: parseFloat(response.location[0].latitude),
+											lng: parseFloat(response.location[0].longitude),
+											label: response.location[0].label,
+									  }
+							}
+							markerClickAllow={true}
+									isMarkerShown={true}
+									
+							position={response.location || []}
+							changeFunction={setresponse}
+							googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
+							loadingElement={
+								<div className="spinner-border" role="status">
+									<span className="sr-only">Loading...</span>
+								</div>
+							}
+							containerElement={
+								<div
+									style={{
+										height: `400px`,
+										width: `100%`,
+										margin: `0 auto`,
+									}}
+								/>
+							}
+							globalState={response}
+							mapElement={<div style={{ height: `100%` }} />}
+							autocompleted={false}
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
 		</Fragment>
 	);
 }

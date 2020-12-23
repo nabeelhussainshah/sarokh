@@ -6,7 +6,7 @@ import { useTransition, animated } from 'react-spring';
 import Loading from '../../../components/Loading/Loading';
 import { dashboardApi } from '../../../Api/warehouseManagerApi';
 
-export default function WarehouseManagerDashboard() {
+export default function WarehouseSupervisorDashboard() {
 	const [response, setresponse] = useState({
 		loading: true,
 		warehouseDetail: {},

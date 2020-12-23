@@ -148,11 +148,15 @@ export default function WarehouseTerminal(props) {
 										>
 											<option value="true">Select Warehouse</option>
 											{response.warehouses.map((doc) => {
-												return (
-													<option key={doc.id} value={doc.id}>
-														{doc.name}
-													</option>
-												);
+												if (
+													doc.id ===
+													JSON.parse(localStorage.getItem('user')).warehouseId
+												)
+													return (
+														<option key={doc.id} value={doc.id}>
+															{doc.name}
+														</option>
+													);
 											})}
 										</select>
 										<span style={{ color: 'red' }}>

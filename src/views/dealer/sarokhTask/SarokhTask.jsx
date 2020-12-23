@@ -24,15 +24,18 @@ export default function SarokhTask(props) {
 	useEffect(async () => {
 		await getSarokhTaskApi().then(res => {
 			res && setDriverId(res.driverId);
+			localStorage.setItem("taskDetails", JSON.stringify(res));
 			res && setDriverName(res.driverName);
 			res && setAmountToPay(res.payCOD);
 		})
 		await getGiveShipmentDetailsApi().then(res => {
 			console.log("Give => ", res);
+			localStorage.setItem("giveShipments", JSON.stringify(res));
 			setGiveShipmentList(res);
 		})
 		await getRecieveShipmentDetailsApi().then(res => {
 			console.log("Recieved -> ", res);
+			localStorage.setItem("recievedShipments", JSON.stringify(res));
 			setRecieveShipmentList(res);
 		})
 	}, []);
@@ -95,17 +98,31 @@ export default function SarokhTask(props) {
 												</div>
 											</div>
 											<div className="form-row">
-												<div className="col-sm-6">
-													<label className="col-sm-6 col-6 redcolor"> Receiver Shipment:</label>
-												</div>
-												<div className="col-sm-6">
-													<label className="col-sm-6 col-6 redcolor">Give Shipment:</label>
-												</div>
-												<div className="col-md-6">
-
-												</div>
-												<div className="col-md-6">
-
+												<div className="col-md-8 mr-auto">
+													<div className="row">
+														<table className="table table-bordered text-center">
+															<thead>
+																<tr>
+																	<th scope="col">Receiver Shipment:</th>
+																	<th scope="col">Give Shipment:</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td className="pl-0 pr-0 loop">
+																		{recieveShipmentList.length > 0 && recieveShipmentList.map(item => (
+																			<p className="border-bottom pb-2">{item.trackingNo}</p>
+																		))}
+																	</td>
+																	<td className="pl-0 pr-0 loop">
+																		{giveShipmentList.length > 0 && giveShipmentList.map(item => (
+																			<p className="border-bottom pb-2">{item.trackingNo}</p>
+																		))}
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -119,27 +136,27 @@ export default function SarokhTask(props) {
 														onSubmit={(values) => {
 															onSubmitTrackingNo(values.trackingNo);
 														}}
-														>
+													>
 														{(formik) => {
 															const { errors, touched, isValid, dirty } = formik;
 															return (
 																<Form>
 																	<label for="fullname">Enter Traking No:</label>
 																	<Field
-																		name="trackingNo" 
-																		type="text" 
+																		name="trackingNo"
+																		type="text"
 																		placeholder=" Scan or Type Shipment Tracking Number"
-																		className={errors.trackingNo && touched.trackingNo ? 
-																		"input-error form-control" : "form-control"}
+																		className={errors.trackingNo && touched.trackingNo ?
+																			"input-error form-control" : "form-control"}
 																	/>
-																	<ErrorMessage style={{color: 'red'}} name="trackingNo" component="span" className="error" />
-										
-																<button
-																	type="submit"
-																	className={!(dirty && isValid) ? "disabled-btn btn btn-info float-right btnbrown mt-2" : "btn btn-info float-right btnbrown mt-2"}
-																	disabled={!(dirty && isValid)}
-																>
-																	Submit
+																	<ErrorMessage style={{ color: 'red' }} name="trackingNo" component="span" className="error" />
+
+																	<button
+																		type="submit"
+																		className={!(dirty && isValid) ? "disabled-btn btn btn-info float-right btnbrown mt-2" : "btn btn-info float-right btnbrown mt-2"}
+																		disabled={!(dirty && isValid)}
+																	>
+																		Submit
 																</button>
 																</Form>
 															);
@@ -148,22 +165,18 @@ export default function SarokhTask(props) {
 												</div>
 											</div>
 										</div>
-										<div className="col-md-3">
+										{/* <div className="col-md-3">
 											<div>
 												<div>Recieve Shipment List</div>
-												{recieveShipmentList.length > 0 && recieveShipmentList.map(item => (
-													<p>{item.trackingNo}</p>
-												))}
+												
 											</div>
 										</div>
 										<div className="col-md-3">
 											<div>
 												<div>Give Shipment List</div>
-												{giveShipmentList.length > 0 && giveShipmentList.map(item => (
-													<p>{item.trackingNo}</p>
-												))}
+												
 											</div>
-										</div>
+										</div> */}
 									</div>
 								</div>
 							</Container>
