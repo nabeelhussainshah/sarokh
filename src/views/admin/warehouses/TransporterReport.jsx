@@ -12,7 +12,7 @@ import Loading from '../../../components/Loading/Loading';
 import { useForm } from 'react-hook-form';
 import { filter } from 'underscore';
 import ReactToPrint from 'react-to-print';
-import TransporterWayBill from './TransporterWayBill';
+import TransporterWayBill from '../../genericViews/warehouse/TransporterWayBill';
 
 export default function TransporterReport(porps) {
 	const hist = useHistory();

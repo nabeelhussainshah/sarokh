@@ -5,13 +5,6 @@ import { BiMobile } from 'react-icons/bi';
 import { HiOutlineChatAlt } from 'react-icons/hi';
 import './styles.css';
 
-import './styles.css';
-// import React from 'react';
-import { FaInstagram } from 'react-icons/fa';
-import { GrTwitter } from 'react-icons/gr';
-import { BiMobile } from 'react-icons/bi';
-import { HiOutlineChatAlt } from 'react-icons/hi';
-
 function TopNav(props) {
 	return (
 		<div>
