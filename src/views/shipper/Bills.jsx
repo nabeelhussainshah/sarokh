@@ -25,7 +25,7 @@ export default function Bills(props) {
 
 	function shipperFilter(data) {
 		const result = filter(data, function (doc) {
-			return doc.shipperId === JSON.parse(localStorage.getItem('user')).id;
+			return doc.billTo === JSON.parse(localStorage.getItem('user')).id;
 		});
 		console.log(result);
 		if (result !== undefined) {
