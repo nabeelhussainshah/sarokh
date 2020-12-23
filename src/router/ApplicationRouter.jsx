@@ -7,6 +7,7 @@ import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
+import '../multiLang/i18n';
 const AdminRouter = React.lazy(() => import('./AdminRouter'));
 const ShipperRouter = React.lazy(() => import('./ShipperRouter'));
 const BusinessSignup = React.lazy(() =>
