@@ -235,7 +235,7 @@ export default function TripDetail(props) {
 											<ReactToPrint
 												trigger={() => (
 													<button className="btn btn-primary mt-4 float-right">
-														Run Sheet
+														Print Table
 													</button>
 												)}
 												content={() => componentRef.current}

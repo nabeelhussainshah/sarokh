@@ -79,7 +79,8 @@ export async function getShipperWarehousesApi() {
 	const user = await JSON.parse(localStorage.getItem('user'));
 	return await axios
 		.get(
-			`${process.env.REACT_APP_API
+			`${
+				process.env.REACT_APP_API
 			}/shipper-warehouse/get-list-by-shipperId/${await user.id}`
 		)
 		.then((res) => {
@@ -144,26 +145,6 @@ export async function getDeliveryLocationsApi() {
 			console.log(res);
 			if (res.status === 200) {
 				return res.data;
-			} else {
-				throw new Error(
-					`something went wrong with status code: ${res.data.status}`
-				);
-			}
-		})
-		.catch((err) => {
-			throw err;
-		});
-}
-
-export async function getBills() {
-	return await axios
-		.get(
-			`${process.env.REACT_APP_API}/bill/get-list`
-		)
-		.then((res) => {
-			console.log(res);
-			if (res.data.status === 200) {
-				return res.data.data;
 			} else {
 				throw new Error(
 					`something went wrong with status code: ${res.data.status}`

@@ -1,7 +1,7 @@
 export const warehouseSupervisorRoutes = [
 	{
-		to: '/warehouseSupervisor/inventory',
-		name: 'Warehouse Inventory',
+		to: '/warehouseSupervisor/dashboard',
+		name: 'Dashboard',
 		iconClass: 'nav-icon fas fa-rocket',
 	},
 	{

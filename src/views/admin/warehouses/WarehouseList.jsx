@@ -9,7 +9,6 @@ import { GoogleMapComponent } from '../../../components/GoogleMap/GoogleMapCompo
 import Table from '../../../components/Generictable/generatictable';
 import { warehouseData } from '../../../components/ShipperComponents/AddShipperWarehouse/state';
 import { useTransition, animated } from 'react-spring';
-import Loading from '../../../components/Loading/Loading';
 
 export default function WarehouseList(porps) {
 	const hist = useHistory();
@@ -130,7 +129,7 @@ export default function WarehouseList(porps) {
 	});
 
 	return response.loading ? (
-		<Loading />
+		<div>loading...</div>
 	) : (
 		transitions.map(
 			({ item, props, key }) =>

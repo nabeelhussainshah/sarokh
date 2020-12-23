@@ -61,7 +61,7 @@ export async function recieveShipmentApi(trackingNo) {
         .post(`${process.env.REACT_APP_API}/dealer-mobile/recieve-shipment/`, {
             dealerId: user.id,
             trackingNumber: trackingNo
-        })
+          })
         .then((res) => {
             if (res.data.status === 200) {
                 return res.data.data;
@@ -79,7 +79,7 @@ export async function recieveShipmentApi(trackingNo) {
 export async function requestTaskConfirmationApi() {
     const user = await JSON.parse(localStorage.getItem('user'));
     return axios
-        .get(`${process.env.REACT_APP_API}/dealer-mobile/request-sarokh-task-confirmation?dealerId=${user.id}`)
+        .get(`${process.env.REACT_APP_API}/dealer-mobile/request-sarokh-task-confirmation/${user.id}`)
         .then((res) => {
             if (res.data.status === 200) {
                 return res.data.data;
@@ -147,3 +147,189 @@ export async function getShipperDeliveryChargesApi() {
         });
 }
 
+export async function createMobileShipmentApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/dealer-mobile/create-mobile-shipment/`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function createBillApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/bill/create-bill`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function deleteBillApi(id) {
+    return axios
+        .delete(`${process.env.REACT_APP_API}/bill/delete/${id}`)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function deleteShipmentApi(id) {
+    return axios
+        .delete(`${process.env.REACT_APP_API}/order/delete/${id}`)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function recordBillPaymentApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/bill/record-bill-payment`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function verifyShipmentTrackingNoApi(trackingNo) {
+    return axios
+        .get(`${process.env.REACT_APP_API}/dealer-mobile/verify-shipment-trackingNo/${trackingNo}`)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function getShipperRecieveApi(shipperId) {
+    return axios
+        .get(`${process.env.REACT_APP_API}/dealer-mobile/get-shipper-receive/${shipperId}`)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function onConfirmShipperRecieveShipmentApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/dealer-mobile/confirm-shipper-receive-shipments/`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function handoverShipmentApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/dealer-mobile/handover-recieved-shipment/`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function searchShipmentApi(trackingNo) {
+    return axios
+        .get(`${process.env.REACT_APP_API}/dealer-mobile/search-shipment-trackingNo/${trackingNo}`)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function getBillApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/dealer-mobile/get-bill/`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
