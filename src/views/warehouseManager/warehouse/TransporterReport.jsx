@@ -59,7 +59,6 @@ export default function TransporterReport(porps) {
 			},
 		},
 	];
-
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
 		enter: {
@@ -69,7 +68,6 @@ export default function TransporterReport(porps) {
 		},
 		leave: { opacity: 0 },
 	});
-
 	const onSubmit = (formData) => {
 		getWarehouseShipmentsApi(formData.fromWarehouse)
 			.then((res) => {
@@ -83,19 +81,16 @@ export default function TransporterReport(porps) {
 				setresponse({ loading: false, data: response.data });
 			});
 	};
-
 	const filterCity = (data, city) => {
 		const result = filter(data, function (doc) {
 			return doc.shipToCity === city;
 		})[0];
-
 		if (result === undefined) {
 			throw new Error('No records found');
 		} else {
 			return result;
 		}
 	};
-
 	return response.loading ? (
 		<Loading />
 	) : (
