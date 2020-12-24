@@ -333,3 +333,19 @@ export async function getBillApi(values) {
             throw err;
         });
 }
+export async function getBillDetailsApi(values) {
+    return axios
+        .get(`${process.env.REACT_APP_API}/bill/get-details/`+values.billNo)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}

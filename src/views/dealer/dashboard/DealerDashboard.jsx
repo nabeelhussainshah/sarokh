@@ -43,7 +43,11 @@ export default function DealerDashboard(props) {
 					<animated.div key={key} style={props}>
 						<Container>
 							<div className="card-header">
-								<h2 className="float-left">Dashboard</h2>
+								{localStorage.getItem('Language') != 'Arabic' ? (
+									<h2 className="float-left">Dashboard</h2>
+								) : (
+									<h2>لوحة التحكم</h2>
+								)}
 							</div>
 							<div className="card-body">
 								<div className="shop-img">
@@ -54,14 +58,54 @@ export default function DealerDashboard(props) {
 								<div className="row">
 									<div className="col-md-6">
 										<div className="dashboard-heading">
-											<h2>Welcome To Sarokh Delivery Network</h2>
-											<label>
-												Point Name: <span></span>
-											</label>
+											{localStorage.getItem('Language') != 'Arabic' ? (
+												<h2>Welcome To Sarokh Delivery Network</h2>
+											) : (
+												<h2>مرحبا بكم في شبكة توصيل صاروخ</h2>
+											)}
+											{localStorage.getItem('Language') != 'Arabic' ? (
+												<label>
+													Point Name:{' '}
+													<span className="text-dark">
+														{
+															JSON.parse(localStorage.getItem('user'))
+																.dealerPointName
+														}
+													</span>
+												</label>
+											) : (
+												<label>
+													<span className="text-dark">
+														{
+															JSON.parse(localStorage.getItem('user'))
+																.dealerPointName
+														}
+													</span>{' '}
+													:اسم النقطة
+												</label>
+											)}
 											<br />
-											<label>
-												OPerator Name: <span></span>
-											</label>
+											{localStorage.getItem('Language') != 'Arabic' ? (
+												<label>
+													OPerator Name:{' '}
+													<span className="text-dark">
+														{
+															JSON.parse(localStorage.getItem('user'))
+																.operatorName
+														}
+													</span>
+												</label>
+											) : (
+												<label>
+													<span className="text-dark">
+														{
+															JSON.parse(localStorage.getItem('user'))
+																.operatorName
+														}
+													</span>{' '}
+													:اسم المشغل
+												</label>
+											)}
 										</div>
 									</div>
 									<div className="col-md-3">

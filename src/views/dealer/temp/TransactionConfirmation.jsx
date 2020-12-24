@@ -14,7 +14,9 @@ export default function DealerDashboard(props) {
 	const taskDetails = JSON.parse(localStorage.getItem("taskDetails"));
 	const giveShipments = JSON.parse(localStorage.getItem("giveShipments"));
 	const recievedShipments = JSON.parse(localStorage.getItem("recievedShipments"));
-
+	const Confirm = e => {		
+		hist.push("/dealer/dashboard");
+	   }
 	const user = JSON.parse(localStorage.getItem("user"));
 
 	useEffect(async () => {
@@ -48,7 +50,7 @@ export default function DealerDashboard(props) {
 							<Container>
 								<div className="card-header">
 									<h2 className="float-left">Dashboard</h2>
-									<button class="btn btn-info float-right btnbrown">Confirm</button>
+									<button class="btn btn-info float-right btnbrown" onClick={Confirm}>Confirm</button>
 								</div>
 								<div className="card-body">
 									<div className="row">
