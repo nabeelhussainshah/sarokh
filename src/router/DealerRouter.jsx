@@ -3,6 +3,7 @@ import SideNavBar from '../components/SideNavbar/SideNavbar';
 import { Switch, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import { dealerRoutes } from '../navRoutes/dealerRoutes';
 import { RecoilRoot } from 'recoil';
+import { dealerRoutesArabic } from '../navRoutes/dealerRoutesArabic';
 import { toast } from 'react-toastify';
 import DealerDashboard from '../views/dealer/dashboard/DealerDashboard';
 import SarokhTask from '../views/dealer/sarokhTask/SarokhTask';
@@ -49,7 +50,15 @@ function DealerRouter(props) {
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	if (JSON.parse(localStorage.getItem('user'))) {
-		return (
+		return localStorage.getItem('Language') == 'Arabic' ? (
+			<SideNavBar
+				routes={dealerRoutesArabic}
+				links={'dealer'}
+				redirect={'/dealer/dashboard'}
+			>
+				<Component />
+			</SideNavBar>
+		) : (
 			<SideNavBar
 				routes={dealerRoutes}
 				links={'dealer'}
