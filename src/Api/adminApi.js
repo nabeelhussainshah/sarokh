@@ -1225,3 +1225,19 @@ export async function transactionAddApi(data) {
 			throw err;
 		});
 }
+
+export async function getWarehouseShipmentsApi(id) {
+	return await axios
+		.get(`${process.env.REACT_APP_API}/order/get-warehouse-shipments/${id}`)
+		.then((res) => {
+			console.log(res);
+			if (res.data.status === 200) {
+				return res.data.data;
+			} else {
+				throw new Error(`something went wrong with status code: ${res.status}`);
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+} 
