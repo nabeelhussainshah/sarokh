@@ -9,8 +9,10 @@ import { getShipperDeliveryChargesApi } from '../../../Api/adminApi';
 import { toast } from 'react-toastify';
 import { isEmpty } from 'underscore';
 import Loading from '../../Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function Step1(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(newShipment);
 	const setState = useSetRecoilState(newShipmentList);
@@ -91,13 +93,12 @@ export default function Step1(props) {
 			<StepIndicator step1={'current'} />
 			<form className="margintop30" onSubmit={handleSubmit(onSubmit)}>
 				<p>
-					Please select the city that you are shipping from and where you would
-					like for it to be received.
+					{t('Please select the city that you are shipping from and where you would like for it to be received')}
 				</p>
 				<div className="form-row" style={{ display: 'none' }}></div>
 				<div className="form-row">
 					<div className="form-group col-md-6">
-						<label>Ship From </label>
+						<label>{t('Ship From')} </label>
 						<select
 							className="form-control"
 							id="shipFromCity"
@@ -122,7 +123,7 @@ export default function Step1(props) {
 						</span>
 					</div>
 					<div className="form-group col-md-6">
-						<label>Ship To</label>
+						<label>{t('Ship To')}</label>
 						<select
 							className="form-control"
 							id="shipToCity"

@@ -7,8 +7,10 @@ import ReactToPrint from 'react-to-print';
 import { useLocation, useHistory } from 'react-router-dom';
 import { getPendingTrackingNumberApi } from '../../../Api/shipperApi';
 import { isUndefined } from 'underscore';
+import { useTranslation } from 'react-i18next';
 
 export default function PrintWayBill(props) {
+	const { t } = useTranslation();
 	const [response, setresponse] = useState({ loading: true });
 	const componentRef = useRef();
 	const hist = useHistory();
@@ -74,7 +76,7 @@ export default function PrintWayBill(props) {
 				<div className="card-body">
 					{isUndefined(loc.state) ? (
 						<>
-							<label>Select Tracking Numbers</label>
+							<label>{t('Select Tracking Numbers')}</label>
 							<select
 								className="form-control mb-5"
 								id="status"

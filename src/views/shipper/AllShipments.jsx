@@ -14,8 +14,10 @@ import { useRecoilState } from 'recoil';
 import { newShipment } from '../../components/ShipperComponents/NewShipmentSteps/state';
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function AllShipments(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const [data, setdata] = useRecoilState(newShipment);
@@ -68,7 +70,7 @@ export default function AllShipments(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
+			Header: t('Action'),
 			accessor: '',
 			Cell: (row) => {
 				return (
@@ -94,31 +96,31 @@ export default function AllShipments(props) {
 			},
 		},
 		{
-			Header: 'id',
+			Header: t('id'),
 			accessor: 'id',
 		},
 		{
-			Header: 'Tracking No',
+			Header: t('Tracking No'),
 			accessor: 'orderId',
 		},
 		{
-			Header: 'Location',
+			Header: t('Location'),
 			accessor: 'pickType',
 		},
 		{
-			Header: 'Delivery',
+			Header: t('Delivery'),
 			accessor: 'deliveryType',
 		},
 		{
-			Header: 'Date And Time',
+			Header: t('Date And Time'),
 			accessor: 'dateTime',
 		},
 		{
-			Header: 'Receiver',
+			Header: t('Receiver'),
 			accessor: 'receiverName',
 		},
 		{
-			Header: 'Status',
+			Header: t('Status'),
 			accessor: 'status',
 		},
 	];
@@ -152,7 +154,7 @@ export default function AllShipments(props) {
 									className="btn btn-success float-right"
 									onClick={() => hist.push('/shipper/newshipment/step1')}
 								>
-									Add New
+									{t('Add New')}
 								</button>
 							</div>
 							<div className="card-body">

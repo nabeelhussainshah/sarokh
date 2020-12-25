@@ -1,15 +1,19 @@
 import React, { Fragment , useEffect , useState } from 'react';
 import { Link , useHistory  } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function TopNav(props) {
+	const {i18n, t} = useTranslation();
 	const [lang, setlang] = useState('');
 	let history = useHistory();
 	 const doSomething = e => {
 		 if (localStorage.getItem('Language')!="Arabic") {
-			localStorage.setItem("Language","Arabic")
+			localStorage.setItem("Language","Arabic");
+			i18n.changeLanguage('en');
 		 }
 		 else{
 			localStorage.setItem("Language","English")
+			i18n.changeLanguage('sa');
 		 }
 		 let URLarray = window.location.href.split("/")
 		 let Url= "./"+URLarray[URLarray.length-1]
@@ -31,22 +35,22 @@ function TopNav(props) {
 					<Fragment>
 						<li className="nav-item d-none d-sm-inline-block">
 							<Link to="/shipper/printwaybill" className="nav-link">
-								Print Way Bill
+								{t('Print Way Bill')}
 							</Link>
 						</li>
 						<li className="nav-item d-none d-sm-inline-block">
 							<Link to="/shipper/newshipment/step1" className="nav-link">
-								New Shipment
+								{t('New Shipment')}
 							</Link>
 						</li>
 						<li className="nav-item d-none d-sm-inline-block">
 							<Link to="/shipper/bulkshipmentupload" className="nav-link">
-								Bulk Shipment Upload
+								{t('Bulk Shipment Upload')}
 							</Link>
 						</li>
 						<li className="nav-item d-none d-sm-inline-block">
 							<Link to="/shipper/printbulkshipment" className="nav-link">
-								Print Bulk Shipment
+								{t('Print Bulk Shipment')}
 							</Link>
 						</li>
 					</Fragment>

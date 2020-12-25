@@ -14,8 +14,10 @@ import Map from './Map';
 import { toast } from 'react-toastify';
 import { postData } from './Api';
 import { has, isEmpty } from 'underscore';
+import { useTranslation } from 'react-i18next';
 
 export default function Step3(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(newShipment);
 	const [list, setlist] = useRecoilState(newShipmentList);
@@ -333,19 +335,19 @@ value is deducted from these fields this does not include the gift packaging val
 			<div className="order-step-detail">
 				<div className="form-row">
 					<div className="col-sm-12">
-						<h2>Receiver Information</h2>
+						<h2>{t('Receiver Information')}</h2>
 					</div>
 				</div>
 				<form>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="receiverName">Receiver Name</label>
+							<label htmlFor="receiverName">{t('Receiver Name')}</label>
 							<input
 								type="text"
 								className="form-control"
 								name="receiverName"
 								id="receiverName"
-								placeholder="Receiver Name"
+								placeholder={t("Receiver Name")}
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
@@ -354,7 +356,7 @@ value is deducted from these fields this does not include the gift packaging val
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="receiverMobileNumber">Receiver Contact No</label>
+							<label htmlFor="receiverMobileNumber">{t('Receiver Contact No')}</label>
 							<input
 								type="tel"
 								className="form-control"
@@ -380,18 +382,18 @@ value is deducted from these fields this does not include the gift packaging val
 					</div>
 					<div className="form-row">
 						<div className="col-sm-12">
-							<h2>Shipment Information</h2>
+							<h2>{t('Shipment Information')}</h2>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="shipmentTitle">Shipment Title</label>
+							<label htmlFor="shipmentTitle">{t('Shipment Title')}</label>
 							<input
 								type="text"
 								className="form-control"
 								id="shipmentTitle"
 								name="shipmentTitle"
-								placeholder="Shipment Title"
+								placeholder={t("Shipment Title")}
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
@@ -399,7 +401,7 @@ value is deducted from these fields this does not include the gift packaging val
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="inputEmail4">Shipment Type</label>
+							<label htmlFor="inputEmail4">{t('Shipment Type')}</label>
 							<select
 								className="form-control"
 								id="shipmentType"
@@ -409,11 +411,11 @@ value is deducted from these fields this does not include the gift packaging val
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">Shipment Type</option>
-								<option value="Electronics">Electronics</option>
-								<option value="General Goods">General Goods</option>
-								<option value="Apparel">Apparel</option>
-								<option value="Others">Others</option>
+								<option value="true">{t('Shipment Type')}</option>
+								<option value="Electronics">{t('Electronics')}</option>
+								<option value="General Goods">{t('General Goods')}</option>
+								<option value="Apparel">{t('Apparel')}</option>
+								<option value="Others">{t('Others')}</option>
 							</select>
 							<span style={{ color: 'red' }}>
 								{errors.shipmentType && 'Shipment Type is required *'}
@@ -422,7 +424,7 @@ value is deducted from these fields this does not include the gift packaging val
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="weight">Shipment Weight</label>
+							<label htmlFor="weight">{t('Shipment Weight')}</label>
 							<select
 								className="form-control"
 								id="shipmentWeight"
@@ -435,17 +437,17 @@ value is deducted from these fields this does not include the gift packaging val
 									validate: (value) => value !== 'true',
 								})}
 							>
-								<option value="true">Shipment Weight</option>
-								<option value="Upto 5 kg">Upto 5 kg</option>
-								<option value="5 kg to 10 kg"> 5 kg to 10 kg</option>
-								<option value="Above 15 kg">Above 15 kg</option>
+								<option value="true">{t('Shipment Weight')}</option>
+								<option value="Upto 5 kg">{t('Upto 5 kg')}</option>
+								<option value="5 kg to 10 kg"> {t('5 kg to 10 kg')}</option>
+								<option value="Above 15 kg">{t('Above 15 kg')}</option>
 							</select>
 							<span style={{ color: 'red' }}>
 								{errors.shipmentWeight && 'Shipment weight is required *'}
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="shipmentValue">Shipment Value (SAR)</label>
+							<label htmlFor="shipmentValue">{t('Shipment Value')} (SAR)</label>
 							<input
 								type="number"
 								className="form-control"
@@ -465,13 +467,13 @@ value is deducted from these fields this does not include the gift packaging val
 					</div>
 					<div className="form-row">
 						<div className="form-group col-sm-12">
-							<label htmlFor="shipmentcontent">Shipment Contents</label>
+							<label htmlFor="shipmentcontent">{t('Shipment Contents')}</label>
 							<textarea
 								style={{ resize: 'none' }}
 								className="form-control"
 								id="content"
 								name="content"
-								placeholder="What does the shipment contain?"
+								placeholder={t("What does the shipment contain?")}
 								ref={register({ required: true })}
 							/>
 							<span style={{ color: 'red' }}>
@@ -482,7 +484,7 @@ value is deducted from these fields this does not include the gift packaging val
 					<div className="form-row">
 						<div className="col-md-6">
 							<h2>Shipper Bill</h2>
-							<h3>Additional Services</h3>
+							<h3>{t('Additional Services')}</h3>
 							{data ? (
 								<table className="table">
 									<tr>
@@ -495,7 +497,7 @@ value is deducted from these fields this does not include the gift packaging val
 													addCharges('noPackaging', e.target.checked)
 												}
 											/>
-											Shipper Packaging
+											{t('Shipper Packaging')}
 										</td>
 										<td className="bordertop font14" align="right">
 											SAR 0/-
@@ -513,7 +515,7 @@ value is deducted from these fields this does not include the gift packaging val
 												}
 												ref={register()}
 											/>
-											Sarokh Packaging
+											{t('Sarokh Packaging')}
 										</td>
 										<td className="bordertop font14" align="right">
 											SAR {shipperSettings.normalPackaging}/-
@@ -531,7 +533,7 @@ value is deducted from these fields this does not include the gift packaging val
 												}}
 												ref={register()}
 											/>
-											Gift Packaging
+											{t('Gift Packaging')}
 										</td>
 										<td className="font14" align="right">
 											SAR {shipperSettings.giftPackaging}/-
@@ -549,8 +551,7 @@ value is deducted from these fields this does not include the gift packaging val
 												}}
 												ref={register()}
 											/>
-											Insurance ({shipperSettings.insurance} % of Shipment
-											Value)
+											{t('Insurance')} ({shipperSettings.insurance} % {t('of Shipment Value')})
 										</td>
 										<td className="font14" align="right">
 											SAR{' '}
@@ -566,7 +567,7 @@ value is deducted from these fields this does not include the gift packaging val
 							<table className="table">
 								<tr>
 									<td className="bordertop" align="left">
-										Additional Services Total:
+										{t('Additional Services Total')}
 									</td>
 									<td className="bordertop" align="right">
 										SAR {data.additionalCharges}/-
@@ -577,11 +578,11 @@ value is deducted from these fields this does not include the gift packaging val
                   add both these values and then whatever the sum is add that to the state.js file in the varibale
                   name 'total' so that the changes are reflected on the form because total represent the sum of both these
                   values */}
-									<td>Delivery Charges:</td>
+									<td>{t('Delivery Charges')}</td>
 									<td align="right">SAR {data.deliveryCharges}/-</td>
 								</tr>
 								<tr>
-									<td>Receiver Address Surcharge:</td>
+									<td>{t('Receiver Address Surcharge')}</td>
 									<td align="right">
 										SAR {data.customerAddressCharges}
 										/-
@@ -604,7 +605,7 @@ value is deducted from these fields this does not include the gift packaging val
 									</td>
 								</tr>
 								<tr>
-									<td align="left">VAT: (15%)</td>
+									<td align="left">{t('VAT')}: (15%)</td>
 									<td align="right">
 										SAR{' '}
 										{(
@@ -622,7 +623,7 @@ value is deducted from these fields this does not include the gift packaging val
 							<table className="table">
 								<tr>
 									<td className="font18" align="left">
-										Total: (VAT Inclusive)
+										{t('Total')}: (VAT Inclusive)
 									</td>
 									<td className="font18" align="right">
 										SAR{' '}
@@ -643,10 +644,10 @@ value is deducted from these fields this does not include the gift packaging val
 							</table>
 						</div>
 						<div className="col-md-6">
-							<h2>Receiver Bill</h2>
+							<h2>{t('Receiver Bill')}</h2>
 							<div className="form-row">
 								<div className="form-group col-md-12">
-									<label htmlFor="billingType">Shipment Bill</label>
+									<label htmlFor="billingType">{t('Shipment Bill')}</label>
 									<select
 										type="text"
 										className="form-control"
@@ -760,7 +761,7 @@ value is deducted from these fields this does not include the gift packaging val
 									className="btn btn-danger canclebtn"
 									onClick={() => cancel()}
 								>
-									Cancel
+									{t('Cancel')}
 								</button>
 							</div>
 							<div className="btn-container float-right">
@@ -776,7 +777,7 @@ value is deducted from these fields this does not include the gift packaging val
 									<>
 										<input
 											className="btn btn-success"
-											value="Add to way bill"
+											value={t('Add to way bill')}
 											type="button"
 											onClick={() => handleSubmit(onSubmit)()}
 										/>
@@ -787,7 +788,7 @@ value is deducted from these fields this does not include the gift packaging val
 											type="button"
 											onClick={() => submitData()}
 										>
-											Finish
+											{t('Finish')}
 										</button>
 									</>
 								)}

@@ -3,8 +3,10 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Loading from '../Loading/Loading';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function AddUserForm(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const { register, handleSubmit, watch, errors } = useForm({
@@ -21,7 +23,7 @@ export default function AddUserForm(props) {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row mb-3">
 						<div className="col">
-							<label htmlFor="fullname">Full Name</label>
+							<label htmlFor="fullname">{t('Full Name')}</label>
 							<input
 								id="fullname"
 								type="text"
@@ -37,7 +39,7 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
-							<label htmlFor="email">Email</label>
+							<label htmlFor="email">{t('Email')}</label>
 							<input
 								id="email"
 								type="text"
@@ -58,7 +60,7 @@ export default function AddUserForm(props) {
 					</div>
 					<div className="form-row mb-3">
 						<div className="col">
-							<label htmlFor="contact">Contact No</label>
+							<label htmlFor="contact">{t('Contact No')}</label>
 							<input
 								id="contact"
 								type="tel"
@@ -76,7 +78,7 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
-							<label htmlFor="designation">Designation</label>
+							<label htmlFor="designation">{t('Designation')}</label>
 							<select
 								className="form-control"
 								id="designation"
@@ -104,7 +106,7 @@ export default function AddUserForm(props) {
 					</div>
 					<div className="form-row mb-3">
 						<div className="col">
-							<label htmlFor="dob">Date Of Birth</label>
+							<label htmlFor="dob">{t('Date Of Birth')}</label>
 							<input
 								id="dob"
 								type="date"
@@ -122,7 +124,7 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
-							<label htmlFor="gender">Gender</label>
+							<label htmlFor="gender">{t('Gender')}</label>
 							<select
 								className="form-control"
 								id="gender"
@@ -144,7 +146,7 @@ export default function AddUserForm(props) {
 					</div>
 					<div className="form-row mb-3">
 						<div className="col">
-							<label htmlFor="username">User Name</label>
+							<label htmlFor="username">{t('User Name')}</label>
 							<input
 								id="username"
 								type="text"
@@ -163,7 +165,7 @@ export default function AddUserForm(props) {
 							</span>
 						</div>
 						<div className="col">
-							<label htmlFor="password">Password</label>
+							<label htmlFor="password">{t('Password')}</label>
 							<input
 								id="password"
 								type="password"
@@ -212,7 +214,7 @@ export default function AddUserForm(props) {
 						) : null}
 
 						<div className="col-6">
-							<label htmlFor="warehouse">Warehouse</label>
+							<label htmlFor="warehouse">{t('Warehouse')}</label>
 							<select
 								id="warehouse"
 								name="warehouseId"

@@ -7,8 +7,10 @@ import Loading from '../../components/Loading/Loading';
 import { getBills } from '../../Api/shipperApi';
 import { toast } from 'react-toastify';
 import { filter } from 'underscore';
+import { useTranslation } from 'react-i18next';
 
 export default function Bills(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const user = JSON.parse(localStorage.getItem('user'));
@@ -47,7 +49,7 @@ export default function Bills(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
+			Header: t('Action'),
 			accessor: '',
 			Cell: (row) => {
 				return (
@@ -59,27 +61,27 @@ export default function Bills(props) {
 			},
 		},
 		{
-			Header: 'Bill Type',
+			Header: t('Bill Type'),
 			accessor: 'billType',
 		},
 		{
-			Header: 'Bill Category',
+			Header: t('Bill Category'),
 			accessor: 'billCategory',
 		},
 		{
-			Header: 'Due Date',
+			Header: t('Due Date'),
 			accessor: 'dueDate',
 		},
 		{
-			Header: 'Amount',
+			Header: t('Amount'),
 			accessor: 'totalAmount',
 		},
 		{
-			Header: 'From',
+			Header: t('From'),
 			accessor: 'shipFromCity',
 		},
 		{
-			Header: 'Status',
+			Header: t('Status'),
 			accessor: 'status',
 		},
 	];

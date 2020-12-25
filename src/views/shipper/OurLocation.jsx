@@ -10,8 +10,10 @@ import Table from '../../components/Generictable/generatictable';
 import { warehouseData } from '../../components/ShipperComponents/AddShipperWarehouse/state';
 import { useTransition, animated } from 'react-spring';
 import Loading from '../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function Maps(porps) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(warehouseData);
 	const [response, setresponse] = useState({ loading: true });
@@ -93,7 +95,7 @@ export default function Maps(porps) {
 
 	const columns = [
 		{
-			Header: 'Actions',
+			Header: t('Action'),
 			Cell: (row) => {
 				return (
 					<>
@@ -115,27 +117,27 @@ export default function Maps(porps) {
 			},
 		},
 		{
-			Header: 'Location Id',
+			Header: t('Location Id'),
 			accessor: 'id',
 		},
 		{
-			Header: 'Name',
+			Header: t('Name'),
 			accessor: 'name',
 		},
 		{
-			Header: 'Manager Name',
+			Header: t('Manager Name'),
 			accessor: 'managerName',
 		},
 		{
-			Header: 'Manager Contact',
+			Header: t('Manager Contact'),
 			accessor: 'mangerContact',
 		},
 		{
-			Header: 'Address',
+			Header: t('Address'),
 			accessor: 'address',
 		},
 		{
-			Header: 'City',
+			Header: t('City'),
 			accessor: 'city',
 		},
 	];
@@ -164,7 +166,7 @@ export default function Maps(porps) {
 									className="btn btn-info float-right btnbrown"
 									onClick={() => addNewWarehouse()}
 								>
-									Add New
+									{t('Add New')}
 								</button>
 							</div>
 							<div className="card-body">

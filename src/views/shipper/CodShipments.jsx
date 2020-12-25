@@ -5,8 +5,10 @@ import axios from 'axios';
 import { useTransition, animated } from 'react-spring';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function CodShipment(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true });
 	const user = JSON.parse(localStorage.getItem('user'));
@@ -39,7 +41,7 @@ export default function CodShipment(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
+			Header: t('Action'),
 			accessor: '',
 			Cell: (row) => {
 				return (
@@ -52,32 +54,32 @@ export default function CodShipment(props) {
 			accessor: 'id',
 		},
 		{
-			Header: 'Tracking No',
+			Header: t('Tracking No'),
 			accessor: 'orderId',
 		},
 		{
-			Header: 'Date/Time',
+			Header: t('Date/Time'),
 			accessor: 'dateTime',
 		},
 		{
-			Header: 'Receiver Name',
+			Header: t('Receiver Name'),
 			accessor: 'receiverName',
 		},
 		{
-			Header: 'From',
+			Header: t('From'),
 			accessor: 'shipFromCity',
 		},
 		{
-			Header: 'To',
+			Header: t('To'),
 			accessor: 'shipToCity',
 		},
 
 		{
-			Header: 'COD Amount',
+			Header: t('COD Amount'),
 			accessor: 'codAmount',
 		},
 		{
-			Header: 'Status',
+			Header: t('Status'),
 			accessor: 'status',
 		},
 	];

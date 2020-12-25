@@ -5,8 +5,10 @@ import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import Container from '../../components/Containers/ListingContainer';
 import Loading from '../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function BulkShipmentUpload(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const { register, errors, handleSubmit } = useForm();
 	const [response, setresponse] = useState({ loading: true });
@@ -112,7 +114,7 @@ export default function BulkShipmentUpload(props) {
 				<form className="margintop30" onSubmit={handleSubmit(onsubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label>Ship From </label>
+							<label>{t('Ship From')} </label>
 							<select
 								className="form-control"
 								id="shipFromCity"
@@ -137,7 +139,7 @@ export default function BulkShipmentUpload(props) {
 							</span>
 						</div>
 						<div className="form-group col-md-6">
-							<label>Ship To</label>
+							<label>{t('Ship To')}</label>
 							<select
 								className="form-control"
 								id="shipToCity"
@@ -164,7 +166,7 @@ export default function BulkShipmentUpload(props) {
 					</div>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-							<label htmlFor="pickupType">Pickup Location</label>
+							<label htmlFor="pickupType">{t('Pickup Location')}</label>
 							<select
 								className="form-control"
 								id="pickupType"
@@ -264,7 +266,7 @@ export default function BulkShipmentUpload(props) {
 							) : null}
 						</div>
 						<div className="form-group col-md-6">
-							<label htmlFor="deliveryLocation">Delivery Location</label>
+							<label htmlFor="deliveryLocation">{t('Delivery Location')}</label>
 							<select
 								className="form-control"
 								id="deliveryLocation"
@@ -399,13 +401,13 @@ export default function BulkShipmentUpload(props) {
 						</div>
 						<div className="form-group col-md-6">
 							<p style={{ paddingTop: 38, float: 'left' }}>
-								Download bulk shipment sample file
+								{t('Download bulk shipment sample file')}
 								<a
 									href="http://app.sarokh.net/web/order_file/order.xlsx"
 									download={true}
 								>
 									{' '}
-									Click here{' '}
+									{t('Click here')}{' '}
 								</a>
 							</p>
 						</div>

@@ -1,9 +1,10 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Redirect, BrowserRouter } from 'react-router-dom';
 import Login from '../views/Authentication/login';
 import Loader from '../components/Loading/Loading';
 import DealerPoints from '../views/publicViews/dealerPoints/DealerPoints';
 import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
@@ -38,6 +39,7 @@ function ApplicationRouter(porps) {
 		draggable: true,
 		progress: undefined,
 	});
+
 
 	return (
 		//	<ErrorBoundary>

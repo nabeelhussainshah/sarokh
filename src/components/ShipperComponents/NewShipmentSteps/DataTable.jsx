@@ -3,8 +3,10 @@ import Table from '../../Generictable/generatictable';
 import { useHistory } from 'react-router-dom';
 import { newShipment, newShipmentList } from './state';
 import { useRecoilState } from 'recoil';
+import { useTranslation } from 'react-i18next';
 
 export default function DataTable(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [data, setdata] = useRecoilState(newShipment);
 	const [list, setlist] = useRecoilState(newShipmentList);
@@ -25,7 +27,7 @@ export default function DataTable(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
+			Header: t('Action'),
 			Cell: (row) => {
 				return (
 					<>
@@ -37,39 +39,39 @@ export default function DataTable(props) {
 			},
 		},
 		{
-			Header: 'Receiver Name',
+			Header: t('Receiver Name'),
 			accessor: 'receiverName',
 		},
 		{
-			Header: 'Receiver Contact',
+			Header: t('Receiver Contact'),
 			accessor: 'receiverContact',
 		},
 		{
-			Header: 'Receiver Address',
+			Header: t('Receiver Address'),
 			accessor: 'location[0].label',
 		},
 		{
-			Header: 'Shipment Type',
+			Header: t('Shipment Type'),
 			accessor: 'shipmentType',
 		},
 		{
-			Header: 'Shipment Weight',
+			Header: t('Shipment Weight'),
 			accessor: 'shipmentWeight',
 		},
 		{
-			Header: 'Additional Services',
+			Header: t('Additional Services'),
 			accessor: 'additionalCharges',
 		},
 		{
-			Header: 'Payment Type',
+			Header: t('Payment Type'),
 			accessor: 'billingType',
 		},
 		{
-			Header: 'COD Amount',
+			Header: t('COD Amount'),
 			accessor: 'codValue',
 		},
 		{
-			Header: 'Shipment Cost',
+			Header: t('Shipment Cost'),
 			accessor: 'shipmentCost',
 		},
 	];

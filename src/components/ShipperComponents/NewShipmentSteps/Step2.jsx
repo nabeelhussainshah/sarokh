@@ -10,8 +10,10 @@ import { toast } from 'react-toastify';
 import { useRecoilValue } from 'recoil';
 import Loading from '../../Loading/Loading';
 import { isEmpty, filter } from 'underscore';
+import { useTranslation } from 'react-i18next';
 
 export default function Step2(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true, dropDowns: {} });
 	const [data, setdata] = useRecoilState(newShipment);
@@ -118,7 +120,7 @@ export default function Step2(props) {
 			<form className="margintop30" onSubmit={handleSubmit(onsubmit)}>
 				<div className="form-row">
 					<div className="form-group col-md-6">
-						<label htmlFor="pickupType">Pickup Location</label>
+						<label htmlFor="pickupType">{t('Pickup Location')}</label>
 						<select
 							className="form-control"
 							id="pickupType"
@@ -219,7 +221,7 @@ export default function Step2(props) {
 						) : null}
 					</div>
 					<div className="form-group col-md-6">
-						<label htmlFor="deliveryLocation">Delivery Location</label>
+						<label htmlFor="deliveryLocation">{t('Delivery Location')}</label>
 						<select
 							className="form-control"
 							id="deliveryLocation"

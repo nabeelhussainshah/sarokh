@@ -8,8 +8,10 @@ import moment from 'moment';
 import axios from 'axios';
 import { getShipperWarehousesApi } from '../../Api/shipperApi';
 import Loading from '../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function AllUsers(props) {
+	const { t } = useTranslation();
 	const hist = useHistory();
 	const [response, setresponse] = useState({ loading: true }); //contains the response and loading state
 	const [formToggle, setformToggle] = useState({ form: false }); //decides when we display the form
@@ -141,7 +143,7 @@ export default function AllUsers(props) {
 
 	const columns = [
 		{
-			Header: 'Action',
+			Header: t('Action'),
 			accessor: '',
 			Cell: (row) => {
 				return (
@@ -157,31 +159,31 @@ export default function AllUsers(props) {
 			},
 		},
 		{
-			Header: 'User ID',
+			Header: t('User ID'),
 			accessor: 'userId',
 		},
 		{
-			Header: 'User Name',
+			Header: t('User Name'),
 			accessor: 'userName',
 		},
 		{
-			Header: 'Full Name',
+			Header: t('Full Name'),
 			accessor: 'fullName',
 		},
 		{
-			Header: 'Email',
+			Header: t('Email'),
 			accessor: 'email',
 		},
 		{
-			Header: 'Contact',
+			Header: t('Contact'),
 			accessor: 'contact',
 		},
 		{
-			Header: 'Gender',
+			Header: t('Gender'),
 			accessor: 'gender',
 		},
 		{
-			Header: 'DOB',
+			Header: t('DOB'),
 			accessor: 'dob',
 			Cell: (row) => {
 				return (
@@ -190,7 +192,7 @@ export default function AllUsers(props) {
 			},
 		},
 		{
-			Header: 'Designation',
+			Header: t('Designation'),
 			accessor: 'designation',
 		},
 	];

@@ -4,8 +4,10 @@ import Table from '../../components/Generictable/generatictable';
 import axios from 'axios';
 import { useTransition, animated } from 'react-spring';
 import Loading from '../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function ShipmentIssues(props) {
+	const { t } = useTranslation();
 	const [response, setresponse] = useState({ loading: true });
 	const user = JSON.parse(localStorage.getItem('user'));
 
@@ -29,38 +31,38 @@ export default function ShipmentIssues(props) {
 
 	const columns = [
 		{
-			Header: 'Info',
+			Header: t('Info'),
 			accessor: '',
 			Cell: (row) => {
 				return <i className="fa fa-info-circle"></i>;
 			},
 		},
 		{
-			Header: 'ID',
+			Header: t('ID'),
 			accessor: '',
 		},
 		{
-			Header: 'Tracking No',
+			Header: t('Tracking No'),
 			accessor: '',
 		},
 		{
-			Header: 'Creation Date',
+			Header: t('Creation Date'),
 			accessor: 'reportedBy',
 		},
 		{
-			Header: 'Date',
+			Header: t('Date'),
 			accessor: '',
 		},
 		{
-			Header: 'Description',
+			Header: t('Description'),
 			accessor: '',
 		},
 		{
-			Header: 'Resolution',
+			Header: t('Resolution'),
 			accessor: '',
 		},
 		{
-			Header: 'Status',
+			Header: t('Status'),
 			accessor: '',
 		},
 	];
