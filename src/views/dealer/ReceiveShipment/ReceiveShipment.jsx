@@ -42,6 +42,7 @@ export default function ReceiveShipment(props) {
 
 	const onSubmitForm = async (values) => {
 		await verifyShipmentTrackingNoApi(values.trackingNo).then((res) => {
+			setShipperId(res.shipperId);
 			getShipperRecieveApi(res.shipperId).then((res) => {
 				setShipperList([values.trackingNo]);
 				setShipperName([values.trackingNo]);
@@ -52,15 +53,16 @@ export default function ReceiveShipment(props) {
 	const onCompleteClick = async () => {
 		const payload = {
 			dealerId: JSON.parse(localStorage.getItem('user')).id,
-			driverId: null,
+			driverId: 0,
 			shipmentList: shipperList,
-			shipperId: 1,
-			shipperName: shipperName,
+			shipperId: shipperId,
+			shipperName: null,
 			signature: 1,
 		};
 		await onConfirmShipperRecieveShipmentApi(payload).then((res) => {
-			console.log('Res => ', res);
+			hist.push("/dealer/dashboard");
 		});
+
 	};
 
 	return response.loading ? (

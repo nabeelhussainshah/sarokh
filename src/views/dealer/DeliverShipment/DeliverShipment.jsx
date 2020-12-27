@@ -177,9 +177,10 @@ export default function DeliverShipment(props) {
 										{localStorage.getItem('Language') != 'Arabic' ? (
 											<label className="col-sm-6 col-6 text-right">
 												Sar{' '}
-												{shipmentData.orderType === 'COD'
-													? shipmentData.billedAmount
-													: shipmentData.deliveryCharges}
+												{ shipmentData && shipmentData.orderType && shipmentData.hasOwnProperty("cod") ?
+													shipmentData.codAmount :
+													0
+												}
 												/-
 											</label>
 										) : (

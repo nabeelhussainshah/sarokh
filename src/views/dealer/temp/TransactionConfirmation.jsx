@@ -5,7 +5,10 @@ import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import { requestTaskConfirmationApi } from '../../../Api/dealerApi';
+import { 
+	requestTaskConfirmationApi, 
+	submitSarokhTaskApi
+ } from '../../../Api/dealerApi';
 
 export default function DealerDashboard(props) {
 	const hist = useHistory();
@@ -14,17 +17,29 @@ export default function DealerDashboard(props) {
 	const taskDetails = JSON.parse(localStorage.getItem("taskDetails"));
 	const giveShipments = JSON.parse(localStorage.getItem("giveShipments"));
 	const recievedShipments = JSON.parse(localStorage.getItem("recievedShipments"));
-	const Confirm = e => {		
-		hist.push("/dealer/dashboard");
-	   }
 	const user = JSON.parse(localStorage.getItem("user"));
 
-	useEffect(async () => {
+	const Confirm = async (e) => {
+		const payload = {
+			confirmationId: data.confirmationId,
+			dealerId: JSON.parse(localStorage.getItem("user")).id,
+			signature: "1"
+		};
+		await submitSarokhTaskApi(payload).then(res => {
+			hist.push("/dealer/dashboard");
+		});		
+	   }
+
+	useEffect(() => {
+		loadData();
+	}, []);
+
+	const loadData = async () => {
 		await requestTaskConfirmationApi().then(res => {
 			setData(res);
 			console.log("Res => ", res);
 		});
-	}, []);
+	}
 
 	const transitions = useTransition(!response.loading, null, {
 		from: { opacity: 0, transform: 'translate3d(-270px,0,0)' },
