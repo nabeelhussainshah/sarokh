@@ -105,7 +105,7 @@ export default function PendingShipment(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2>Pending Shipments</h2>
+								<h2>{t('Pending Shipments')}</h2>
 							</div>
 							<div className="card-body">
 								<Table

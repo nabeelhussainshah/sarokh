@@ -102,10 +102,24 @@ export const arabic = {
     "Add to way bill" : 'أضف لبوليصة الشحن',
     "Finish" : 'الانتهاء ',
     "Cancel" : 'الإلغاء ',
-    "Print Way Bill" : 'اختر رقم تتبع الشحنة ',
-
-
-
-
-
+    "Print Way Bill" : 'اطبع بوليصة شحن',
+    "Bulk Shipment Upload" : ' رفع ملف طلبات الشحن',
+    "New Shipment" : ' شحنة جديدة ',
+    "Print Bulk Shipment" : ' اطبع ملف الشحنات',
+    "Dashboard" : ' لوحة التحكم الرئيسية',
+    "Our Location" : 'مواقعنا',
+    "All Shipments" : 'جميع الشحنات',
+    "COD Shipments" : 'شحنات الدفع عند الاستلام',
+    "Pending Shipments" : 'الشحنات قيد الانتظار',
+    "Shipment issues" : 'مشاكل الشحنات',
+    "Users" : 'المستخدمين',
+    "Add User" : 'اضف مستخدم',
+    "All Users" : 'جميع المستخدمين ',
+    "Bills" : 'الموازنة',
+    "Sub Total" : 'المجموع ',
+    "Reports" : 'التقارير',
+    "VAT Inclusive" : ' شامل ضريبة القيمة المضافة',
+    "Shipment Issues" : 'مشاكل الشحنات',
+    "Shipper Bill" : 'فاتورة الشاحن ',
+    "Contact" : 'رقم التواصل',
 };

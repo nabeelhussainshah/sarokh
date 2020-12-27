@@ -161,7 +161,7 @@ export default function Maps(porps) {
 					<animated.div key={key} style={props}>
 						<Container>
 							<div className="card-header">
-								<h2 className="float-left">Our Location</h2>
+								<h2 className="float-left">{t('Our Location')}</h2>
 								<button
 									className="btn btn-info float-right btnbrown"
 									onClick={() => addNewWarehouse()}

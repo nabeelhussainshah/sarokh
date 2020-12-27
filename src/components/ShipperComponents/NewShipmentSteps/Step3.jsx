@@ -483,7 +483,7 @@ value is deducted from these fields this does not include the gift packaging val
 					</div>
 					<div className="form-row">
 						<div className="col-md-6">
-							<h2>Shipper Bill</h2>
+							<h2>{t('Shipper Bill')}</h2>
 							<h3>{t('Additional Services')}</h3>
 							{data ? (
 								<table className="table">
@@ -592,7 +592,7 @@ value is deducted from these fields this does not include the gift packaging val
 							<table className="table">
 								<tr>
 									<td className="bordertop" align="left">
-										Sub Total:
+										{t('Sub Total')} :
 									</td>
 									<td className="bordertop" align="right">
 										SAR{' '}
@@ -623,7 +623,7 @@ value is deducted from these fields this does not include the gift packaging val
 							<table className="table">
 								<tr>
 									<td className="font18" align="left">
-										{t('Total')}: (VAT Inclusive)
+										{t('Total')}: ({t('VAT Inclusive')})
 									</td>
 									<td className="font18" align="right">
 										SAR{' '}

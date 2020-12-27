@@ -71,7 +71,7 @@ export default function PrintWayBill(props) {
 		<ListingContainer>
 			<div>
 				<div className="card-header">
-					<h2>Print Way Bill</h2>
+					<h2>{t('Print Way Bill')}</h2>
 				</div>
 				<div className="card-body">
 					{isUndefined(loc.state) ? (

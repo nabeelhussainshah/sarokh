@@ -102,7 +102,7 @@ export default function CodShipment(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2>COD Shipments</h2>
+								<h2>{t('COD Shipments')}</h2>
 							</div>
 							<div className="card-body">
 								<Table

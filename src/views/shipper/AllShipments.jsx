@@ -149,7 +149,7 @@ export default function AllShipments(props) {
 						{console.log(item)}
 						<ListingContainer>
 							<div className="card-header">
-								<h2 className="float-left">All Shipments</h2>
+								<h2 className="float-left">{t('All Shipments')}</h2>
 								<button
 									className="btn btn-success float-right"
 									onClick={() => hist.push('/shipper/newshipment/step1')}

@@ -17,7 +17,7 @@ export default function AddUserForm(props) {
 	return (
 		<>
 			<div className="card-header">
-				<h2>Add User</h2>
+				<h2>{t('Add User')}</h2>
 			</div>
 			<div className="card-body">
 				<form onSubmit={handleSubmit(onSubmit)}>

@@ -6,13 +6,15 @@ import Step2 from '../../components/ShipperComponents/NewShipmentSteps/Step2';
 import Step3 from '../../components/ShipperComponents/NewShipmentSteps/Step3';
 import Container from '../../components/Containers/ListingContainer';
 import { RecoilRoot } from 'recoil';
+import { useTranslation } from 'react-i18next';
 
 export default function NewShipment(props) {
+	const { t } = useTranslation();
 	return (
 		<Switch>
 			<Container>
 				<div className="card-header">
-					<h2>New Shipment</h2>
+					<h2>{t('New Shipment')}</h2>
 				</div>
 				<div className="card-body">
 					<Route exact path="/shipper/newshipment/step1">

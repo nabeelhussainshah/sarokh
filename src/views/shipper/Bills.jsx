@@ -104,7 +104,7 @@ export default function Bills(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2>View Bills</h2>
+								<h2>{t('View Bills')}</h2>
 							</div>
 							<div className="card-body">
 								<Table

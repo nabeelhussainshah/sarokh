@@ -49,7 +49,7 @@ export default function PrintBulkShipment(props) {
 	) : (
 		<Container>
 			<div className="card-header">
-				<h2>Print Bulk Shipment</h2>
+				<h2>{t('Print Bulk Shipment')}</h2>
 			</div>
 			<div className="card-body">
 				<form onSubmit={handleSubmit(onSubmit)}>

@@ -85,7 +85,7 @@ export default function ShipmentIssues(props) {
 					<animated.div key={key} style={props}>
 						<ListingContainer>
 							<div className="card-header">
-								<h2>Shipment Issues</h2>
+								<h2>{t('Shipment Issues')}</h2>
 							</div>
 							<div className="card-body">
 								<Table

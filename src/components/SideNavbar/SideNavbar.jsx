@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import TopNav from '../TopNav/TopNav';
 import Footer from '../Footer/Footer';
 import { NavLink, Link } from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 function NavBar(props) {
+
+	const {t} = useTranslation();
+
 	useEffect(() => {
 		const trees = window.$('[data-widget="treeview"]');
 		trees.Treeview('init');
@@ -37,7 +41,7 @@ function NavBar(props) {
 								role="menu"
 								data-accordion="false"
 							>
-								<NavigationLinks routes={props.routes} />
+								<NavigationLinks routes={props.routes} t={t}/>
 							</ul>
 						</nav>
 					</div>
@@ -51,7 +55,7 @@ function NavBar(props) {
 	);
 }
 
-const NavigationLinks = ({ routes }) => {
+const NavigationLinks = ({ routes, t }) => {
 	return (
 		<>
 			{' '}
@@ -65,7 +69,7 @@ const NavigationLinks = ({ routes }) => {
 								activeClassName="active"
 							>
 								<i className={doc.iconClass} />
-								<p>{doc.name}</p>
+								<p>{t(doc.name)}</p>
 							</NavLink>
 						</li>
 					);
@@ -79,7 +83,7 @@ const NavigationLinks = ({ routes }) => {
 							>
 								<i className={doc.iconClass} />
 								<p>
-									{doc.name}
+									{t(doc.name)}
 									<i className="fas fa-angle-left right" />
 								</p>
 							</NavLink>
@@ -93,7 +97,7 @@ const NavigationLinks = ({ routes }) => {
 												activeClassName="active"
 											>
 												<i className={doc.iconClass} />
-												<p>{doc.name}</p>
+												<p>{t(doc.name)}</p>
 											</NavLink>
 										</li>
 									);

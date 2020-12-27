@@ -203,7 +203,7 @@ export default function AllUsers(props) {
 		) : (
 			<Container>
 				<div className="card-header">
-					<h2 className="float-left">All Users</h2>
+					<h2 className="float-left">{t('All Users')}</h2>
 					<Link to="/shipper/users/adduser">
 						<button className="btn btn-success float-right">Add User</button>
 					</Link>

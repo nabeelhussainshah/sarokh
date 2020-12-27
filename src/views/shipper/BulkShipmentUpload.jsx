@@ -108,7 +108,7 @@ export default function BulkShipmentUpload(props) {
 	) : (
 		<Container>
 			<div className="card-header">
-				<h2>Bulk Shipment Upload</h2>
+				<h2>{t('Bulk Shipment Upload')}</h2>
 			</div>
 			<div className="card-body">
 				<form className="margintop30" onSubmit={handleSubmit(onsubmit)}>
