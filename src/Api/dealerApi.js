@@ -22,7 +22,7 @@ export async function dealerDashboardApi() {
 export async function getRecieveShipmentDetailsApi() {
     const user = await JSON.parse(localStorage.getItem('user'));
     return axios
-        .get(`${process.env.REACT_APP_API}/dealer-mobile/get-give-shipments-detail/${user.id}`)
+        .get(`${process.env.REACT_APP_API}/dealer-mobile/get-recieve-shipments-detail/${user.id}`)
         .then((res) => {
             if (res.data.status === 200) {
                 return res.data.data;
@@ -349,3 +349,38 @@ export async function getBillDetailsApi(values) {
             throw err;
         });
 }
+
+export async function confirmShipperRecieveShipmentsApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/dealer-mobile/confirm-shipper-receive-shipments/`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export async function submitSarokhTaskApi(values) {
+    return axios
+        .post(`${process.env.REACT_APP_API}/dealer-mobile/submit-sarokh-task/`, values)
+        .then((res) => {
+            if (res.data.status === 200) {
+                return res.data.data;
+            } else {
+                throw new Error(
+                    `something went wrong with status code: ${res.data.status}`
+                );
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
