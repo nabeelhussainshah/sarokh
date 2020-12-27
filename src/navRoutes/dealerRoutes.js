@@ -24,25 +24,25 @@ export const dealerRoutes = [
         name: 'Sarokh Pay',
         iconClass: 'nav-icon fas fa-rocket',
     },
-    {
-        to: '/dealer/confirmation',
-        name: 'Transaction Confirmation',
-        iconClass: 'nav-icon fas fa-rocket',
-    },
+    // {
+    //     to: '/dealer/confirmation',
+    //     name: 'Transaction Confirmation',
+    //     iconClass: 'nav-icon fas fa-rocket',
+    // },
     {
         to: '/dealer/shipmentDetail',
         name: 'Shipment Detail',
         iconClass: 'nav-icon fas fa-rocket',
     },
-    {
-        to: '/dealer/shipmentPayment',
-        name: 'Shipment Payment',
-        iconClass: 'nav-icon fas fa-rocket',
-    },
-    {
-        to: '/dealer/shipmentBill',
-        name: 'Shipment Bill',
-        iconClass: 'nav-icon fas fa-rocket',
-    },
+    // {
+    //     to: '/dealer/shipmentPayment',
+    //     name: 'Shipment Payment',
+    //     iconClass: 'nav-icon fas fa-rocket',
+    // },
+    // {
+    //     to: '/dealer/shipmentBill',
+    //     name: 'Shipment Bill',
+    //     iconClass: 'nav-icon fas fa-rocket',
+    // },
 
 ];
