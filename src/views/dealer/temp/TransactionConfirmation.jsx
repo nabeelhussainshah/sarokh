@@ -5,7 +5,10 @@ import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import { requestTaskConfirmationApi } from '../../../Api/dealerApi';
+import { 
+	requestTaskConfirmationApi, 
+	submitSarokhTaskApi
+ } from '../../../Api/dealerApi';
 
 export default function DealerDashboard(props) {
 	const hist = useHistory();
@@ -14,14 +17,27 @@ export default function DealerDashboard(props) {
 	const taskDetails = JSON.parse(localStorage.getItem("taskDetails"));
 	const giveShipments = JSON.parse(localStorage.getItem("giveShipments"));
 	const recievedShipments = JSON.parse(localStorage.getItem("recievedShipments"));
-
 	const user = JSON.parse(localStorage.getItem("user"));
 
-	useEffect(async () => {
-		await requestTaskConfirmationApi().then(res => {
-			setData(res);
-			console.log("Res => ", res);
-		});
+	const Confirm = async (e) => {
+		const payload = {
+			confirmationId: data.confirmationId,
+			dealerId: JSON.parse(localStorage.getItem("user")).id,
+			signature: "1"
+		};
+		await submitSarokhTaskApi(payload).then(res => {
+			hist.push("/dealer/dashboard");
+		});		
+	   }
+
+	useEffect(() => {
+		async function loadData(){
+			await requestTaskConfirmationApi().then(res => {
+				setData(res);
+				console.log("Res => ", res);
+			});
+		}
+		loadData();
 	}, []);
 
 	const transitions = useTransition(!response.loading, null, {
@@ -48,12 +64,12 @@ export default function DealerDashboard(props) {
 							<Container>
 								<div className="card-header">
 									<h2 className="float-left">Dashboard</h2>
-									<button class="btn btn-info float-right btnbrown">Confirm</button>
+									<button class="btn btn-info float-right btnbrown" onClick={Confirm}>Confirm</button>
 								</div>
 								<div className="card-body">
-									<div className="row justify-content-center align-items-center h-100">
+									<div className="row">
 										<div className="col-md-8">
-											<p className="w-75 m-auto">Transaction from dealer [{user.dealerPointName}] having ID [{user.dealerId}] to Driver [{ taskDetails && taskDetails.driverName }] having ID [{ taskDetails && taskDetails.driverId }] in Trip having ID [{ taskDetails && taskDetails.tripId }] on [ { moment(new Date).format('LLLL') } ].</p>
+											<p>Transaction from dealer [{user.dealerPointName}] having ID [{user.dealerId}] to Driver [{ taskDetails && taskDetails.driverName }] having ID [{ taskDetails && taskDetails.driverId }] in Trip having ID [{ taskDetails && taskDetails.tripId }] on [ { moment(new Date).format('LLLL') } ].</p>
 										</div>
 										<div className="col-md-4">
 											<div className="transaction-detail">

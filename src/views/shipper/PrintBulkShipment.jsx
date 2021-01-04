@@ -5,8 +5,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading/Loading';
 import { getPendingTrackingNumberApi } from '../../Api/shipperApi';
+import { useTranslation } from 'react-i18next';
 
 export default function PrintBulkShipment(props) {
+	const { t } = useTranslation();
 	const { register, errors, handleSubmit } = useForm();
 	const [response, setresponse] = useState({ loading: true });
 
@@ -53,7 +55,7 @@ export default function PrintBulkShipment(props) {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row mb-3">
 						<div className="col">
-							<label htmlFor="sarokhWarehouseId">Start Tracking Number</label>
+							<label htmlFor="sarokhWarehouseId">{t('Start Tracking Number')}</label>
 							<select
 								className="form-control"
 								name="startTrackingNumber"
@@ -80,7 +82,7 @@ export default function PrintBulkShipment(props) {
 							</span>
 						</div>
 						<div className="col">
-							<label htmlFor="sarokhWarehouseId">End Tracking Number</label>
+							<label htmlFor="sarokhWarehouseId">{t('End Tracking Number')}</label>
 							<select
 								className="form-control"
 								name="endTrackingNumber"

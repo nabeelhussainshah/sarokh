@@ -18,6 +18,8 @@ export default function AddUser(props) {
 		{ id: 8, name: 'WarehouseUser', parentRole: 'Admin' },
 		{ id: 9, name: 'WarehouseManager', parentRole: 'Admin' },
 		{ id: 10, name: 'FinanceManager', parentRole: 'Admin' },
+		{ id: 6, name: 'Supervisor', parentRole: 'Shipper' },
+		{ id: 14, name: 'Dealer Network Manager', parentRole: 'Dealer' },
 	];
 	console.log(data);
 	useEffect(() => {

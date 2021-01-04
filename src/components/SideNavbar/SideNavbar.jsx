@@ -13,11 +13,11 @@ function NavBar(props) {
 			<div className="wrapper">
 				<TopNav links={props.links} />
 
-				<aside className="main-sidebar sidebar-dark-primary elevation-4">
+				<aside className={localStorage.getItem('Language') != 'Arabic' ? "main-sidebar sidebar-dark-primary elevation-4": "main-sidebar_arbic sidebar-dark-primary elevation-4"}>
 					<Link to={props.redirect} className="brand-link">
 						<img
 							src="http://app.sarokh.net/web/assets/img/brand/sarokh-logo.png"
-							alt="AdminLTE Logo"
+							alt="Sarokh Logo"
 							style={{
 								opacity: '.8',
 								lineHeight: '.8',
@@ -28,8 +28,7 @@ function NavBar(props) {
 							}}
 						/>
 					</Link>
-
-					<div className="sidebar">
+					<div className="sidebar" >
 						<nav className="mt-2">
 							<ul
 								className="nav nav-pills nav-sidebar flex-column"
@@ -42,9 +41,7 @@ function NavBar(props) {
 						</nav>
 					</div>
 				</aside>
-
-				<div className="content-wrapper">{props.children}</div>
-
+				<div className={localStorage.getItem('Language') != 'Arabic' ? "content-wrapper": "content-wrapper_arbic"}>{props.children}</div>
 				<Footer />
 			</div>
 		</div>
@@ -58,16 +55,30 @@ const NavigationLinks = ({ routes }) => {
 			{routes.map((doc, j) => {
 				if (doc.subRoutes === undefined) {
 					return (
-						<li key={j} className="nav-item">
-							<NavLink
-								to={doc.to}
-								className="nav-link"
-								activeClassName="active"
-							>
-								<i className={doc.iconClass} />
-								<p>{doc.name}</p>
-							</NavLink>
-						</li>
+						localStorage.getItem('Language') != 'Arabic' ? (
+							<li key={j} className="nav-item">
+								<NavLink
+									to={doc.to}
+									className="nav-link"
+									activeClassName="active"
+								>
+									<i className={doc.iconClass} />
+									<p>{doc.name}</p>
+								</NavLink>
+							</li>
+						) : (
+								<li key={j} className="nav-item text-right">
+									<NavLink
+										to={doc.to}
+										className="nav-link"
+										activeClassName="active"
+									>
+										<p>{doc.name}</p>
+										<i className={doc.iconClass} />
+
+									</NavLink>
+								</li>
+							)
 					);
 				} else {
 					return (

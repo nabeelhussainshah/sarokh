@@ -15,6 +15,7 @@ import BulkShipmentUpload from '../views/shipper/BulkShipmentUpload';
 import AllShipments from '../views/shipper/AllShipments';
 import AddShipperWarehouseFormRoutes from '../views/shipper/AddShipperWarehouseFormRoutes';
 import WarehouseDetail from '../views/genericViews/warehouse/WarehouseDetail';
+import Bills from '../views/shipper/Bills';
 import { shipperRoutes } from '../navRoutes/shipperRoutes';
 import { RecoilRoot } from 'recoil';
 import { toast } from 'react-toastify';
@@ -72,6 +73,7 @@ function ShipperRouter(props) {
 					path="/shipper/shipperwarehouse"
 					component={AddShipperWarehouseFormRoutes}
 				/>
+				<ProtectedRoute path="/shipper/bills" component={Bills} />
 			</Switch>
 		</RecoilRoot>
 	);

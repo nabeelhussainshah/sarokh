@@ -1665,37 +1665,29 @@ pre code {
 .table th {
 	padding: 0.75rem;
 	vertical-align: top;
-	border-top: 1px solid #f6921d;
+	border-top: 1px solid #dee2e6;
 }
 .table thead th {
 	vertical-align: bottom;
-	border-bottom: 2px solid #f6921d;
+	border-bottom: 2px solid #dee2e6;
 }
 .table tbody + tbody {
-	border-top: 2px solid #f6921d;
+	border-top: 2px solid #dee2e6;
 }
 .table-sm td,
 .table-sm th {
 	padding: 0.3rem;
 }
 .table-bordered {
-	border: 1px solid #f6921d;
-}
-.loop .border-bottom{
-	border-bottom:1px solid #f6921d !important;
-}
-.loop p:last-child {
-	border-bottom: 0px !important;
-	padding-bottom: 0px !important;
-	margin-bottom: 0px !important;
+	border: 1px solid #dee2e6;
 }
 .table-bordered td,
 .table-bordered th {
-	border: 1px solid #f6921d;
+	border: 1px solid #dee2e6;
 }
 .table-bordered thead td,
 .table-bordered thead th {
-	border-width: 3px;
+	border-bottom-width: 2px;
 }
 .table-borderless tbody + tbody,
 .table-borderless td,
@@ -10883,6 +10875,12 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini)
 		transition: margin-left 0.3s ease-in-out;
 		margin-left: 250px;
 	}
+	body:not(.sidebar-mini-md) .content-wrapper_arbic,
+	body:not(.sidebar-mini-md) .main-footer_arbic,
+	body:not(.sidebar-mini-md) .main-header_arbic {
+		transition: margin-right 0.3s ease-in-out;
+		margin-right: 250px;
+	}
 }
 @media (min-width: 768px) and (prefers-reduced-motion: reduce) {
 	body:not(.sidebar-mini-md) .content-wrapper,
@@ -10997,6 +10995,14 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini)
 	position: fixed;
 	top: 0;
 }
+.layout-fixed .main-sidebar_arbic {
+	bottom: 0;
+	float: none;
+	height: 100vh;
+	right: 0;
+	position: fixed;
+	top: 0;
+}
 .layout-fixed .control-sidebar {
 	bottom: 0;
 	float: none;
@@ -11013,6 +11019,12 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini)
 	}
 }
 .main-footer {
+	background: #fff;
+	border-top: 1px solid #dee2e6;
+	color: #869099;
+	padding: 1rem;
+}
+.main-footer_arbic {
 	background: #fff;
 	border-top: 1px solid #dee2e6;
 	color: #869099;
@@ -12498,6 +12510,11 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini)
 	.sidebar-mini.sidebar-collapse .main-footer,
 	.sidebar-mini.sidebar-collapse .main-header {
 		margin-left: 4.6rem !important;
+	}
+	.sidebar-mini.sidebar-collapse .content-wrapper_arbic,
+	.sidebar-mini.sidebar-collapse .main-footer_arbic,
+	.sidebar-mini.sidebar-collapse .main-header_arbic {
+		margin-right: 4.6rem !important;
 	}
 	.sidebar-mini.sidebar-collapse .nav-sidebar .nav-header {
 		display: none;
