@@ -16,9 +16,14 @@ import { uploadFile } from '../../../Api/generalApi';
 import { GoogleMapComponent } from '../../../components/GoogleMap/GoogleMapComponent';
 import { filter, isNull } from 'underscore';
 import { DealerPointSchema } from '../../../formValidation/dealerPointSchemaValidation';
+import Timer from 'react-datetime';
+import { Controller } from 'react-hook-form';
+import 'react-datetime/css/react-datetime.css';
+import moment from 'moment';
 
 export default function AddPoint(props) {
 	const hist = useHistory();
+	console.log(hist);
 
 	const [response, setresponse] = useState({ loading: true });
 	const [data, setdata] = useState({
@@ -31,7 +36,7 @@ export default function AddPoint(props) {
 		],
 	});
 
-	const { register, errors, handleSubmit, setValue } = useForm({
+	const { register, errors, handleSubmit, setValue, control } = useForm({
 		defaultValues: isNull(hist.location.state) ? {} : hist.location.state,
 		shouldFocusError: true,
 		mode: 'onChange',
@@ -82,6 +87,14 @@ export default function AddPoint(props) {
 			address: data.location[0].label,
 			locationLatitude: data.location[0].latitude,
 			locationLongitude: data.location[0].longitude,
+			timingFriday:
+				moment(formData.timingFridayStart).format('HH:mm:ss') +
+				'/' +
+				moment(formData.timingFridayEnd).format('HH:mm:ss'),
+			timingSaturdayToFriday:
+				moment(formData.timingSaturdayToFridayStart).format('HH:mm:ss') +
+				'/' +
+				moment(formData.timingSaturdayToFridayEnd).format('HH:mm:ss'),
 		};
 		delete payload['location'];
 
@@ -361,6 +374,178 @@ export default function AddPoint(props) {
 												uploadContent(e.target.files[0], 'pointPicture');
 											}}
 										/>
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="form-group col-md-6">
+										<label htmlFor="address">Point Name( Arabic )</label>
+										<input
+											type="text"
+											className="form-control"
+											name="pointNameArabic"
+											placeholder="Enter point Name in Arabic"
+											ref={register({ required: true })}
+										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.pointNameArabic && errors.pointNameArabic.message}
+										</span>
+									</div>
+									<div className="form-group col-md-6">
+										<label htmlFor="address">Point Zone</label>
+										<input
+											type="text"
+											className="form-control"
+											name="pointZone"
+											placeholder="Enter Point Zone"
+											ref={register({ required: true })}
+										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.pointZone && errors.pointZone.message}
+										</span>
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="form-group col-md-6">
+										<label htmlFor="address">Shop Type</label>
+										<select
+											type="text"
+											className="form-control"
+											name="shopType"
+											placeholder="Country"
+											ref={register}
+										>
+											<option value="Mini Market">Mini Market</option>
+											<option value="Cafe">Cafe</option>
+											<option value="Supermarket">Supermarket</option>
+											<option value="Mobile Store">Mobile Store</option>
+											<option value="Electronics Store">
+												Electronics Store
+											</option>
+											<option value="Flower Store">Flower Store</option>
+											<option value="Event Supplies Store">
+												Event Supplies Store
+											</option>
+											<option value="Tobacco Shop">Tobacco Shop</option>
+											<option value="Restaurant">Restaurant</option>
+											<option value="Diet Center">Diet Center</option>
+											<option value="Hair Saloon">Hair Saloon</option>
+											<option value="Dry Fruit & Nuts Shop">
+												Dry Fruit & Nuts Shop
+											</option>
+											<option value="Tailor">Tailor</option>
+											<option value="Hardware Shop">Hardware Shop</option>
+											<option value="Car Detail Shop">Car Detail Shop</option>
+											<option value="General Store">General Store</option>
+											<option value="Fruit & Vegetables Store">
+												Fruit & Vegetables Store
+											</option>
+											<option value="Others">Others</option>
+										</select>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.shopType && errors.shopType.message}
+										</span>
+									</div>
+									<div className="form-group col-md-6">
+										<label htmlFor="address">Timing Friday( Start )</label>
+										<Controller
+											name="timingFridayStart"
+											control={control}
+											render={(props) => {
+												return (
+													<Timer
+														initialViewMode={'time'}
+														dateFormat={false}
+														value={props.value}
+														onChange={props.onChange}
+													/>
+												);
+											}}
+											defaultValue={new Date()}
+										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.timingFridayStart &&
+												errors.timingFridayStart.message}
+										</span>
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="form-group col-md-6">
+										<label htmlFor="address">Timing Friday( End )</label>
+										<Controller
+											name="timingFridayEnd"
+											control={control}
+											render={(props) => {
+												return (
+													<Timer
+														initialViewMode={'time'}
+														dateFormat={false}
+														value={props.value}
+														onChange={props.onChange}
+													/>
+												);
+											}}
+											defaultValue={new Date()}
+										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.timingFridayEnd && errors.timingFridayEnd.message}
+										</span>
+									</div>
+									<div className="form-group col-md-6">
+										<label htmlFor="address">
+											Timing saturday to Friday( Start )
+										</label>
+										<Controller
+											name="timingSaturdayToFridayStart"
+											control={control}
+											render={(props) => {
+												return (
+													<Timer
+														initialViewMode={'time'}
+														dateFormat={false}
+														value={props.value}
+														onChange={props.onChange}
+													/>
+												);
+											}}
+											defaultValue={new Date()}
+										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.timingSaturdayToFridayStart &&
+												errors.timingSaturdayToFridayStart.message}
+										</span>
+									</div>
+								</div>
+								<div className="form-row">
+									<div className="form-group col-md-6">
+										<label htmlFor="address">
+											Timing saturday to Friday( End )
+										</label>
+										<Controller
+											name="timingSaturdayToFridayEnd"
+											control={control}
+											render={(props) => {
+												return (
+													<Timer
+														initialViewMode={'time'}
+														dateFormat={false}
+														value={props.value}
+														onChange={props.onChange}
+													/>
+												);
+											}}
+											defaultValue={new Date()}
+										/>
+										<span style={{ color: 'red' }}>
+											{' '}
+											{errors.timingSaturdayToFridayEnd &&
+												errors.timingSaturdayToFridayEnd.message}
+										</span>
 									</div>
 								</div>
 								<div className="form-row">

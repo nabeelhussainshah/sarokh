@@ -121,6 +121,10 @@ export default function CreateTrip(props) {
 			Header: 'COD',
 			accessor: 'codcollection',
 		},
+		{
+			Header: 'Point Zone',
+			accessor: 'pointZone',
+		},
 	];
 
 	const columns1 = [

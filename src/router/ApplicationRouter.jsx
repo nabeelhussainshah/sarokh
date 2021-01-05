@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { Route, Redirect, BrowserRouter } from 'react-router-dom';
+import { Route, Redirect, BrowserRouter, useHistory } from 'react-router-dom';
 import Login from '../views/Authentication/login';
 import Loader from '../components/Loading/Loading';
 import DealerPoints from '../views/publicViews/dealerPoints/DealerPoints';
@@ -30,6 +30,8 @@ const DealerRouter = React.lazy(() => import('./DealerRouter'));
 const dealerNetworkManager = React.lazy(() => import('./DealerNetworkManager'));
 
 function ApplicationRouter(porps) {
+	const hist = useHistory();
+
 	toast.configure({
 		position: 'bottom-right',
 		autoClose: 3000,
@@ -40,13 +42,12 @@ function ApplicationRouter(porps) {
 		progress: undefined,
 	});
 
-
 	return (
 		//	<ErrorBoundary>
 		<Suspense fallback={<Loader />}>
 			<BrowserRouter>
-				<Route exact={true} path="/" component={Login} />
-				<Route exact={true} path="/logout" component={Logout} />
+				<Route exact path="/" component={Login} />
+				<Route exact path="/logout" component={Logout} />
 				<Route path="/business/signup" component={BusinessSignup} />
 				<Route path="/individual/signup" component={IndividualSignup} />
 				<Route path="/dealerPoints" component={DealerPoints} />
@@ -67,9 +68,13 @@ function ApplicationRouter(porps) {
 }
 
 function Logout() {
+	const hist = useHistory();
 	localStorage.clear();
 	toast.success('LOGOUT SUCCESSFUL');
+	setTimeout(() => {
+		hist.go();
+	}, 200);
 	return <Redirect to="/" />;
 }
 
-export default React.memo(ApplicationRouter);
+export default ApplicationRouter;

@@ -21,4 +21,12 @@ export const DealerPointSchema = Joi.object({
 	postalCode: Joi.string().min(5).max(5).required().label('Post Code'),
 	userName: Joi.string().alphanum().required().label('Username'),
 	password: Joi.string().required().label('Password'),
+	pointNameArabic: Joi.string().required().label('Point Name( Arabic )'),
+	pointZone: Joi.string().required().label('Point Zone'),
+	shopType: Joi.string().required().label('Shop Type'),
+	timingFridayStart: Joi.object().label('timing Friday Start'),
+	timingFridayEnd: Joi.object().label('timing Friday End'),
+	timingSaturdayToFridayStart: Joi.object().label('timing Saturday to Friday( start )'),
+	timingSaturdayToFridayEnd: Joi.object().label('timing Saturday to Friday( End )'),
+
 });

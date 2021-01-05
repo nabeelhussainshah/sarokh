@@ -23,6 +23,7 @@ export default function BulkShipmentUpload(props) {
 		dealerPointId: '',
 		fileUploaded: false,
 		fileURL: '',
+		deliveryLocationShipper: '',
 	});
 
 	useEffect(() => {
@@ -62,6 +63,14 @@ export default function BulkShipmentUpload(props) {
 	}, [response.city]);
 
 	const onsubmit = async (formdata) => {
+		let data = {
+			...formdata,
+			deliveryLocationRadio:
+				formdata.deliveryLocation === 'To SarokhPoint'
+					? 'sarokhPoint'
+					: 'customerAddress',
+			deliveryLocation: 'To Sarokh Point',
+		};
 		await axios
 			.post(`${process.env.REACT_APP_API}/order/create-bulk-order`, {
 				...formdata,
@@ -230,7 +239,8 @@ export default function BulkShipmentUpload(props) {
 									</span>
 								</div>
 							) : null}
-							{data.pickupType === 'ShipperWarehouse' ? (
+							{data.pickupType === 'ShipperWarehouse' ||
+							data.deliveryLocationShipper !== '' ? (
 								<div className="mt-3">
 									<label htmlFor="deliveryLocation`">Shipper Warehouse</label>
 									<select
@@ -273,7 +283,14 @@ export default function BulkShipmentUpload(props) {
 								name="deliveryLocation"
 								defaultValue={data.deliveryLocation}
 								onChange={(e) => {
-									setdata({ ...data, deliveryLocation: e.target.value });
+									if (e.target.value === 'shipperLocation') {
+										setdata({
+											...data,
+											deliveryLocationShipper: 'ShipperWarehouse',
+										});
+									} else {
+										setdata({ ...data, deliveryLocationShipper: '' });
+									}
 								}}
 								ref={register({
 									required: true,
@@ -284,108 +301,19 @@ export default function BulkShipmentUpload(props) {
 									Delivery Location{' '}
 								</option>
 								<option key={2} value="To SarokhPoint">
-									Select Delivery Location Now
+									To Sarokh Point
 								</option>
-								<option key={3} value="To PredefinedLocation">
-									Let the Receiver Choose
+								<option key={3} value="To customerAddress">
+									To Customer Address
+								</option>
+								<option key={3} value="shipperLocation">
+									Shipper Location
 								</option>
 							</select>
 							<span style={{ color: 'red' }}>
 								{' '}
 								{errors.deliveryLocation && 'Delivery location is required'}
 							</span>
-							{data.deliveryLocation === 'To SarokhPoint' ? (
-								<div className="mt-3">
-									<label name="sarokhPointRadio">
-										Choose the type of delivery location
-									</label>
-									<div className="form-check">
-										<input
-											className="form-check-input"
-											type="radio"
-											name="sarokhPoint"
-											value="indeliverycase"
-											defaultChecked={data.customerAddress === 'indeliverycase'}
-											onClick={(e) => {
-												setdata({
-													...data,
-													customerAddress: 'indeliverycase',
-													sarokhPoint: '',
-												});
-											}}
-											ref={register()}
-										/>
-										<span style={{ color: 'red' }}>
-											{' '}
-											{errors.sarokhPoint && 'this is required'}
-										</span>
-										<label
-											className="form-check-label"
-											htmlFor="indeliverycase"
-										>
-											Customer Address
-										</label>
-									</div>
-									<div className="form-check">
-										<input
-											className="form-check-input"
-											type="radio"
-											name="sarokhPoint"
-											value="selectNow"
-											defaultChecked={data.sarokhPoint === 'selectNow'}
-											onClick={(e) => {
-												setdata({
-													...data,
-													sarokhPoint: 'selectNow',
-													customerAddress: '',
-												});
-											}}
-											ref={register({ required: true })}
-										/>
-										<span style={{ color: 'red' }}>
-											{' '}
-											{errors.sarokhPoint && 'This field is required'}
-										</span>
-										<label className="form-check-label" htmlFor="selectNow">
-											Select Sarokh Point
-										</label>
-									</div>
-								</div>
-							) : null}
-							{data.sarokhPoint === 'selectNow' &&
-							data.deliveryLocation === 'To SarokhPoint' ? (
-								<div className="mt-3">
-									<label htmlFor="concernPerson">Sarokh Point</label>
-									<select
-										className="form-control"
-										id="dealerPointId"
-										name="dealerPointId"
-										defaultValue={data.dealerPointId}
-										onChange={(e) => {
-											setdata({ ...data, dealerPointId: e.target.value });
-										}}
-										ref={register({
-											required: true,
-											validate: (value) => value !== 'true',
-										})}
-									>
-										<option key={12345} value="true">
-											--- Select Sarokh Point ---
-										</option>
-										{response.data.sarokhPoints.map((doc, i) => {
-											return (
-												<option key={i} value={doc.id}>
-													{doc.dealerPointName}
-												</option>
-											);
-										})}
-									</select>
-									<span style={{ color: 'red' }}>
-										{' '}
-										{errors.dealerPointId && 'Sarokh Point is required'}
-									</span>
-								</div>
-							) : null}
 						</div>
 					</div>
 					<div className="form-row">

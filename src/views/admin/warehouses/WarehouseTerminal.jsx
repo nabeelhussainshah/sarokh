@@ -65,6 +65,10 @@ export default function WarehouseTerminal(props) {
 			Header: 'Address',
 			accessor: 'address',
 		},
+		{
+			Header: 'Point Zone',
+			accessor: 'pointZone',
+		},
 	];
 
 	const transitions = useTransition(!response.loading, null, {

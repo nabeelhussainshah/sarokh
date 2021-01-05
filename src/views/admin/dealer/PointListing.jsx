@@ -31,8 +31,8 @@ export default function PointListing(props) {
 
 	const handleClick = (row) => {
 		const result = pointEditHelper(row.row.original);
-		hist.push({ pathname: '/admin/dealer/addpoint', state: result });
 		console.log(result);
+		hist.push({ pathname: '/admin/dealer/addpoint', state: result });
 	};
 
 	const deletePoint = (row) => {
@@ -88,6 +88,10 @@ export default function PointListing(props) {
 		{
 			Header: 'Current Inventory',
 			accessor: '',
+		},
+		{
+			Header: 'Point Zone',
+			accessor: 'pointZone',
 		},
 	];
 
